@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table>
+    <column>
+        <name>idgarage</name>
+        <type>serial</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>fechaalta</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>useralta</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>fechamodificacion</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>usermodificacion</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>activo</name>
+        <type>boolean</type>
+        <default>true</default>
+    </column>
+    <column>
+        <name>fechabaja</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>userbaja</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>idempresa</name>
+        <type>integer</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>nombre</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>ciudad</name>
+        <type>character varying(100)</type>
+    </column>
+    <column>
+        <name>provincia</name>
+        <type>character varying(100)</type>
+    </column>
+    <column>
+        <name>codpais</name>
+        <type>character varying(20)</type>
+    </column>
+    <column>
+        <name>codpostal</name>
+        <type>character varying(10)</type>
+    </column>
+    <column>
+        <name>apartado</name>
+        <type>character varying(10)</type>
+    </column>
+    <column>
+        <name>direccion</name>
+        <type>character varying(100)</type>
+    </column>
+    <column>
+        <name>telefono1</name>
+        <type>character varying(30)</type>
+    </column>
+    <column>
+        <name>telefono2</name>
+        <type>character varying(30)</type>
+    </column>
+    <column>
+        <name>fax</name>
+        <type>character varying(30)</type>
+    </column>
+    <column>
+        <name>email</name>
+        <type>character varying(100)</type>
+    </column>
+    <column>
+        <name>web</name>
+        <type>character varying(100)</type>
+    </column>
+    <column>
+        <name>observaciones</name>
+        <type>text</type>
+    </column>
+    <constraint>
+        <name>garages_pkey</name>
+        <type>PRIMARY KEY (idgarage)</type>
+    </constraint>
+    <constraint>
+        <name>ca_garages_empresas</name>
+        <type>FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    
+<!--
+    <constraint>
+        <name>ca_garages_users_alta</name>
+        <type>FOREIGN KEY (useralta) REFERENCES users (nick) ON DELETE RESTRICT ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_garages_users_modificacion</name>
+        <type>FOREIGN KEY (usermodificacion) REFERENCES users (nick) ON DELETE RESTRICT ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_garages_users_baja</name>
+        <type>FOREIGN KEY (userbaja) REFERENCES users (nick) ON DELETE RESTRICT ON UPDATE CASCADE</type>
+    </constraint>
+-->        
+</table>
+
