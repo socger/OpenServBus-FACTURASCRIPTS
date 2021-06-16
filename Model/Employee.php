@@ -1,4 +1,5 @@
 <?php
+
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
 use FacturaScripts\Core\Model\Base;
