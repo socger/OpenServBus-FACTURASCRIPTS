@@ -6,7 +6,7 @@ use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 class EditGarage extends EditController {
     
-    public $seModifica;           // L
+    public $seModifica;  
     
     public function getModelClassName() {
         return 'Garage';

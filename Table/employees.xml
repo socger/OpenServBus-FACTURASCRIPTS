@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <column>
-        <name>$idemployee</name>
+        <name>idemployee</name>
         <type>serial</type>
         <null>NO</null>
     </column>
@@ -35,7 +35,7 @@
         <type>character varying(50)</type>
     </column>
     <column>
-        <name>$cod_employee</name>
+        <name>cod_employee</name>
         <type>character varying(6)</type>
         <null>NO</null>
     </column>
