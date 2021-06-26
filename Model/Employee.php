@@ -105,6 +105,16 @@ class Employee extends Base\ModelClass {
     
     public function test()
     {
+        // Comprobamos que el código de empleado si se ha introducido correctamente
+        if (!empty($this->cod_employee) && 1 !== \preg_match('/^[A-Z0-9_\+\.\-]{1,10}$/i', $this->cod_employee)) {
+            $this->toolBox()->i18nLog()->error(
+                'invalid-alphanumeric-code',
+                ['%value%' => $this->cod_employee, '%column%' => 'cod_employee', '%min%' => '1', '%max%' => '10']
+            );
+            
+            return false;
+        }
+        
         // Nos rellena la empresa (si no se ha elegido) con la empresa por defecto
         if (empty($this->idempresa)) {
             $this->idempresa = $this->toolBox()->appSettings()->get('default', 'idempresa');
