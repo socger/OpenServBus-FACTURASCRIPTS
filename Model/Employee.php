@@ -90,6 +90,11 @@ class Employee extends Base\ModelClass {
             $this->idemployee = $this->newCode();
         }
 
+        // Rellenamos el cod_employee si no lo introdujo el usuario
+        if (empty($this->cod_employee)) {
+            $this->cod_employee = (string) $this->newCode();
+        }
+
         // Rellenamos los datos de alta
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 

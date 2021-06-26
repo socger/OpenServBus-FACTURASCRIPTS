@@ -69,7 +69,7 @@ class Collaborator extends Base\ModelClass {
         if (empty($this->idcollaborator)) {
             $this->idcollaborator = $this->newCode();
         }
-
+        
         // Rellenamos los datos de alta
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
