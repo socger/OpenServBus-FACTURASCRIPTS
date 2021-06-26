@@ -37,6 +37,9 @@ class Employee extends Base\ModelClass {
     public $email;
     public $web;
     public $observaciones;
+
+    public $fecha_nacimiento;
+    public $num_seg_social;
     
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {
@@ -125,6 +128,7 @@ class Employee extends Base\ModelClass {
         $this->email = $utils->noHtml($this->email);
         $this->web = $utils->noHtml($this->web);
         $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->num_seg_social = $utils->noHtml($this->num_seg_social);
 
         return parent::test();
     }

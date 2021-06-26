@@ -106,6 +106,17 @@
         <name>observaciones</name>
         <type>text</type>
     </column>
+    <column>
+        <name>fecha_nacimiento</name>
+        <type>date</type>
+    </column>
+    <column>
+        <name>num_seg_social</name>
+        <type>character varying(30)</type>
+        <null>NO</null>
+    </column>
+
+
     <constraint>
         <name>employees_pkey</name>
         <type>PRIMARY KEY (idemployee)</type>
