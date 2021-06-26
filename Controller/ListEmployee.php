@@ -11,7 +11,7 @@ class ListEmployee extends ListController {
         $pageData = parent::getPageData();
         
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Archivos';
+        $pageData['submenu'] = 'Empleados';
         $pageData['title'] = 'Empleados';
         
         $pageData['icon'] = 'far fa-id-card';

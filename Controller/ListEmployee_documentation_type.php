@@ -3,7 +3,7 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
-class ListEmployee_type extends ListController {
+class ListEmployee_documentation_type extends ListController {
     
     // Para presentar la pantalla del controlador
     // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
@@ -12,21 +12,21 @@ class ListEmployee_type extends ListController {
         
         $pageData['menu'] = 'OpenServBus';
         $pageData['submenu'] = 'Empleados';
-        $pageData['title'] = 'Empleados - Tipos';
+        $pageData['title'] = 'Empleados - Tipos Documentación';
         
-        $pageData['icon'] = 'fas fa-book-reader';
-        
+        $pageData['icon'] = 'far fa-address-card';
+
 
         return $pageData;
     }
     
     protected function createViews() {
-        $this->createViewEmployee_type();
+        $this->createViewEmployee_documentation_type();
     }
     
-    protected function createViewEmployee_type($viewName = 'ListEmployee_type')
+    protected function createViewEmployee_documentation_type($viewName = 'ListEmployee_type')
     {
-        $this->addView($viewName, 'Employee_type');
+        $this->addView($viewName, 'Employee_documentation_type');
         
         // Opciones de búsqueda rápida
         $this->addSearchFields($viewName, ['nombre']); // Las búsqueda la hará por el campo nombre
@@ -48,6 +48,7 @@ class ListEmployee_type extends ListController {
             // $label ... la etiqueta a mostrar al usuario
             // $field ... el campo del modelo sobre el que vamos a comprobar
         $this->addFilterCheckbox($viewName, 'activo', 'Activo', 'activo');
+        $this->addFilterCheckbox($viewName, 'fechacaducidad_obligarla', 'Obligar-F.Caducidad', 'fechacaducidad_obligarla');
         
         // Filtro periodo de fechas
         // addFilterPeriod($viewName, $key, $label, $field)
