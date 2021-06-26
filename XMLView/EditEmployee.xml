@@ -5,7 +5,7 @@
         
         <group name="Invisibles" numcolumns="12">
             <column name="user_fecha" display="none" order="100">
-                <widget type="date" fieldname="user_fecha" readonly="true"/>
+                <widget type="date" fieldname="user_fecha" readonly="true"/> 
             </column>
             <column name="user_nick" display="none" order="110">
                 <widget type="text" fieldname="user_nick" readonly="true"/>
