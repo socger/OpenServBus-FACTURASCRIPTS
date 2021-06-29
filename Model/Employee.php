@@ -26,6 +26,7 @@ class Employee extends Base\ModelClass {
     public $cifnif;
             
     public $idempresa;
+    public $idcollaborator;
     public $ciudad;
     public $provincia;
     public $codpais;
@@ -117,6 +118,15 @@ class Employee extends Base\ModelClass {
                 ['%value%' => $this->cod_employee, '%column%' => 'cod_employee', '%min%' => '1', '%max%' => '10']
             );
             
+            return false;
+        }
+        
+        // Exijimos que se introduzca idempresa o idcollaborator
+        if ( (empty($this->idempresa)) 
+         and (empty($this->idcollaborator))
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('O es un empleado nuestro o de una empresa colaboradora');
             return false;
         }
         
