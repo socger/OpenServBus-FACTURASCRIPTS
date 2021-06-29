@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <column>
-        <name>idemployee_type</name>
+        <name>iddepartment</name>
         <type>serial</type>
         <null>NO</null>
     </column>
@@ -44,8 +44,8 @@
         <type>text</type>
     </column>
     <constraint>
-        <name>employee_types_pkey</name>
-        <type>PRIMARY KEY (idemployee_type)</type>
+        <name>departments_pkey</name>
+        <type>PRIMARY KEY (iddepartment)</type>
     </constraint>
 </table>
 
