@@ -3,7 +3,7 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
-class ListEmployee_documentation_type extends ListController {
+class ListDocumentation_type extends ListController {
     
     // Para presentar la pantalla del controlador
     // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
@@ -21,12 +21,12 @@ class ListEmployee_documentation_type extends ListController {
     }
     
     protected function createViews() {
-        $this->createViewEmployee_documentation_type();
+        $this->createViewDocumentation_type();
     }
     
-    protected function createViewEmployee_documentation_type($viewName = 'ListEmployee_type')
+    protected function createViewDocumentation_type($viewName = 'ListDocumentation_type')
     {
-        $this->addView($viewName, 'Employee_documentation_type');
+        $this->addView($viewName, 'Documentation_type');
         
         // Opciones de búsqueda rápida
         $this->addSearchFields($viewName, ['nombre']); // Las búsqueda la hará por el campo nombre

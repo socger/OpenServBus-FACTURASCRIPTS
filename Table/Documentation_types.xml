@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <column>
-        <name>idemployee_documentation_type</name>
+        <name>iddocumentation_type</name>
         <type>serial</type>
         <null>NO</null>
     </column>
@@ -49,8 +49,8 @@
         <type>text</type>
     </column>
     <constraint>
-        <name>employee_documentation_types_pkey</name>
-        <type>PRIMARY KEY (idemployee_documentation_type)</type>
+        <name>documentation_types_pkey</name>
+        <type>PRIMARY KEY (iddocumentation_type)</type>
     </constraint>
 </table>
 

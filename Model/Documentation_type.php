@@ -4,10 +4,10 @@ namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
 
-class Employee_documentation_type extends Base\ModelClass {
+class Documentation_type extends Base\ModelClass {
     use Base\ModelTrait;
 
-    public $idemployee_documentation_type;
+    public $iddocumentation_type;
         
     public $user_fecha;
     public $user_nick;
@@ -33,12 +33,12 @@ class Employee_documentation_type extends Base\ModelClass {
     
     // función que devuelve el id principal
     public static function primaryColumn(): string {
-        return 'idemployee_documentation_type';
+        return 'iddocumentation_type';
     }
     
     // función que devuelve el nombre de la tabla
     public static function tableName(): string {
-        return 'employee_documentation_types';
+        return 'documentation_types';
     }
     
     protected function comprobarSiActivo()
@@ -68,8 +68,8 @@ class Employee_documentation_type extends Base\ModelClass {
     protected function saveInsert(array $values = [])
     {
         // Creamos el nuevo id
-        if (empty($this->idemployee_documentation_type)) {
-            $this->idemployee_documentation_type = $this->newCode();
+        if (empty($this->iddocumentation_type)) {
+            $this->iddocumentation_type = $this->newCode();
         }
 
         // Rellenamos los datos de alta

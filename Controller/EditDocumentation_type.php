@@ -4,10 +4,10 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
-class EditEmployee_documentation_type extends EditController {
+class EditDocumentation_type extends EditController {
     
     public function getModelClassName() {
-        return 'Employee_documentation_type';
+        return 'Documentation_type';
     }
     
     // Para presentar la pantalla del controlador
@@ -25,12 +25,12 @@ class EditEmployee_documentation_type extends EditController {
     }
     
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
-    // en este caso EditEmployee_type
+    // en este caso EditDocumentation_type
     protected function loadData($viewName, $view) {
         switch ($viewName) {
 
-            // Pestaña EditEmployee_documentation_type
-            case 'EditEmployee_documentation_type': 
+            // Pestaña EditDocumentation_type
+            case 'EditDocumentation_type': 
                 parent::loadData($viewName, $view);
                 
                 // Guardamos quien pulsó guardar y cuando

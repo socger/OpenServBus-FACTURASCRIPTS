@@ -2,7 +2,7 @@
 <view>
     <columns>
         <column name="Id" display="none" order="100">
-            <widget type="text" fieldname="idemployee_type" />
+            <widget type="text" fieldname="iddocumentation_type" />
         </column>
         <column name="Nombre" order="120">
             <widget type="text" fieldname="nombre" />

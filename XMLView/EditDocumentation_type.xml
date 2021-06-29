@@ -14,7 +14,7 @@
 
         <group name="Datos" numcolumns="12">
             <column name="Id" title="Código" numcolumns="3" order="100">
-                <widget type="text" fieldname="idemployee_documentation_type" readonly="true"/>
+                <widget type="text" fieldname="iddocumentation_type" readonly="true"/>
             </column>
             <column name="Nombre" numcolumns="7" order="110">
                 <widget type="text" fieldname="nombre" maxlength="100" required ="true" />
