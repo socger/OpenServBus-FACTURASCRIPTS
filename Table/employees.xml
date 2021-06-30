@@ -128,5 +128,9 @@
         <name>ca_employees_empresas</name>
         <type>FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
+    <constraint>
+        <name>ca_employees_collaborators</name>
+        <type>FOREIGN KEY (idcollaborator) REFERENCES collaborators (idcollaborator) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
 </table>
 
