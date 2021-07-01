@@ -1,0 +1,148 @@
+<?php
+
+namespace FacturaScripts\Plugins\OpenServBus\Model; 
+
+use FacturaScripts\Core\Model\Base;
+
+class Vehicle extends Base\ModelClass {
+    use Base\ModelTrait;
+
+    public $idvehicle;
+        
+    public $user_fecha;
+    public $user_nick;
+    public $fechaalta;
+    public $useralta;
+    public $fechamodificacion;
+    public $usermodificacion;
+    public $activo;
+    public $fechabaja;
+    public $userbaja;
+
+    public $cod_vehicle;
+    public $nombre;
+    public $matricula;
+    public $motor_chasis;
+    public $numero_bastidor;
+    public $carroceria;
+    public $numero_obra;
+    public $fecha_matriculacion_primera;
+    public $fecha_matriculacion_actual;
+    public $plazas_segun_permiso;
+    public $plazas_segun_ficha_tecnica;
+    public $plazas_ofertables;
+    public $configuraciones_especiales;
+    public $idempresa;
+    public $idcollaborator;
+    public $idgarage;
+    public $observaciones;
+    
+    // función que inicializa algunos valores antes de la vista del controlador
+    public function clear() {
+        parent::clear();
+        
+        $this->activo = true; // Por defecto estará activo
+    }
+    
+    // función que devuelve el id principal
+    public static function primaryColumn(): string {
+        return 'idvehicle';
+    }
+    
+    // función que devuelve el nombre de la tabla
+    public static function tableName(): string {
+        return 'vehicles';
+    }
+    
+    protected function comprobarSiActivo()
+    {
+        if ($this->activo == false) {
+            $this->fechabaja = $this->fechamodificacion;
+            $this->userbaja = $this->usermodificacion;
+        } else { // Por si se vuelve a poner Activo = true
+            $this->fechabaja = null;
+            $this->userbaja = null;
+        }
+    }
+    
+    // Para realizar cambios en los datos antes de guardar por modificación
+    protected function saveUpdate(array $values = [])
+    {
+        // Siendo un alta o una modificación, siempre guardamos los datos de modificación
+        $this->usermodificacion = $this->user_nick; 
+        $this->fechamodificacion = $this->user_fecha; 
+        
+        $this->comprobarSiActivo();
+        
+        return parent::saveUpdate($values);
+    }
+
+    // Para realizar cambios en los datos antes de guardar por alta
+    protected function saveInsert(array $values = [])
+    {
+        // Creamos el nuevo id
+        if (empty($this->idvehicle)) {
+            $this->idvehicle = $this->newCode();
+        }
+
+        // Rellenamos el cod_vehicle si no lo introdujo el usuario
+        if (empty($this->cod_vehicle)) {
+            $this->cod_vehicle = (string) $this->newCode();
+        }
+
+        // Rellenamos los datos de alta
+        $this->useralta = $this->user_nick; 
+        $this->fechaalta = $this->user_fecha; 
+        
+        // Siendo un alta o una modificación, siempre guardamos los datos de modificación
+        $this->usermodificacion = $this->user_nick; 
+        $this->fechamodificacion = $this->user_fecha; 
+        
+        $this->comprobarSiActivo();
+        
+        return parent::saveInsert($values);
+    }
+    
+    public function test()
+    {
+        // Comprobamos que el código de empleado si se ha introducido correctamente
+        if (!empty($this->cod_vehicle) && 1 !== \preg_match('/^[A-Z0-9_\+\.\-]{1,10}$/i', $this->cod_vehicle)) {
+            $this->toolBox()->i18nLog()->error(
+                'invalid-alphanumeric-code',
+                ['%value%' => $this->cod_vehicle, '%column%' => 'cod_vehicle', '%min%' => '1', '%max%' => '10']
+            );
+            
+            return false;
+        }
+        
+        // Exijimos que se introduzca idempresa o idcollaborator
+        if ( (empty($this->idempresa)) 
+         and (empty($this->idcollaborator))
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('O es un vehículo nuestro o de una empresa colaboradora');
+            return false;
+        }
+        
+        // Nos rellena la empresa (si no se ha elegido) con la empresa por defecto
+        if (empty($this->idempresa)) {
+            $this->idempresa = $this->toolBox()->appSettings()->get('default', 'idempresa');
+        }
+
+        $utils = $this->toolBox()->utils();
+        
+        $this->cod_vehicle = $utils->noHtml($this->cod_vehicle);
+        $this->nombre = $utils->noHtml($this->nombre);
+        $this->matricula = $utils->noHtml($this->matricula);
+        $this->motor_chasis = $utils->noHtml($this->motor_chasis);
+        $this->numero_bastidor = $utils->noHtml($this->numero_bastidor);
+        $this->carroceria = $utils->noHtml($this->carroceria);
+        $this->numero_obra = $utils->noHtml($this->numero_obra);
+        $this->plazas_segun_ficha_tecnica = $utils->noHtml($this->plazas_segun_ficha_tecnica);
+        $this->configuraciones_especiales = $utils->noHtml($this->configuraciones_especiales);
+        $this->observaciones = $utils->noHtml($this->observaciones);
+
+        return parent::test();
+    }
+    
+}
