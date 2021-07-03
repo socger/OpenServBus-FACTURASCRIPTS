@@ -30,23 +30,23 @@
             </column>
             
             <column name="motor_chasis" title="Motor/Chasis" numcolumns="3" order="130">
-                <widget type="text" fieldname="motor_chasis" maxlength="50" required="true"/>
+                <widget type="text" fieldname="motor_chasis" maxlength="50"/>
             </column>
             <column name="numero_bastidor" title="Nº.bastidor" numcolumns="3" order="140">
-                <widget type="text" fieldname="numero_bastidor" maxlength="50" required="true"/>
+                <widget type="text" fieldname="numero_bastidor" maxlength="50"/>
             </column>
             <column name="carroceria" title="Carroceria" numcolumns="3" order="150">
-                <widget type="text" fieldname="carroceria" maxlength="50" required="true"/>
+                <widget type="text" fieldname="carroceria" maxlength="50"/>
             </column>
             <column name="numero_obra" title="Nº.obra" numcolumns="3" order="160">
-                <widget type="text" fieldname="numero_obra" maxlength="50" required="true"/>
+                <widget type="text" fieldname="numero_obra" maxlength="50"/>
             </column>
             
             
-            <column name="fecha_matriculacion_primera" title="Fecha matric. 1ª" numcolumns="3" order="170">
+            <column name="fecha_matriculacion_primera" title="Fecha matriculación 1ª" numcolumns="3" order="170">
                 <widget type="date" fieldname="fecha_matriculacion_primera" />
             </column>
-            <column name="fecha_matriculacion_actual" title="Fecha matric. actual" numcolumns="3" order="180">
+            <column name="fecha_matriculacion_actual" title="Fecha matriculación actual" numcolumns="3" order="180">
                 <widget type="date" fieldname="fecha_matriculacion_actual" />
             </column>
             <column name="garage" numcolumns="6" order="190">
@@ -59,10 +59,10 @@
 
         <group name="Plazas" numcolumns="12" icon="fas fa-chair" title="Plazas">
             <column name="plazas_segun_permiso" title="Según permiso" numcolumns="3" order="100">
-                <widget type="text" fieldname="plazas_segun_permiso" maxlength="5" required="true"/>
+                <widget type="text" fieldname="plazas_segun_permiso" maxlength="5"/>
             </column>
             <column name="plazas_segun_ficha_tecnica" title="Según ficha técnica" numcolumns="6" order="110">
-                <widget type="text" fieldname="plazas_segun_ficha_tecnica" maxlength="50" required="true"/>
+                <widget type="text" fieldname="plazas_segun_ficha_tecnica" maxlength="50"/>
             </column>
             <column name="plazas_ofertables" title="Ofertables" numcolumns="3" order="120">
                 <widget type="text" fieldname="plazas_ofertables" maxlength="5" required="true"/>
@@ -84,7 +84,7 @@
         </group>
         
 
-        <group name="Otros datos" numcolumns="12" icon="fas fa-address-card" title="Datos de contacto">
+        <group name="Otros datos" numcolumns="12" icon="fas fa-truck-loading" title="Otos datos de interés">
             <column name="configuraciones_especiales" numcolumns="12" title="Configuraciones especiales" order="100">
                 <widget type="textarea" fieldname="configuraciones_especiales" />
             </column>
