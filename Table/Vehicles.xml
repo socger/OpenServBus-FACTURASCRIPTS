@@ -122,7 +122,7 @@
     </constraint>
     <constraint>
         <name>ca_vehicles_garages</name>
-        <type>FOREIGN KEY (idgarage) REFERENCES collaborators (idgarage) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <type>FOREIGN KEY (idgarage) REFERENCES garages (idgarage) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
 </table>
 

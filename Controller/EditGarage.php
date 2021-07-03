@@ -27,11 +27,10 @@ class EditGarage extends EditController {
     }
     
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
-    // en este caso EditGarage
     protected function loadData($viewName, $view) {
         switch ($viewName) {
 
-            // Pestaña EditProject
+            // Pestaña con el mismo nombre que este controlador EditXxxxx
             case 'EditGarage': 
                 parent::loadData($viewName, $view);
                 
@@ -49,7 +48,7 @@ class EditGarage extends EditController {
 //                    $this->seModifica = 'SI';
 //                }
 //
-                // Guardamos quien pulsó guardar y cuando
+                // Guardamos que usuario y cuando pulsará guardar
                 $this->views[$viewName]->model->user_nick = $this->user->nick;
 
              // $this->views[$viewName]->model->user_fecha = date('d-m-Y');

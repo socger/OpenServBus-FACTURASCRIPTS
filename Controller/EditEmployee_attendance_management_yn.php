@@ -25,15 +25,14 @@ class EditEmployee_attendance_management_yn extends EditController {
     }
     
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
-    // en este caso EditCollaborator
     protected function loadData($viewName, $view) {
         switch ($viewName) {
 
-            // Pestaña EditProject
+            // Pestaña con el mismo nombre que este controlador EditXxxxx
             case 'EditEmployee_attendance_management_yn': 
                 parent::loadData($viewName, $view);
                 
-                // Guardamos quien pulsó guardar y cuando
+                // Guardamos que usuario y cuando pulsará guardar
                 $this->views[$viewName]->model->user_nick = $this->user->nick;
 
              // $this->views[$viewName]->model->user_fecha = date('d-m-Y');

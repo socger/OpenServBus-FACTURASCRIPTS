@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view>
+    <columns>
+        <column name="Id" display="none" order="100">
+            <widget type="text" fieldname="idvehicle" />
+        </column>
+        <column name="code" order="110">
+            <widget type="text" fieldname="cod_vehicle" onclick="EditVehicle" />
+        </column>
+        <column name="Nombre" order="120">
+            <widget type="text" fieldname="nombre" />
+        </column>
+        <column name="Matricula" title="Matrícula" order="120">
+            <widget type="text" fieldname="matricula" />
+        </column>
+        <column name="F_Matric" title="F.Matriculación" display="none" order="100">
+            <widget type="date" fieldname="fecha_matriculacion_actual"/> 
+        </column>
+        <column name="plazas_ofertables" title="Plazas Of." order="100">
+            <widget type="text" fieldname="plazas_ofertables" />
+        </column>
+        <column name="Activo" display="center" order="150">
+            <widget type="checkbox" fieldname="activo"/>
+        </column>
+        <column name="fechaalta" title="Alta" display="right" order="160">
+            <widget type="datetime" fieldname="fechaalta"/>
+        </column>
+    </columns>
+    
+    <rows>
+        <row type="status">
+            <option color="success" fieldname="activo">1</option>
+            <option color="warning" fieldname="activo">0</option>
+        </row>
+    </rows>    
+</view>

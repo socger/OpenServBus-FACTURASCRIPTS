@@ -25,15 +25,14 @@ class EditDocumentation_type extends EditController {
     }
     
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
-    // en este caso EditDocumentation_type
     protected function loadData($viewName, $view) {
         switch ($viewName) {
 
-            // Pestaña EditDocumentation_type
+            // Pestaña con el mismo nombre que este controlador EditXxxxx
             case 'EditDocumentation_type': 
                 parent::loadData($viewName, $view);
                 
-                // Guardamos quien pulsó guardar y cuando
+                // Guardamos que usuario y cuando pulsará guardar
                 $this->views[$viewName]->model->user_nick = $this->user->nick;
 
              // $this->views[$viewName]->model->user_fecha = date('d-m-Y');
