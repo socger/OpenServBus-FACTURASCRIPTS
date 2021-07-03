@@ -120,7 +120,15 @@ class Vehicle extends Base\ModelClass {
          and (empty($this->idcollaborator))
            ) 
         {
-            $this->toolBox()->i18nLog()->error('O es un vehículo nuestro o de una empresa colaboradora');
+            $this->toolBox()->i18nLog()->error('Debe de confirmar si es un vehículo nuestro o de una empresa colaboradora');
+            return false;
+        }
+
+        if ( (!empty($this->idempresa)) 
+         and (!empty($this->idcollaborator))
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('O es un vehículo nuestro o de una empresa colaboradora, pero ambos no');
             return false;
         }
         

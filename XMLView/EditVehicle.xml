@@ -22,23 +22,25 @@
             <column name="Codigo" description="Es opcional" numcolumns="2" order="100">
                 <widget type="text" fieldname="cod_vehicle" icon="fas fa-bus-alt" maxlength="6" readonly="dinamic" />
             </column>
-            <column name="Nombre" numcolumns="6" order="110">
+            <column name="Nombre" numcolumns="5" order="110">
                 <widget type="text" fieldname="nombre" maxlength="100" required="true"/>
             </column>
-            <column name="Matricula"  title="Matrícula" numcolumns="6" order="120">
+            <column name="Matricula"  title="Matrícula" numcolumns="2" order="120">
                 <widget type="text" fieldname="matricula" maxlength="25" required="true"/>
             </column>
-            
             <column name="motor_chasis" title="Motor/Chasis" numcolumns="3" order="130">
                 <widget type="text" fieldname="motor_chasis" maxlength="50"/>
             </column>
-            <column name="numero_bastidor" title="Nº.bastidor" numcolumns="3" order="140">
+
+
+            <column name="numero_bastidor" title="Nº.bastidor" numcolumns="4" order="140">
                 <widget type="text" fieldname="numero_bastidor" maxlength="50"/>
             </column>
-            <column name="carroceria" title="Carroceria" numcolumns="3" order="150">
+            
+            <column name="carroceria" title="Carroceria" numcolumns="4" order="150">
                 <widget type="text" fieldname="carroceria" maxlength="50"/>
             </column>
-            <column name="numero_obra" title="Nº.obra" numcolumns="3" order="160">
+            <column name="numero_obra" title="Nº.obra" numcolumns="4" order="160">
                 <widget type="text" fieldname="numero_obra" maxlength="50"/>
             </column>
             
@@ -72,12 +74,12 @@
 
         <group name="VehiculoNuestroExterno" numcolumns="12" icon="fas fa-bus-alt" title="Vehículo nuestro o externo">
             <column name="company" numcolumns="6" order="100">
-                <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa" readonly="dinamic">
+                <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa">
                     <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto" />
                 </widget>
             </column>
-            <column name="colaborador" numcolumns="6" order="110">
-                <widget type="select" fieldname="idcollaborator" icon="fas fa-business-time" onclick="EditCollaborator" readonly="dinamic">
+            <column name="Colaborador" numcolumns="6" order="110">
+                <widget type="select" fieldname="idcollaborator" icon="fas fa-business-time" onclick="EditCollaborator">
                     <values source="collaborators" fieldcode="idcollaborator" fieldtitle="codproveedor" />
                 </widget>
             </column>
