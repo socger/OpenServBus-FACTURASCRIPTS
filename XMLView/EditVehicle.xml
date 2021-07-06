@@ -84,6 +84,15 @@
                 </widget>
             </column>
         </group>
+
+
+        <group name="Combustible" numcolumns="12" icon="fas fa-gas-pump" title="Combustible">
+            <column name="combustible"  title="Tipo de combustible" numcolumns="6" order="100">
+                <widget type="select" fieldname="idfuel_type" icon="fas fa-gas-pump" onclick="EditFuel_type">
+                    <values source="fuel_types" fieldcode="idfuel_type" fieldtitle="nombre" />
+                </widget>
+            </column>
+        </group>
         
 
         <group name="Otros datos" numcolumns="12" icon="fas fa-truck-loading" title="Otos datos de interés">

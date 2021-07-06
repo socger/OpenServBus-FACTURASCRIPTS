@@ -36,6 +36,7 @@ class Vehicle extends Base\ModelClass {
     public $idcollaborator;
     public $idgarage;
     public $observaciones;
+    public $idfuel_type;
     
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {

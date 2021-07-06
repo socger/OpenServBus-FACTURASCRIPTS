@@ -17,7 +17,7 @@ class EditDocumentation_type extends EditController {
         
         $pagedata['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Empleados - Tipo Documentación';
+        $pageData['title'] = 'Tipo Documentación';
         
         $pageData['icon'] = 'far fa-address-card';
 

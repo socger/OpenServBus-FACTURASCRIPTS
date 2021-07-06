@@ -108,6 +108,11 @@
         <type>text</type>
     </column>
 
+    <column>
+        <name>idfuel_type</name>
+        <type>integer</type>
+    </column>
+
     <constraint>
         <name>vehicles_pkey</name>
         <type>PRIMARY KEY (idvehicle)</type>
