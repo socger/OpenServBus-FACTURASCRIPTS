@@ -138,10 +138,12 @@ class Employee extends Base\ModelClass {
             return false;
         }
         
-        // Nos rellena la empresa (si no se ha elegido) con la empresa por defecto
-        if (empty($this->idempresa)) {
-            $this->idempresa = $this->toolBox()->appSettings()->get('default', 'idempresa');
+        /* Quitamos esta parte porque si el usuario rellenaba idControllator y idempresa estaba vacío, lo rellenaba automáticamente con la empresa por defecto
+            // Nos rellena la empresa (si no se ha elegido) con la empresa por defecto
+            if (empty($this->idempresa)) {
+                $this->idempresa = $this->toolBox()->appSettings()->get('default', 'idempresa');
         }
+        */
 
         $utils = $this->toolBox()->utils();
 

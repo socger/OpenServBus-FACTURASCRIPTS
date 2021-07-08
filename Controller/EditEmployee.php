@@ -32,6 +32,18 @@ class EditEmployee extends EditController {
             case 'EditEmployee': 
                 parent::loadData($viewName, $view);
                 
+                // Rellenamos el widget de tipo select para la empresa colaboradora
+                $sql = ' SELECT COLLABORATORS.IDCOLLABORATOR AS value '
+                     .      ' , PROVEEDORES.NOMBRE AS title '
+                     . ' FROM COLLABORATORS '
+                     . ' LEFT JOIN PROVEEDORES ON (PROVEEDORES.CODPROVEEDOR = COLLABORATORS.CODPROVEEDOR) ';
+
+                $data = $this->dataBase->select($sql);
+                $columnToModify = $this->views[$viewName]->columnForName('Colaborador');
+                if($columnToModify) {
+                    $columnToModify->widget->setValuesFromArray($data);
+                }
+                
                 // Guardamos que usuario y cuando pulsará guardar
                 $this->views[$viewName]->model->user_nick = $this->user->nick;
 
