@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view>
+    <columns>
+        <column name="Id" display="none" order="100">
+            <widget type="text" fieldname="iddriver" />
+        </column>
+        <column name="Conductor" order="110" title="Empleado/Conductor">
+            <widget type="select" fieldname="idemployee">
+                <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
+            </widget>
+        </column>
+        <column name="Activo" display="center" order="150">
+            <widget type="checkbox" fieldname="activo"/>
+        </column>
+        <column name="fechaalta" title="Alta" display="right" order="160">
+            <widget type="datetime" fieldname="fechaalta"/>
+        </column>
+    </columns>
+    
+    <rows>
+        <row type="status">
+            <option color="success" fieldname="activo">1</option>
+            <option color="warning" fieldname="activo">0</option>
+        </row>
+    </rows>    
+</view>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view>
+    <columns>
+
+        <group name="Invisibles" numcolumns="12">
+            <column name="user_fecha" display="none" numcolumns="3" order="110">
+                <widget type="date" fieldname="user_fecha" readonly="true"/>
+            </column>
+            <column name="user_nick" display="none" order="120">
+                <widget type="text" fieldname="user_nick" readonly="true"/>
+            </column>
+        </group>
+
+
+        <group name="Datos" numcolumns="12">
+            <column name="Id" title="Código" numcolumns="3" order="100">
+                <widget type="text" fieldname="iddriver" readonly="true"/>
+            </column>
+            <column name="Empleado" titleurl="ListEmployee" numcolumns="9" order="110">
+                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee" readonly="dinamic" required="true">
+                    <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
+                </widget>
+            </column>
+            
+            <column name="observations" numcolumns="12" order="120">
+                <widget type="textarea" fieldname="observaciones" />
+            </column>
+        </group>
+
+                        
+        <group name="Estado" numcolumns="12" icon="fas fa-cog" title="Estado del registro">
+            <column name="Activo" numcolums="12" order="100">
+                <widget type="checkbox" fieldname="activo"/>
+            </column>
+        </group>
+        
+            
+        <group name="Estado_2" numcolumns="12">
+            <column name="fechaalta" title="Alta el" numcolumns="3" order="110">
+                <widget type="datetime" fieldname="fechaalta" readonly="true"/>
+            </column>
+            <column name="Creado por" numcolumns="9" order="120">
+                <widget type="text" icon="fas fa-user-circle" fieldname="useralta" readonly="true"/>
+            </column>
+
+
+            <column name="fechamodificacion" title="Modificado el" numcolumns="3" order="130">
+                <widget type="datetime" fieldname="fechamodificacion" readonly="true"/>
+            </column>
+            <column name="Modificado por" numcolumns="9" order="140">
+                <widget type="text" icon="fas fa-user-circle" fieldname="usermodificacion" readonly="true"/>
+            </column>
+            
+            
+            <column name="fechabaja" title="Baja el" numcolumns="3" order="150">
+                <widget type="datetime" fieldname="fechabaja" readonly="true"/>
+            </column>
+            <column name="Borrado por" numcolumns="9" order="160">
+                <widget type="text" icon="fas fa-user-circle" fieldname="userbaja" readonly="true"/>
+            </column>
+        </group>
+             
+    </columns>
+</view>

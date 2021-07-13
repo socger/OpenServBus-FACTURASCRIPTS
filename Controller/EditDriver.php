@@ -4,10 +4,10 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
-class EditEmployee extends EditController {
+class EditDriver extends EditController {
     
     public function getModelClassName() {
-        return 'Employee';
+        return 'Driver';
     }
     
     // Para presentar la pantalla del controlador
@@ -17,9 +17,9 @@ class EditEmployee extends EditController {
         
         $pagedata['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Empleado';
+        $pageData['title'] = 'Conductor';
         
-        $pageData['icon'] = 'far fa-id-card';
+        $pageData['icon'] = 'fas fa-user-astronaut';
 
         return $pageData;
     }
@@ -29,21 +29,8 @@ class EditEmployee extends EditController {
         switch ($viewName) {
 
             // Pestaña con el mismo nombre que este controlador EditXxxxx
-            case 'EditEmployee': 
+            case 'EditDriver': 
                 parent::loadData($viewName, $view);
-                
-                // Rellenamos el widget de tipo select para la empresa colaboradora
-                $sql = ' SELECT COLLABORATORS.IDCOLLABORATOR AS value '
-                     .      ' , PROVEEDORES.NOMBRE AS title '
-                     . ' FROM COLLABORATORS '
-                     . ' LEFT JOIN PROVEEDORES ON (PROVEEDORES.CODPROVEEDOR = COLLABORATORS.CODPROVEEDOR) ';
-
-                $data = $this->dataBase->select($sql);
-                $columnToModify = $this->views[$viewName]->columnForName('Colaborador');
-                if($columnToModify) {
-                 // $columnToModify->widget->setValuesFromArray($data);
-                    $columnToModify->widget->setValuesFromArray($data, false, true); // El 3er parámetro es para añadir un elemento vacío, mirar documentacion en https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/Widget/WidgetSelect.php#L137
-                }
                 
                 // Guardamos que usuario y cuando pulsará guardar
                 $this->views[$viewName]->model->user_nick = $this->user->nick;

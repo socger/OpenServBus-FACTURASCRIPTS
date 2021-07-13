@@ -39,9 +39,17 @@ class EditVehicle extends EditController {
                      . ' LEFT JOIN PROVEEDORES ON (PROVEEDORES.CODPROVEEDOR = COLLABORATORS.CODPROVEEDOR) ';
 
                 $data = $this->dataBase->select($sql);
+                
+             // $data[] = ['value' => null, 'title' => null];
+             // $data[] = ['value' => '24', 'title' => 'jeromin'];
+                
+             // array_unshift($data, ['value' => null, '------' => null]); ... Esto no guardaba una línea nula
+             // array_unshift($data, ['value' => '0', 'title' => '------']); ... Esto me dejaba una opción que aparentemente parecía nula, pero luego en function test del modelo tenía que comprobar si devolvía 0 para ponerlo = null (idCollaborator)
+                
                 $columnToModify = $this->views[$viewName]->columnForName('Colaborador');
                 if($columnToModify) {
-                    $columnToModify->widget->setValuesFromArray($data);
+                 // $columnToModify->widget->setValuesFromArray($data);
+                    $columnToModify->widget->setValuesFromArray($data, false, true); // El 3er parámetro es para añadir un elemento vacío, mirar documentacion en https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/Widget/WidgetSelect.php#L137
                 }
                 
                 // Guardamos que usuario y cuando pulsará guardar

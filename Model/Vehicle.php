@@ -106,6 +106,18 @@ class Vehicle extends Base\ModelClass {
     
     public function test()
     {
+        /* Lo quitamos de momento para probar lo último comentado por neorazorx
+           Mirar como rellenamos en editVehicle.php el controlador Colaborador
+         
+        // Desde que rellenamos los valores del widget Colaborador, he tenido que poner un valor 0
+        // Por lo tanto no me viene como empty, así que lo pongo a pelo yo si es = 0
+        if ( $this->idcollaborator == 0) 
+        {
+            $this->toolBox()->i18nLog()->info('Ponemos a null al colaborador');
+            $this->idcollaborator = null;
+        }
+        */
+      
         // Comprobamos que el código de empleado si se ha introducido correctamente
         if (!empty($this->cod_vehicle) && 1 !== \preg_match('/^[A-Z0-9_\+\.\-]{1,10}$/i', $this->cod_vehicle)) {
             $this->toolBox()->i18nLog()->error(
