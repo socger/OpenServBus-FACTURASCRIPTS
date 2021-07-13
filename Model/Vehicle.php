@@ -37,12 +37,15 @@ class Vehicle extends Base\ModelClass {
     public $idgarage;
     public $observaciones;
     public $idfuel_type;
+    public $km_actuales;
+    public $fecha_km_actuales;
     
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {
         parent::clear();
         
         $this->activo = true; // Por defecto estará activo
+        $this->km_actuales = 0;
     }
     
     // función que devuelve el id principal

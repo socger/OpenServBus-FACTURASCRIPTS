@@ -112,6 +112,15 @@
         <name>idfuel_type</name>
         <type>integer</type>
     </column>
+    <column>
+        <name>km_actuales</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>fecha_km_actuales</name>
+        <type>timestamp</type>
+    </column>
+
 
     <constraint>
         <name>vehicles_pkey</name>
