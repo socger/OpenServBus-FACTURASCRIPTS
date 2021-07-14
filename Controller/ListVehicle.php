@@ -65,9 +65,9 @@ class ListVehicle extends ListController {
         $this->addFilterAutocomplete($viewName, 'xidfuel_type', 'T.Combustible', 'idfuel_type', 'fuel_types', 'idfuel_type', 'nombre');
 
         // $this->addFilterAutocomplete($viewName, 'xIdCollaborator', 'Colaborador', 'idcollaborator', 'collaborators', 'idcollaborator', 'codproveedor');
-        $this->addFilterAutocomplete($viewName, 'xvIdCollaborator', 'Colaborador', 'idcollaborator', 'vcollaborators', 'idcollaborator', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdCollaborator', 'Colaborador', 'idcollaborator', 'collaborators', 'idcollaborator', 'nombre');
         
-        $this->addFilterAutocomplete($viewName, 'xvIdvehicle_type', 'Tipo vehículo', 'idvehicle_type', 'vehicle_types', 'idvehicle_type', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdvehicle_type', 'Tipo vehículo', 'idvehicle_type', 'vehicle_types', 'idvehicle_type', 'nombre');
         
         // Filtro periodo de fechas
         // addFilterPeriod($viewName, $key, $label, $field)

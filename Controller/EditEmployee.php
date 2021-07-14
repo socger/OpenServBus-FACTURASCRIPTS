@@ -32,18 +32,20 @@ class EditEmployee extends EditController {
             case 'EditEmployee': 
                 parent::loadData($viewName, $view);
                 
-                // Rellenamos el widget de tipo select para la empresa colaboradora
-                $sql = ' SELECT COLLABORATORS.IDCOLLABORATOR AS value '
-                     .      ' , PROVEEDORES.NOMBRE AS title '
-                     . ' FROM COLLABORATORS '
-                     . ' LEFT JOIN PROVEEDORES ON (PROVEEDORES.CODPROVEEDOR = COLLABORATORS.CODPROVEEDOR) ';
+                /* No hace falta porque ya tenemos el campo nombre físicamente en tabla collaborators
+                    // Rellenamos el widget de tipo select para la empresa colaboradora
+                    $sql = ' SELECT COLLABORATORS.IDCOLLABORATOR AS value '
+                         .      ' , PROVEEDORES.NOMBRE AS title '
+                         . ' FROM COLLABORATORS '
+                         . ' LEFT JOIN PROVEEDORES ON (PROVEEDORES.CODPROVEEDOR = COLLABORATORS.CODPROVEEDOR) ';
 
-                $data = $this->dataBase->select($sql);
-                $columnToModify = $this->views[$viewName]->columnForName('Colaborador');
-                if($columnToModify) {
-                 // $columnToModify->widget->setValuesFromArray($data);
-                    $columnToModify->widget->setValuesFromArray($data, false, true); // El 3er parámetro es para añadir un elemento vacío, mirar documentacion en https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/Widget/WidgetSelect.php#L137
-                }
+                    $data = $this->dataBase->select($sql);
+                    $columnToModify = $this->views[$viewName]->columnForName('Colaborador');
+                    if($columnToModify) {
+                     // $columnToModify->widget->setValuesFromArray($data);
+                        $columnToModify->widget->setValuesFromArray($data, false, true); // El 3er parámetro es para añadir un elemento vacío, mirar documentacion en https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/Widget/WidgetSelect.php#L137
+                    }
+                */
                 
                 // Guardamos que usuario y cuando pulsará guardar
                 $this->views[$viewName]->model->user_nick = $this->user->nick;

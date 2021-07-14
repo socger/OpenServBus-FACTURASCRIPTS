@@ -60,7 +60,7 @@ class ListEmployee extends ListController {
             // $fieldcode ... es el campo interno que quiero consultar
             // $fieldtitle ... es el campo a mostar al usuario
         $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xvIdCollaborator', 'Colaborador', 'idcollaborator', 'vcollaborators', 'idcollaborator', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdCollaborator', 'Colaborador', 'idcollaborator', 'collaborators', 'idcollaborator', 'nombre');
         
         // Filtro periodo de fechas
         // addFilterPeriod($viewName, $key, $label, $field)

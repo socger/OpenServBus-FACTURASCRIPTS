@@ -80,7 +80,7 @@
             </column>
             <column name="Colaborador" numcolumns="6" order="110">
                 <widget type="select" fieldname="idcollaborator" icon="fas fa-business-time" onclick="EditCollaborator">
-                    <values source="collaborators" fieldcode="idcollaborator" fieldtitle="codproveedor" />
+                    <values source="collaborators" fieldcode="idcollaborator" fieldtitle="nombre" />
                 </widget>
             </column>
         </group>

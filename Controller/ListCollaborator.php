@@ -29,7 +29,7 @@ class ListCollaborator extends ListController {
         $this->addView($viewName, 'Collaborator');
         
         // Opciones de búsqueda rápida
-        $this->addSearchFields($viewName, ['codproveedor']); // Las búsqueda la hará por el campo codproveedor
+        $this->addSearchFields($viewName, ['codproveedor', 'nombre']); // Las búsqueda la hará por el campo codproveedor
         
         // Tipos de Ordenación
             // Primer parámetro es la pestaña
