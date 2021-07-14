@@ -86,27 +86,30 @@
         </group>
 
 
-        <group name="Datos técnicos" numcolumns="12" icon="fas fa-gas-pump" title="Combustible">
-            <column name="combustible"  title="Tipo de combustible" numcolumns="4" order="100">
+        <group name="Otros datos" numcolumns="12" icon="fas fa-truck-loading" title="Otos datos de interés">
+            <column name="combustible"  title="Tipo de combustible" numcolumns="5" order="100">
                 <widget type="select" fieldname="idfuel_type" icon="fas fa-gas-pump" onclick="EditFuel_type">
                     <values source="fuel_types" fieldcode="idfuel_type" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="Km_Actuales" title="Km.actuales" numcolumns="2" order="110">
+            <column name="Tipo_Vehiculo"  title="Tipo de vehículo" numcolumns="4" order="110">
+                <widget type="select" fieldname="idvehicle_type" icon="fas fa-tractor" onclick="EditVehicle_type">
+                    <values source="vehicle_types" fieldcode="idvehicle_type" fieldtitle="nombre" />
+                </widget>
+            </column>
+            <column name="Km_Actuales" title="Km.actuales" numcolumns="1" order="120">
                 <widget type="text" fieldname="km_actuales" maxlength="10" readonly="true" />
             </column>
             
-            <column name="Fecha_Km_Actuales" title="Fecha Km.actuales" numcolumns="3" order="120">
+            <column name="Fecha_Km_Actuales" title="Fecha Km.actuales" numcolumns="2" order="130">
                 <widget type="datetime" fieldname="fecha_km_actuales" readonly="true"/>
             </column>
-        </group>
         
 
-        <group name="Otros datos" numcolumns="12" icon="fas fa-truck-loading" title="Otos datos de interés">
-            <column name="configuraciones_especiales" numcolumns="6" title="Configuraciones especiales" order="100">
+            <column name="configuraciones_especiales" numcolumns="6" title="Configuraciones especiales" order="140">
                 <widget type="textarea" fieldname="configuraciones_especiales" />
             </column>
-            <column name="Observaciones" numcolumns="6" title="Observaciones" order="110">
+            <column name="Observaciones" numcolumns="6" title="Observaciones" order="150">
                 <widget type="textarea" fieldname="observaciones" />
             </column>
         </group>

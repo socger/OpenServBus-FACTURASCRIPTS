@@ -39,6 +39,7 @@ class Vehicle extends Base\ModelClass {
     public $idfuel_type;
     public $km_actuales;
     public $fecha_km_actuales;
+    public $idvehicle_type;
     
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {

@@ -120,7 +120,10 @@
         <name>fecha_km_actuales</name>
         <type>timestamp</type>
     </column>
-
+    <column>
+        <name>idvehicle_type</name>
+        <type>integer</type>
+    </column>
 
     <constraint>
         <name>vehicles_pkey</name>
