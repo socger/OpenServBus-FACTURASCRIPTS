@@ -2,6 +2,8 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
+// use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
+// use FacturaScripts\Dinamic\Model\Proveedor;
 use FacturaScripts\Core\Model\Base;
 
 class Collaborator extends Base\ModelClass {
@@ -21,6 +23,7 @@ class Collaborator extends Base\ModelClass {
 
     public $codproveedor;
     public $observaciones;
+    public $nombre;
     
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {
@@ -89,6 +92,32 @@ class Collaborator extends Base\ModelClass {
 
         $this->codproveedor = $utils->noHtml($this->codproveedor);
         $this->observaciones = $utils->noHtml($this->observaciones);
+
+        // Rellenamos el campo nombre de este modelo pues está ligado con campo nombre de tabla proveedores
+        if (empty($this->nombre)) {
+            if (!empty($this->codproveedor)) {
+                /* Esta podría ser una manera, pero implica hacer un uses al principio contra el modelo proveedor
+                 
+                $proveedorModel = new Proveedor(); // Tengo que poner en el uses la clase modelo Proveedor
+                $where = [new DataBaseWhere('codproveedor', $this->codproveedor)]; // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/databasewhere-478
+                $prov_Buscar = $proveedorModel->all($where);
+
+                foreach ($prov_Buscar as $prov) {
+                   $this->nombre = $prov->nombre; 
+                }
+                */
+
+                $sql = ' SELECT PROVEEDORES.NOMBRE AS title '
+                     . ' FROM PROVEEDORES '
+                     //. ' WHERE (PROVEEDORES.CODPROVEEDOR = ' . $this->codproveedor
+                     ;
+                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+                foreach ($registros as $fila) {
+                    $this->nombre = $fila['title'];
+                }
+            }
+        }
 
         return parent::test();
     }

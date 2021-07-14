@@ -4,22 +4,19 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Table/Vehicle_types.xml</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/EditCollaborator.php</file>
             <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Table/Vehicles.xml</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/EditFuel_type.php</file>
             <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/XMLView/ListVehicle_type.xml</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Model/Fuel_type.php</file>
             <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/EditVehicle_type.php</file>
             <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/EditVehicle.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Model/Department.php</file>
             <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Model/Vehicle.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Table/Fuel_types.xml</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Table/Collaborators.xml</file>
             <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListVehicle_type.php</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListVehicle.php</file>
             <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Model/Vehicle_type.php</file>
             <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/XMLView/EditVehicle_type.xml</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListFuel_type.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/XMLView/ListFuel_type.xml</file>
             <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/XMLView/EditVehicle.xml</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/XMLView/EditFuel_type.xml</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Model/Collaborator.php</file>
         </group>
     </open-files>
 </project-private>
