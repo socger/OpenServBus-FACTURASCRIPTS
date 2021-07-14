@@ -164,7 +164,11 @@ class Employee extends Base\ModelClass {
         $this->web = $utils->noHtml($this->web);
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->num_seg_social = $utils->noHtml($this->num_seg_social);
-
+        
+        // Completamos el campo nombre de la tabla DRIVERS
+        $sql = "UPDATE drivers SET drivers.nombre = '" . $this->nombre . "' WHERE drivers.idemployee = " . $this->idemployee . ";";
+        self::$dataBase->exec($sql);
+        
         return parent::test();
     }
 

@@ -5,9 +5,7 @@
             <widget type="text" fieldname="iddriver" />
         </column>
         <column name="Conductor" order="110" title="Empleado/Conductor">
-            <widget type="select" fieldname="idemployee">
-                <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
-            </widget>
+            <widget type="text" fieldname="nombre" />
         </column>
         <column name="Activo" display="center" order="150">
             <widget type="checkbox" fieldname="activo"/>

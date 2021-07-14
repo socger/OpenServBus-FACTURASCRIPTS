@@ -118,6 +118,11 @@
         <type>character varying(30)</type>
         <null>NO</null>
     </column>
+    <column>
+        <name>driver_yn</name>
+        <type>boolean</type>
+        <default>false</default>
+    </column>
 
 
     <constraint>
