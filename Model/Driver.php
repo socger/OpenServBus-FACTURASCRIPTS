@@ -105,7 +105,7 @@ class Driver extends Base\ModelClass {
                 $this->nombre = $fila['title'];
             }
         }
-
+        
         // Completamos el campo driver_yn de la tabla employee
         $sql = "UPDATE employees SET employees.driver_yn = 1 WHERE employees.idemployee = " . $this->idemployee . ";";
         self::$dataBase->exec($sql);

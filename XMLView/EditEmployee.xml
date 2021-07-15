@@ -22,8 +22,11 @@
             <column name="Codigo" description="Es opcional" numcolumns="2" order="100">
                 <widget type="text" fieldname="cod_employee" icon="fas fa-hashtag" maxlength="6" readonly="dinamic" />
             </column>
-            <column name="Nombre" numcolumns="10" order="110">
+            <column name="Nombre" numcolumns="8" order="110">
                 <widget type="text" fieldname="nombre" maxlength="100" required="true"/>
+            </column>
+            <column name="Conductor" description="No modificarlo, se actualiza sólo"  numcolums="2" order="120">
+                <widget type="checkbox" fieldname="driver_yn" readonly="true"/>
             </column>
 
 

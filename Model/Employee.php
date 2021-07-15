@@ -41,6 +41,7 @@ class Employee extends Base\ModelClass {
 
     public $fecha_nacimiento;
     public $num_seg_social;
+    public $driver_yn;
     
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {
@@ -173,6 +174,22 @@ class Employee extends Base\ModelClass {
         $sql = "UPDATE employees_attendance_management_yn SET employees_attendance_management_yn.nombre = '" . $this->nombre . "' WHERE employees_attendance_management_yn.idemployee = " . $this->idemployee . ";";
         self::$dataBase->exec($sql);
         
+        // Comprobar si está creado como conductor
+        // Esto lo hacemos porque en EditEmployee.xml hemos creado el widget checkbox para driver_yn como readonly, pero permite modificarlo
+        $sql = ' SELECT COUNT(*) AS cuantos '
+             . ' FROM drivers '
+             . ' WHERE drivers.idemployee = ' . $this->idemployee
+             ;
+
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $this->driver_yn = 0;
+            if ($fila['cuantos'] > 0) {
+                $this->driver_yn = 1;
+            }
+        }
+
         return parent::test();
     }
 
