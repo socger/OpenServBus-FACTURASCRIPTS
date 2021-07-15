@@ -38,7 +38,8 @@ class ListCollaborator extends ListController {
             // Cuarto parámetro, si se rellena, le está diciendo cual es el order by por defecto, y además las opciones son
                // 1 Orden ascendente
                // 2 Orden descendente
-        $this->addOrderBy($viewName, ['codproveedor'], 'Cod.Proveedor', 2);
+        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
+        $this->addOrderBy($viewName, ['codproveedor'], 'Cod.Proveedor');
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
         
         // Filtros

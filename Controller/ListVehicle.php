@@ -29,7 +29,7 @@ class ListVehicle extends ListController {
         $this->addView($viewName, 'Vehicle');
         
         // Opciones de búsqueda rápida
-        $this->addSearchFields($viewName, ['nombre','matricula']); // Las búsqueda la hará por el campo nombre y por el campo direccion
+        $this->addSearchFields($viewName, ['cod_vehicle', 'nombre','matricula']); // Las búsqueda la hará por el campo nombre y por el campo direccion
         
         // Tipos de Ordenación
             // Primer parámetro es la pestaña
@@ -38,7 +38,8 @@ class ListVehicle extends ListController {
             // Cuarto parámetro, si se rellena, le está diciendo cual es el order by por defecto, y además las opciones son
                // 1 Orden ascendente
                // 2 Orden descendente
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 2);
+        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
+        $this->addOrderBy($viewName, ['cod_vehicle'], 'Código');
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
         
         // Filtros

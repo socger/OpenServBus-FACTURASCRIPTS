@@ -56,5 +56,9 @@
         <name>ca_collaborator_proveedores</name>
         <type>FOREIGN KEY (codproveedor) REFERENCES proveedores (codproveedor) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
+    <constraint>
+        <name>uniq_codprov_collaborators</name>
+        <type>UNIQUE (codproveedor)</type>
+    </constraint>
 </table>
 
