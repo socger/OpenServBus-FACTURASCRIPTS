@@ -169,6 +169,10 @@ class Employee extends Base\ModelClass {
         $sql = "UPDATE drivers SET drivers.nombre = '" . $this->nombre . "' WHERE drivers.idemployee = " . $this->idemployee . ";";
         self::$dataBase->exec($sql);
         
+        // Completamos el campo nombre de la tabla DRIVERS
+        $sql = "UPDATE employees_attendance_management_yn SET employees_attendance_management_yn.nombre = '" . $this->nombre . "' WHERE employees_attendance_management_yn.idemployee = " . $this->idemployee . ";";
+        self::$dataBase->exec($sql);
+        
         return parent::test();
     }
 

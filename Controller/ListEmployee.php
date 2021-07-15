@@ -48,6 +48,7 @@ class ListEmployee extends ListController {
             // $label ... la etiqueta a mostrar al usuario
             // $field ... el campo del modelo sobre el que vamos a comprobar
         $this->addFilterCheckbox($viewName, 'activo', 'Activo', 'activo');
+        $this->addFilterCheckbox($viewName, 'conductor', 'Conductores sólo', 'driver_yn');
         
         // Filtro autoComplete ... addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode, $fieldtitle)
         // Aunque lo vamos a hacer sobre la tabla empresa que normalmente tiene pocos registros
