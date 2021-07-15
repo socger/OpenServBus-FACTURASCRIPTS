@@ -89,6 +89,21 @@ class Employee_attendance_management_yn extends Base\ModelClass {
 
         $this->observaciones = $utils->noHtml($this->observaciones);
 
+        // Rellenamos el campo nombre de este modelo pues está ligado con campo nombre de tabla empleados
+        // no hace falta actualizarlo siempre. porque la tabla employees es de este mismo pluggin y desde el test de employee.php actualizo el campo nombre de tabla dirvers
+        if (!empty($this->idemployee)) {
+            $sql = ' SELECT EMPLOYEES.NOMBRE AS title '
+                 . ' FROM EMPLOYEES '
+                 . ' WHERE EMPLOYEES.IDEMPLOYEE = ' . $this->idemployee
+                 ;
+
+            $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+            foreach ($registros as $fila) {
+                $this->nombre = $fila['title'];
+            }
+        }
+
         return parent::test();
     }
 

@@ -29,7 +29,7 @@ class ListEmployee_attendance_management_yn extends ListController {
         $this->addView($viewName, 'Employee_attendance_management_yn');
         
         // Opciones de búsqueda rápida
-        $this->addSearchFields($viewName, ['idemployee']); // Las búsqueda la hará por el campo idemployee
+        $this->addSearchFields($viewName, ['idemployee', 'nombre']); // Las búsqueda la hará por el campo idemployee y nombre
         
         // Tipos de Ordenación
             // Primer parámetro es la pestaña
@@ -38,7 +38,7 @@ class ListEmployee_attendance_management_yn extends ListController {
             // Cuarto parámetro, si se rellena, le está diciendo cual es el order by por defecto, y además las opciones son
                // 1 Orden ascendente
                // 2 Orden descendente
-        $this->addOrderBy($viewName, ['idemployee'], 'Cod.Empleado', 2);
+        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
         
         // Filtros

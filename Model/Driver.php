@@ -91,7 +91,6 @@ class Driver extends Base\ModelClass {
 
         $this->observaciones = $utils->noHtml($this->observaciones);
 
-
         // Rellenamos el campo nombre de este modelo pues está ligado con campo nombre de tabla empleados
         // no hace falta actualizarlo siempre. porque la tabla employees es de este mismo pluggin y desde el test de employee.php actualizo el campo nombre de tabla dirvers
         if (!empty($this->idemployee)) {

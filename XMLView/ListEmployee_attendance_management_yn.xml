@@ -4,10 +4,8 @@
         <column name="Id" display="none" order="100">
             <widget type="text" fieldname="idemployee_attendance_management_yn" />
         </column>
-        <column name="Empleado" order="110">
-            <widget type="select" fieldname="idemployee">
-                <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
-            </widget>
+        <column name="Empleado" order="110" title="Empleado">
+            <widget type="text" fieldname="nombre" />
         </column>
         <column name="Activo" display="center" order="150">
             <widget type="checkbox" fieldname="activo"/>

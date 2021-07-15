@@ -40,6 +40,11 @@
         <null>NO</null>
     </column>
     <column>
+        <name>nombre</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
+    <column>
         <name>observaciones</name>
         <type>text</type>
     </column>
@@ -50,6 +55,10 @@
     <constraint>
         <name>ca_employee_attendance_management_yn_employees</name>
         <type>FOREIGN KEY (idemployee) REFERENCES employees (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>uniq_idempatt_employees</name>
+        <type>UNIQUE (idemployee)</type>
     </constraint>
 </table>
 

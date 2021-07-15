@@ -29,7 +29,7 @@ class ListDriver extends ListController {
         $this->addView($viewName, 'Driver');
         
         // Opciones de búsqueda rápida
-        $this->addSearchFields($viewName, ['idemployee', 'nombre']); // Las búsqueda la hará por el campo codproveedor
+        $this->addSearchFields($viewName, ['idemployee', 'nombre']); // Las búsqueda la hará por el campo idemployee y nombre
         
         // Tipos de Ordenación
             // Primer parámetro es la pestaña
