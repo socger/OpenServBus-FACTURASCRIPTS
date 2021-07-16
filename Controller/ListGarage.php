@@ -46,7 +46,7 @@ class ListGarage extends ListController {
             // $key ... es el nombre que le ponemos al filtro
             // $label ... la etiqueta a mostrar al usuario
             // $field ... el campo del modelo sobre el que vamos a comprobar
-        $this->addFilterCheckbox($viewName, 'activo', 'Activo', 'activo');
+        $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
         
 //        // Filtro select por el campo useralta
 //            // Primero necesitamos los valores que quiero mostrar en el select

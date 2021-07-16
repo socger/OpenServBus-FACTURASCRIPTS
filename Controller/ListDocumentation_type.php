@@ -47,7 +47,7 @@ class ListDocumentation_type extends ListController {
             // $key ... es el nombre que le ponemos al filtro
             // $label ... la etiqueta a mostrar al usuario
             // $field ... el campo del modelo sobre el que vamos a comprobar
-        $this->addFilterCheckbox($viewName, 'activo', 'Activo', 'activo');
+        $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
         $this->addFilterCheckbox($viewName, 'fechacaducidad_obligarla', 'Obligar-F.Caducidad', 'fechacaducidad_obligarla');
         
         // Filtro periodo de fechas

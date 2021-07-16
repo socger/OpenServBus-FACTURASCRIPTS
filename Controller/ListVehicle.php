@@ -48,8 +48,8 @@ class ListVehicle extends ListController {
             // $key ... es el nombre que le ponemos al filtro
             // $label ... la etiqueta a mostrar al usuario
             // $field ... el campo del modelo sobre el que vamos a comprobar
-        $this->addFilterCheckbox($viewName, 'activo', 'Activo', 'activo');
-        $this->addFilterCheckbox($viewName, 'collaborator', 'Colaboradores sólo', 'idcollaborator', 'IS NOT', null);
+        $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
+        $this->addFilterCheckbox($viewName, 'collaborator', 'Ver sólo colaboradores', 'idcollaborator', 'IS NOT', null);
         
         // Filtro autoComplete ... addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode, $fieldtitle)
         // Aunque lo vamos a hacer sobre la tabla empresa que normalmente tiene pocos registros
