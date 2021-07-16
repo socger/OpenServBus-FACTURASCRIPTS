@@ -3,7 +3,7 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
-class ListFuel_type extends ListController {
+class ListEmployee_contract_type extends ListController {
     
     // Para presentar la pantalla del controlador
     // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
@@ -11,22 +11,22 @@ class ListFuel_type extends ListController {
         $pageData = parent::getPageData();
         
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Archivos';
-        $pageData['title'] = 'Combustible - tipos';
+        $pageData['submenu'] = 'Empleados';
+        $pageData['title'] = 'Contratos - tipos';
         
-        $pageData['icon'] = 'fas fa-gas-pump';
+        $pageData['icon'] = 'fas fa-file-signature';
 
 
         return $pageData;
     }
     
     protected function createViews() {
-        $this->createViewFuel_type();
+        $this->createViewEmployee_contract_type();
     }
     
-    protected function createViewFuel_type($viewName = 'ListFuel_type')
+    protected function createViewEmployee_contract_type($viewName = 'ListEmployee_contract_type')
     {
-        $this->addView($viewName, 'Fuel_type');
+        $this->addView($viewName, 'Employee_contract_type');
         
         // Opciones de búsqueda rápida
         $this->addSearchFields($viewName, ['nombre']); // Las búsqueda la hará por el campo nombre
