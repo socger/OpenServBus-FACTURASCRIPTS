@@ -41,6 +41,22 @@ class Driver extends Base\ModelClass {
         return 'drivers';
     }
     
+    protected function Actualizar_driverYN_en_employees($p_borrando)
+    {
+        // Completamos el campo driver_yn de la tabla employee
+        $valor = 0; // No será conductor el empleado
+        if ($this->activo == true) {
+          $valor = 1;  
+        }
+        
+        if ($p_borrando == 1){ // Se está borrando el registro
+          $valor = 0; // No será conductor el empleado 
+        }
+
+        $sql = "UPDATE employees SET employees.driver_yn = " . $valor . " WHERE employees.idemployee = " . $this->idemployee . ";";
+        self::$dataBase->exec($sql);
+    }
+    
     protected function comprobarSiActivo()
     {
         if ($this->activo == false) {
@@ -52,6 +68,14 @@ class Driver extends Base\ModelClass {
         }
     }
     
+    // Para realizar algo antes o después del borrado ... todo depende de que se ponga antes del parent o después
+    public function delete()
+    {
+        $this->Actualizar_driverYN_en_employees(1); // Se pasa valor 1, en parámetro, porque se está borrando el registro
+
+        return parent::delete();
+    }
+
     // Para realizar cambios en los datos antes de guardar por modificación
     protected function saveUpdate(array $values = [])
     {
@@ -106,9 +130,7 @@ class Driver extends Base\ModelClass {
             }
         }
         
-        // Completamos el campo driver_yn de la tabla employee
-        $sql = "UPDATE employees SET employees.driver_yn = 1 WHERE employees.idemployee = " . $this->idemployee . ";";
-        self::$dataBase->exec($sql);
+        $this->Actualizar_driverYN_en_employees(0); // Se pasa como parámetro 0 para decir que no se está borrando el empleado
         
         return parent::test();
     }
