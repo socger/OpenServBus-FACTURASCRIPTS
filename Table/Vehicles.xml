@@ -124,6 +124,10 @@
         <name>idvehicle_type</name>
         <type>integer</type>
     </column>
+    <column>
+        <name>iddriver_usual</name>
+        <type>integer</type>
+    </column>
 
     <constraint>
         <name>vehicles_pkey</name>

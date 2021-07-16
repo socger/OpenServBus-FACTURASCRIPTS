@@ -40,6 +40,7 @@ class Vehicle extends Base\ModelClass {
     public $km_actuales;
     public $fecha_km_actuales;
     public $idvehicle_type;
+    public $iddriver_usual;
     
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {

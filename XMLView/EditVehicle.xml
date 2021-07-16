@@ -87,22 +87,28 @@
 
 
         <group name="Otros datos" numcolumns="12" icon="fas fa-truck-loading" title="Otos datos de interés">
-            <column name="combustible"  title="Tipo de combustible" numcolumns="5" order="100">
+            <column name="Conductor_Habitual" titleurl="ListDriver" numcolumns="8" order="100">
+                <widget type="select" fieldname="iddriver_usual" icon="fas fa-user-astronaut" onclick="EditDriver">
+                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
+                </widget>
+            </column>
+            <column name="Km_Actuales" title="Km.actuales" numcolumns="2" order="110">
+                <widget type="text" fieldname="km_actuales" maxlength="10" readonly="true" />
+            </column>
+            <column name="Fecha_Km_Actuales" title=" Fecha Km.actuales" numcolumns="2" order="120">
+                <widget type="datetime" fieldname="fecha_km_actuales" readonly="true"/>
+            </column>
+
+                        
+            <column name="combustible"  title="Tipo de combustible" numcolumns="6" order="130">
                 <widget type="select" fieldname="idfuel_type" icon="fas fa-gas-pump" onclick="EditFuel_type">
                     <values source="fuel_types" fieldcode="idfuel_type" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="Tipo_Vehiculo"  title="Tipo de vehículo" numcolumns="4" order="110">
+            <column name="Tipo_Vehiculo"  title="Tipo de vehículo" numcolumns="6" order="140">
                 <widget type="select" fieldname="idvehicle_type" icon="fas fa-tractor" onclick="EditVehicle_type">
                     <values source="vehicle_types" fieldcode="idvehicle_type" fieldtitle="nombre" />
                 </widget>
-            </column>
-            <column name="Km_Actuales" title="Km.actuales" numcolumns="1" order="120">
-                <widget type="text" fieldname="km_actuales" maxlength="10" readonly="true" />
-            </column>
-            
-            <column name="Fecha_Km_Actuales" title="Fecha Km.actuales" numcolumns="2" order="130">
-                <widget type="datetime" fieldname="fecha_km_actuales" readonly="true"/>
             </column>
         
 
