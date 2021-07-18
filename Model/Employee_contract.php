@@ -46,18 +46,7 @@ class Employee_contract extends Base\ModelClass {
     public static function tableName(): string {
         return 'employee_contracts';
     }
-    
-    protected function comprobarSiActivo()
-    {
-        if ($this->activo == false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-        } else { // Por si se vuelve a poner Activo = true
-            $this->fechabaja = null;
-            $this->userbaja = null;
-        }
-    }
-    
+
     // Para realizar algo antes o después del borrado ... todo depende de que se ponga antes del parent o después
     public function delete()
     {
@@ -133,8 +122,29 @@ class Employee_contract extends Base\ModelClass {
                 $this->nombre = $fila['title'];
             }
         }
+        
+        if (!empty($this->ComprobarSiEsColaborador())) {
+            $this->toolBox()->i18nLog()->error('El empleado elegido es un colaborador, no se puede usar en un contrato.');
+            return false;
+        }
+
 
         return parent::test();
+    }
+
+
+    // ** ********************************** ** //
+    // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
+    // ** ********************************** ** //
+    protected function comprobarSiActivo()
+    {
+        if ($this->activo == false) {
+            $this->fechabaja = $this->fechamodificacion;
+            $this->userbaja = $this->usermodificacion;
+        } else { // Por si se vuelve a poner Activo = true
+            $this->fechabaja = null;
+            $this->userbaja = null;
+        }
     }
     
     protected function Actualizar_idempresa_en_employees()
@@ -156,5 +166,22 @@ class Employee_contract extends Base\ModelClass {
         self::$dataBase->exec($sql);
     }
     
+    protected function ComprobarSiEsColaborador()
+    {
+        // Comprobar si está creado como conductor
+        // Esto lo hacemos porque en EditEmployee.xml hemos creado el widget checkbox para driver_yn como readonly, pero permite modificarlo
+        $sql = ' SELECT employees.idcollaborator '
+             . ' FROM employees '
+             . ' WHERE employees.idemployee = ' . $this->idemployee
+             ;
+
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $aDevolver = $fila['idcollaborator'];
+        }
+        
+        return $aDevolver;
+    }
     
 }

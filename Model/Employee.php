@@ -207,5 +207,5 @@ class Employee extends Base\ModelClass {
         $sql = "UPDATE employee_contracts SET employee_contracts.nombre = '" . $this->nombre . "' WHERE employee_contracts.idemployee = " . $this->idemployee . ";";
         self::$dataBase->exec($sql);
     }
-
+    
 }
