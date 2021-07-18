@@ -38,18 +38,7 @@ class Employee_contract_type extends Base\ModelClass {
     public static function tableName(): string {
         return 'employee_contract_types';
     }
-    
-    protected function comprobarSiActivo()
-    {
-        if ($this->activo == false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-        } else { // Por si se vuelve a poner Activo = true
-            $this->fechabaja = null;
-            $this->userbaja = null;
-        }
-    }
-    
+
     // Para realizar cambios en los datos antes de guardar por modificación
     protected function saveUpdate(array $values = [])
     {
@@ -93,5 +82,19 @@ class Employee_contract_type extends Base\ModelClass {
         return parent::test();
     }
 
+
+    // ** ********************************** ** //
+    // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
+    // ** ********************************** ** //
+    protected function comprobarSiActivo()
+    {
+        if ($this->activo == false) {
+            $this->fechabaja = $this->fechamodificacion;
+            $this->userbaja = $this->usermodificacion;
+        } else { // Por si se vuelve a poner Activo = true
+            $this->fechabaja = null;
+            $this->userbaja = null;
+        }
+    }
     
 }

@@ -18,9 +18,9 @@
         
         
         <group name="Datos" numcolumns="12">
-            <column name="Tipo_contrato" titleurl="ListEmployee_contract_type" numcolumns="8" order="100">
-                <widget type="select" fieldname="idemployee_contract_type" icon="fas fa-building" onclick="EditEmployee_contract_type" required="true">
-                    <values source="employee_contract_types" fieldcode="idemployee_contract_type" fieldtitle="nombre" />
+            <column name="Empleado" titleurl="ListEmployee" numcolumns="8" order="100">
+                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee" required="true" readonly="dinamic">
+                    <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
                 </widget>
             </column>
             <column name="date" title="F. inicio" numcolumns="2" order="110">
@@ -31,9 +31,9 @@
             </column>
             
             
-            <column name="Empleado" titleurl="ListEmployee" numcolumns="6" order="130">
-                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee" required="true">
-                    <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
+            <column name="Tipo_contrato" titleurl="ListEmployee_contract_type" numcolumns="6" order="130">
+                <widget type="select" fieldname="idemployee_contract_type" icon="fas fa-building" onclick="EditEmployee_contract_type" required="true">
+                    <values source="employee_contract_types" fieldcode="idemployee_contract_type" fieldtitle="nombre" />
                 </widget>
             </column>
             <column name="company" titleurl="ListEmpresas" numcolumns="6" order="140">

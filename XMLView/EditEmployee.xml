@@ -77,8 +77,8 @@
         
 
         <group name="EmpleadoNuestroExterno" numcolumns="12" icon="fas fa-address-card" title="Empleado nuestro o externo">
-            <column name="company" numcolumns="6" order="100">
-                <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa">
+            <column name="company" description="Modificable desde contratos" numcolumns="6" order="100">
+                <widget type="select" fieldname="idempresa" icon="fas fa-building" readonly="dinamic" onclick="EditEmpresa">
                     <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto" />
                 </widget>
             </column>
