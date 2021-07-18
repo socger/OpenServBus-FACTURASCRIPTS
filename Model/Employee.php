@@ -134,6 +134,15 @@ class Employee extends Base\ModelClass {
                 $this->idempresa = $this->toolBox()->appSettings()->get('default', 'idempresa');
         }
         */
+        
+        if ( (!empty($this->idcollaborator)) 
+         and ($this->ComprobarSiTieneContratos() > 0)
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('Este empleado no puede ser colaborador, porque tiene contratos laborales creados.');
+            return false;
+        }
+
 
         $utils = $this->toolBox()->utils();
 
@@ -207,5 +216,24 @@ class Employee extends Base\ModelClass {
         $sql = "UPDATE employee_contracts SET employee_contracts.nombre = '" . $this->nombre . "' WHERE employee_contracts.idemployee = " . $this->idemployee . ";";
         self::$dataBase->exec($sql);
     }
+    
+    protected function ComprobarSiTieneContratos()
+    {
+        // Comprobar si está creado como conductor
+        // Esto lo hacemos porque en EditEmployee.xml hemos creado el widget checkbox para driver_yn como readonly, pero permite modificarlo
+        $sql = ' SELECT COUNT(*) AS cuantos '
+             . ' FROM employee_contracts '
+             . ' WHERE employee_contracts.idemployee = ' . $this->idemployee
+             ;
+
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $aDevolver = $fila['cuantos'];
+        }
+        
+        return $aDevolver; 
+    }
+        
     
 }
