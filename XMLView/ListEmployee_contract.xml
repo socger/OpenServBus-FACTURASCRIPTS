@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view>
+    <columns>
+        <column name="Id" display="none" order="100">
+            <widget type="text" fieldname="idemployee_contract" />
+        </column>
+        <column name="Empleado" order="110" title="Empleado">
+            <widget type="text" fieldname="nombre" />
+        </column>
+        <column name="company" numcolumns="6" order="150">
+            <widget type="select" fieldname="idempresa" onclick="EditEmpresa">
+                <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto" />
+            </widget>
+        </column>
+        <column name="Tipo_contrato" order="160">
+            <widget type="select" fieldname="idemployee_contract_type" onclick="EditEmployee_contract_type">
+                <values source="employee_contract_types" fieldcode="idemployee_contract_type" fieldtitle="nombre" />
+            </widget>
+        </column>
+        <column name="fecha_inicio" title="Inicio" display="right" order="170">
+            <widget type="datetime" fieldname="fecha_inicio"/>
+        </column>
+        <column name="fecha_fin" title="Fin" display="right" order="180">
+            <widget type="datetime" fieldname="fecha_fin"/>
+        </column>
+        <column name="Activo" display="center" order="190">
+            <widget type="checkbox" fieldname="activo"/>
+        </column>
+    </columns>
+    
+    <rows>
+        <row type="status">
+            <option color="success" fieldname="activo">1</option>
+            <option color="warning" fieldname="activo">0</option>
+        </row>
+    </rows>    
+</view>

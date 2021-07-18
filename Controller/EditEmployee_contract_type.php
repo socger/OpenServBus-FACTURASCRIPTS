@@ -17,7 +17,7 @@ class EditEmployee_contract_type extends EditController {
         
         $pagedata['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Combustible - tipo';
+        $pageData['title'] = 'Contrato - tipo';
         
         $pageData['icon'] = 'fas fa-file-signature';
 
