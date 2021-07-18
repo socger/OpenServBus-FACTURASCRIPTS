@@ -79,7 +79,11 @@ class Employee_contract extends Base\ModelClass {
         
         $this->comprobarSiActivo();
         
-        return parent::saveUpdate($values);
+        $parent_devuelve = parent::saveUpdate($values);
+        
+        $this->Actualizar_idempresa_en_employees();
+        
+        return $parent_devuelve;
     }
 
     // Para realizar cambios en los datos antes de guardar por alta
@@ -99,8 +103,13 @@ class Employee_contract extends Base\ModelClass {
         $this->fechamodificacion = $this->user_fecha; 
         
         $this->comprobarSiActivo();
-
-        return parent::saveInsert($values);
+        
+        $parent_devuelve = parent::saveInsert($values);
+        
+        $this->Actualizar_idempresa_en_employees();
+        
+        return $parent_devuelve;
+        //return parent::saveInsert($values);
     }
     
     public function test()
@@ -124,12 +133,8 @@ class Employee_contract extends Base\ModelClass {
                 $this->nombre = $fila['title'];
             }
         }
-        
-        $parent_devuelve = parent::test();
-        
-        $this->Actualizar_idempresa_en_employees();
-        
-        return $parent_devuelve;
+
+        return parent::test();
     }
     
     protected function Actualizar_idempresa_en_employees()
