@@ -124,7 +124,7 @@ class Employee_contract extends Base\ModelClass {
         }
         
         if (!empty($this->ComprobarSiEsColaborador())) {
-            $this->toolBox()->i18nLog()->error('El empleado elegido es un colaborador, no se puede usar en un contrato.');
+            $this->toolBox()->i18nLog()->error('El empleado elegido es un colaborador, no se puede usar en un contrato.'); 
             return false;
         }
 
