@@ -60,18 +60,7 @@ class Employee extends Base\ModelClass {
     public static function tableName(): string {
         return 'employees';
     }
-    
-    protected function comprobarSiActivo()
-    {
-        if ($this->activo == false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-        } else { // Por si se vuelve a poner Activo = true
-            $this->fechabaja = null;
-            $this->userbaja = null;
-        }
-    }
-    
+
     // Para realizar cambios en los datos antes de guardar por modificación
     protected function saveUpdate(array $values = [])
     {
@@ -109,7 +98,7 @@ class Employee extends Base\ModelClass {
         
         return parent::saveInsert($values);
     }
-    
+
     public function test()
     {
         // Comprobamos que el código de empleado si se ha introducido correctamente
@@ -166,14 +155,29 @@ class Employee extends Base\ModelClass {
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->num_seg_social = $utils->noHtml($this->num_seg_social);
         
-        // Completamos el campo nombre de la tabla DRIVERS
-        $sql = "UPDATE drivers SET drivers.nombre = '" . $this->nombre . "' WHERE drivers.idemployee = " . $this->idemployee . ";";
-        self::$dataBase->exec($sql);
-        
-        // Completamos el campo nombre de la tabla DRIVERS
-        $sql = "UPDATE employees_attendance_management_yn SET employees_attendance_management_yn.nombre = '" . $this->nombre . "' WHERE employees_attendance_management_yn.idemployee = " . $this->idemployee . ";";
-        self::$dataBase->exec($sql);
-        
+        $this->ComprobarSiEsConductor();
+        $this->actualizarNombreEmpleadoEn();
+
+        return parent::test();
+    }
+
+
+    // ** ********************************** ** //
+    // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
+    // ** ********************************** ** //
+    protected function comprobarSiActivo()
+    {
+        if ($this->activo == false) {
+            $this->fechabaja = $this->fechamodificacion;
+            $this->userbaja = $this->usermodificacion;
+        } else { // Por si se vuelve a poner Activo = true
+            $this->fechabaja = null;
+            $this->userbaja = null;
+        }
+    }
+    
+    protected function ComprobarSiEsConductor()
+    {
         // Comprobar si está creado como conductor
         // Esto lo hacemos porque en EditEmployee.xml hemos creado el widget checkbox para driver_yn como readonly, pero permite modificarlo
         $sql = ' SELECT COUNT(*) AS cuantos '
@@ -189,9 +193,19 @@ class Employee extends Base\ModelClass {
                 $this->driver_yn = 1;
             }
         }
-
-        return parent::test();
+    }
+        
+    protected function actualizarNombreEmpleadoEn()
+    {
+        // Rellenamos el nombre del empleado en otras tablas
+        $sql = "UPDATE drivers SET drivers.nombre = '" . $this->nombre . "' WHERE drivers.idemployee = " . $this->idemployee . ";";
+        self::$dataBase->exec($sql);
+        
+        $sql = "UPDATE employees_attendance_management_yn SET employees_attendance_management_yn.nombre = '" . $this->nombre . "' WHERE employees_attendance_management_yn.idemployee = " . $this->idemployee . ";";
+        self::$dataBase->exec($sql);
+        
+        $sql = "UPDATE employee_contracts SET employee_contracts.nombre = '" . $this->nombre . "' WHERE employee_contracts.idemployee = " . $this->idemployee . ";";
+        self::$dataBase->exec($sql);
     }
 
-    
 }
