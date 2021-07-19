@@ -60,6 +60,13 @@ class EditEmployee_contract extends EditController {
              // $this->views[$viewName]->model->user_fecha = date('d-m-Y');
                 $this->views[$viewName]->model->user_fecha = date("Y-m-d H:i:s");
                 
+                // Guardamos si esta o no activo
+                $this->views[$viewName]->model->esta_Activo_SI_NO = 'NO';
+                if ($this->views[$viewName]->model->activo == 1) {
+                    $this->views[$viewName]->model->esta_Activo_SI_NO = 'SI';
+                }
+                        
+                
                 break;
         }
     }

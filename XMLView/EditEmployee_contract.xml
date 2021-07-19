@@ -48,9 +48,9 @@
         </group>
 
         
-        <group name="Estado" numcolumns="12" icon="fas fa-cog" title="Estado del registro">
-            <column name="Activo" numcolums="12" order="100">
-                <widget type="checkbox" fieldname="activo"/>
+        <group name="Estado" numcolumns="3" icon="fas fa-cog" title="Estado del registro">
+            <column name="Activox" numcolums="2" order="100">
+                <widget type="text" fieldname="esta_Activo_SI_NO" readonly="true" />
             </column>
         </group>
         

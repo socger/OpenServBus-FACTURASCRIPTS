@@ -29,6 +29,8 @@ class Employee_contract extends Base\ModelClass {
     
     public $fecha_inicio;
     public $fecha_fin;
+    public $esta_Activo_SI_NO;
+    
     
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {
@@ -51,9 +53,10 @@ class Employee_contract extends Base\ModelClass {
     public function delete()
     {
         $parent_devuelve = parent::delete();
-        //  Aqui debemos de poner el código que actualice idempresa en tabla employees
-        $this->Actualizar_idempresa_en_employees(); // Se pasa valor 1, en parámetro, porque se está borrando el registro
         
+        $this->Actualizar_idempresa_en_employees();
+        $this->actualizar_campo_activo_enContratos_del_Empleado();
+                
         return $parent_devuelve;
         
         // return parent::delete();
@@ -71,6 +74,7 @@ class Employee_contract extends Base\ModelClass {
         $parent_devuelve = parent::saveUpdate($values);
         
         $this->Actualizar_idempresa_en_employees();
+        $this->actualizar_campo_activo_enContratos_del_Empleado();
         
         return $parent_devuelve;
     }
@@ -96,6 +100,7 @@ class Employee_contract extends Base\ModelClass {
         $parent_devuelve = parent::saveInsert($values);
         
         $this->Actualizar_idempresa_en_employees();
+        $this->actualizar_campo_activo_enContratos_del_Empleado();
         
         return $parent_devuelve;
         //return parent::saveInsert($values);
@@ -142,7 +147,6 @@ class Employee_contract extends Base\ModelClass {
     }
     
     protected function Actualizar_idempresa_en_employees()
-    //CUANDO BORRA NO LO ESTÁ HACIENDO BIEN, HAY QUE VER SI LO HACE BIEN CUANDO MODIFICAMOS O CREAMOS
     {
         // Completamos el campo idempresa de la tabla employee
         $sql = " UPDATE employees "
@@ -158,6 +162,50 @@ class Employee_contract extends Base\ModelClass {
              . " WHERE employees.idemployee = " . $this->idemployee . ";";
         
         self::$dataBase->exec($sql);
+    }
+    
+    private function actualizar_campo_activo_enContratos_del_Empleado()
+    {
+        // Buscamos el contrato con fecha_inicio + Fecha_fin más alta
+        $sql = " SELECT IF(employee_contracts.idemployee_contract IS NOT NULL, employee_contracts.idemployee_contract, 0) AS idemployee_contract "
+             . " FROM employee_contracts "
+             . " WHERE employee_contracts.idemployee = " . $this->idemployee . " "
+             . " ORDER BY employee_contracts.idemployee "
+             .        " , employee_contracts.fecha_inicio DESC "
+             .        " , employee_contracts.fecha_fin DESC "
+             . " LIMIT 1 ";
+
+        $contratos = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        if (!empty($contratos)){
+            // Se ha encontrado algún contrato de ese empleado
+            foreach ($contratos as $contrato) {
+                // Ponemos como activo el encontrado con mayor fecha_inicio + fecha_fin
+                $sql = " UPDATE employee_contracts "
+                     . " SET employee_contracts.activo = 1 "
+                     .   " , employee_contracts.usermodificacion = '" . $this->user_nick . "' "
+                     .   " , employee_contracts.fechamodificacion = '" . $this->user_fecha . "' "
+                     .   " , employee_contracts.userbaja = null "
+                     .   " , employee_contracts.fechabaja = null "
+                     . " WHERE employee_contracts.idemployee_contract = " . $contrato['idemployee_contract'] . " ";
+
+                self::$dataBase->exec($sql);
+
+                // Ponemos como no activos el resto
+                $sql = " UPDATE employee_contracts "
+                     . " SET employee_contracts.activo = 0 "
+                     .   " , employee_contracts.usermodificacion = '" . $this->user_nick . "' "
+                     .   " , employee_contracts.fechamodificacion = '" . $this->user_fecha . "' "
+                     .   " , employee_contracts.userbaja = '" . $this->user_nick . "' "
+                     .   " , employee_contracts.fechabaja = '" . $this->user_fecha . "' "
+                        
+                     . " WHERE employee_contracts.idemployee_contract <> " . $contrato['idemployee_contract'] . " "
+                     .   " AND employee_contracts.idemployee = " . $this->idemployee . " ";
+
+                self::$dataBase->exec($sql);
+            }
+        }
+        
     }
     
 }
