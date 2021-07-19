@@ -43,6 +43,10 @@ class Employee extends Base\ModelClass {
     public $num_seg_social;
     public $driver_yn;
     
+    public $tipo_contrato;
+    public $fecha_inicio;
+    public $fecha_fin;
+    
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {
         parent::clear();

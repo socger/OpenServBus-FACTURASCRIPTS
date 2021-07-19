@@ -3,6 +3,7 @@
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
+
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 class EditEmployee extends EditController {
@@ -61,20 +62,7 @@ class EditEmployee extends EditController {
             case 'EditEmployee': 
                 parent::loadData($viewName, $view);
                 
-                /* No hace falta porque ya tenemos el campo nombre físicamente en tabla collaborators
-                    // Rellenamos el widget de tipo select para la empresa colaboradora
-                    $sql = ' SELECT COLLABORATORS.IDCOLLABORATOR AS value '
-                         .      ' , PROVEEDORES.NOMBRE AS title '
-                         . ' FROM COLLABORATORS '
-                         . ' LEFT JOIN PROVEEDORES ON (PROVEEDORES.CODPROVEEDOR = COLLABORATORS.CODPROVEEDOR) ';
-
-                    $data = $this->dataBase->select($sql);
-                    $columnToModify = $this->views[$viewName]->columnForName('Colaborador');
-                    if($columnToModify) {
-                     // $columnToModify->widget->setValuesFromArray($data);
-                        $columnToModify->widget->setValuesFromArray($data, false, true); // El 3er parámetro es para añadir un elemento vacío, mirar documentacion en https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/Widget/WidgetSelect.php#L137
-                    }
-                */
+                $this->PonerContratoActivoEnVista($viewName);
                 
                 // Guardamos que usuario y cuando pulsará guardar
                 $this->views[$viewName]->model->user_nick = $this->user->nick;
@@ -84,6 +72,38 @@ class EditEmployee extends EditController {
                 
                 break;
         }
+    }
+
+
+    // ** *************************************** ** //
+    // ** FUNCIONES CREADAS PARA ESTE CONTROLADOR ** //
+    // ** *************************************** ** //
+    private function PonerContratoActivoEnVista(string $p_viewName)
+    {
+    
+        // Rellenamos el widget de tipo text para el tipo de contrato
+        $idemployee = $this->getViewModelValue('EditEmployee', 'idemployee'); // Le pedimos que guarde en la variable local $idemployee el valor del campo idemployee del controlador EditEmployee.php
+        
+        $sql = " SELECT employee_contract_types.nombre "
+             .       ", employee_contracts.fecha_inicio "   
+             .       ", employee_contracts.fecha_fin "   
+             . " FROM employee_contracts "
+             . " LEFT JOIN employee_contract_types ON (employee_contract_types.idemployee_contract_type = employee_contracts.idemployee_contract_type) "   
+             . " WHERE employee_contracts.idemployee = " . $idemployee . " "
+             .   " AND employee_contracts.activo = 1 "
+             . " ORDER BY employee_contracts.idemployee "
+             .        " , employee_contracts.fecha_inicio DESC "
+             .        " , employee_contracts.fecha_fin DESC "
+             . " LIMIT 1 ";
+
+        $registros = $this->dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $this->views[$p_viewName]->model->tipo_contrato = $fila['nombre'];
+            $this->views[$p_viewName]->model->fecha_inicio = $fila['fecha_inicio'];
+            $this->views[$p_viewName]->model->fecha_fin = $fila['fecha_fin'];
+        }
+        
     }
     
 }
