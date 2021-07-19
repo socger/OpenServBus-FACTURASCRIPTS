@@ -17,12 +17,12 @@
                 <widget type="text" fieldname="iddriver" readonly="true"/>
             </column>
             
-            <column name="Empleado" numcolumns="5" order="100">
+            <column name="Empleado" description="Una vez creado no se permite modificarlo, pero si borrar el contrato" numcolumns="5" order="100">
                 <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee" readonly="dinamic" >
                     <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="Colaborador" numcolumns="5" order="110">
+            <column name="Colaborador" description="Una vez creado no se permite modificarlo, pero si borrar el contrato" numcolumns="5" order="110">
                 <widget type="select" fieldname="idcollaborator" icon="fas fa-business-time" onclick="EditCollaborator" readonly="dinamic" >
                     <values source="collaborators" fieldcode="idcollaborator" fieldtitle="nombre" />
                 </widget>
