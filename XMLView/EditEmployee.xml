@@ -18,7 +18,6 @@
         
         
         <group name="Datos" numcolumns="12">
-            
             <column name="Codigo" description="Es opcional" numcolumns="2" order="100">
                 <widget type="text" fieldname="cod_employee" icon="fas fa-hashtag" maxlength="6" readonly="dinamic" />
             </column>
@@ -74,32 +73,25 @@
                 </widget>
             </column>
         </group>
-        
 
-        <group name="EmpleadoNuestroExterno" numcolumns="12" icon="fas fa-address-card" title="Empleado nuestro o externo">
-            <column name="company" description="Modificable desde contratos" numcolumns="6" order="100">
+
+        <group name="Ultimo_contrato" numcolumns="12" icon="fas fa-id-badge" title="Datos del último contrato">
+            <column name="company" description="Modificable desde contratos" numcolumns="4" order="240">
                 <widget type="select" fieldname="idempresa" icon="fas fa-building" readonly="true" onclick="EditEmpresa">
                     <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto" />
                 </widget>
             </column>
-            <column name="Colaborador" numcolumns="6" order="110">
-                <widget type="select" fieldname="idcollaborator" icon="fas fa-business-time" onclick="EditCollaborator">
-                    <values source="collaborators" fieldcode="idcollaborator" fieldtitle="nombre" />
-                </widget>
-            </column>
-            
-
-            <column name="tipo_contrato" title="Tipo de contrato" numcolumns="8" order="120">
+            <column name="tipo_contrato" title="Tipo de contrato" numcolumns="4" order="250">
                 <widget type="text" fieldname="tipo_contrato" readonly="true" />
             </column>
-            <column name="fecha_inicio" title="F. inicio" numcolumns="2" order="130">
+            <column name="fecha_inicio" title="F. inicio" numcolumns="2" order="260">
                 <widget type="date" fieldname="fecha_inicio" required="true" readonly="true" />
             </column>
-            <column name="fecha_fin" title="F. fin" numcolumns="2" order="140">
+            <column name="fecha_fin" title="F. fin" numcolumns="2" order="270">
                 <widget type="date" fieldname="fecha_fin" readonly="true" />
             </column>
-                        
         </group>
+
 
         <group name="Datos de contacto" numcolumns="12" icon="fas fa-address-card" title="Datos de contacto">
             <column name="phone" numcolumns="3" order="100">

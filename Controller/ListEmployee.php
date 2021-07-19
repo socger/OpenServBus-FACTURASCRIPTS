@@ -49,7 +49,6 @@ class ListEmployee extends ListController {
             // $field ... el campo del modelo sobre el que vamos a comprobar
         $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
         // $this->addFilterCheckbox($viewName, 'conductor', 'Ver sólo conductores', 'driver_yn');
-        $this->addFilterCheckbox($viewName, 'collaborator', 'Ver sólo colaboradores', 'idcollaborator', 'IS NOT', null);
         
         // Filtro autoComplete ... addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode, $fieldtitle)
         // Aunque lo vamos a hacer sobre la tabla empresa que normalmente tiene pocos registros
@@ -63,7 +62,6 @@ class ListEmployee extends ListController {
             // $fieldcode ... es el campo interno que quiero consultar
             // $fieldtitle ... es el campo a mostar al usuario
         $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdCollaborator', 'Colaborador', 'idcollaborator', 'collaborators', 'idcollaborator', 'nombre');
         
         // Filtro periodo de fechas
         // addFilterPeriod($viewName, $key, $label, $field)

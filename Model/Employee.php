@@ -26,7 +26,6 @@ class Employee extends Base\ModelClass {
     public $cifnif;
             
     public $idempresa;
-    public $idcollaborator;
     public $ciudad;
     public $provincia;
     public $codpais;
@@ -116,41 +115,16 @@ class Employee extends Base\ModelClass {
             return false;
         }
         
-        // Exijimos que se introduzca idempresa o idcollaborator
-        if ( (empty($this->idempresa)) 
-         and (empty($this->idcollaborator))
-           ) 
-        {
-            $this->toolBox()->i18nLog()->error('Debe de confirmar si es un empleado nuestro o de una empresa colaboradora');
-            return false;
-        }
 
-        if ( (!empty($this->idempresa)) 
-         and (!empty($this->idcollaborator))
-           ) 
-        {
-            $this->toolBox()->i18nLog()->error('O es un empleado nuestro o de una empresa colaboradora, pero ambos no');
-            return false;
-        }
-        
-        /* Quitamos esta parte porque si el usuario rellenaba idControllator y idempresa estaba vacío, lo rellenaba automáticamente con la empresa por defecto
+        /* Quitamos esta parte porque se rellena automáticamente desde el mantenimiento de contratos
             // Nos rellena la empresa (si no se ha elegido) con la empresa por defecto
             if (empty($this->idempresa)) {
                 $this->idempresa = $this->toolBox()->appSettings()->get('default', 'idempresa');
         }
         */
         
-        if ( (!empty($this->idcollaborator)) 
-         and ($this->ComprobarSiTieneContratos() > 0)
-           ) 
-        {
-            $this->toolBox()->i18nLog()->error('Este empleado no puede ser colaborador, porque tiene contratos laborales creados.');
-            return false;
-        }
-
-
+        // Quitamos la posibilidad de inección por sql
         $utils = $this->toolBox()->utils();
-
         $this->cod_employee = $utils->noHtml($this->cod_employee);
         $this->user_facturascripts_nick = $utils->noHtml($this->user_facturascripts_nick);
         $this->tipoidfiscal = $utils->noHtml($this->tipoidfiscal);
@@ -221,24 +195,5 @@ class Employee extends Base\ModelClass {
         $sql = "UPDATE employee_contracts SET employee_contracts.nombre = '" . $this->nombre . "' WHERE employee_contracts.idemployee = " . $this->idemployee . ";";
         self::$dataBase->exec($sql);
     }
-    
-    protected function ComprobarSiTieneContratos()
-    {
-        // Comprobar si está creado como conductor
-        $sql = ' SELECT COUNT(*) AS cuantos '
-             . ' FROM employee_contracts '
-             . ' WHERE employee_contracts.idemployee = ' . $this->idemployee
-             ;
-
-        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
-
-        $aDevolver = 0;
-        foreach ($registros as $fila) {
-            $aDevolver = $fila['cuantos'];
-        }
-        
-        return $aDevolver; 
-    }
-        
-    
+   
 }
