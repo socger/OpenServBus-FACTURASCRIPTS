@@ -41,18 +41,7 @@ class Collaborator extends Base\ModelClass {
     public static function tableName(): string {
         return 'collaborators';
     }
-    
-    protected function comprobarSiActivo()
-    {
-        if ($this->activo == false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-        } else { // Por si se vuelve a poner Activo = true
-            $this->fechabaja = null;
-            $this->userbaja = null;
-        }
-    }
-    
+
     // Para realizar cambios en los datos antes de guardar por modificación
     protected function saveUpdate(array $values = [])
     {
@@ -93,6 +82,36 @@ class Collaborator extends Base\ModelClass {
         $this->codproveedor = $utils->noHtml($this->codproveedor);
         $this->observaciones = $utils->noHtml($this->observaciones);
 
+        $this->actualizarCampoNombre();
+        $this->actualizarNombreColaboradorEn();
+        
+        return parent::test();
+    }
+
+
+    // ** ********************************** ** //
+    // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
+    // ** ********************************** ** //
+    private function comprobarSiActivo()
+    {
+        if ($this->activo == false) {
+            $this->fechabaja = $this->fechamodificacion;
+            $this->userbaja = $this->usermodificacion;
+        } else { // Por si se vuelve a poner Activo = true
+            $this->fechabaja = null;
+            $this->userbaja = null;
+        }
+    }
+        
+    private function actualizarNombreColaboradorEn()
+    {
+        // Rellenamos el nombre del empleado en otras tablas
+        $sql = "UPDATE drivers SET drivers.nombre = '" . $this->nombre . "' WHERE drivers.idcollaborator = " . $this->idcollaborator . ";";
+        self::$dataBase->exec($sql);
+    }
+      
+    private function actualizarCampoNombre()
+    {
         // Rellenamos el campo nombre de este modelo pues está ligado con campo nombre de tabla proveedores
         // pero siempre lo actualizamos porque pueden cambiar el nombre del proveedor
         if (!empty($this->codproveedor)) {
@@ -117,9 +136,6 @@ class Collaborator extends Base\ModelClass {
                 $this->nombre = $fila['title'];
             }
         }
-
-        return parent::test();
     }
 
-    
 }
