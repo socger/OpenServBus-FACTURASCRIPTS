@@ -5,10 +5,10 @@ namespace FacturaScripts\Plugins\OpenServBus\Model;
 //use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Model\Base;
 
-class Employee_documentation extends Base\ModelClass {
+class Vehicle_documentation extends Base\ModelClass {
     use Base\ModelTrait;
     
-    public $idemployee_documentation;
+    public $idvehicle_documentation;
         
     public $user_fecha;
     public $user_nick;
@@ -21,7 +21,7 @@ class Employee_documentation extends Base\ModelClass {
     public $userbaja;
 
     public $nombre;
-    public $idemployee;
+    public $idvehicle;
     public $iddocumentation_type;
     
     public $observaciones;
@@ -36,12 +36,12 @@ class Employee_documentation extends Base\ModelClass {
     
     // función que devuelve el id principal
     public static function primaryColumn(): string {
-        return 'idemployee_documentation';
+        return 'idvehicle_documentation';
     }
     
     // función que devuelve el nombre de la tabla
     public static function tableName(): string {
-        return 'employee_documentations';
+        return 'vehicle_documentations';
     }
 
     // Para realizar algo antes o después del borrado ... todo depende de que se ponga antes del parent o después
@@ -75,8 +75,8 @@ class Employee_documentation extends Base\ModelClass {
     protected function saveInsert(array $values = [])
     {
         // Creamos el nuevo id
-        if (empty($this->idemployee_documentation)) {
-            $this->idemployee_documentation = $this->newCode();
+        if (empty($this->idvehicle_documentation)) {
+            $this->idvehicle_documentation = $this->newCode();
         }
         
         // Rellenamos los datos de alta

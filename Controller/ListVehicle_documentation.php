@@ -3,7 +3,7 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
-class ListEmployee_documentation extends ListController {
+class ListVehicle_documentation extends ListController {
     
     // Para presentar la pantalla del controlador
     // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
@@ -12,7 +12,7 @@ class ListEmployee_documentation extends ListController {
         
         $pageData['menu'] = 'OpenServBus';
         $pageData['submenu'] = 'Documentación';
-        $pageData['title'] = 'Doc. empleados';
+        $pageData['title'] = 'Doc. vehículos';
         
         $pageData['icon'] = 'far fa-file-pdf';
         
@@ -21,12 +21,12 @@ class ListEmployee_documentation extends ListController {
     }
     
     protected function createViews() {
-        $this->createViewEmployee_documentation();
+        $this->createViewVehicle_documentation();
     }
     
-    protected function createViewEmployee_documentation($viewName = 'ListEmployee_documentation')
+    protected function createViewVehicle_documentation($viewName = 'ListVehicle_documentation')
     {
-        $this->addView($viewName, 'Employee_documentation');
+        $this->addView($viewName, 'Vehicle_documentation');
         
         // Opciones de búsqueda rápida
         $this->addSearchFields($viewName, ['nombre']); // Las búsqueda la hará por el campo idemployee_contract y nombre
@@ -62,7 +62,7 @@ class ListEmployee_documentation extends ListController {
             // $table ... es el nombre de la tabla en la BD
             // $fieldcode ... es el campo interno que quiero consultar
             // $fieldtitle ... es el campo a mostar al usuario
-        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdVehicle', 'Vehículo', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xiddocumentation_type', 'Documentación - tipo', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
 
         // Filtro periodo de fechas
