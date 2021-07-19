@@ -11,8 +11,8 @@ class ListDocumentation_type extends ListController {
         $pageData = parent::getPageData();
         
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Archivos';
-        $pageData['title'] = 'Tipos de Documentación';
+        $pageData['submenu'] = 'Documentación';
+        $pageData['title'] = 'Doc. - Tipos';
         
         $pageData['icon'] = 'far fa-address-card';
 
