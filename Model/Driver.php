@@ -21,6 +21,7 @@ class Driver extends Base\ModelClass {
     public $userbaja;
 
     public $idemployee;
+    
     public $observaciones;
     public $nombre;
     
@@ -44,17 +45,21 @@ class Driver extends Base\ModelClass {
     protected function Actualizar_driverYN_en_employees($p_borrando)
     {
         // Completamos el campo driver_yn de la tabla employee
-        $valor = 0; // No será conductor el empleado
-        if ($this->activo == true) {
-          $valor = 1;  
+        if ($p_borrando == 1){ 
+            // Se está borrando el registro
+            if (!empty($this->idemployee)){
+                $sql = "UPDATE employees SET employees.driver_yn = 0 WHERE employees.idemployee = " . $this->idemployee . ";";
+            }
+        } else {
+            // Se está creando/editando el registro
+            if (!empty($this->idemployee)){
+                // Si al crear/modificar el registro es un empleado
+                $sql = "UPDATE employees SET employees.driver_yn = 1 WHERE employees.idemployee = " . $this->idemployee . ";";
+            } 
         }
         
-        if ($p_borrando == 1){ // Se está borrando el registro
-          $valor = 0; // No será conductor el empleado 
-        }
-
-        $sql = "UPDATE employees SET employees.driver_yn = " . $valor . " WHERE employees.idemployee = " . $this->idemployee . ";";
         self::$dataBase->exec($sql);
+        
     }
     
     protected function comprobarSiActivo()
@@ -111,29 +116,68 @@ class Driver extends Base\ModelClass {
     
     public function test()
     {
-        $utils = $this->toolBox()->utils();
-
-        $this->observaciones = $utils->noHtml($this->observaciones);
-
-        // Rellenamos el campo nombre de este modelo pues está ligado con campo nombre de tabla empleados
-        // no hace falta actualizarlo siempre. porque la tabla employees es de este mismo pluggin y desde el test de employee.php actualizo el campo nombre de tabla dirvers
-        if (!empty($this->idemployee)) {
-            $sql = ' SELECT EMPLOYEES.NOMBRE AS title '
-                 . ' FROM EMPLOYEES '
-                 . ' WHERE EMPLOYEES.IDEMPLOYEE = ' . $this->idemployee
-                 ;
-
-            $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
-
-            foreach ($registros as $fila) {
-                $this->nombre = $fila['title'];
-            }
+        // Exijimos que se introduzca idempresa o idcollaborator
+        if ( (empty($this->idemployee)) 
+         and (empty($this->idcollaborator))
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('Debe de confirmar si es un empleado nuestro o de una empresa colaboradora');
+            return false;
         }
         
+        // No debe de elegir empleado y colaborador a la vez
+        if ( (!empty($this->idemployee)) 
+         and (!empty($this->idcollaborator))
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('O es un empleado nuestro o de una empresa colaboradora, pero ambos no');
+            return false;
+        }
+        
+        // Para evitar posible inyección de sql
+        $utils = $this->toolBox()->utils();
+        $this->observaciones = $utils->noHtml($this->observaciones);
+
+        $this->CompletarCampoNombre();
         $this->Actualizar_driverYN_en_employees(0); // Se pasa como parámetro 0 para decir que no se está borrando el empleado
         
         return parent::test();
     }
 
+
+    // ** ********************************** ** //
+    // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
+    // ** ********************************** ** //
+    private function CompletarCampoNombre()
+    {
+        // Rellenamos el campo nombre de este modelo pues está ligado con campo nombre de tabla empleados
+        // no hace falta actualizarlo siempre. porque la tabla employees es de este mismo pluggin y desde el test de employee.php actualizo el campo nombre de tabla dirvers
+        $sql = '';
+        
+        if (!empty($this->idemployee)) {
+            $sql = ' SELECT employees.nombre AS title '
+                 . ' FROM employees '
+                 . ' WHERE employees.idemployee = ' . $this->idemployee
+                 ;
+        }
+
+        if (!empty($this->idcollaborator)) {
+            $sql = ' SELECT collaborators.NOMBRE AS title '
+                 . ' FROM collaborators '
+                 . ' WHERE collaborators.idcollaborator = ' . $this->idcollaborator
+                 ;
+        }
+
+        if (!$sql == '') {
+            $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+            foreach ($registros as $fila) {
+                $this->nombre = $fila['title'];
+            }
+        } else {
+            $this->nombre = null;
+        }
+        
+    }
     
 }

@@ -1,6 +1,7 @@
 <?php
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
 class ListDriver extends ListController {
@@ -55,6 +56,15 @@ class ListDriver extends ListController {
             // $label ... es la etiqueta a mostrar al cliente
             // $field ... es el campo sobre el que filtraremos
         $this->addFilterPeriod($viewName, 'porFechaAlta', 'Fecha de alta', 'fechaalta');
+
+        $this->addFilterSelectWhere( $viewName
+                                   , 'status'
+                                   , [ ['label' => 'Colaboradores/Empleados - Todos', 'where' => []]
+                                     , ['label' => 'Colaboradores sólo', 'where' => [new DataBaseWhere('idcollaborator', '0', '>')]]
+                                     , ['label' => 'Empleados sólo', 'where' => [new DataBaseWhere('idemployee', '0', '>')]]
+                                     ]
+        );
+
         
     }
 }

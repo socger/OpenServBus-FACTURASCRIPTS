@@ -225,7 +225,6 @@ class Employee extends Base\ModelClass {
     protected function ComprobarSiTieneContratos()
     {
         // Comprobar si está creado como conductor
-        // Esto lo hacemos porque en EditEmployee.xml hemos creado el widget checkbox para driver_yn como readonly, pero permite modificarlo
         $sql = ' SELECT COUNT(*) AS cuantos '
              . ' FROM employee_contracts '
              . ' WHERE employee_contracts.idemployee = ' . $this->idemployee
@@ -233,6 +232,7 @@ class Employee extends Base\ModelClass {
 
         $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
 
+        $aDevolver = 0;
         foreach ($registros as $fila) {
             $aDevolver = $fila['cuantos'];
         }
