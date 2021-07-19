@@ -64,12 +64,19 @@ class EditEmployee extends EditController {
                 
                 $this->PonerContratoActivoEnVista($viewName);
                 
-                // Guardamos que usuario y cuando pulsará guardar
+                // Guardamos que usuario pulsará guardar
                 $this->views[$viewName]->model->user_nick = $this->user->nick;
 
+                // Guardamos cuando el usuario pulsará guardar
              // $this->views[$viewName]->model->user_fecha = date('d-m-Y');
                 $this->views[$viewName]->model->user_fecha = date("Y-m-d H:i:s");
                 
+                // Guardamos si es conductor o no para la vista
+                $this->views[$viewName]->model->es_Conductor_SI_NO = 'NO';
+                if ($this->views[$viewName]->model->driver_yn == 1) {
+                    $this->views[$viewName]->model->es_Conductor_SI_NO = 'SI';
+                }
+                        
                 break;
         }
     }

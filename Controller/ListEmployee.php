@@ -48,7 +48,7 @@ class ListEmployee extends ListController {
             // $label ... la etiqueta a mostrar al usuario
             // $field ... el campo del modelo sobre el que vamos a comprobar
         $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
-        $this->addFilterCheckbox($viewName, 'conductor', 'Ver sólo conductores', 'driver_yn');
+        // $this->addFilterCheckbox($viewName, 'conductor', 'Ver sólo conductores', 'driver_yn');
         $this->addFilterCheckbox($viewName, 'collaborator', 'Ver sólo colaboradores', 'idcollaborator', 'IS NOT', null);
         
         // Filtro autoComplete ... addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode, $fieldtitle)
@@ -74,6 +74,13 @@ class ListEmployee extends ListController {
         
         // Filtro de fecha sin periodo
         // addFilterDatePicker($viewName, $key, $label, $field)
-        
+
+        // Filtro de TIPO SELECT para filtrar por SI ES O NO ES CONDUCTOR, O TODOS
+        $esConductor = [
+            ['code' => '1', 'description' => 'Conductor = SI'],
+            ['code' => '0', 'description' => 'Conductor = NO'],
+        ];
+        $this->addFilterSelect($viewName, 'esConductor', 'Conductor = TODOS', 'driver_yn', $esConductor);        
     }
+    
 }

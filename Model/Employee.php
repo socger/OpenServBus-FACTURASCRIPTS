@@ -42,6 +42,7 @@ class Employee extends Base\ModelClass {
     public $fecha_nacimiento;
     public $num_seg_social;
     public $driver_yn;
+    public $es_Conductor_SI_NO;
     
     public $tipo_contrato;
     public $fecha_inicio;
