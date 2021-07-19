@@ -65,6 +65,9 @@ class ListDriver extends ListController {
                                      ]
         );
 
+        $this->addFilterAutocomplete($viewName, 'xIdEmpleado', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdCollaborator', 'Colaborador', 'idcollaborator', 'collaborators', 'idcollaborator', 'nombre');
+
         
     }
 }
