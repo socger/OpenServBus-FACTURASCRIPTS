@@ -12,7 +12,7 @@ class ListDriver extends ListController {
         $pageData = parent::getPageData();
         
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Empleados';
+        $pageData['submenu'] = 'Conductores';
         $pageData['title'] = 'Conductores';
         
         $pageData['icon'] = 'fas fa-user-astronaut';
