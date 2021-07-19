@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view>
+    <columns>
+        <column name="Id" display="none" order="100">
+            <widget type="text" fieldname="idemployee_documentation" />
+        </column>
+        
+        <column name="Empleado" order="110">
+            <widget type="select" fieldname="idemployee" onclick="EditEmployee">
+                <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
+            </widget>
+        </column>
+        <column name="Documento" order="120" title="Documento">
+            <widget type="text" fieldname="nombre" />
+        </column>
+        <column name="Tipo_documento" order="130">
+            <widget type="select" fieldname="iddocumentation_type" onclick="EditDocumentation_type">
+                <values source="documentation_types" fieldcode="iddocumentation_type" fieldtitle="nombre" />
+            </widget>
+        </column>
+        
+        <column name="Activo" display="center" order="190">
+            <widget type="checkbox" fieldname="activo"/>
+        </column>
+        <column name="fechaalta" title="F. Alta" display="right" order="170">
+            <widget type="datetime" fieldname="fechaalta"/>
+        </column>
+    </columns>
+    
+    <rows>
+        <row type="status">
+            <option color="success" fieldname="activo">1</option>
+            <option color="warning" fieldname="activo">0</option>
+        </row>
+    </rows>    
+</view>
