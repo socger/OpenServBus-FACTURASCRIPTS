@@ -3,7 +3,6 @@
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 class EditEmployee extends EditController {
@@ -39,6 +38,7 @@ class EditEmployee extends EditController {
         */
         $this->addListView('ListEmployee_contract', 'Employee_contract', 'Contratos realizados');    
         $this->addListView('ListEmployee_attendance_management_yn', 'Employee_attendance_management_yn', '¿Está obligado al control de presencia?');    
+        $this->addListView('ListEmployee_documentation', 'Employee_documentation', 'Documentación');    
         
         $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
     }
@@ -46,6 +46,12 @@ class EditEmployee extends EditController {
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
     protected function loadData($viewName, $view) {
         switch ($viewName) {
+            case 'ListEmployee_documentation':
+                $idemployee = $this->getViewModelValue('EditEmployee', 'idemployee'); // Le pedimos que guarde en la variable local $idemployee el valor del campo idemployee del controlador EditEmployee.php
+                $where = [new DatabaseWhere('idemployee', $idemployee)];
+                $view->loadData('', $where);
+                break;
+                    
             case 'ListEmployee_contract':
                 $idemployee = $this->getViewModelValue('EditEmployee', 'idemployee'); // Le pedimos que guarde en la variable local $idemployee el valor del campo idemployee del controlador EditEmployee.php
                 $where = [new DatabaseWhere('idemployee', $idemployee)];
