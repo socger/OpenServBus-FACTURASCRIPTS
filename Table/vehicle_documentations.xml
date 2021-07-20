@@ -50,6 +50,10 @@
         <type>integer</type>
         <null>NO</null>
     </column>
+    <column>
+        <name>fecha_caducidad</name>
+        <type>timestamp</type>
+    </column>
     
     <column>
         <name>observaciones</name>

@@ -21,18 +21,21 @@
             <column name="Nombre" numcolumns="4" order="110">
                 <widget type="text" fieldname="nombre" maxlength="100" required ="true" />
             </column>
-            <column name="Vehículo" titleurl="ListVehicle" numcolumns="4" order="110">
+            <column name="Vehículo" titleurl="ListVehicle" numcolumns="3" order="110">
                 <widget type="select" fieldname="idvehicle" icon="fas fa-bus-alt" onclick="EditVehicle" required="true" >
                     <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="Tipo_documento" title="Tipo documento" titleurl="ListDocumentation_type" numcolumns="4" order="120">
+            <column name="Tipo_documento" title="Tipo documento" titleurl="ListDocumentation_type" numcolumns="3" order="120">
                 <widget type="select" fieldname="iddocumentation_type" icon="far fa-address-card" onclick="EditDocumentation_type" required="true" >
                     <values source="documentation_types" fieldcode="iddocumentation_type" fieldtitle="nombre" />
                 </widget>
             </column>
+            <column name="fecha_caducidad" title="F. caducidad" numcolumns="2" order="130">
+                <widget type="date" fieldname="fecha_caducidad" />
+            </column>
             
-            <column name="Observaciones" numcolumns="12" title="Observaciones" order="150">
+            <column name="Observaciones" numcolumns="12" title="Observaciones" order="140">
                 <widget type="textarea" fieldname="observaciones" />
             </column>
         </group>

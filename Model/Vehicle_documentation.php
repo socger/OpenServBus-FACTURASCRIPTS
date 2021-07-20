@@ -23,6 +23,7 @@ class Vehicle_documentation extends Base\ModelClass {
     public $nombre;
     public $idvehicle;
     public $iddocumentation_type;
+    public $fecha_caducidad;
     
     public $observaciones;
     

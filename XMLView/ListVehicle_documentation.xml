@@ -25,6 +25,9 @@
         <column name="fechaalta" title="F. Alta" display="right" order="150">
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
+        <column name="fecha_caducidad" title="F. Caducidad" display="right" order="150">
+            <widget type="datetime" fieldname="fecha_caducidad"/>
+        </column>
     </columns>
     
     <rows>

@@ -23,6 +23,7 @@ class Employee_documentation extends Base\ModelClass {
     public $nombre;
     public $idemployee;
     public $iddocumentation_type;
+    public $fecha_caducidad;
     
     public $observaciones;
     
