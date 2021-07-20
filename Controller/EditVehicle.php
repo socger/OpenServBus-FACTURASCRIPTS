@@ -83,7 +83,24 @@ class EditVehicle extends EditController {
              // $this->views[$viewName]->model->user_fecha = date('d-m-Y');
                 $this->views[$viewName]->model->user_fecha = date("Y-m-d H:i:s");
                 
+                $this->PonerEnVistaLaEdad($viewName);
+
                 break;
+        }
+    }
+
+
+    // ** *************************************** ** //
+    // ** FUNCIONES CREADAS PARA ESTE CONTROLADOR ** //
+    // ** *************************************** ** //
+    private function PonerEnVistaLaEdad($p_viewName) {
+        if (!empty($this->views[$p_viewName]->model->fecha_matriculacion_primera)) {
+         // $this->views[$viewName]->model->edad_vehiculo = "12";
+            $intervalo = date_diff( date_create(date("Y-m-d H:i:s"))
+                                  , date_create($this->views[$p_viewName]->model->fecha_matriculacion_primera) 
+                                  );
+
+            $this->views[$p_viewName]->model->edad_vehiculo = $intervalo->format('%y a, %m m, %d d');
         }
     }
     
