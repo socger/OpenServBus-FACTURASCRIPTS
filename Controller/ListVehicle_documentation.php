@@ -40,7 +40,7 @@ class ListVehicle_documentation extends ListController {
                // 2 Orden descendente
         $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
         $this->addOrderBy($viewName, ['iddocumentation_type', 'nombre'], 'Tipo Doc. + nombre');
-        $this->addOrderBy($viewName, ['fecha_inicio', 'fecha_fin'], 'F.inicio + F.fin.');
+        $this->addOrderBy($viewName, ['fecha_caducidad'], 'F. caducidad.');
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
         
         // Filtros
@@ -71,6 +71,7 @@ class ListVehicle_documentation extends ListController {
             // $label ... es la etiqueta a mostrar al cliente
             // $field ... es el campo sobre el que filtraremos
         $this->addFilterPeriod($viewName, 'porFechaAlta', 'Fecha de alta', 'fechaalta');
+        $this->addFilterPeriod($viewName, 'porFechaCaducidad', 'Fecha de caducidad', 'fecha_caducidad');
         
     }
 }

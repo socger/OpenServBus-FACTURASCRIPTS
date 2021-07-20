@@ -100,6 +100,13 @@ class Employee_documentation extends Base\ModelClass {
     
     public function test()
     {
+        if (empty($this->fecha_caducidad)) {
+            if ($this->ComprobarSiEsObligadaFechaCaducidad() == 1) {
+                $this->toolBox()->i18nLog()->error('Para el tipo de documento elegido, necesitamos rellenar la fecha de caducidad');
+                return false;
+            }
+        }
+        
         // Código para evitar la inyección de sql
         $utils = $this->toolBox()->utils();
         $this->observaciones = $utils->noHtml($this->observaciones);
@@ -112,7 +119,7 @@ class Employee_documentation extends Base\ModelClass {
     // ** ********************************** ** //
     // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
     // ** ********************************** ** //
-    protected function comprobarSiActivo()
+    private function comprobarSiActivo()
     {
         if ($this->activo == false) {
             $this->fechabaja = $this->fechamodificacion;
@@ -120,6 +127,20 @@ class Employee_documentation extends Base\ModelClass {
         } else { // Por si se vuelve a poner Activo = true
             $this->fechabaja = null;
             $this->userbaja = null;
+        }
+    }
+    
+    private function ComprobarSiEsObligadaFechaCaducidad()
+    {
+        $sql = ' SELECT documentation_types.fechacaducidad_obligarla '
+             . ' FROM documentation_types '
+             . ' WHERE documentation_types.iddocumentation_type = ' . $this->iddocumentation_type . " "
+             ;
+
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            return $fila['fechacaducidad_obligarla'];
         }
     }
     
