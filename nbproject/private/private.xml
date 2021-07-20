@@ -2,6 +2,14 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Model/Vehicle.php</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Model/Vehicle_documentation.php</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListEmployee_documentation.php</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/EditEmployee.php</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Model/Employee_documentation.php</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Model/Employee.php</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListVehicle_documentation.php</file>
+        </group>
     </open-files>
 </project-private>
