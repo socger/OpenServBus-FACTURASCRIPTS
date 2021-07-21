@@ -11,10 +11,10 @@ class ListFuel_type extends ListController {
         $pageData = parent::getPageData();
         
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Archivos';
+        $pageData['submenu'] = 'Repostajes / kms';
         $pageData['title'] = 'Combustible - tipos';
         
-        $pageData['icon'] = 'fas fa-gas-pump';
+        $pageData['icon'] = 'fas fa-charging-station';
 
 
         return $pageData;

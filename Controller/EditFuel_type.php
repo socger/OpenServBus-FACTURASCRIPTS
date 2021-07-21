@@ -19,7 +19,7 @@ class EditFuel_type extends EditController {
         $pageData['menu'] = 'OpenServBus';
         $pageData['title'] = 'Combustible - tipo';
         
-        $pageData['icon'] = 'fas fa-gas-pump';
+        $pageData['icon'] = 'fas fa-charging-station';
 
         return $pageData;
     }
