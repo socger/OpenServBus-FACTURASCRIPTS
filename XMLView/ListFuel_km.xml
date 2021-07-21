@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view>
+    <columns>
+        <column name="Id" display="none" order="100">
+            <widget type="text" fieldname="idFuel_km" />
+        </column>
+
+        <column name="idvehicle" title="Vehículo" order="110">
+            <widget type="select" fieldname="idvehicle" onclick="EditVehicle">
+                <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
+            </widget>
+        </column>
+        <column name="fecha" title="Fecha" display="right" order="120">
+            <widget type="date" fieldname="fecha"/>
+        </column>
+
+        <column name="km" title="Km" display="right" order="130">
+            <widget type="text" fieldname="km" />
+        </column>
+        <column name="idfuel_type" title="Combustible" order="140">
+            <widget type="select" fieldname="idfuel_type" onclick="EditFuel_type">
+                <values source="fuel_types" fieldcode="idfuel_type" fieldtitle="nombre" />
+            </widget>
+        </column>
+        <column name="litros" title="Litros" display="right" order="150">
+            <widget type="text" fieldname="litros" />
+        </column>
+        <column name="deposito_lleno" title="Depósito lleno" display="center" order="160">
+            <widget type="checkbox" fieldname="deposito_lleno"/>
+        </column>
+
+                
+        <column name="Activo" display="center" order="150">
+            <widget type="checkbox" fieldname="activo"/>
+        </column>
+        
+        <column name="fechaalta" title="Alta" display="right" order="160">
+            <widget type="datetime" fieldname="fechaalta"/>
+        </column>
+    </columns>
+    
+    <rows>
+        <row type="status">
+            <option color="success" fieldname="activo">1</option>
+            <option color="warning" fieldname="activo">0</option>
+        </row>
+    </rows>    
+</view>
