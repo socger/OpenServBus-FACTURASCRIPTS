@@ -77,7 +77,24 @@
         <name>tarjetas_pkey</name>
         <type>PRIMARY KEY (idtarjeta)</type>
     </constraint>
+
+    <constraint>
+        <name>ca_tarjetas__empresas</name>
+        <type>FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_tarjetas__drivers</name>
+        <type>FOREIGN KEY (iddriver) REFERENCES drivers (iddriver) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_tarjetas__employees</name>
+        <type>FOREIGN KEY (idemployee) REFERENCES employees (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
     
+    <constraint>
+        <name>ca_tarjetas__card_types</name>
+        <type>FOREIGN KEY (idcard_type) REFERENCES card_types (idcard_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
 </table>
 
 
