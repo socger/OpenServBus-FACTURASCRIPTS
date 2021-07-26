@@ -60,11 +60,11 @@ class ListCard_type extends ListController {
         // addFilterDatePicker($viewName, $key, $label, $field)
 
         // Filtro de TIPO SELECT para filtrar por SI ES O NO de pago, O TODOS
-        $esConductor = [
+        $esDePago = [
             ['code' => '1', 'description' => 'De pago = SI'],
             ['code' => '0', 'description' => 'De pago = NO'],
         ];
-        $this->addFilterSelect($viewName, 'esDepago', 'De pago = TODO', 'de_pago', $esConductor);        
+        $this->addFilterSelect($viewName, 'esDepago', 'De pago = TODO', 'de_pago', $esDePago);        
         
     }
 }

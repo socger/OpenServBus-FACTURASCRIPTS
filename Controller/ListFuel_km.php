@@ -48,12 +48,42 @@ class ListFuel_km extends ListController {
             // $field ... el campo del modelo sobre el que vamos a comprobar
         $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
         
+        // Filtro autoComplete ... addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode, $fieldtitle)
+        // Aunque lo vamos a hacer sobre la tabla empresa que normalmente tiene pocos registros
+        // este tipo de filtros está pensado para tablas como clientes, proveedores, etc que tengan muchos registros
+        // Para estas tablas no vamos a usar un filtro Select ... faltaría memoria al equipo para ello
+            // $viewName ... nombre del controlador
+            // $key ... es el nombre que le ponemos al filtro, que puede ser el campo sobre el que quiero filtrar
+            // $label ...  parámetro es la etiqueta a mostrar al usuario
+            // $field ... es el campo del modelo
+            // $table ... es el nombre de la tabla en la BD
+            // $fieldcode ... es el campo interno que quiero consultar
+            // $fieldtitle ... es el campo a mostar al usuario
+        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdVehicle', 'Vehículo', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdFuel_Type', 'Combustible', 'idfuel_type', 'fuel_types', 'idfuel_type', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdFuel_Pumps', 'Surtidor Interno', 'idfuel_pump', 'fuel_pumps', 'idfuel_pump', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdDriver', 'Conductor', 'iddriver', 'drivers', 'iddriver', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xCodProveedor', 'Proveedor', 'codproveedor', 'proveedores', 'codproveedor', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdTarjeta', 'Tarjeta', 'idtarjeta', 'tarjetas', 'idtarjeta', 'nombre');
+        
         // Filtro periodo de fechas
         // addFilterPeriod($viewName, $key, $label, $field)
             // $key ... es el nombre que le ponemos al filtro
             // $label ... es la etiqueta a mostrar al cliente
             // $field ... es el campo sobre el que filtraremos
         $this->addFilterPeriod($viewName, 'porFecha', 'Fecha repostaje', 'fecha');
+        
+        // Filtro de fecha sin periodo
+        // addFilterDatePicker($viewName, $key, $label, $field)
+
+        // Filtro de TIPO SELECT para filtrar por SI ES O NO de pago, O TODOS
+        $esDepositoLleno = [
+            ['code' => '1', 'description' => 'Depósito lleno = SI'],
+            ['code' => '0', 'description' => 'Depósito lleno = NO'],
+        ];
+        $this->addFilterSelect($viewName, 'esDepositoLleno', 'Depósito lleno = TODO', 'deposito_lleno', $esDepositoLleno);        
         
     }
 }
