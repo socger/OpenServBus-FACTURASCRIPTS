@@ -111,5 +111,40 @@
         <type>PRIMARY KEY (idfuel_km)</type>
     </constraint>
     
+    
+    <constraint>
+        <name>ca_fuel_kms__vehicles</name>
+        <type>FOREIGN KEY (idvehicle) REFERENCES vehicles (idvehicle) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_fuel_kms__drivers</name>
+        <type>FOREIGN KEY (iddriver) REFERENCES drivers (iddriver) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_fuel_kms__employees</name>
+        <type>FOREIGN KEY (idemployee) REFERENCES employees (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_fuel_kms__fuel_types</name>
+        <type>FOREIGN KEY (idfuel_type) REFERENCES fuel_types (idfuel_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_fuel_kms__fuel_pumps</name>
+        <type>FOREIGN KEY (idfuel_pump) REFERENCES fuel_pumps (idfuel_pump) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_fuel_kms__proveedores</name>
+        <type>FOREIGN KEY (codproveedor) REFERENCES proveedores (codproveedor) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_fuel_kms__tarjetas</name>
+        <type>FOREIGN KEY (idtarjeta) REFERENCES tarjetas (idtarjeta) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_fuel_kms__empresas</name>
+        <type>FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    
+    
 </table>
 
