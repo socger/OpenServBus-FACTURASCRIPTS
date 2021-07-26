@@ -56,5 +56,15 @@ class ListCard_type extends ListController {
             // $field ... es el campo sobre el que filtraremos
         $this->addFilterPeriod($viewName, 'porFechaAlta', 'Fecha de alta', 'fechaalta');
         
+        // Filtro de fecha sin periodo
+        // addFilterDatePicker($viewName, $key, $label, $field)
+
+        // Filtro de TIPO SELECT para filtrar por SI ES O NO de pago, O TODOS
+        $esConductor = [
+            ['code' => '1', 'description' => 'De pago = SI'],
+            ['code' => '0', 'description' => 'De pago = NO'],
+        ];
+        $this->addFilterSelect($viewName, 'esDepago', 'De pago = TODO', 'de_pago', $esConductor);        
+        
     }
 }
