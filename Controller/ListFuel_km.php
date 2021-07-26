@@ -38,6 +38,7 @@ class ListFuel_km extends ListController {
             // Cuarto parámetro, si se rellena, le está diciendo cual es el order by por defecto, y además las opciones son
                // 1 Orden ascendente
                // 2 Orden descendente
+        $this->addOrderBy($viewName, ['fecha'], 'Fecha', 1);
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
         
         // Filtros
