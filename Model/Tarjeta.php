@@ -88,6 +88,24 @@ class Tarjeta extends Base\ModelClass {
         $utils = $this->toolBox()->utils();
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->nombre = $utils->noHtml($this->nombre);
+        
+        // Exijimos que se introduzca idempresa o idcollaborator
+        if ( (empty($this->idemployee)) 
+         and (empty($this->iddriver))
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('Debe de confirmar si la tarjeta es de un empleado o de un conductor.');
+            return false;
+        }
+
+        if ( (!empty($this->idemployee)) 
+         and (!empty($this->iddriver))
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('La tarjeta o es de un empleado o es de un conductor, pero no de ambos.');
+            return false;
+        }
+        
 
         return parent::test();
     }
