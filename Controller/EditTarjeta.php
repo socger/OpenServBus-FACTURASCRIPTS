@@ -38,6 +38,12 @@ class EditTarjeta extends EditController {
              // $this->views[$viewName]->model->user_fecha = date('d-m-Y');
                 $this->views[$viewName]->model->user_fecha = date("Y-m-d H:i:s");
                 
+                if ($this->views[$viewName]->model->de_pago == 1){
+                    $this->views[$viewName]->model->es_DePago = 'Si';
+                } else {
+                    $this->views[$viewName]->model->es_DePago = "No";
+                }
+                
                 break;
         }
     }

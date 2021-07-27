@@ -22,6 +22,7 @@ class Tarjeta extends Base\ModelClass {
     public $nombre;
     public $idtarjeta_type;
     public $de_pago;
+    public $es_DePago;
     public $idemployee;
     public $iddriver;
     public $idempresa;

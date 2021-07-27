@@ -24,8 +24,8 @@
                     <values source="tarjeta_types" fieldcode="idtarjeta_type" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="De_Pago" title="De pago" numcolums="2" order="130">
-                <widget type="text" fieldname="de_pago" readonly ="true" />
+            <column name="es_DePago" title="De pago" numcolums="2" order="130">
+                <widget type="text" fieldname="es_DePago" readonly ="true" />
             </column>
 
 
