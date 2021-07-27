@@ -51,7 +51,11 @@ class Card_type extends Base\ModelClass {
         
         $this->comprobarSiActivo();
         
-        return parent::saveUpdate($values);
+        $a_Devolver = parent::saveInsert($values);
+        
+        $this->actualizarEnTarjetas_DePago();
+        
+        return $a_Devolver;
     }
 
     // Para realizar cambios en los datos antes de guardar por alta
@@ -72,7 +76,11 @@ class Card_type extends Base\ModelClass {
         
         $this->comprobarSiActivo();
         
-        return parent::saveInsert($values);
+        $a_Devolver = parent::saveInsert($values);
+        
+        $this->actualizarEnTarjetas_DePago();
+        
+        return $a_Devolver;
     }
     
     public function test() {
@@ -99,4 +107,11 @@ class Card_type extends Base\ModelClass {
         }
     }
     
+    private function actualizarEnTarjetas_DePago()
+    {
+        // Rellenamos el nombre del empleado en otras tablas
+        $sql = "UPDATE tarjetas SET tarjetas.de_pago = " . $this->de_pago . "' WHERE tarjetas.idcard_type = " . $this->idcard_type . ";";
+        self::$dataBase->exec($sql);
+    }
+      
 }

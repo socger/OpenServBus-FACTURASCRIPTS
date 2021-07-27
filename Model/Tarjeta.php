@@ -80,6 +80,9 @@ class Tarjeta extends Base\ModelClass {
     }
     
     public function test() {
+        
+        $this->actualizar_dePago();
+        
         // Para evitar la inyección de sql
         $utils = $this->toolBox()->utils();
         $this->observaciones = $utils->noHtml($this->observaciones);
@@ -102,5 +105,22 @@ class Tarjeta extends Base\ModelClass {
             $this->userbaja = null;
         }
     }
-    
+      
+    private function actualizar_dePago()
+    {
+        // Rellenamos el campo de_pago de este modelo pues está ligado con campo de_pago de tabla card_types
+        // pero siempre lo actualizamos porque pueden cambiar el valor de de_pago en tabla card_types
+        if (!empty($this->idcard_type)) {
+            $sql = ' SELECT card_types.de_pago '
+                 . ' FROM card_types '
+                 . ' WHERE card_types.idcard_type = ' . $this->idcard_type
+                 ;
+            $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+            foreach ($registros as $fila) {
+                $this->de_pago = $fila['de_pago'];
+            }
+        }
+    }
+
 }
