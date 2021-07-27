@@ -108,11 +108,8 @@ class Tarjeta_type extends Base\ModelClass {
             $de_pago = 0;
         }
         
-        // Rellenamos el nombre del empleado en otras tablas
+        // Rellenamos el de_pago de tabla tarjetas
         $sql = "UPDATE tarjetas SET tarjetas.de_pago = " . $de_pago . " WHERE tarjetas.idtarjeta_type = " . $this->idtarjeta_type . ";";
-        
-        $this->toolBox()->i18nLog()->error($sql);
-
         self::$dataBase->exec($sql);
     }
       
