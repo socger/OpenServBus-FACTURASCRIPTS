@@ -106,7 +106,8 @@ class Tarjeta extends Base\ModelClass {
             return false;
         }
         
-
+        $this->comprobarEmpresa();
+        
         return parent::test();
     }
 
@@ -140,6 +141,37 @@ class Tarjeta extends Base\ModelClass {
                 $this->de_pago = $fila['de_pago'];
             }
         }
+    }
+      
+    private function comprobarEmpresa()
+    {
+        if (!empty($this->idemployee)){
+            $sql = ' SELECT employees.idempresa '
+                 . ' FROM employees '
+                 . ' WHERE employees.idemployee = ' . $this->idemployee
+                 ;
+        } else {
+            $sql = ' SELECT employees.idempresa '
+                 . ' FROM drivers '
+                 . ' LEFT JOIN employees ON (employees.idemployee = drivers.idemployee) '
+                 . ' WHERE drivers.iddriver = ' . $this->iddriver
+                 ;
+        }
+        // Rellenamos el campo de_pago de este modelo pues está ligado con campo de_pago de tabla tarjeta_types
+        // pero siempre lo actualizamos porque pueden cambiar el valor de de_pago en tabla tarjeta_types
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $idempresa = $fila['idempresa'];
+        }
+        
+        //$this->toolBox()->i18nLog()->info($idempresa . ' ... ' . $this->idempresa );
+        if (!empty($idempresa)){
+            if ($idempresa <> $this->idempresa){
+                $this->toolBox()->i18nLog()->info('Pero para su información ... la empresa del conductor/empleado no es la misma que la empresa elegida para esta tarjeta.');
+            }
+        }
+        
     }
 
 }
