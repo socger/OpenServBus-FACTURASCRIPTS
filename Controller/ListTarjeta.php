@@ -63,7 +63,7 @@ class ListTarjeta extends ListController {
         $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdDriver', 'Conductor', 'iddriver', 'drivers', 'iddriver', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdCard_Type', 'Tipo tarjeta', 'idcard_type', 'card_types', 'idcard_type', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdTarjeta_Type', 'Tipo tarjeta', 'idtarjeta_type', 'tarjeta_types', 'idtarjeta_type', 'nombre');
 
         // Filtro periodo de fechas
         // addFilterPeriod($viewName, $key, $label, $field)

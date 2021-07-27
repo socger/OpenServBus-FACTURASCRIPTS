@@ -44,7 +44,7 @@
         <null>NO</null>
     </column>
     <column>
-        <name>idcard_type</name>
+        <name>idtarjeta_type</name>
         <type>integer</type>
         <null>NO</null>
     </column>
@@ -92,8 +92,8 @@
     </constraint>
     
     <constraint>
-        <name>ca_tarjetas__card_types</name>
-        <type>FOREIGN KEY (idcard_type) REFERENCES card_types (idcard_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <name>ca_tarjetas__tarjeta_types</name>
+        <type>FOREIGN KEY (idtarjeta_type) REFERENCES tarjeta_types (idtarjeta_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
 </table>
 

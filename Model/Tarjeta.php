@@ -20,7 +20,7 @@ class Tarjeta extends Base\ModelClass {
     public $userbaja;
 
     public $nombre;
-    public $idcard_type;
+    public $idtarjeta_type;
     public $de_pago;
     public $idemployee;
     public $iddriver;
@@ -108,12 +108,12 @@ class Tarjeta extends Base\ModelClass {
       
     private function actualizar_dePago()
     {
-        // Rellenamos el campo de_pago de este modelo pues está ligado con campo de_pago de tabla card_types
-        // pero siempre lo actualizamos porque pueden cambiar el valor de de_pago en tabla card_types
-        if (!empty($this->idcard_type)) {
-            $sql = ' SELECT card_types.de_pago '
-                 . ' FROM card_types '
-                 . ' WHERE card_types.idcard_type = ' . $this->idcard_type
+        // Rellenamos el campo de_pago de este modelo pues está ligado con campo de_pago de tabla tarjeta_types
+        // pero siempre lo actualizamos porque pueden cambiar el valor de de_pago en tabla tarjeta_types
+        if (!empty($this->idtarjeta_type)) {
+            $sql = ' SELECT tarjeta_types.de_pago '
+                 . ' FROM tarjeta_types '
+                 . ' WHERE tarjeta_types.idtarjeta_type = ' . $this->idtarjeta_type
                  ;
             $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
 

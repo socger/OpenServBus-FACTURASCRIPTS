@@ -8,9 +8,9 @@
         <column name="nombre" title="Descripción" order="120">
             <widget type="text" fieldname="nombre" />
         </column>
-        <column name="idcard_type" title="Tipo de tarjeta" numcolumns="6" order="150">
-            <widget type="select" fieldname="idcard_type" onclick="EditCard_type">
-                <values source="card_types" fieldcode="idcard_type" fieldtitle="nombre" />
+        <column name="idtarjeta_type" title="Tipo de tarjeta" numcolumns="6" order="150">
+            <widget type="select" fieldname="idtarjeta_type" onclick="EditTarjeta_type">
+                <values source="tarjeta_types" fieldcode="idtarjeta_type" fieldtitle="nombre" />
             </widget>
         </column>
         <column name="de_pago" title="De pago" display="center" order="150">
