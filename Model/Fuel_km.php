@@ -91,6 +91,14 @@ class Fuel_km extends Base\ModelClass {
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->nombre = $utils->noHtml($this->nombre);
         
+        if ($this->comprobar_Surtidor_Proveedor() == false) {
+            return false;
+        }
+        
+        if ($this->comprobar_Empleado_Conductor() == false) {
+            return false;
+        }
+        
         return parent::test();
     }
 
@@ -98,7 +106,7 @@ class Fuel_km extends Base\ModelClass {
     // ** ********************************** ** //
     // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
     // ** ********************************** ** //
-    protected function comprobarSiActivo()
+    private function comprobarSiActivo()
     {
         if ($this->activo == false) {
             $this->fechabaja = $this->fechamodificacion;
@@ -108,5 +116,49 @@ class Fuel_km extends Base\ModelClass {
             $this->userbaja = null;
         }
     }
-    
+
+    private function comprobar_Surtidor_Proveedor()
+    {
+        // Exijimos que se introduzca idempresa o idcollaborator
+        if ( (empty($this->idfuel_pump)) 
+         and (empty($this->codproveedor))
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('Debe de confirmar si es un repostaje interno o externo.');
+            return false;
+        }
+
+        if ( (!empty($this->idfuel_pump)) 
+         and (!empty($this->codproveedor))
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('El repostaje o es interno o externo, pero no de ambos.');
+            return false;
+        }
+        
+        return true;
+    }        
+
+    private function comprobar_Empleado_Conductor()
+    {
+        // Exijimos que se introduzca idempresa o idcollaborator
+        if ( (empty($this->iddriver)) 
+         and (empty($this->idemployee))
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('Debe de confirmar si el repostaje lo ha hecho un empleado o un conductor.');
+            return false;
+        }
+
+        if ( (!empty($this->iddriver)) 
+         and (!empty($this->idemployee))
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('El repostaje o lo ha hecho un empleado o lo ha hecho un conductor, pero no de ambos.');
+            return false;
+        }
+        
+        return true;
+    }        
+
 }
