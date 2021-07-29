@@ -11,7 +11,7 @@ class ListEmployee_attendance_management_yn extends ListController {
         $pageData = parent::getPageData();
         
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Empleados';
+        $pageData['submenu'] = 'Control presencial';
         $pageData['title'] = 'Obligar Control Presencial a ...';
         
         $pageData['icon'] = 'fas fa-fingerprint';
