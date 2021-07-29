@@ -99,6 +99,8 @@ class Fuel_km extends Base\ModelClass {
             return false;
         }
         
+        $this->comprobarEmpresa();
+        
         return parent::test();
     }
 
@@ -160,5 +162,71 @@ class Fuel_km extends Base\ModelClass {
         
         return true;
     }        
+
+    private function comprobarEmpresa()
+    {
+        // Comprobamos la empresa del empleado o del conductor
+        if (!empty($this->idemployee)){
+            $sql = ' SELECT employees.idempresa '
+                 .      ' , empresas.nombrecorto '
+                 . ' FROM employees '
+                 . ' LEFT JOIN empresas ON (empresas.idempresa = employees.idempresa) '
+                 . ' WHERE employees.idemployee = ' . $this->idemployee
+                 ;
+        } else {
+            $sql = ' SELECT employees.idempresa '
+                 .      ' , empresas.nombrecorto '
+                 . ' FROM drivers '
+                 . ' LEFT JOIN employees ON (employees.idemployee = drivers.idemployee) '
+                 . ' LEFT JOIN empresas ON (empresas.idempresa = employees.idempresa) '
+                 . ' WHERE drivers.iddriver = ' . $this->iddriver
+                 ;
+        }
+
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $idempresa = $fila['idempresa'];
+            $nombreEmpresa = $fila['nombrecorto'];
+        }
+        
+        //$this->toolBox()->i18nLog()->info($idempresa . ' ... ' . $this->idempresa );
+        if (!empty($this->idempresa)){
+            if (!empty($idempresa)){
+                if ($idempresa <> $this->idempresa){
+                    $this->toolBox()->i18nLog()->info('Pero para su información ... la empresa del conductor/empleado ("' . $nombreEmpresa . '") no es la misma que la empresa elegida para esta tarjeta.');
+                }
+            }
+        }
+        
+        // Ahora comprobamos la empresa del vehículo
+        if (!empty($this->idvehicle)){
+            $sql = ' SELECT vehicles.idempresa '
+                 .      ' , empresas.nombrecorto '
+                 . ' FROM vehicles '
+                 . ' LEFT JOIN empresas ON (empresas.idempresa = vehicles.idempresa) '
+                 . ' WHERE vehicles.idvehicle = ' . $this->idvehicle
+                 ;
+
+            $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+            foreach ($registros as $fila) {
+                $idempresa = $fila['idempresa'];
+                $nombreEmpresa = $fila['nombrecorto'];
+            }
+
+            //$this->toolBox()->i18nLog()->info($idempresa . ' ... ' . $this->idempresa );
+            if (!empty($this->idempresa)){
+                if (!empty($idempresa)){
+                    if ($idempresa <> $this->idempresa){
+                        $this->toolBox()->i18nLog()->info('Pero para su información ... la empresa del vehículo ("' . $nombreEmpresa . '") no es la misma que la empresa elegida para esta tarjeta.');
+                    }
+                }
+
+            }
+        }
+        
+    }
+
 
 }

@@ -158,9 +158,11 @@ class Tarjeta extends Base\ModelClass {
         }
         
         //$this->toolBox()->i18nLog()->info($idempresa . ' ... ' . $this->idempresa );
-        if (!empty($idempresa)){
-            if ($idempresa <> $this->idempresa){
-                $this->toolBox()->i18nLog()->info('Pero para su información ... la empresa del conductor/empleado ("' . $nombreEmpresa . '") no es la misma que la empresa elegida para esta tarjeta.');
+        if (!empty($this->idempresa)){
+            if (!empty($idempresa)){
+                if ($idempresa <> $this->idempresa){
+                    $this->toolBox()->i18nLog()->info('Pero para su información ... la empresa del conductor/empleado ("' . $nombreEmpresa . '") no es la misma que la empresa elegida para esta tarjeta.');
+                }
             }
         }
         
