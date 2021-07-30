@@ -36,6 +36,9 @@ class Fuel_km extends Base\ModelClass {
     
     public $observaciones;
     
+    public $tipo_tarjeta;
+    public $es_de_pago;
+    
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {
         parent::clear();
@@ -91,6 +94,8 @@ class Fuel_km extends Base\ModelClass {
         $utils = $this->toolBox()->utils();
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->nombre = $utils->noHtml($this->nombre);
+        $this->tipo_tarjeta = $utils->noHtml($this->tipo_tarjeta);
+        $this->es_de_pago = $utils->noHtml($this->es_de_pago);
         
         if ($this->comprobar_Surtidor_Proveedor() == false) {
             return false;

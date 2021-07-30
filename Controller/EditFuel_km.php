@@ -38,8 +38,40 @@ class EditFuel_km extends EditController {
              // $this->views[$viewName]->model->user_fecha = date('d-m-Y');
                 $this->views[$viewName]->model->user_fecha = date("Y-m-d H:i:s");
                 
+                $this->TraerTipoTarjeta($viewName);
+                
                 break;
+        }
+    }
+
+    // ** *************************************** ** //
+    // ** FUNCIONES CREADAS PARA ESTE CONTROLADOR ** //
+    // ** *************************************** ** //
+    private function TraerTipoTarjeta(string $p_viewName)
+    {
+        if (!empty($this->views[$p_viewName]->model->idtarjeta)){
+            $sql = " SELECT tarjeta_types.nombre "
+                 .      " , tarjeta_types.de_pago "
+                 . " FROM tarjetas "
+                 . " LEFT JOIN tarjeta_types ON (tarjeta_types.idtarjeta_type = tarjetas.idtarjeta_type) "
+                 . " WHERE tarjetas.idtarjeta = " . $this->views[$p_viewName]->model->idtarjeta . " ";
+
+            $registros = $this->dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+            foreach ($registros as $fila) {
+                $this->views[$p_viewName]->model->tipo_tarjeta = $fila['nombre'];
+
+                if ($fila['de_pago'] == 1){
+                    $this->views[$p_viewName]->model->es_de_pago = 'Si';
+                } else {
+                    $this->views[$p_viewName]->model->es_de_pago = 'No';
+                }
+            }
         }
     }
     
 }
+
+
+
+                

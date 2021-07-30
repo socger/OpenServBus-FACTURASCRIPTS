@@ -97,26 +97,26 @@ class EditEmployee extends EditController {
         // Rellenamos el widget de tipo text para el tipo de contrato
         $idemployee = $this->getViewModelValue('EditEmployee', 'idemployee'); // Le pedimos que guarde en la variable local $idemployee el valor del campo idemployee del controlador EditEmployee.php
         
-		if (!empty($idemployee)){
-			$sql = " SELECT employee_contract_types.nombre "
-				 .       ", employee_contracts.fecha_inicio "   
-				 .       ", employee_contracts.fecha_fin "   
-				 . " FROM employee_contracts "
-				 . " LEFT JOIN employee_contract_types ON (employee_contract_types.idemployee_contract_type = employee_contracts.idemployee_contract_type) "   
-				 . " WHERE employee_contracts.idemployee = " . $idemployee . " "
-				 .   " AND employee_contracts.activo = 1 "
-				 . " ORDER BY employee_contracts.idemployee "
-				 .        " , employee_contracts.fecha_inicio DESC "
-				 .        " , employee_contracts.fecha_fin DESC "
-				 . " LIMIT 1 ";
+        if (!empty($idemployee)){
+            $sql = " SELECT employee_contract_types.nombre "
+                     .       ", employee_contracts.fecha_inicio "   
+                     .       ", employee_contracts.fecha_fin "   
+                     . " FROM employee_contracts "
+                     . " LEFT JOIN employee_contract_types ON (employee_contract_types.idemployee_contract_type = employee_contracts.idemployee_contract_type) "   
+                     . " WHERE employee_contracts.idemployee = " . $idemployee . " "
+                     .   " AND employee_contracts.activo = 1 "
+                     . " ORDER BY employee_contracts.idemployee "
+                     .        " , employee_contracts.fecha_inicio DESC "
+                     .        " , employee_contracts.fecha_fin DESC "
+                     . " LIMIT 1 ";
 
-			$registros = $this->dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+            $registros = $this->dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
 
-			foreach ($registros as $fila) {
-				$this->views[$p_viewName]->model->tipo_contrato = $fila['nombre'];
-				$this->views[$p_viewName]->model->fecha_inicio = $fila['fecha_inicio'];
-				$this->views[$p_viewName]->model->fecha_fin = $fila['fecha_fin'];
-			}
+            foreach ($registros as $fila) {
+                $this->views[$p_viewName]->model->tipo_contrato = $fila['nombre'];
+                $this->views[$p_viewName]->model->fecha_inicio = $fila['fecha_inicio'];
+                $this->views[$p_viewName]->model->fecha_fin = $fila['fecha_fin'];
+            }
         }
         
     }
