@@ -99,4 +99,3 @@ class Absence_reason extends Base\ModelClass {
     
 }
 
-//<i class="fas fa-hourglass-half"></i>
