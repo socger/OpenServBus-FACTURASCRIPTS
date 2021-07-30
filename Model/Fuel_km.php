@@ -31,6 +31,7 @@ class Fuel_km extends Base\ModelClass {
     public $idfuel_pump;
     public $codproveedor;
     public $idtarjeta;
+    public $ididentification_mean;
     public $nombre;
     
     public $observaciones;
@@ -99,6 +100,10 @@ class Fuel_km extends Base\ModelClass {
             return false;
         }
         
+        if ($this->comprobar_Tarjeta__Identificacion_mean() == false) {
+            return false;
+        }
+                    
         $this->comprobarEmpresa();
         
         return parent::test();
@@ -143,7 +148,7 @@ class Fuel_km extends Base\ModelClass {
 
     private function comprobar_Empleado_Conductor()
     {
-        // Exijimos que se introduzca idempresa o idcollaborator
+        // Exijimos que se introduzca iddriver o idemployee
         if ( (empty($this->iddriver)) 
          and (empty($this->idemployee))
            ) 
@@ -228,5 +233,26 @@ class Fuel_km extends Base\ModelClass {
         
     }
 
+    private function comprobar_Tarjeta__Identificacion_mean()
+    {
+        // Exijimos que se introduzca idtarjeta o ididentification_mean
+        if ( (empty($this->idtarjeta)) 
+         and (empty($this->ididentification_mean))
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('Debe de confirmar que tarjeta ó que Medio de Identificación ha usado para este repostaje.');
+            return false;
+        }
+
+        if ( (!empty($this->idtarjeta)) 
+         and (!empty($this->ididentification_mean))
+           ) 
+        {
+            $this->toolBox()->i18nLog()->error('El repostaje o lo ha hecho con el uso de una tarjeta o lo ha hecho con un Medio de Identifiación, pero no de ambos.');
+            return false;
+        }
+        
+        return true;
+    }        
 
 }
