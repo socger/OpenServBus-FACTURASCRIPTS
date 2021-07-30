@@ -12,7 +12,7 @@ class ListEmployee_attendance_management_yn extends ListController {
         
         $pageData['menu'] = 'OpenServBus';
         $pageData['submenu'] = 'Control presencial';
-        $pageData['title'] = 'Obligar Control Presencial a ...';
+        $pageData['title'] = 'Obligar control presencial a ...';
         
         $pageData['icon'] = 'fas fa-fingerprint';
         
