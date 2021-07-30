@@ -63,8 +63,24 @@
                     <values source="proveedores" fieldcode="codproveedor" fieldtitle="nombre" />
                 </widget>
             </column>
-            
-            
+        </group>
+
+                        
+        <group name="Quien_lo_hace" numcolumns="12" icon="fas fa-cog" title="Realizado por">
+            <column name="iddriver" title="Conductor" titleurl="ListDriver" numcolumns="6" order="100">
+                <widget type="select" fieldname="iddriver" icon="fas fa-user-astronaut" onclick="EditDriver" >
+                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
+                </widget>
+            </column>
+            <column name="idemployee" title="Empleado" titleurl="ListEmployee" numcolumns="6" order="110">
+                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee" >
+                    <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
+                </widget>
+            </column>
+        </group>
+
+
+        <group name="Repostado_con" numcolumns="12" icon="fas fa-cog" title="Repostado con">
             <column name="ididentification_mean" title="Identificación - medio" titleurl="ListIdentification_mean" numcolumns="4" order="210">
                 <widget type="select" fieldname="ididentification_mean" icon="far fa-hand-point-right" onclick="EditIdentification_mean" >
                     <values source="identification_means" fieldcode="ididentification_mean" fieldtitle="nombre" />
@@ -81,26 +97,16 @@
             <column name="es_de_pago" title="De pago" numcolumns="1" order="230">
                 <widget type="text" fieldname="es_de_pago" readonly="true"/>
             </column>
+        </group>
 
-
-            <column name="iddriver" title="Conductor" titleurl="ListDriver" numcolumns="6" order="240">
-                <widget type="select" fieldname="iddriver" icon="fas fa-user-astronaut" onclick="EditDriver" >
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
-                </widget>
-            </column>
-            <column name="idemployee" title="Empleado" titleurl="ListEmployee" numcolumns="6" order="250">
-                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee" >
-                    <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
-                </widget>
-            </column>
-
-            
+                
+        <group name="Observ" numcolumns="12" icon="fas fa-cog" title="Otras anotaciones">
             <column name="observations" numcolumns="12" order="260">
                 <widget type="textarea" fieldname="observaciones" />
             </column>
         </group>
-
-                        
+        
+            
         <group name="Estado" numcolumns="12" icon="fas fa-cog" title="Estado del registro">
             <column name="Activo" numcolums="12" order="100">
                 <widget type="checkbox" fieldname="activo"/>
