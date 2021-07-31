@@ -12,7 +12,7 @@ class ListVehicle_type extends ListController {
         
         $pageData['menu'] = 'OpenServBus';
         $pageData['submenu'] = 'Vehículos';
-        $pageData['title'] = 'Tipos de Vehículo';
+        $pageData['title'] = 'Vehículo - Tipos';
         
         $pageData['icon'] = 'fas fa-tractor';
 

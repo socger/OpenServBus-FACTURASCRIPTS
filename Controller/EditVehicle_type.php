@@ -17,7 +17,7 @@ class EditVehicle_type extends EditController {
         
         $pagedata['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Tipo Vehículo';
+        $pageData['title'] = 'Vehículo - Tipo';
         
         $pageData['icon'] = 'fas fa-tractor';
 
