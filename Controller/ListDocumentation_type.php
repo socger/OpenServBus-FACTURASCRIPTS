@@ -52,6 +52,14 @@ class ListDocumentation_type extends ListController {
      
         // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
         // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        $fecha_caducidad = [
+            ['code' => '1', 'description' => 'Obligar F.Caducidad = SI'],
+            ['code' => '0', 'description' => 'Obligar F.Caducidad = NO'],
+        ];
+        $this->addFilterSelect($viewName, 'soloFechaCaducidad', 'Obligar F.Caducidad = TODOS', 'fechacaducidad_obligarla', $fecha_caducidad);        
+     
+        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
+        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
             ['code' => '0', 'description' => 'Activos = NO'],
