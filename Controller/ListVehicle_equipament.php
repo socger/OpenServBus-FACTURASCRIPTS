@@ -76,7 +76,7 @@ class ListVehicle_equipament extends ListController {
             // $key ... es el nombre que le ponemos al filtro
             // $label ... es la etiqueta a mostrar al cliente
             // $field ... es el campo sobre el que filtraremos
-        $this->addFilterPeriod($viewName, 'porFechaAlta', 'Fecha de alta', 'fechaalta');
+        // $this->addFilterPeriod($viewName, 'porFechaAlta', 'Fecha de alta', 'fechaalta');
         
     }
 }
