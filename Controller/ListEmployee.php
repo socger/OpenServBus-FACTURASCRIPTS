@@ -47,9 +47,17 @@ class ListEmployee extends ListController {
             // $key ... es el nombre que le ponemos al filtro
             // $label ... la etiqueta a mostrar al usuario
             // $field ... el campo del modelo sobre el que vamos a comprobar
-        $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
         // $this->addFilterCheckbox($viewName, 'conductor', 'Ver sólo conductores', 'driver_yn');
-        
+        // $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
+     
+        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
+        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        $activo = [
+            ['code' => '1', 'description' => 'Activos = SI'],
+            ['code' => '0', 'description' => 'Activos = NO'],
+        ];
+        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);        
+
         // Filtro autoComplete ... addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode, $fieldtitle)
         // Aunque lo vamos a hacer sobre la tabla empresa que normalmente tiene pocos registros
         // este tipo de filtros está pensado para tablas como clientes, proveedores, etc que tengan muchos registros

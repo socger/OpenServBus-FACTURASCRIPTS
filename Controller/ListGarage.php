@@ -46,8 +46,16 @@ class ListGarage extends ListController {
             // $key ... es el nombre que le ponemos al filtro
             // $label ... la etiqueta a mostrar al usuario
             // $field ... el campo del modelo sobre el que vamos a comprobar
-        $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
-        
+        // $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
+     
+        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
+        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        $activo = [
+            ['code' => '1', 'description' => 'Activos = SI'],
+            ['code' => '0', 'description' => 'Activos = NO'],
+        ];
+        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);        
+
 //        // Filtro select por el campo useralta
 //            // Primero necesitamos los valores que quiero mostrar en el select
 //            // codeModel->all($tableName, $fieldCode, $fieldDescription) ... para buscar todos los usuarios
