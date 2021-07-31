@@ -36,7 +36,7 @@ class ListEmployee_attendance_management extends ListController {
                // 1 Orden ascendente
                // 2 Orden descendente
         $this->addOrderBy($viewName, ['fecha'], 'Fecha', 1);
-        $this->addOrderBy($viewName, ['idempleado', 'fecha'], 'Empleado + Fecha');
+        $this->addOrderBy($viewName, ['idemployee', 'fecha'], 'Empleado + Fecha');
         
         // Filtros
         // Filtro checkBox por campo Activo ... addFilterCheckbox($viewName, $key, $label, $field);
@@ -81,8 +81,8 @@ class ListEmployee_attendance_management extends ListController {
      
         // Filtro de TIPO SELECT para filtrar por el tipo de fichaje (ENTRADAS, SALIDAS o TODOS)
         $origen = [
-            ['code' => '0', 'description' => 'Tipo fichaje = ENTRADA'],
-            ['code' => '1', 'description' => 'Tipo fichaje = SALIDA'],
+            ['code' => '1', 'description' => 'Tipo fichaje = ENTRADA'],
+            ['code' => '0', 'description' => 'Tipo fichaje = SALIDA'],
         ];
         $this->addFilterSelect($viewName, 'elTipoFichaje', 'Tipo fichaje = TODOS', 'tipoFichaje', $origen);        
      
