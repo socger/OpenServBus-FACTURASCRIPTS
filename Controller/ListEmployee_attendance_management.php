@@ -86,6 +86,6 @@ class ListEmployee_attendance_management extends ListController {
         ];
         $this->addFilterSelect($viewName, 'elTipoFichaje', 'Tipo fichaje = TODOS', 'tipoFichaje', $origen);        
      
-        
     }
+    
 }
