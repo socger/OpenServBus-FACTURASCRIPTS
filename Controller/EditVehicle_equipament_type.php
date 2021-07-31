@@ -17,7 +17,7 @@ class EditVehicle_equipament_type extends EditController {
         
         $pagedata['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Equipamiento vehículo';
+        $pageData['title'] = 'Equipamiento - Tipo';
         
         $pageData['icon'] = 'fas fa-wheelchair';
 

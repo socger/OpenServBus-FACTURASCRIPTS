@@ -2,28 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListCollaborator.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListFuel_km.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListFuel_pump.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListDriver.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListDepartment.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListEmployee.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListTarjeta_type.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListEmployee_documentation.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListGarage.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListDocumentation_type.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListTarjeta.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListVehicle_type.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListVehicle.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListEmployee_contract_type.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListFuel_type.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListEmployee_contract.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListEmployee_attendance_management.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListAbsence_reason.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListIdentification_mean.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListEmployee_attendance_management_yn.php</file>
-            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Controller/ListVehicle_documentation.php</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

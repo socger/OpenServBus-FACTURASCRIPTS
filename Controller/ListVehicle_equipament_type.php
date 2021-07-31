@@ -12,7 +12,7 @@ class ListVehicle_equipament_type extends ListController {
         
         $pageData['menu'] = 'OpenServBus';
         $pageData['submenu'] = 'Vehículos';
-        $pageData['title'] = 'Equipamiento vehículos';
+        $pageData['title'] = 'Equipamiento - Tipos';
         
         $pageData['icon'] = 'fas fa-wheelchair';
 

@@ -39,7 +39,7 @@ class ListVehicle_documentation extends ListController {
                // 1 Orden ascendente
                // 2 Orden descendente
         $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
-        $this->addOrderBy($viewName, ['iddocumentation_type', 'nombre'], 'Tipo Doc. + nombre');
+        $this->addOrderBy($viewName, ['idvehicle', 'nombre'], 'Vehículo + Tipo Doc.');
         $this->addOrderBy($viewName, ['fecha_caducidad'], 'F. caducidad.');
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
         
