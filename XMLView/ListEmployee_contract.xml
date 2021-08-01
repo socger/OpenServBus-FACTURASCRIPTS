@@ -12,16 +12,16 @@
                 <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto" />
             </widget>
         </column>
-        <column name="Tipo_contrato" order="160">
+        <column name="Tipo_contrato" title="Tipo de contrato" order="160">
             <widget type="select" fieldname="idemployee_contract_type" onclick="EditEmployee_contract_type">
                 <values source="employee_contract_types" fieldcode="idemployee_contract_type" fieldtitle="nombre" />
             </widget>
         </column>
         <column name="fecha_inicio" title="Inicio" display="right" order="170">
-            <widget type="datetime" fieldname="fecha_inicio"/>
+            <widget type="date" fieldname="fecha_inicio"/>
         </column>
         <column name="fecha_fin" title="Fin" display="right" order="180">
-            <widget type="datetime" fieldname="fecha_fin"/>
+            <widget type="date" fieldname="fecha_fin"/>
         </column>
         <column name="Activo" display="center" order="190">
             <widget type="checkbox" fieldname="activo"/>
