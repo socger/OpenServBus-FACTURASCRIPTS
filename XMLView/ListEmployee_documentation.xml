@@ -18,15 +18,15 @@
                 <values source="documentation_types" fieldcode="iddocumentation_type" fieldtitle="nombre" />
             </widget>
         </column>
+        <column name="fecha_caducidad" title="F. Caducidad" display="right" order="140">
+            <widget type="date" fieldname="fecha_caducidad"/>
+        </column>
         
-        <column name="Activo" display="center" order="140">
+        <column name="Activo" display="center" order="150">
             <widget type="checkbox" fieldname="activo"/>
         </column>
-        <column name="fechaalta" title="F. Alta" display="right" order="150">
+        <column name="fechaalta" title="F. Alta" display="right" order="160">
             <widget type="datetime" fieldname="fechaalta"/>
-        </column>
-        <column name="fecha_caducidad" title="F. Caducidad" display="right" order="150">
-            <widget type="datetime" fieldname="fecha_caducidad"/>
         </column>
     </columns>
     
