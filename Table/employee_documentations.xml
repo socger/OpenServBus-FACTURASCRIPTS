@@ -74,5 +74,11 @@
         <name>ca_employee_documentations__documentation_types</name>
         <type>FOREIGN KEY (iddocumentation_type) REFERENCES documentation_types (iddocumentation_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
+    
+    <constraint>
+        <name>uniq_employee_documentations__idemployee_iddocumentationtype</name>
+        <type>UNIQUE (idemployee,iddocumentation_type)</type>
+    </constraint>
+    
 </table>
 
