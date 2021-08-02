@@ -131,9 +131,28 @@
         <name>employees_pkey</name>
         <type>PRIMARY KEY (idemployee)</type>
     </constraint>
+    
+    
     <constraint>
         <name>ca_employees__empresas</name>
         <type>FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_employees__users</name>
+        <type>FOREIGN KEY (user_facturascripts_nick) REFERENCES users (nick) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_employees__paises</name>
+        <type>FOREIGN KEY (codpais) REFERENCES paises (codpais) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_employees__idsfiscales</name>
+        <type>FOREIGN KEY (tipoidfiscal) REFERENCES idsfiscales (tipoidfiscal) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    
+    <constraint>
+        <name>uniq_employees__user_facturascripts_nick</name>
+        <type>UNIQUE (user_facturascripts_nick)</type>
     </constraint>
 </table>
 
