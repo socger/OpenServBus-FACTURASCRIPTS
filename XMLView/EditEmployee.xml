@@ -35,11 +35,13 @@
             <column name="Num. Seg. Social" numcolumns="2" order="140">
                 <widget type="text" fieldname="num_seg_social" maxlength="30"/>
             </column>
-            <column name="fiscal-id" titleurl="EditSettings?activetab=ListIdentificadorFiscal" numcolumns="2" order="150">
+            <column name="fiscal-id" titleurl="EditSettings?activetab=EditIdentificadorFiscal" numcolumns="2" order="150">
                 <widget type="select" fieldname="tipoidfiscal" required="true">
                     <values source="idsfiscales" fieldcode="tipoidfiscal" fieldtitle="tipoidfiscal" />
                 </widget>
             </column>
+
+
             <column name="fiscal-number" numcolumns="2" order="160">
                 <widget type="text" fieldname="cifnif" maxlength="30" icon="fas fa-id-card"/>
             </column>

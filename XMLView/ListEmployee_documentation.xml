@@ -6,7 +6,7 @@
         </column>
         
         <column name="Empleado" order="110">
-            <widget type="select" fieldname="idemployee" onclick="EditEmployee">
+            <widget type="select" fieldname="idemployee" >
                 <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
             </widget>
         </column>
@@ -14,7 +14,7 @@
             <widget type="text" fieldname="nombre" />
         </column>
         <column name="Tipo_documento" order="130">
-            <widget type="select" fieldname="iddocumentation_type" onclick="EditDocumentation_type">
+            <widget type="select" fieldname="iddocumentation_type" >
                 <values source="documentation_types" fieldcode="iddocumentation_type" fieldtitle="nombre" />
             </widget>
         </column>

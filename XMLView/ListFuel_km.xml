@@ -6,7 +6,7 @@
         </column>
 
         <column name="idvehicle" title="Vehículo" order="110">
-            <widget type="select" fieldname="idvehicle" onclick="EditVehicle">
+            <widget type="select" fieldname="idvehicle" >
                 <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
             </widget>
         </column>
@@ -18,7 +18,7 @@
             <widget type="text" fieldname="km" />
         </column>
         <column name="idfuel_type" title="Combustible" order="140">
-            <widget type="select" fieldname="idfuel_type" onclick="EditFuel_type">
+            <widget type="select" fieldname="idfuel_type" >
                 <values source="fuel_types" fieldcode="idfuel_type" fieldtitle="nombre" />
             </widget>
         </column>

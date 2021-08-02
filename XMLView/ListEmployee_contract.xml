@@ -8,12 +8,12 @@
             <widget type="text" fieldname="nombre" />
         </column>
         <column name="company" numcolumns="6" order="150">
-            <widget type="select" fieldname="idempresa" onclick="EditEmpresa">
+            <widget type="select" fieldname="idempresa" >
                 <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto" />
             </widget>
         </column>
         <column name="Tipo_contrato" title="Tipo de contrato" order="160">
-            <widget type="select" fieldname="idemployee_contract_type" onclick="EditEmployee_contract_type">
+            <widget type="select" fieldname="idemployee_contract_type" >
                 <values source="employee_contract_types" fieldcode="idemployee_contract_type" fieldtitle="nombre" />
             </widget>
         </column>

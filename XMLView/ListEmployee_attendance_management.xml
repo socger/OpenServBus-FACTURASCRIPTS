@@ -6,7 +6,7 @@
         </column>
 
         <column name="idemployee" title="Empleado" order="110">
-            <widget type="select" fieldname="idemployee" onclick="EditEmployee">
+            <widget type="select" fieldname="idemployee" >
                 <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
             </widget>
         </column>
@@ -28,12 +28,12 @@
             </widget>            
         </column>
         <column name="ididentification_mean" title="Identificación - medio" order="150">
-            <widget type="select" fieldname="ididentification_mean" onclick="EditIdidentification_mean">
+            <widget type="select" fieldname="ididentification_mean" >
                 <values source="identification_means" fieldcode="ididentification_mean" fieldtitle="nombre" />
             </widget>
         </column>
         <column name="idabsence_reason" title="Ausencia - motivo" order="160">
-            <widget type="select" fieldname="idabsence_reason" onclick="EditAbsence_reason">
+            <widget type="select" fieldname="idabsence_reason" >
                 <values source="absence_reasons" fieldcode="idabsence_reason" fieldtitle="nombre" />
             </widget>
         </column>

@@ -5,7 +5,7 @@
             <widget type="text" fieldname="idvehicle" />
         </column>
         <column name="code" order="110">
-            <widget type="text" fieldname="cod_vehicle" onclick="EditVehicle" />
+            <widget type="text" fieldname="cod_vehicle" />
         </column>
         <column name="Nombre" order="120">
             <widget type="text" fieldname="nombre" />

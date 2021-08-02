@@ -7,12 +7,12 @@
 
 
         <column name="Vehículo" order="110">
-            <widget type="select" fieldname="idvehicle" onclick="EditVehicle">
+            <widget type="select" fieldname="idvehicle" >
                 <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
             </widget>
         </column>
         <column name="Equipamiento - Tipo" order="120">
-            <widget type="select" fieldname="idvehicle_equipament_type" onclick="EditVehicle_equipament_type">
+            <widget type="select" fieldname="idvehicle_equipament_type" >
                 <values source="vehicle_equipament_types" fieldcode="idvehicle_equipament_type" fieldtitle="nombre" />
             </widget>
         </column>
