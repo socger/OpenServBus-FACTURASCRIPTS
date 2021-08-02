@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table>
+    <column>
+        <name>idvehicle</name>
+        <type>serial</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>fechaalta</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>useralta</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>fechamodificacion</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>usermodificacion</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>activo</name>
+        <type>boolean</type>
+        <default>true</default>
+    </column>
+    <column>
+        <name>fechabaja</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>userbaja</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>motivobaja</name>
+        <type>character varying(100)</type>
+    </column>
+
+
+    <column>
+        <name>cod_vehicle</name>
+        <type>character varying(6)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>nombre</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>matricula</name>
+        <type>character varying(25)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>motor_chasis</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>numero_bastidor</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>carroceria</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>numero_obra</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>fecha_matriculacion_primera</name>
+        <type>date</type>
+    </column>
+    <column>
+        <name>fecha_matriculacion_actual</name>
+        <type>date</type>
+    </column>
+    <column>
+        <name>plazas_segun_permiso</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>plazas_segun_ficha_tecnica</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>plazas_ofertables</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>configuraciones_especiales</name>
+        <type>text</type>
+    </column>
+
+    <column>
+        <name>idempresa</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idcollaborator</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idgarage</name>
+        <type>integer</type>
+    </column>
+    
+    <column>
+        <name>observaciones</name>
+        <type>text</type>
+    </column>
+
+    <column>
+        <name>idfuel_type</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>km_actuales</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>fecha_km_actuales</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>idvehicle_type</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>iddriver_usual</name>
+        <type>integer</type>
+    </column>
+
+    <constraint>
+        <name>vehicles_pkey</name>
+        <type>PRIMARY KEY (idvehicle)</type>
+    </constraint>
+    <constraint>
+        <name>ca_vehicles_empresas</name>
+        <type>FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_vehicles_collaborators</name>
+        <type>FOREIGN KEY (idcollaborator) REFERENCES collaborators (idcollaborator) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_vehicles_garages</name>
+        <type>FOREIGN KEY (idgarage) REFERENCES garages (idgarage) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+</table>
+
