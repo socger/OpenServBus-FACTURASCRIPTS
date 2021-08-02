@@ -37,6 +37,7 @@ class EditVehicle extends EditController {
         $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
         */
         $this->addListView('ListVehicle_documentation', 'Vehicle_documentation', 'Documentación');    
+        $this->addListView('ListVehicle_equipament', 'Vehicle_equipament', 'Equipamiento');    
         
         $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
     }
@@ -50,6 +51,11 @@ class EditVehicle extends EditController {
                 $view->loadData('', $where);
                 break;
                     
+            case 'ListVehicle_equipament':
+                $idvehicle = $this->getViewModelValue('EditVehicle', 'idvehicle'); // Le pedimos que guarde en la variable local $idemployee el valor del campo idemployee del controlador EditEmployee.php
+                $where = [new DatabaseWhere('idvehicle', $idvehicle)];
+                $view->loadData('', $where);
+                break;
 
             // Pestaña con el mismo nombre que este controlador EditXxxxx
             case 'EditVehicle': 
