@@ -34,6 +34,10 @@
         <name>userbaja</name>
         <type>character varying(50)</type>
     </column>
+    <column>
+        <name>motivobaja</name>
+        <type>character varying(100)</type>
+    </column>
 
 
     <column>
