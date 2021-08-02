@@ -18,6 +18,7 @@ class Vehicle_equipament extends Base\ModelClass {
     public $activo;
     public $fechabaja;
     public $userbaja;
+    public $motivobaja;
 
     public $idvehicle;
     public $idvehicle_equipament_type;
@@ -48,7 +49,9 @@ class Vehicle_equipament extends Base\ModelClass {
         $this->usermodificacion = $this->user_nick; 
         $this->fechamodificacion = $this->user_fecha; 
         
-        $this->comprobarSiActivo();
+        if ($this->comprobarSiActivo() == false){
+            return false;
+        }
         
         return parent::saveUpdate($values);
     }
@@ -69,7 +72,9 @@ class Vehicle_equipament extends Base\ModelClass {
         $this->usermodificacion = $this->user_nick; 
         $this->fechamodificacion = $this->user_fecha; 
         
-        $this->comprobarSiActivo();
+        if ($this->comprobarSiActivo() == false){
+            return false;
+        }
         
         return parent::saveInsert($values);
     }
@@ -86,15 +91,24 @@ class Vehicle_equipament extends Base\ModelClass {
     // ** ********************************** ** //
     // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
     // ** ********************************** ** //
-    protected function comprobarSiActivo()
+    private function comprobarSiActivo()
     {
+        $a_devolver = true;
+        
         if ($this->activo == false) {
             $this->fechabaja = $this->fechamodificacion;
             $this->userbaja = $this->usermodificacion;
+            
+            if (empty($this->motivobaja)){
+                $a_devolver = false;
+                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
+            }
         } else { // Por si se vuelve a poner Activo = true
             $this->fechabaja = null;
             $this->userbaja = null;
+            $this->motivobaja = null;
         }
+        return $a_devolver;
     }
     
 }
