@@ -26,11 +26,11 @@
             <column name="fecha_dia" title="Fecha" numcolumns="2" order="120">
                 <widget type="date" fieldname="fecha_dia" required="true" />
             </column>
-            <column name="fecha_hora" title="Hora" numcolumns="2" order="120">
+            <column name="fecha_hora" title="Hora" numcolumns="2" order="130">
                 <widget type="time" fieldname="fecha_hora"/>
             </column>
             
-            <column name="origen" title="Origen" numcolumns="2" order="130">
+            <column name="origen" title="Origen" numcolumns="2" order="140">
                 <widget type="select" fieldname="origen" required="true" readonly="true">
                     <values title="Externo">0</values>
                     <values title="Manual">1</values>
@@ -38,18 +38,18 @@
             </column>
 
 
-            <column name="tipoFichaje" title="Tipo fichaje" numcolumns="2" order="140">
+            <column name="tipoFichaje" title="Tipo fichaje" numcolumns="2" order="150">
                 <widget type="select" fieldname="tipoFichaje" required="true">
                     <values title="Entrada">1</values>
                     <values title="Salida">0</values>
                 </widget>            
             </column>
-            <column name="ididentification_mean" title="Identificación - medio" titleurl="ListIdentification_mean" numcolumns="5" order="150">
+            <column name="ididentification_mean" title="Identificación - medio" titleurl="ListIdentification_mean" numcolumns="5" order="160">
                 <widget type="select" fieldname="ididentification_mean" icon="far fa-hand-point-right" onclick="EditIdentification_mean" required="true">
                     <values source="identification_means" fieldcode="ididentification_mean" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="idabsence_reason" title="Ausencia - motivo" titleurl="ListAbsence_reason" numcolumns="5" order="160">
+            <column name="idabsence_reason" title="Ausencia - motivo" titleurl="ListAbsence_reason" numcolumns="5" order="170">
                 <widget type="select" fieldname="idabsence_reason" icon="fas fa-first-aid" onclick="EditAbsence_reason">
                     <values source="absence_reasons" fieldcode="idabsence_reason" fieldtitle="nombre" />
                 </widget>

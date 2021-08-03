@@ -7,10 +7,11 @@
         <column name="Nombre" title="Descripción" order="120">
             <widget type="text" fieldname="nombre" />
         </column>
+        
+        
         <column name="Activo" display="center" order="150">
             <widget type="checkbox" fieldname="activo"/>
         </column>
-        
         <column name="fechaalta" title="Alta" display="right" order="160">
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
