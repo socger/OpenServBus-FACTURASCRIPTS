@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table>
+    <column>
+        <name>idstop</name>
+        <type>serial</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>fechaalta</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>useralta</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>fechamodificacion</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>usermodificacion</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>activo</name>
+        <type>boolean</type>
+        <default>true</default>
+    </column>
+    <column>
+        <name>fechabaja</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>userbaja</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>motivobaja</name>
+        <type>character varying(100)</type>
+    </column>
+
+
+    <column>
+        <name>nombre</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
+
+    <column>
+        <name>ciudad</name>
+        <type>character varying(100)</type>
+    </column>
+    <column>
+        <name>provincia</name>
+        <type>character varying(100)</type>
+    </column>
+    <column>
+        <name>codpais</name>
+        <type>character varying(20)</type>
+    </column>
+    <column>
+        <name>codpostal</name>
+        <type>character varying(10)</type>
+    </column>
+    <column>
+        <name>direccion</name>
+        <type>character varying(100)</type>
+    </column>
+
+
+    <column>
+        <name>observaciones</name>
+        <type>text</type>
+    </column>
+
+
+    <constraint>
+        <name>stops_pkey</name>
+        <type>PRIMARY KEY (idstop)</type>
+    </constraint>
+    
+    <constraint>
+        <name>ca_stops__paises</name>
+        <type>FOREIGN KEY (codpais) REFERENCES paises (codpais) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    
+    <constraint>
+        <name>uniq_stops__parada_direccion</name>
+        <type>UNIQUE (nombre, ciudad, provincia, codpais, codpostal, direccion)</type>
+    </constraint>
+</table>
