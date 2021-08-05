@@ -5,6 +5,8 @@
         <type>serial</type>
         <null>NO</null>
     </column>
+    
+    
     <column>
         <name>fechaalta</name>
         <type>timestamp</type>
@@ -53,14 +55,20 @@
         <type>character varying(100)</type>
         <null>NO</null>
     </column>
+    
+    
     <column>
         <name>observaciones</name>
         <type>text</type>
     </column>
+    
+    
     <constraint>
         <name>driver_pkey</name>
         <type>PRIMARY KEY (iddriver)</type>
     </constraint>
+    
+    
     <constraint>
         <name>ca_driver__employees</name>
         <type>FOREIGN KEY (idemployee) REFERENCES employees (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
@@ -69,6 +77,8 @@
         <name>ca_drivers__collaborators</name>
         <type>FOREIGN KEY (idcollaborator) REFERENCES collaborators (idcollaborator) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
+    
+    
     <constraint>
         <name>uniq_idemployee</name>
         <type>UNIQUE (idemployee)</type>
