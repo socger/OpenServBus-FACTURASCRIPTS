@@ -122,6 +122,9 @@ class Collaborator extends Base\ModelClass {
         // Rellenamos el nombre del empleado en otras tablas
         $sql = "UPDATE drivers SET drivers.nombre = '" . $this->nombre . "' WHERE drivers.idcollaborator = " . $this->idcollaborator . ";";
         self::$dataBase->exec($sql);
+
+        $sql = "UPDATE helpers SET helpers.nombre = '" . $this->nombre . "' WHERE helpers.idcollaborator = " . $this->idcollaborator . ";";
+        self::$dataBase->exec($sql);
     }
       
     private function actualizarCampoNombre()
