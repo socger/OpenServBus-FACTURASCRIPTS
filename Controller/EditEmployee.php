@@ -18,7 +18,7 @@ class EditEmployee extends EditController {
         
         $pagedata['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Empleado';
+        $pageData['title'] = 'Empleado/a';
         
         $pageData['icon'] = 'far fa-id-card';
 

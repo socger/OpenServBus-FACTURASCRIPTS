@@ -17,7 +17,7 @@ class EditDriver extends EditController {
         
         $pagedata['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Conductor';
+        $pageData['title'] = 'Conductor/a';
         
         $pageData['icon'] = 'fas fa-user-astronaut';
 
