@@ -43,7 +43,7 @@ class Driver extends Base\ModelClass {
         return 'drivers';
     }
     
-    protected function Actualizar_driverYN_en_employees($p_borrando)
+    protected function actualizar_driverYN_en_employees($p_borrando)
     {
         // Completamos el campo driver_yn de la tabla employee
         if ($p_borrando == 1){ 
@@ -66,7 +66,7 @@ class Driver extends Base\ModelClass {
     // Para realizar algo antes o después del borrado ... todo depende de que se ponga antes del parent o después
     public function delete()
     {
-        $this->Actualizar_driverYN_en_employees(1); // Se pasa valor 1, en parámetro, porque se está borrando el registro
+        $this->actualizar_driverYN_en_employees(1); // Se pasa valor 1, en parámetro, porque se está borrando el registro
 
         return parent::delete();
     }
@@ -132,8 +132,8 @@ class Driver extends Base\ModelClass {
         $utils = $this->toolBox()->utils();
         $this->observaciones = $utils->noHtml($this->observaciones);
 
-        $this->CompletarCampoNombre();
-        $this->Actualizar_driverYN_en_employees(0); // Se pasa como parámetro 0 para decir que no se está borrando el empleado
+        $this->completarCampoNombre();
+        $this->actualizar_driverYN_en_employees(0); // Se pasa como parámetro 0 para decir que no se está borrando el empleado
         
         return parent::test();
     }
@@ -162,7 +162,7 @@ class Driver extends Base\ModelClass {
         return $a_devolver;
     }
     
-    private function CompletarCampoNombre()
+    private function completarCampoNombre()
     {
         // Rellenamos el campo nombre de este modelo pues está ligado con campo nombre de tabla empleados
         // no hace falta actualizarlo siempre. porque la tabla employees es de este mismo pluggin y desde el test de employee.php actualizo el campo nombre de tabla dirvers
