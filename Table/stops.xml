@@ -5,6 +5,8 @@
         <type>serial</type>
         <null>NO</null>
     </column>
+    
+    
     <column>
         <name>fechaalta</name>
         <type>timestamp</type>
