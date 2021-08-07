@@ -3,7 +3,7 @@
     <columns>
 
         
-        <group name="Invisibles" numcolumns="12">
+        <group name="no-visible" numcolumns="12">
             <column name="user_fecha" display="none" order="100">
                 <widget type="date" fieldname="user_fecha" readonly="true"/> 
             </column>
@@ -11,27 +11,27 @@
                 <widget type="text" fieldname="user_nick" readonly="true"/>
             </column>
             
-            <column name="Id" display="none" order="120">
+            <column name="id" display="none" order="120">
                 <widget type="text" fieldname="idemployee_contract" readonly="true"/>
             </column>
         </group>
         
         
-        <group name="Datos" numcolumns="12">
-            <column name="Empleado" titleurl="ListEmployee" numcolumns="8" order="100">
+        <group name="data" numcolumns="12">
+            <column name="employee" titleurl="ListEmployee" numcolumns="8" order="100">
                 <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee" required="true" readonly="dinamic">
                     <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="date" title="F. inicio" numcolumns="2" order="110">
+            <column name="start-date" numcolumns="2" order="110">
                 <widget type="date" fieldname="fecha_inicio" required="true" />
             </column>
-            <column name="date2" title="F. fin" numcolumns="2" order="120">
+            <column name="end-date" numcolumns="2" order="120">
                 <widget type="date" fieldname="fecha_fin"/>
             </column>
             
             
-            <column name="Tipo_contrato" titleurl="ListEmployee_contract_type" numcolumns="6" order="130">
+            <column name="contract-type" titleurl="ListEmployee_contract_type" numcolumns="6" order="130">
                 <widget type="select" fieldname="idemployee_contract_type" icon="fas fa-building" onclick="EditEmployee_contract_type" required="true">
                     <values source="employee_contract_types" fieldcode="idemployee_contract_type" fieldtitle="nombre" />
                 </widget>
@@ -42,44 +42,44 @@
                 </widget>
             </column>
             
-            <column name="Observaciones" numcolumns="12" title="Observaciones" order="150">
+            <column name="observations" numcolumns="12" order="150">
                 <widget type="textarea" fieldname="observaciones" />
             </column>
         </group>
 
         
-        <group name="Estado" numcolumns="3" icon="fas fa-cog" title="Estado del registro">
-            <column name="Activox" numcolums="2" order="100">
+        <group name="record-status" numcolumns="3" icon="fas fa-cog" title="Estado del registro">
+            <column name="Activo" numcolums="2" order="100">
                 <widget type="text" fieldname="esta_Activo_SI_NO" readonly="true" />
             </column>
         </group>
         
             
-        <group name="Estado_2" numcolumns="12">
-            <column name="fechaalta" title="Alta el" numcolumns="3" order="100">
+        <group name="record-status_2" numcolumns="12">
+            <column name="creation-date" numcolumns="3" order="100">
                 <widget type="datetime" fieldname="fechaalta" readonly="true"/>
             </column>
-            <column name="Creado por" numcolumns="9" order="110">
+            <column name="created-by" numcolumns="9" order="110">
                 <widget type="text" icon="fas fa-user-circle" fieldname="useralta" readonly="true"/>
             </column>
 
 
-            <column name="fechamodificacion" title="Modificado el" numcolumns="3" order="120">
+            <column name="modification-date" numcolumns="3" order="120">
                 <widget type="datetime" fieldname="fechamodificacion" readonly="true"/>
             </column>
-            <column name="Modificado por" numcolumns="9" order="130">
+            <column name="modified-by" numcolumns="9" order="130">
                 <widget type="text" icon="fas fa-user-circle" fieldname="usermodificacion" readonly="true"/>
             </column>
             
             
-            <column name="fechabaja" title="Baja el" numcolumns="3" order="140">
+            <column name="deletion-date" numcolumns="3" order="140">
                 <widget type="datetime" fieldname="fechabaja" readonly="true"/>
             </column>
-            <column name="Borrado por" numcolumns="9" order="150">
+            <column name="deleted-by" numcolumns="9" order="150">
                 <widget type="text" icon="fas fa-user-circle" fieldname="userbaja" readonly="true"/>
             </column>
 
-            <column name="motivobaja" title="Baja - Motivo" description="Sólo rellenar si registro = NO ACTIVO" numcolumns="12" order="170">
+            <column name="deleted-motif" description="only-fill-inactive-record" numcolumns="12" order="170">
                 <widget type="text" fieldname="motivobaja" maxlength="100" />
             </column>
         </group>

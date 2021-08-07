@@ -1,0 +1,13 @@
+{
+    "Description": "Description",
+    "Id": "Id",
+    "Observations": "Observations",
+    "Record_Status": "Record_Status",
+    "created-by": "created-by",
+    "deleted-by": "Deleted by",
+    "deletion-date": "deletion date",
+    "fecha-alta": "fecha-alta",
+    "modification-date": "modification-date",
+    "modified-by": "modified by",
+    "record-status": "record-status"
+}

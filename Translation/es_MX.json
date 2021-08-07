@@ -1,0 +1,13 @@
+{
+    "Description": "Descripción",
+    "Id": "Código",
+    "Observations": "Observaciones",
+    "Record_Status": "Estado del registro",
+    "created-by": "Creado por",
+    "deleted-by": "Borrado por",
+    "deletion-date": "Fecha de baja",
+    "fecha-alta": "fecha-alta",
+    "modification-date": "Fecha modificación",
+    "modified-by": "Modificado por",
+    "record-status": "Estado del registro"
+}
