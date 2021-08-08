@@ -49,7 +49,7 @@
         </group>
 
 
-        <group name="contact-information" numcolumns="12" icon="fas fa-address-card" title="contact-information">
+        <group name="data-contact-information" numcolumns="12" icon="fas fa-address-card" title="data-contact-information">
             <column name="phone" numcolumns="2" order="100">
                 <widget type="text" fieldname="telefono1" maxlength="30" icon="fas fa-phone"/>
             </column>

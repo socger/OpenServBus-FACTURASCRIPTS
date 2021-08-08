@@ -30,7 +30,7 @@
                 <widget type="time" fieldname="fecha_hora"/>
             </column>
             
-            <column name="origin" numcolumns="2" order="140">
+            <column name="the-origin" numcolumns="2" order="140">
                 <widget type="select" fieldname="origen" required="true" readonly="true">
                     <values title="Externo">0</values>
                     <values title="Manual">1</values>

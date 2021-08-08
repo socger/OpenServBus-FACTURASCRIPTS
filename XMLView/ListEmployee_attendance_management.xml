@@ -16,7 +16,7 @@
             <widget type="datetime" fieldname="fecha" />
         </column>
         
-        <column name="origin" order="130">
+        <column name="the-origin" order="130">
             <widget type="select" fieldname="origen">
                 <values title="Externo">0</values>
                 <values title="Manual">1</values>
