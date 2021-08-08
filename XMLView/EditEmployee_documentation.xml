@@ -26,12 +26,12 @@
                     <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="Tipo_documento" title="Tipo documento" titleurl="ListDocumentation_type" numcolumns="3" order="120">
+            <column name="document-type" titleurl="ListDocumentation_type" numcolumns="3" order="120">
                 <widget type="select" fieldname="iddocumentation_type" icon="far fa-address-card" onclick="EditDocumentation_type" required="true" >
                     <values source="documentation_types" fieldcode="iddocumentation_type" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="fecha_caducidad" title="F. caducidad" numcolumns="2" order="130">
+            <column name="expiration-date" numcolumns="2" order="130">
                 <widget type="date" fieldname="fecha_caducidad" />
             </column>
             

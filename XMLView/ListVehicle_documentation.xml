@@ -13,12 +13,12 @@
         <column name="Documento" order="120" title="Documento">
             <widget type="text" fieldname="nombre" />
         </column>
-        <column name="Tipo_documento" order="130">
+        <column name="document-type" order="130">
             <widget type="select" fieldname="iddocumentation_type" >
                 <values source="documentation_types" fieldcode="iddocumentation_type" fieldtitle="nombre" />
             </widget>
         </column>
-        <column name="fecha_caducidad" title="F. Caducidad" display="right" order="140">
+        <column name="expiration-date" display="right" order="140">
             <widget type="date" fieldname="fecha_caducidad"/>
         </column>
         

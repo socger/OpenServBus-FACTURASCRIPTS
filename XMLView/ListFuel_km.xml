@@ -14,7 +14,7 @@
             <widget type="date" fieldname="fecha"/>
         </column>
 
-        <column name="km" title="Km" display="right" order="130">
+        <column name="kms" display="right" order="130">
             <widget type="text" fieldname="km" />
         </column>
         <column name="idfuel_type" title="Combustible" order="140">
@@ -25,7 +25,7 @@
         <column name="litros" title="Litros" display="right" order="150">
             <widget type="text" fieldname="litros" />
         </column>
-        <column name="deposito_lleno" title="Depósito lleno" display="center" order="160">
+        <column name="full-tank" display="center" order="160">
             <widget type="checkbox" fieldname="deposito_lleno"/>
         </column>
 

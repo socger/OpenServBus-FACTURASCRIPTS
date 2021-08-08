@@ -17,12 +17,12 @@
                 <widget type="text" fieldname="idhelper" readonly="true"/>
             </column>
             
-            <column name="employee" description="Una vez creado no se permite modificarlo. Pero puede borrarlo si no ha sido usado" numcolumns="5" order="100">
+            <column name="employee" description="once-created-are-not-allowed-to-modify-it-but-can-delete-it" numcolumns="5" order="100">
                 <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee" readonly="dinamic" >
                     <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="collaborator" description="Una vez creado no se permite modificarlo. Pero puede borrarlo si no ha sido usado" numcolumns="5" order="110">
+            <column name="collaborator" description="once-created-are-not-allowed-to-modify-it-but-can-delete-it" numcolumns="5" order="110">
                 <widget type="select" fieldname="idcollaborator" icon="fas fa-business-time" onclick="EditCollaborator" readonly="dinamic" >
                     <values source="collaborators" fieldcode="idcollaborator" fieldtitle="nombre" />
                 </widget>

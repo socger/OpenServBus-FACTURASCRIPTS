@@ -16,44 +16,44 @@
             <column name="id" numcolumns="2" order="100">
                 <widget type="text" fieldname="idFuel_km" readonly="true"/>
             </column>
-            <column name="Vehiculo" title="Vehículo" titleurl="ListVehicle" numcolumns="4" order="110">
+            <column name="vehicle" titleurl="ListVehicle" numcolumns="4" order="110">
                 <widget type="select" fieldname="idvehicle" icon="fas fa-bus-alt" onclick="EditVehicle" required="true">
                     <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="fecha" title="Fecha" numcolumns="3" order="120">
+            <column name="fecha-dia" numcolumns="3" order="120">
                 <widget type="date" fieldname="fecha" required="true" />
             </column>
-            <column name="km" title="Kms" numcolumns="3" order="130">
+            <column name="kms" numcolumns="3" order="130">
                 <widget type="text" fieldname="km" />
             </column>
             
             
-            <column name="company" title="Empresa" description="Si al crear está vacía, pondrá empresa del vehículo" titleurl="ListEmpresa" numcolumns="12" order="140">
+            <column name="company" description="if-creating-is-empty-company-vehicle-will-be-entered" titleurl="ListEmpresa" numcolumns="12" order="140">
                 <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa" required="true">
                     <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto" />
                 </widget>
             </column>
 
                         
-            <column name="Combustible" title="Combustible" titleurl="ListFuel_type" numcolumns="4" order="150">
+            <column name="fuel-type" titleurl="ListFuel_type" numcolumns="4" order="150">
                 <widget type="select" fieldname="idfuel_type" icon="fas fa-charging-station" onclick="EditFuel_type" required="true">
                     <values source="fuel_types" fieldcode="idfuel_type" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="litros" title="Litros" numcolumns="3" order="160">
+            <column name="liters" numcolumns="3" order="160">
                 <widget type="text" fieldname="litros" />
             </column>
-            <column name="deposito_lleno" title="Depósito lleno" numcolums="2" order="170">
+            <column name="full-tank" numcolums="2" order="170">
                 <widget type="checkbox" fieldname="deposito_lleno"/>
             </column>
-            <column name="pvp_litro" title="Pvp litro" display="right" numcolumns="3" order="180">
+            <column name="pvp-litro" display="right" numcolumns="3" order="180">
                 <widget type="money" fieldname="pvp_litro">
                 </widget>
             </column>
             
 
-            <column name="idfuel_pump" title="Surtidor interno" titleurl="ListFuel_pump" numcolumns="6" order="190">
+            <column name="internal-fuel-dispenser" titleurl="ListFuel_pump" numcolumns="6" order="190">
                 <widget type="select" fieldname="idfuel_pump" icon="fas fa-thumbtack" onclick="EditFuel_pump" >
                     <values source="fuel_pumps" fieldcode="idfuel_pump" fieldtitle="nombre" />
                 </widget>
@@ -66,7 +66,7 @@
         </group>
 
                         
-        <group name="Quien_lo_hace" numcolumns="12" icon="fas fa-cog" title="Realizado por">
+        <group name="made-by" numcolumns="12" icon="fas fa-cog" title="made-by">
             <column name="driver" titleurl="ListDriver" numcolumns="6" order="100">
                 <widget type="select" fieldname="iddriver" icon="fas fa-user-astronaut" onclick="EditDriver" >
                     <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
@@ -80,21 +80,21 @@
         </group>
 
 
-        <group name="Repostado_con" numcolumns="12" icon="fas fa-cog" title="Repostado con">
+        <group name="refueled-with" numcolumns="12" icon="fas fa-cog" title="refueled-with">
             <column name="identification-mean" titleurl="ListIdentification_mean" numcolumns="4" order="210">
                 <widget type="select" fieldname="ididentification_mean" icon="far fa-hand-point-right" onclick="EditIdentification_mean" >
                     <values source="identification_means" fieldcode="ididentification_mean" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="idtarjeta" title="Tarjeta" titleurl="ListTarjeta" numcolumns="3" order="220">
+            <column name="card" titleurl="ListTarjeta" numcolumns="3" order="220">
                 <widget type="select" fieldname="idtarjeta" icon="fab fa-cc-mastercard" onclick="EditTarjeta" >
                     <values source="tarjetas" fieldcode="idtarjeta" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="tipo_tarjeta" title="Tipo tarjeta" numcolumns="4" order="230">
+            <column name="card-type" numcolumns="4" order="230">
                 <widget type="text" fieldname="tipo_tarjeta" readonly="true"/>
             </column>
-            <column name="es_de_pago" title="De pago" numcolumns="1" order="230">
+            <column name="es-de-pago" numcolumns="1" order="230">
                 <widget type="text" fieldname="es_de_pago" readonly="true"/>
             </column>
         </group>
