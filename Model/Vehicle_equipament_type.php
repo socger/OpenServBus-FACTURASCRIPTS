@@ -61,10 +61,7 @@ class Vehicle_equipament_type extends Base\ModelClass {
             $this->idvehicle_equipament_type = $this->newCode();
         }
 
-        // Rellenamos los datos de alta
-        $this->useralta = $this->user_nick; 
-        $this->fechaalta = $this->user_fecha; 
-        
+        $this->rellenarDatosAlta();
         $this->rellenarDatosModificacion();
         
         if ($this->comprobarSiActivo() == false){
@@ -111,6 +108,12 @@ class Vehicle_equipament_type extends Base\ModelClass {
     {
         $this->usermodificacion = $this->user_nick; 
         $this->fechamodificacion = $this->user_fecha; 
+    }
+
+    private function rellenarDatosAlta()
+    {
+        $this->useralta = $this->user_nick; 
+        $this->fechaalta = $this->user_fecha; 
     }
 
 }

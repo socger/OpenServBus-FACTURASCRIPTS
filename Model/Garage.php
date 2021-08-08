@@ -75,10 +75,7 @@ class Garage extends Base\ModelClass {
             $this->idgarage = $this->newCode();
         }
 
-        // Rellenamos los datos de alta
-        $this->useralta = $this->user_nick; 
-        $this->fechaalta = $this->user_fecha; 
-        
+        $this->rellenarDatosAlta();
         $this->rellenarDatosModificacion();
         
         // echo $this->active;
@@ -144,6 +141,12 @@ class Garage extends Base\ModelClass {
     {
         $this->usermodificacion = $this->user_nick; 
         $this->fechamodificacion = $this->user_fecha; 
+    }
+
+    private function rellenarDatosAlta()
+    {
+        $this->useralta = $this->user_nick; 
+        $this->fechaalta = $this->user_fecha; 
     }
 
 }
