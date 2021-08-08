@@ -4,16 +4,17 @@
         <column name="id" display="none" order="100">
             <widget type="text" fieldname="idtarjeta" />
         </column>
+        
 
-        <column name="description" title="Descripción" order="120">
+        <column name="card" order="120">
             <widget type="text" fieldname="nombre" />
         </column>
-        <column name="idtarjeta_type" title="Tipo de tarjeta" numcolumns="6" order="150">
+        <column name="card-type" numcolumns="6" order="150">
             <widget type="select" fieldname="idtarjeta_type" >
                 <values source="tarjeta_types" fieldcode="idtarjeta_type" fieldtitle="nombre" />
             </widget>
         </column>
-        <column name="de_pago" title="De pago" display="center" order="150">
+        <column name="es-de-pago" display="center" order="150">
             <widget type="checkbox" fieldname="de_pago"/>
         </column>
 
@@ -21,8 +22,7 @@
         <column name="active" display="center" order="150">
             <widget type="checkbox" fieldname="activo"/>
         </column>
-        
-        <column name="creation-date" title="Alta" display="right" order="160">
+        <column name="creation-date" display="right" order="160">
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>

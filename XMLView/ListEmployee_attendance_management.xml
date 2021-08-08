@@ -5,13 +5,14 @@
             <widget type="text" fieldname="idemployee_attendance_management" />
         </column>
 
+
         <column name="employee" order="110">
             <widget type="select" fieldname="idemployee" >
                 <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
             </widget>
         </column>
 
-        <column name="fecha" title="Fecha" display="right" order="120">
+        <column name="date" display="right" order="120">
             <widget type="datetime" fieldname="fecha" />
         </column>
         
@@ -38,11 +39,11 @@
             </widget>
         </column>
         
+        
         <column name="active" display="center" order="170">
             <widget type="checkbox" fieldname="activo"/>
         </column>
-        
-        <column name="creation-date" title="Alta" display="right" order="180">
+        <column name="creation-date" display="right" order="180">
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>

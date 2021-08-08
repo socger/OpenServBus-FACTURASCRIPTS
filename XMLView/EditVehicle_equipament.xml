@@ -17,12 +17,12 @@
                 <widget type="text" fieldname="idvehicle_equipament" readonly="true"/>
             </column>
             
-            <column name="Vehículo" titleurl="ListVehicle" numcolumns="5" order="110">
+            <column name="vehicle" titleurl="ListVehicle" numcolumns="5" order="110">
                 <widget type="select" fieldname="idvehicle" icon="fas fa-bus-alt" onclick="EditVehicle" required="true" >
                     <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="Vehículo_Equipamiento" titleurl="ListVehicle_equipament_type" numcolumns="5" order="120">
+            <column name="vehicle-equipment" titleurl="ListVehicle_equipament_type" numcolumns="5" order="120">
                 <widget type="select" fieldname="idvehicle_equipament_type" icon="fas fa-wheelchair" onclick="EditVehicle_equipament_type" required="true" >
                     <values source="vehicle_equipament_types" fieldcode="idvehicle_equipament_type" fieldtitle="nombre" />
                 </widget>

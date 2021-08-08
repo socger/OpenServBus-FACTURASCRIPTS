@@ -4,25 +4,26 @@
         <column name="id" display="none" order="100">
             <widget type="text" fieldname="idFuel_km" />
         </column>
+        
 
-        <column name="idvehicle" title="Vehículo" order="110">
+        <column name="vehicle" order="110">
             <widget type="select" fieldname="idvehicle" >
                 <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
             </widget>
         </column>
-        <column name="fecha" title="Fecha" display="right" order="120">
+        <column name="date" display="right" order="120">
             <widget type="date" fieldname="fecha"/>
         </column>
 
         <column name="kms" display="right" order="130">
             <widget type="text" fieldname="km" />
         </column>
-        <column name="idfuel_type" title="Combustible" order="140">
+        <column name="fuel-type" order="140">
             <widget type="select" fieldname="idfuel_type" >
                 <values source="fuel_types" fieldcode="idfuel_type" fieldtitle="nombre" />
             </widget>
         </column>
-        <column name="litros" title="Litros" display="right" order="150">
+        <column name="liters" display="right" order="150">
             <widget type="text" fieldname="litros" />
         </column>
         <column name="full-tank" display="center" order="160">
@@ -33,8 +34,7 @@
         <column name="active" display="center" order="150">
             <widget type="checkbox" fieldname="activo"/>
         </column>
-        
-        <column name="creation-date" title="Alta" display="right" order="160">
+        <column name="creation-date" display="right" order="160">
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>

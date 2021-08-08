@@ -5,14 +5,16 @@
             <widget type="text" fieldname="idhelper" />
         </column>
         
-        <column name="Monitor" order="110" title="Empleado/Monitor">
+        
+        <column name="helper" order="110" >
             <widget type="text" fieldname="nombre" />
         </column>
+        
         
         <column name="active" display="center" order="150">
             <widget type="checkbox" fieldname="activo"/>
         </column>
-        <column name="creation-date" title="Alta" display="right" order="160">
+        <column name="creation-date" display="right" order="160">
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>

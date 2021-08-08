@@ -4,17 +4,20 @@
         <column name="id" display="none" order="100">
             <widget type="text" fieldname="iddocumentation_type" />
         </column>
+        
+        
         <column name="description" order="120">
             <widget type="text" fieldname="nombre" />
         </column>
-        <column name="Obligar-F.Caducidad" display="center" order="150">
+        <column name="expiration-date-required" display="center" order="150">
             <widget type="checkbox" fieldname="fechacaducidad_obligarla"/>
         </column>
+        
+        
         <column name="active" display="center" order="150">
             <widget type="checkbox" fieldname="activo"/>
         </column>
-        
-        <column name="creation-date" title="Alta" display="right" order="160">
+        <column name="creation-date" display="right" order="160">
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>

@@ -16,10 +16,10 @@
             <column name="id" numcolumns="3" order="100">
                 <widget type="text" fieldname="idtarjeta_type" readonly="true"/>
             </column>
-            <column name="description" title="Descripción" numcolumns="7" order="110">
+            <column name="description" numcolumns="7" order="110">
                 <widget type="text" fieldname="nombre" maxlength="100" required ="true" />
             </column>
-            <column name="De_pago" title="De pago" description="Afectará a todas las tarjetas con este tipo" numcolums="2" order="120">
+            <column name="es-de-pago" description="will-affect-all-cards-this-type" numcolums="2" order="120">
                 <widget type="checkbox" fieldname="de_pago"/>
             </column>
             

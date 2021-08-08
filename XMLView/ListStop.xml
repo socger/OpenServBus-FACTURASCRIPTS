@@ -4,14 +4,15 @@
         <column name="id" display="none" order="100">
             <widget type="text" fieldname="idstop" />
         </column>
-        <column name="description" title="Parada" order="110">
+        
+
+        <column name="stop" order="110">
             <widget type="text" fieldname="nombre" />
         </column>
-        
-        <column name="ciudad" title="Ciudad/Población" order="120">
+        <column name="city" order="120">
             <widget type="text" fieldname="ciudad" />
         </column>
-        <column name="direccion" title="Dirección" order="120">
+        <column name="address" title="Dirección" order="120">
             <widget type="text" fieldname="direccion" />
         </column>
         
@@ -19,7 +20,7 @@
         <column name="active" display="center" order="150">
             <widget type="checkbox" fieldname="activo"/>
         </column>
-        <column name="creation-date" title="Alta" display="right" order="160">
+        <column name="creation-date" display="right" order="160">
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>

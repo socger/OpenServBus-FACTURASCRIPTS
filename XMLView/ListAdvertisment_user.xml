@@ -5,13 +5,14 @@
             <widget type="text" fieldname="idadvertisment_user" />
         </column>
         
+        
         <column name="description" title="notice" order="110">
             <widget type="text" fieldname="nombre" />
         </column>
-        <column name="inicio" title="Inicio" display="right" order="120">
+        <column name="start" display="right" order="120">
             <widget type="datetime" fieldname="inicio"/>
         </column>
-        <column name="fin" title="Fin" display="right" order="130">
+        <column name="end" display="right" order="130">
             <widget type="datetime" fieldname="fin"/>
         </column>
         <column name="nick" title="nick-user" titleurl="ListUser#ListUser" numcolumns="4" order="140">
@@ -19,7 +20,7 @@
                 <values source="users" fieldcode="nick" fieldtitle="nick" />
             </widget>
         </column>
-        <column name="codrole" title="Grupo de usuarios" titleurl="ListUser#ListRole" numcolumns="4" order="150">
+        <column name="user-group" titleurl="ListUser#ListRole" numcolumns="4" order="150">
             <widget type="select" fieldname="codrole" icon="fas fa-id-card" >
                 <values source="roles" fieldcode="codrole" fieldtitle="descripcion" />
             </widget>
@@ -29,7 +30,7 @@
         <column name="active" display="center" order="150">
             <widget type="checkbox" fieldname="activo"/>
         </column>
-        <column name="creation-date" title="Alta" display="right" order="160">
+        <column name="creation-date" display="right" order="160">
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>

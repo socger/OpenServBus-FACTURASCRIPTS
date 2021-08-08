@@ -5,12 +5,13 @@
             <widget type="text" fieldname="idvehicle_documentation" />
         </column>
         
-        <column name="Vehículo" order="110">
+        
+        <column name="vehicle" order="110">
             <widget type="select" fieldname="idvehicle" >
                 <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
             </widget>
         </column>
-        <column name="Documento" order="120" title="Documento">
+        <column name="description" order="120" >
             <widget type="text" fieldname="nombre" />
         </column>
         <column name="document-type" order="130">
@@ -22,10 +23,11 @@
             <widget type="date" fieldname="fecha_caducidad"/>
         </column>
         
+        
         <column name="active" display="center" order="150">
             <widget type="checkbox" fieldname="activo"/>
         </column>
-        <column name="creation-date" title="F. Alta" display="right" order="160">
+        <column name="creation-date" display="right" order="160">
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>
