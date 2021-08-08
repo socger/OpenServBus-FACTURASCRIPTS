@@ -151,5 +151,11 @@
         <name>ca_vehicles_garages</name>
         <type>FOREIGN KEY (idgarage) REFERENCES garages (idgarage) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
+    
+    <constraint>
+        <name>uniq_vehicles__cod_vehicle</name>
+        <type>UNIQUE (cod_vehicle)</type>
+    </constraint>
+    
 </table>
 

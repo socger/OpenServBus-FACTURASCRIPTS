@@ -154,5 +154,11 @@
         <name>uniq_employees__user_facturascripts_nick</name>
         <type>UNIQUE (user_facturascripts_nick)</type>
     </constraint>
+    <constraint>
+        <name>uniq_employees__cod_employee</name>
+        <type>UNIQUE (cod_employee)</type>
+    </constraint>
+    
+    
 </table>
 
