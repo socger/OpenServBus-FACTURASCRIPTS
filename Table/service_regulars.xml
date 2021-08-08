@@ -50,6 +50,11 @@
     
     
     <column>
+        <name>cod_servicio</name>
+        <type>character varying(20)</type>
+        <null>NO</null>
+    </column>
+    <column>
         <name>codcliente</name>
         <type>character varying(10)</type>
         <null>NO</null>
@@ -113,23 +118,106 @@
     </column>
     
     
-    
-    
-    <column>
-        <name>observaciones</name>
-        <type>text</type>
-    </column>
-    
-    
     <column>
         <name>fueraDelMunicipio</name>
         <type>boolean</type>
         <default>false</default>
     </column>
 
+    
+    <column>
+        <name>hoja_ruta_origen</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>hoja_ruta_destino</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>hoja_ruta_expediciones</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>hoja_ruta_contratante</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>hoja_ruta_tipoidfiscal</name>
+        <type>character varying(25)</type>
+    </column>
+    <column>
+        <name>hoja_ruta_cifnif</name>
+        <type>character varying(30)</type>
+        <null>NO</null>
+    </column>
+
+        
+    <column>
+        <name>idservice_type</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idempresa</name>
+        <type>integer</type>
+    </column>
+
+        
+    <column>
+        <name>observaciones_montaje</name>
+        <type>text</type>
+    </column>
+    <column>
+        <name>observaciones_vehiculo</name>
+        <type>text</type>
+    </column>
+    <column>
+        <name>observaciones_facturacion</name>
+        <type>text</type>
+    </column>
+    
     <constraint>
         <name>service_regulars_pkey</name>
         <type>PRIMARY KEY (idservice_regular)</type>
+    </constraint>
+
+
+    <constraint>
+        <name>ca_service_regulars__clientes</name>
+        <type>FOREIGN KEY (codcliente) REFERENCES clientes (codcliente) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_regulars__vehicle_types</name>
+        <type>FOREIGN KEY (idvehicle_type) REFERENCES vehicle_types (idvehicle_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_regulars__helpers</name>
+        <type>FOREIGN KEY (idhelper) REFERENCES helpers (idhelper) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_regulars__idsfiscales</name>
+        <type>FOREIGN KEY (hoja_ruta_tipoidfiscal) REFERENCES idsfiscales (tipoidfiscal) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_regulars__service_types</name>
+        <type>FOREIGN KEY (idservice_type) REFERENCES service_types (idservice_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_regulars__service_types</name>
+        <type>FOREIGN KEY (idservice_type) REFERENCES service_types (idservice_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_regulars__empresas</name>
+        <type>FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+
+
+    <constraint>
+        <name>uniq_service_regulars__cod_servicio</name>
+        <type>UNIQUE (cod_servicio)</type>
     </constraint>
     
 </table>
