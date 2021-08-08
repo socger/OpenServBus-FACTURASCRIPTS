@@ -64,9 +64,7 @@ class Vehicle extends Base\ModelClass {
     // Para realizar cambios en los datos antes de guardar por modificación
     protected function saveUpdate(array $values = [])
     {
-        // Siendo un alta o una modificación, siempre guardamos los datos de modificación
-        $this->usermodificacion = $this->user_nick; 
-        $this->fechamodificacion = $this->user_fecha; 
+        $this->rellenarDatosModificacion();
         
         if ($this->comprobarSiActivo() == false){
             return false;
@@ -92,9 +90,7 @@ class Vehicle extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
         
-        // Siendo un alta o una modificación, siempre guardamos los datos de modificación
-        $this->usermodificacion = $this->user_nick; 
-        $this->fechamodificacion = $this->user_fecha; 
+        $this->rellenarDatosModificacion();
         
         if ($this->comprobarSiActivo() == false){
             return false;
@@ -117,7 +113,7 @@ class Vehicle extends Base\ModelClass {
         }
         */
       
-        // Comprobamos que el código de empleado si se ha introducido correctamente
+        // Comprobamos que el código se ha introducido correctamente
         if (!empty($this->cod_vehicle) && 1 !== \preg_match('/^[A-Z0-9_\+\.\-]{1,10}$/i', $this->cod_vehicle)) {
             $this->toolBox()->i18nLog()->error(
                 'invalid-alphanumeric-code',
@@ -200,5 +196,11 @@ class Vehicle extends Base\ModelClass {
         }
         return $a_devolver;
     }
-    
+
+    private function rellenarDatosModificacion()
+    {
+        $this->usermodificacion = $this->user_nick; 
+        $this->fechamodificacion = $this->user_fecha; 
+    }
+
 }

@@ -69,9 +69,7 @@ class Employee extends Base\ModelClass {
     // Para realizar cambios en los datos antes de guardar por modificación
     protected function saveUpdate(array $values = [])
     {
-        // Siendo un alta o una modificación, siempre guardamos los datos de modificación
-        $this->usermodificacion = $this->user_nick; 
-        $this->fechamodificacion = $this->user_fecha; 
+        $this->rellenarDatosModificacion();
         
         if ($this->comprobarSiActivo() == false){
             return false;
@@ -97,9 +95,7 @@ class Employee extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
         
-        // Siendo un alta o una modificación, siempre guardamos los datos de modificación
-        $this->usermodificacion = $this->user_nick; 
-        $this->fechamodificacion = $this->user_fecha; 
+        $this->rellenarDatosModificacion();
         
         if ($this->comprobarSiActivo() == false){
             return false;
@@ -213,5 +209,11 @@ class Employee extends Base\ModelClass {
         self::$dataBase->exec($sql);
         
     }
-   
+
+    private function rellenarDatosModificacion()
+    {
+        $this->usermodificacion = $this->user_nick; 
+        $this->fechamodificacion = $this->user_fecha; 
+    }
+
 }
