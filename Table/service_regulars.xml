@@ -107,19 +107,19 @@
     
 
     <column>
-        <name>facturarSN</name>
+        <name>facturar_SN</name>
         <type>boolean</type>
         <default>true</default>
     </column>
     <column>
-        <name>facturarIndividualmente</name>
+        <name>facturar_agrupando</name>
         <type>boolean</type>
         <default>false</default>
     </column>
     
     
     <column>
-        <name>fueraDelMunicipio</name>
+        <name>fuera_del_municipio</name>
         <type>boolean</type>
         <default>false</default>
     </column>
