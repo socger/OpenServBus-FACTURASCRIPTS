@@ -17,23 +17,46 @@
 
 
         <group name="data" numcolumns="12">
-            <column name="code" description="its-optional" numcolumns="2" order="100">
+            <column name="code" description="its-optional" numcolumns="3" order="100">
                 <widget type="text" fieldname="cod_servicio" icon="fas fa-hashtag" maxlength="20" readonly="dinamic" />
             </column>
-            
-            jerofa vas por aqui
-            
-            
             <column name="description" numcolumns="9" order="110">
                 <widget type="text" fieldname="nombre" maxlength="100" required ="true" />
             </column>
             
-            <column name="observations" numcolumns="12" order="120">
-                <widget type="textarea" fieldname="observaciones" />
+
+            <column name="client" numcolumns="6" order="100">
+                <widget type="select" fieldname="codcliente" icon="fas fa-users" onclick="EditCliente">
+                    <values source="empresas" fieldcode="codcliente" fieldtitle="nombre" />
+                </widget>
             </column>
+            <column name="vehicle-type" numcolumns="6" order="140">
+                <widget type="select" fieldname="idvehicle_type" icon="fas fa-tractor" onclick="EditVehicle_type">
+                    <values source="vehicle_types" fieldcode="idvehicle_type" fieldtitle="nombre" />
+                </widget>
+            </column>
+            
+            
+             jerofa vas por aqui           
+                                                
+            
         </group>
 
                         
+                        
+        <group name="observations" numcolumns="12" icon="fas fa-info-circle" title="observations">
+            <column name="observations-mounting" numcolumns="12" order="120">
+                <widget type="textarea" fieldname="observaciones_montaje" />
+            </column>
+            <column name="observations-vehicle" numcolumns="12" order="120">
+                <widget type="textarea" fieldname="observaciones_vehiculo" />
+            </column>
+            <column name="observations-billing" numcolumns="12" order="120">
+                <widget type="textarea" fieldname="observaciones_facturacion" />
+            </column>
+        </group>
+        
+
         <group name="record-status" numcolumns="12" icon="fas fa-cog" title="Estado del registro">
             <column name="active" numcolums="12" order="100">
                 <widget type="checkbox" fieldname="activo"/>
