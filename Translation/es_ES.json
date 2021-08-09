@@ -68,6 +68,7 @@
     "the-origin": "El origen",
     "the-destination": "El destino",
     "expeditions": "Expediciones",
+    "contracting-party": "Contratante",
     "to-calculate-age-need-first-registration-date": "Para calcular la edad, necesita la fecha de matriculación 1ª",
     "user-fs": "Usuario FacturaScripts",
     "user-group": "Grupo de usuarios",
@@ -89,5 +90,11 @@
     "create-invoice": "Crear factura",
     "outside-the-gown": "Fuera del municipio",
     "book-roadmap": "Libro / Hoja de ruta",
-    "service-type": "Tipo de servicio"
+    "service-type": "Tipo de servicio",
+    "amount": "Importe",
+    "client": "Cliente",
+    "observation": "Observaciones",
+    "observations-mounting": "Observaciones - montaje",
+    "observations-vehicle": "Observaciones - vehículo",
+    "observations-billing": "Observaciones - facturación"
 }

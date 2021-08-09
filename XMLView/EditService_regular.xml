@@ -30,7 +30,7 @@
 
             <column name="client" numcolumns="6" order="130">
                 <widget type="select" fieldname="codcliente" icon="fas fa-users" onclick="EditCliente">
-                    <values source="empresas" fieldcode="codcliente" fieldtitle="nombre" />
+                    <values source="clientes" fieldcode="codcliente" fieldtitle="nombre" />
                 </widget>
             </column>
             <column name="vehicle-type" numcolumns="6" order="140">
@@ -66,12 +66,15 @@
         </group>
 
                                                 
-        <group name="billing" numcolumns="4" icon="fas fa-calendar-day" title="billing">
+        <group name="billing" numcolumns="12" icon="fas fa-calendar-day" title="billing">
             <column name="create-invoice" numcolums="2" order="100">
                 <widget type="checkbox" fieldname="facturar_SN"/>
             </column>
             <column name="bill-grouping" numcolums="2" order="110">
                 <widget type="checkbox" fieldname="facturar_agrupando"/>
+            </column>
+            <column name="amount" display="right" numcolums="3" order="120">
+                <widget type="number" decimal="2" fieldname="importe" />
             </column>
         </group>
 
@@ -87,7 +90,7 @@
             <column name="expeditions" numcolumns="4" order="120">
                 <widget type="text" fieldname="hoja_ruta_expediciones" maxlength="100" required ="true" />
             </column>
-            <column name="hoja_ruta_contratante" numcolumns="4" order="130">
+            <column name="contracting-party" numcolumns="4" order="130">
                 <widget type="text" fieldname="hoja_ruta_contratante" maxlength="100" required ="true" />
             </column>
             <column name="fiscal-id" titleurl="EditSettings?activetab=EditIdentificadorFiscal" numcolumns="2" order="140">
@@ -109,7 +112,7 @@
                     <values source="service_types" fieldcode="idservice_type" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="company" titleurl="ListEmpresas" numcolumns="6" order="140">
+            <column name="company" titleurl="ListEmpresas" numcolumns="4" order="180">
                 <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa" required="true">
                     <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto" />
                 </widget>

@@ -116,6 +116,12 @@
         <type>boolean</type>
         <default>false</default>
     </column>
+    <column>
+        <name>importe</name>
+        <type>double precision</type>
+        <null>NO</null>
+        <default>0</default>
+    </column>
     
     
     <column>
@@ -182,36 +188,6 @@
     <constraint>
         <name>service_regulars_pkey</name>
         <type>PRIMARY KEY (idservice_regular)</type>
-    </constraint>
-
-
-    <constraint>
-        <name>ca_service_regulars__clientes</name>
-        <type>FOREIGN KEY (codcliente) REFERENCES clientes (codcliente) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
-    </constraint>
-    <constraint>
-        <name>ca_service_regulars__vehicle_types</name>
-        <type>FOREIGN KEY (idvehicle_type) REFERENCES vehicle_types (idvehicle_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
-    </constraint>
-    <constraint>
-        <name>ca_service_regulars__helpers</name>
-        <type>FOREIGN KEY (idhelper) REFERENCES helpers (idhelper) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
-    </constraint>
-    <constraint>
-        <name>ca_service_regulars__idsfiscales</name>
-        <type>FOREIGN KEY (hoja_ruta_tipoidfiscal) REFERENCES idsfiscales (tipoidfiscal) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
-    </constraint>
-    <constraint>
-        <name>ca_service_regulars__service_types</name>
-        <type>FOREIGN KEY (idservice_type) REFERENCES service_types (idservice_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
-    </constraint>
-    <constraint>
-        <name>ca_service_regulars__service_types</name>
-        <type>FOREIGN KEY (idservice_type) REFERENCES service_types (idservice_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
-    </constraint>
-    <constraint>
-        <name>ca_service_regulars__empresas</name>
-        <type>FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
 
 
