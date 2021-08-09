@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/XMLView/EditService_regular.xml</file>
-            <file>file:/C:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Table/service_regulars.xml</file>
-            <file>file:/C:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Model/Service_regular.php</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Table/service_regulars.xml</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Model/Service_regular.php</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/Translation/es_ES.json</file>
+            <file>file:/E:/PROGRAMACION/PHP/FACTURASCRIPTS/OpenServBus/XMLView/EditService_regular.xml</file>
         </group>
     </open-files>
 </project-private>
