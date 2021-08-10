@@ -89,7 +89,7 @@ class Service_regular extends Base\ModelClass {
         if ($this->comprobarSiActivo() == false){
             return false;
         }
-        
+
         return parent::saveUpdate($values);
     }
 
@@ -112,7 +112,7 @@ class Service_regular extends Base\ModelClass {
         if ($this->comprobarSiActivo() == false){
             return false;
         }
-        
+
         return parent::saveInsert($values);
     }
     
@@ -202,12 +202,12 @@ class Service_regular extends Base\ModelClass {
     {
         $a_devolver = true;
         if ( $this->lunes == false and 
-             $this->martes = false and 
-             $this->miercoles = false and 
-             $this->jueves = false and 
-             $this->viernes = false and 
-             $this->sabado = false and 
-             $this->domingo = false ) 
+             $this->martes == false and 
+             $this->miercoles == false and 
+             $this->jueves == false and 
+             $this->viernes == false and 
+             $this->sabado == false and 
+             $this->domingo == false ) 
         {
             $a_devolver = false;
             $this->toolBox()->i18nLog()->error('Ya que es un servicio regular/fijo, debe de elegirme que días de la semana se va a realizar.');

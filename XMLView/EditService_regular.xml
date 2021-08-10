@@ -16,7 +16,7 @@
         </group>
 
 
-        <group name="data" numcolumns="10">
+        <group name="data" numcolumns="8">
             <column name="code" description="its-optional" numcolumns="3" order="100">
                 <widget type="text" fieldname="cod_servicio" icon="fas fa-hashtag" maxlength="20" readonly="dinamic" />
             </column>
@@ -26,7 +26,7 @@
         </group>
 
                         
-        <group name="days-of-week" numcolumns="2" icon="fas fa-calendar-day" title="days-of-week">
+        <group name="days-of-week" numcolumns="4" icon="fas fa-calendar-day" title="days-of-week">
             <column name="monday" numcolums="1" order="100">
                 <widget type="checkbox" fieldname="lunes"/>
             </column>
