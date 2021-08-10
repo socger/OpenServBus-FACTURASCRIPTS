@@ -12,7 +12,7 @@ class ListService_regular extends ListController {
         
         $pageData['menu'] = 'OpenServBus';
         $pageData['submenu'] = 'Servicios';
-        $pageData['title'] = 'Servicios fijos/regulares';
+        $pageData['title'] = 'Serv. regulares';
         
         $pageData['icon'] = 'fas fa-book-open';
 

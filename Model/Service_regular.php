@@ -49,6 +49,7 @@ class Service_regular extends Base\ModelClass {
     public $idservice_type;
     public $idempresa;
     
+    public $observaciones;
     public $observaciones_montaje;
     public $observaciones_vehiculo;
     public $observaciones_facturacion;
@@ -101,7 +102,7 @@ class Service_regular extends Base\ModelClass {
             $this->idservice_regular = $this->newCode();
         }
 
-        // Rellenamos el cod_vehicle si no lo introdujo el usuario
+        // Rellenamos cod_servicio si no lo introdujo el usuario
         if (empty($this->cod_servicio)) {
             $this->cod_servicio = (string) $this->newCode();
         }
@@ -137,6 +138,7 @@ class Service_regular extends Base\ModelClass {
         // Para evitar la inyección de sql
         $utils = $this->toolBox()->utils();
         $this->nombre = $utils->noHtml($this->nombre);
+        $this->observaciones = $utils->noHtml($this->observaciones);
         $this->observaciones_montaje = $utils->noHtml($this->observaciones_montaje);
         $this->observaciones_vehiculo = $utils->noHtml($this->observaciones_vehiculo);
         $this->observaciones_facturacion = $utils->noHtml($this->observaciones_facturacion);

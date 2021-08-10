@@ -122,16 +122,18 @@
             </column>
         </group>
 
-                                                
-        
+
         <group name="observations" numcolumns="12" icon="fas fa-info-circle" title="observations">
-            <column name="observations-mounting" numcolumns="12" order="120">
+            <column name="observations-general" numcolumns="12" order="100">
+                <widget type="textarea" fieldname="observaciones" />
+            </column>
+            <column name="observations-mounting" numcolumns="12" order="110">
                 <widget type="textarea" fieldname="observaciones_montaje" />
             </column>
             <column name="observations-vehicle" numcolumns="12" order="120">
                 <widget type="textarea" fieldname="observaciones_vehiculo" />
             </column>
-            <column name="observations-billing" numcolumns="12" order="120">
+            <column name="observations-billing" numcolumns="12" order="130">
                 <widget type="textarea" fieldname="observaciones_facturacion" />
             </column>
         </group>

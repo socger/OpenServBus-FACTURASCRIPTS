@@ -173,6 +173,10 @@
 
         
     <column>
+        <name>observaciones</name>
+        <type>text</type>
+    </column>
+    <column>
         <name>observaciones_montaje</name>
         <type>text</type>
     </column>
