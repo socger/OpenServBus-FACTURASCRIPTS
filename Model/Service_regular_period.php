@@ -85,7 +85,11 @@ class Service_regular_period extends Base\ModelClass {
     }
     
     public function test() {
-        
+        $this->crearFechaDesde();
+        $this->crearFechaHasta();
+        $this->crearHoraDesde();
+        $this->crearHoraHasta();
+
         if ($this->checkFechasPeriodo() == false){
             return false;
         }
@@ -93,9 +97,6 @@ class Service_regular_period extends Base\ModelClass {
         if ($this->checkHorasPeriodo() == false){
             return false;
         }
-        
-        $this->crearHoraDesde();
-        $this->crearHoraHasta();
 
         $this->evitarInyeccionSQL();
         return parent::test();
@@ -202,6 +203,24 @@ class Service_regular_period extends Base\ModelClass {
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
 
+    private function crearFechaDesde()
+    {
+        $fecha = '';
+        if ($this->inicio_dia <> '01-01-1970'){
+            $fecha = $fecha . $this->inicio_dia;
+        }
+        $this->fecha_desde = $fecha;
+    }
+
+    private function crearFechaHasta()
+    {
+        $fecha = '';
+        if ($this->fin_dia <> '01-01-1970'){
+            $fecha = $fecha . $this->fin_dia;
+        }
+        $this->fecha_hasta = $fecha;
+    }
+    
     private function crearHoraDesde()
     {
         $fecha = '';
