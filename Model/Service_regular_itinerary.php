@@ -166,7 +166,7 @@ class Service_regular_itinerary extends Base\ModelClass {
     private function checkPasajeros()
     {
         $a_devolver = true;
-        if ( empty($this->pasajeros_entradas) ||
+        if ( empty($this->pasajeros_entradas) and
              empty($this->pasajeros_salidas) ) 
         {
             $a_devolver = false;
