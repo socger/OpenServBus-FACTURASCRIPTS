@@ -135,7 +135,7 @@ class Service_regular extends Base\ModelClass {
             return false;
         }
         
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

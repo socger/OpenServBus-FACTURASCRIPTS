@@ -72,7 +72,7 @@ class Fuel_pump extends Base\ModelClass {
     }
     
     public function test() {
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

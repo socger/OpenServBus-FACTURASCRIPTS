@@ -23,9 +23,14 @@ class Service_regular_period extends Base\ModelClass {
     public $idservice_regular;
     public $fecha_desde;
     public $fecha_hasta;
-    
+
     public $hora_desde;
     public $hora_hasta;
+
+    public $inicio_dia;
+    public $inicio_hora;
+    public $fin_dia;
+    public $fin_hora;
     
     public $salida_desde_nave_sn;
     
@@ -89,7 +94,10 @@ class Service_regular_period extends Base\ModelClass {
             return false;
         }
         
-		evitarInyeccionSQL();
+        $this->crearHoraDesde();
+        $this->crearHoraHasta();
+
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -183,6 +191,7 @@ class Service_regular_period extends Base\ModelClass {
                 $this->toolBox()->i18nLog()->error('La hora de inicio, no puede ser mayor que la hora de fin.');
             }
         }
+
         return $a_devolver;
     }
 	
@@ -192,5 +201,32 @@ class Service_regular_period extends Base\ModelClass {
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
-	
+
+    private function crearHoraDesde()
+    {
+        $fecha = '';
+        if ($this->inicio_dia <> '01-01-1970'){
+            $fecha = $fecha . $this->inicio_dia;
+        }
+        
+        if (!empty($this->inicio_hora)){
+            $fecha = $fecha . ' ' . $this->inicio_hora;
+        }
+        $this->hora_desde = $fecha;
+    }
+
+    private function crearHoraHasta()
+    {
+        $fecha = '';
+        if ($this->inicio_dia <> '01-01-1970'){
+            $fecha = $fecha . $this->inicio_dia;
+        }
+        
+        if (!empty($this->fin_hora)){
+            $fecha = $fecha . ' ' . $this->fin_hora;
+        }
+        $this->hora_hasta = $fecha;
+    }
+
 }
+

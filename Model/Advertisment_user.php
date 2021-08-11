@@ -114,7 +114,7 @@ class Advertisment_user extends Base\ModelClass {
         }
         $this->fin = $fecha;
 
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

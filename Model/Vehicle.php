@@ -153,8 +153,7 @@ class Vehicle extends Base\ModelClass {
             }
         }
         
-
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

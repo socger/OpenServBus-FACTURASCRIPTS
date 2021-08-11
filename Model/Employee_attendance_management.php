@@ -85,7 +85,7 @@ class Employee_attendance_management extends Base\ModelClass {
         // Guardamos la fecha, porque en EditEmployee_attendance_management.xml separamos el día y la hora en dos widget
         $this->fecha = $this->fecha_dia . ' ' . $this->fecha_hora;
 
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

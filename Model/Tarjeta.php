@@ -88,7 +88,7 @@ class Tarjeta extends Base\ModelClass {
         
         $this->comprobarEmpresa();
 
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

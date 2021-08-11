@@ -102,7 +102,7 @@ class Fuel_km extends Base\ModelClass {
                     
         $this->comprobarEmpresa();
         
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

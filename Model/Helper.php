@@ -95,7 +95,7 @@ class Helper extends Base\ModelClass {
         
         $this->completarCampoNombre();
         
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

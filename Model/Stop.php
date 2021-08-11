@@ -77,7 +77,7 @@ class Stop extends Base\ModelClass {
     }
     
     public function test() {
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

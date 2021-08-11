@@ -94,7 +94,7 @@ class Garage extends Base\ModelClass {
             $this->idempresa = $this->toolBox()->appSettings()->get('default', 'idempresa');
         }
 
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

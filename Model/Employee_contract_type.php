@@ -72,7 +72,7 @@ class Employee_contract_type extends Base\ModelClass {
     
     public function test()
     {
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

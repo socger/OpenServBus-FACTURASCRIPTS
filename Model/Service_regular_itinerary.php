@@ -90,7 +90,7 @@ class Service_regular_itinerary extends Base\ModelClass {
         if ($this->checkHora() == false){return false;}
         if ($this->checkPasajeros() == false){return false;}
         
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

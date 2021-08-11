@@ -91,7 +91,7 @@ class Employee_attendance_management_yn extends Base\ModelClass {
             }
         }
 
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

@@ -121,7 +121,7 @@ class Driver extends Base\ModelClass {
             return false;
         }
         
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

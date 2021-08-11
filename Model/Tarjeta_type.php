@@ -76,7 +76,7 @@ class Tarjeta_type extends Base\ModelClass {
     {
         $this->actualizarEnTarjetas_DePago();
 
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 

@@ -124,7 +124,7 @@ class Employee extends Base\ModelClass {
         $this->actualizarNombreEmpleadoEn();
 
         
-		evitarInyeccionSQL();
+        $this->evitarInyeccionSQL();
         return parent::test();
     }
 
