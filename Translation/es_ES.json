@@ -103,5 +103,8 @@
     "hours": "Horas",
     "minutes": "Minutos",
     "anticipation": "Anticipación",
-    "horario": "Horario"
+    "horario": "Horario",
+    "kms-empty": "Kms en vacío",
+    "entries": "Entradas",
+    "outputs": "Salidas"
 }
