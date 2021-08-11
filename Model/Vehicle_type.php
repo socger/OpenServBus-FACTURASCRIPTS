@@ -72,11 +72,7 @@ class Vehicle_type extends Base\ModelClass {
     
     public function test()
     {
-        $utils = $this->toolBox()->utils();
-
-        $this->nombre = $utils->noHtml($this->nombre);
-        $this->observaciones = $utils->noHtml($this->observaciones);
-
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -115,5 +111,13 @@ class Vehicle_type extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
     }
-
+	
+    private function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->nombre = $utils->noHtml($this->nombre);
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+    }
+	
 }

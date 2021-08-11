@@ -77,16 +77,7 @@ class Stop extends Base\ModelClass {
     }
     
     public function test() {
-        // Para evitar la inyección de sql
-        $utils = $this->toolBox()->utils();
-        $this->nombre = $utils->noHtml($this->nombre);
-        $this->ciudad = $utils->noHtml($this->ciudad);
-        $this->provincia = $utils->noHtml($this->provincia);
-        $this->codpostal = $utils->noHtml($this->codpostal);
-        $this->direccion = $utils->noHtml($this->direccion);
-        
-        $this->observaciones = $utils->noHtml($this->observaciones);
-
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -125,5 +116,17 @@ class Stop extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
     }
-
+	
+    private function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->nombre = $utils->noHtml($this->nombre);
+        $this->ciudad = $utils->noHtml($this->ciudad);
+        $this->provincia = $utils->noHtml($this->provincia);
+        $this->codpostal = $utils->noHtml($this->codpostal);
+        $this->direccion = $utils->noHtml($this->direccion);
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+    }
+	
 }

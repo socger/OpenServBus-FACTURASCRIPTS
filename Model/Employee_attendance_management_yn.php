@@ -91,6 +91,7 @@ class Employee_attendance_management_yn extends Base\ModelClass {
             }
         }
 
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -129,5 +130,12 @@ class Employee_attendance_management_yn extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
     }
-
+	
+    private function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+    }
+	
 }

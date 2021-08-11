@@ -82,13 +82,10 @@ class Employee_attendance_management extends Base\ModelClass {
     
     public function test()
     {
-        // Para evitar la inección de sql
-        $utils = $this->toolBox()->utils();
-        $this->observaciones = $utils->noHtml($this->observaciones);
-
         // Guardamos la fecha, porque en EditEmployee_attendance_management.xml separamos el día y la hora en dos widget
         $this->fecha = $this->fecha_dia . ' ' . $this->fecha_hora;
 
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -127,5 +124,12 @@ class Employee_attendance_management extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
     }
-
+	
+    private function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+    }
+	
 }

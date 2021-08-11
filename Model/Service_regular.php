@@ -135,20 +135,7 @@ class Service_regular extends Base\ModelClass {
             return false;
         }
         
-        // Para evitar la inyección de sql
-        $utils = $this->toolBox()->utils();
-        $this->nombre = $utils->noHtml($this->nombre);
-        $this->observaciones = $utils->noHtml($this->observaciones);
-        $this->observaciones_montaje = $utils->noHtml($this->observaciones_montaje);
-        $this->observaciones_vehiculo = $utils->noHtml($this->observaciones_vehiculo);
-        $this->observaciones_facturacion = $utils->noHtml($this->observaciones_facturacion);
-        $this->hoja_ruta_origen = $utils->noHtml($this->hoja_ruta_origen);
-        $this->hoja_ruta_destino = $utils->noHtml($this->hoja_ruta_destino);
-        $this->hoja_ruta_expediciones = $utils->noHtml($this->hoja_ruta_expediciones);
-        $this->hoja_ruta_contratante = $utils->noHtml($this->hoja_ruta_contratante);
-        $this->hoja_ruta_tipoidfiscal = $utils->noHtml($this->hoja_ruta_tipoidfiscal);
-        $this->hoja_ruta_cifnif = $utils->noHtml($this->hoja_ruta_cifnif);
-
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -216,5 +203,22 @@ class Service_regular extends Base\ModelClass {
         }
         return $a_devolver;
     }
-
+	
+    private function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->nombre = $utils->noHtml($this->nombre);
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->observaciones_montaje = $utils->noHtml($this->observaciones_montaje);
+        $this->observaciones_vehiculo = $utils->noHtml($this->observaciones_vehiculo);
+        $this->observaciones_facturacion = $utils->noHtml($this->observaciones_facturacion);
+        $this->hoja_ruta_origen = $utils->noHtml($this->hoja_ruta_origen);
+        $this->hoja_ruta_destino = $utils->noHtml($this->hoja_ruta_destino);
+        $this->hoja_ruta_expediciones = $utils->noHtml($this->hoja_ruta_expediciones);
+        $this->hoja_ruta_contratante = $utils->noHtml($this->hoja_ruta_contratante);
+        $this->hoja_ruta_tipoidfiscal = $utils->noHtml($this->hoja_ruta_tipoidfiscal);
+        $this->hoja_ruta_cifnif = $utils->noHtml($this->hoja_ruta_cifnif);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+    }
+	
 }

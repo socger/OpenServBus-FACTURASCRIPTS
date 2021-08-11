@@ -105,11 +105,7 @@ class Vehicle_documentation extends Base\ModelClass {
             }
         }
         
-        // Código para evitar la inyección de sql
-        $utils = $this->toolBox()->utils();
-        $this->observaciones = $utils->noHtml($this->observaciones);
-        $this->nombre = $utils->noHtml($this->nombre);
-
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -162,5 +158,13 @@ class Vehicle_documentation extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
     }
-
+	
+    private function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->nombre = $utils->noHtml($this->nombre);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+    }
+	
 }

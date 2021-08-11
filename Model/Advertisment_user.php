@@ -114,14 +114,7 @@ class Advertisment_user extends Base\ModelClass {
         }
         $this->fin = $fecha;
 
-        
-        // Para evitar la inección de sql
-        $utils = $this->toolBox()->utils();
-        $this->nombre = $utils->noHtml($this->nombre);
-        $this->nick = $utils->noHtml($this->nick);
-        $this->codrole = $utils->noHtml($this->codrole);
-        $this->observaciones = $utils->noHtml($this->observaciones);
-
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -159,6 +152,17 @@ class Advertisment_user extends Base\ModelClass {
     {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
+    }
+
+    private function evitarInyeccionSQL()
+    {
+        // Para evitar la inección de sql
+        $utils = $this->toolBox()->utils();
+        $this->nombre = $utils->noHtml($this->nombre);
+        $this->nick = $utils->noHtml($this->nick);
+        $this->codrole = $utils->noHtml($this->codrole);
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
 
 }

@@ -88,13 +88,6 @@ class Fuel_km extends Base\ModelClass {
     }
     
     public function test() {
-        // Para evitar la inyección de sql
-        $utils = $this->toolBox()->utils();
-        $this->observaciones = $utils->noHtml($this->observaciones);
-        $this->nombre = $utils->noHtml($this->nombre);
-        $this->tipo_tarjeta = $utils->noHtml($this->tipo_tarjeta);
-        $this->es_de_pago = $utils->noHtml($this->es_de_pago);
-        
         if ($this->comprobar_Surtidor_Proveedor() == false) {
             return false;
         }
@@ -109,6 +102,7 @@ class Fuel_km extends Base\ModelClass {
                     
         $this->comprobarEmpresa();
         
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -278,5 +272,15 @@ class Fuel_km extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
     }
-
+	
+    private function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->nombre = $utils->noHtml($this->nombre);
+        $this->tipo_tarjeta = $utils->noHtml($this->tipo_tarjeta);
+        $this->es_de_pago = $utils->noHtml($this->es_de_pago);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+    }
+	
 }

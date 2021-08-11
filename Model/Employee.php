@@ -120,30 +120,11 @@ class Employee extends Base\ModelClass {
                 $this->idempresa = $this->toolBox()->appSettings()->get('default', 'idempresa');
         }
         */
-        
-        // Quitamos la posibilidad de inección por sql
-        $utils = $this->toolBox()->utils();
-        $this->cod_employee = $utils->noHtml($this->cod_employee);
-        $this->user_facturascripts_nick = $utils->noHtml($this->user_facturascripts_nick);
-        $this->tipoidfiscal = $utils->noHtml($this->tipoidfiscal);
-        $this->cifnif = $utils->noHtml($this->cifnif);
-        $this->nombre = $utils->noHtml($this->nombre);
-        $this->ciudad = $utils->noHtml($this->ciudad);
-        $this->provincia = $utils->noHtml($this->provincia);
-        $this->codpais = $utils->noHtml($this->codpais);
-        $this->codpostal = $utils->noHtml($this->codpostal);
-        $this->apartado = $utils->noHtml($this->apartado);
-        $this->direccion = $utils->noHtml($this->direccion);
-        $this->telefono1 = $utils->noHtml($this->telefono1);
-        $this->telefono2 = $utils->noHtml($this->telefono2);
-        $this->email = $utils->noHtml($this->email);
-        $this->web = $utils->noHtml($this->web);
-        $this->observaciones = $utils->noHtml($this->observaciones);
-        $this->num_seg_social = $utils->noHtml($this->num_seg_social);
-        
         $this->ComprobarSiEsConductor();
         $this->actualizarNombreEmpleadoEn();
 
+        
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -218,5 +199,28 @@ class Employee extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
     }
-
+	
+    private function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->cod_employee = $utils->noHtml($this->cod_employee);
+        $this->user_facturascripts_nick = $utils->noHtml($this->user_facturascripts_nick);
+        $this->tipoidfiscal = $utils->noHtml($this->tipoidfiscal);
+        $this->cifnif = $utils->noHtml($this->cifnif);
+        $this->nombre = $utils->noHtml($this->nombre);
+        $this->ciudad = $utils->noHtml($this->ciudad);
+        $this->provincia = $utils->noHtml($this->provincia);
+        $this->codpais = $utils->noHtml($this->codpais);
+        $this->codpostal = $utils->noHtml($this->codpostal);
+        $this->apartado = $utils->noHtml($this->apartado);
+        $this->direccion = $utils->noHtml($this->direccion);
+        $this->telefono1 = $utils->noHtml($this->telefono1);
+        $this->telefono2 = $utils->noHtml($this->telefono2);
+        $this->email = $utils->noHtml($this->email);
+        $this->web = $utils->noHtml($this->web);
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->num_seg_social = $utils->noHtml($this->num_seg_social);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+    }
+	
 }

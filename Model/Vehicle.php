@@ -154,19 +154,7 @@ class Vehicle extends Base\ModelClass {
         }
         
 
-        $utils = $this->toolBox()->utils();
-        
-        $this->cod_vehicle = $utils->noHtml($this->cod_vehicle);
-        $this->nombre = $utils->noHtml($this->nombre);
-        $this->matricula = $utils->noHtml($this->matricula);
-        $this->motor_chasis = $utils->noHtml($this->motor_chasis);
-        $this->numero_bastidor = $utils->noHtml($this->numero_bastidor);
-        $this->carroceria = $utils->noHtml($this->carroceria);
-        $this->numero_obra = $utils->noHtml($this->numero_obra);
-        $this->plazas_segun_ficha_tecnica = $utils->noHtml($this->plazas_segun_ficha_tecnica);
-        $this->configuraciones_especiales = $utils->noHtml($this->configuraciones_especiales);
-        $this->observaciones = $utils->noHtml($this->observaciones);
-
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -205,5 +193,21 @@ class Vehicle extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
     }
-
+	
+    private function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->cod_vehicle = $utils->noHtml($this->cod_vehicle);
+        $this->nombre = $utils->noHtml($this->nombre);
+        $this->matricula = $utils->noHtml($this->matricula);
+        $this->motor_chasis = $utils->noHtml($this->motor_chasis);
+        $this->numero_bastidor = $utils->noHtml($this->numero_bastidor);
+        $this->carroceria = $utils->noHtml($this->carroceria);
+        $this->numero_obra = $utils->noHtml($this->numero_obra);
+        $this->plazas_segun_ficha_tecnica = $utils->noHtml($this->plazas_segun_ficha_tecnica);
+        $this->configuraciones_especiales = $utils->noHtml($this->configuraciones_especiales);
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+    }
+	
 }

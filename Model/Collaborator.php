@@ -75,14 +75,7 @@ class Collaborator extends Base\ModelClass {
     
     public function test()
     {
-        $utils = $this->toolBox()->utils();
-
-        $this->codproveedor = $utils->noHtml($this->codproveedor);
-        $this->observaciones = $utils->noHtml($this->observaciones);
-
-        $this->actualizarCampoNombre();
-        $this->actualizarNombreColaboradorEn();
-        
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -159,5 +152,15 @@ class Collaborator extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
     }
-
+	
+    private function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->codproveedor = $utils->noHtml($this->codproveedor);
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->actualizarCampoNombre();
+        $this->actualizarNombreColaboradorEn();
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+    }
+	
 }

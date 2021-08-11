@@ -82,17 +82,13 @@ class Tarjeta extends Base\ModelClass {
         
         $this->actualizar_dePago();
         
-        // Para evitar la inyección de sql
-        $utils = $this->toolBox()->utils();
-        $this->observaciones = $utils->noHtml($this->observaciones);
-        $this->nombre = $utils->noHtml($this->nombre);
-        
         if ($this->comprobar_Empleado_Conductor() == false) {
             return false;
         }
         
         $this->comprobarEmpresa();
-        
+
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -208,5 +204,13 @@ class Tarjeta extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
     }
-
+	
+    private function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->nombre = $utils->noHtml($this->nombre);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+    }
+	
 }

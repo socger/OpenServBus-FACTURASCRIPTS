@@ -94,22 +94,7 @@ class Garage extends Base\ModelClass {
             $this->idempresa = $this->toolBox()->appSettings()->get('default', 'idempresa');
         }
 
-        $utils = $this->toolBox()->utils();
-
-        $this->nombre = $utils->noHtml($this->nombre);
-        $this->ciudad = $utils->noHtml($this->ciudad);
-        $this->provincia = $utils->noHtml($this->provincia);
-        $this->codpais = $utils->noHtml($this->codpais);
-        $this->codpostal = $utils->noHtml($this->codpostal);
-        $this->apartado = $utils->noHtml($this->apartado);
-        $this->direccion = $utils->noHtml($this->direccion);
-        $this->telefono1 = $utils->noHtml($this->telefono1);
-        $this->telefono2 = $utils->noHtml($this->telefono2);
-        $this->fax = $utils->noHtml($this->fax);
-        $this->email = $utils->noHtml($this->email);
-        $this->web = $utils->noHtml($this->web);
-        $this->observaciones = $utils->noHtml($this->observaciones);
-
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -148,5 +133,24 @@ class Garage extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
     }
-
+	
+    private function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->nombre = $utils->noHtml($this->nombre);
+        $this->ciudad = $utils->noHtml($this->ciudad);
+        $this->provincia = $utils->noHtml($this->provincia);
+        $this->codpais = $utils->noHtml($this->codpais);
+        $this->codpostal = $utils->noHtml($this->codpostal);
+        $this->apartado = $utils->noHtml($this->apartado);
+        $this->direccion = $utils->noHtml($this->direccion);
+        $this->telefono1 = $utils->noHtml($this->telefono1);
+        $this->telefono2 = $utils->noHtml($this->telefono2);
+        $this->fax = $utils->noHtml($this->fax);
+        $this->email = $utils->noHtml($this->email);
+        $this->web = $utils->noHtml($this->web);
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+    }
+	
 }

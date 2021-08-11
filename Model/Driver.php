@@ -121,13 +121,7 @@ class Driver extends Base\ModelClass {
             return false;
         }
         
-        // Para evitar posible inyección de sql
-        $utils = $this->toolBox()->utils();
-        $this->observaciones = $utils->noHtml($this->observaciones);
-
-        $this->completarCampoNombre();
-        $this->actualizar_driverYN_en_employees(0); // Se pasa como parámetro 0 para decir que no se está borrando el empleado
-        
+		evitarInyeccionSQL();
         return parent::test();
     }
 
@@ -198,5 +192,14 @@ class Driver extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
     }
-
+	
+    private function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->completarCampoNombre();
+        $this->actualizar_driverYN_en_employees(0); // Se pasa como parámetro 0 para decir que no se está borrando el empleado
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+    }
+	
 }
