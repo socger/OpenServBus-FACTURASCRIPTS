@@ -75,7 +75,7 @@ class ListService_regular_period extends ListController {
             // $table ... es el nombre de la tabla en la BD
             // $fieldcode ... es el campo interno que quiero consultar
             // $fieldtitle ... es el campo a mostar al usuario
-        // $this->addFilterAutocomplete($viewName, 'xIdvehicle_type', 'Vehículo - tipo', 'idvehicle_type', 'vehiculos', 'idvehicle_type', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdservice_regular', 'Servicio regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
         
         
         

@@ -89,11 +89,9 @@ class Service_regular_period extends Base\ModelClass {
             return false;
         }
         
-        /*
         // Para evitar la inyección de sql
         $utils = $this->toolBox()->utils();
-        $this->nombre = $utils->noHtml($this->nombre);
-        */
+        $this->observaciones = $utils->noHtml($this->observaciones);
         
         return parent::test();
     }

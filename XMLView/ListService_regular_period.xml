@@ -7,7 +7,7 @@
         
         <column name="service-regular" order="110">
             <widget type="select" fieldname="idservice_regular">
-                <values source="service_regular" fieldcode="idservice_regular" fieldtitle="nombre" />
+                <values source="service_regulars" fieldcode="idservice_regular" fieldtitle="nombre" />
             </widget>
         </column>
             
