@@ -24,7 +24,10 @@ class Service_regular_itinerary extends Base\ModelClass {
 
     public $orden;
     public $idstop;
+
     public $hora;
+    public $inicio_hora;
+    
     public $kms;
     public $kms_vacios;
     public $pasajeros_entradas;
@@ -84,6 +87,7 @@ class Service_regular_itinerary extends Base\ModelClass {
     }
     
     public function test() {
+        $this->crearHora();
         
         if ($this->checkParada() == false){return false;}
         if ($this->checkOrden() == false){return false;}
@@ -180,5 +184,14 @@ class Service_regular_itinerary extends Base\ModelClass {
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
+    private function crearHora()
+    {
+        $fecha = '';
+        if (!empty($this->inicio_hora)){
+            $fecha = date('d-m-Y') . ' ' . $this->inicio_hora;
+        }
+        $this->hora = $fecha;
+    }
 	
 }
+

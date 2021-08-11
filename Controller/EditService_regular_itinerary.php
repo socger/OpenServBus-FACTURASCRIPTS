@@ -37,9 +37,24 @@ class EditService_regular_itinerary extends EditController {
 
              // $this->views[$viewName]->model->user_fecha = date('d-m-Y');
                 $this->views[$viewName]->model->user_fecha = date("Y-m-d H:i:s");
-                
+
+                $this->prepararHoraParaVista($viewName);
+
                 break;
         }
     }
-    
+
+
+    // ** *************************************** ** //
+    // ** FUNCIONES CREADAS PARA ESTE CONTROLADOR ** //
+    // ** *************************************** ** //
+    private function prepararHoraParaVista($viewName)
+    {
+        if (!empty($this->views[$viewName]->model->hora)){
+            $this->views[$viewName]->model->inicio_hora = date("H:i:s", strtotime($this->views[$viewName]->model->hora));
+        } else {
+            $this->views[$viewName]->model->inicio_hora = null;
+        }
+    }
+
 }
