@@ -85,17 +85,10 @@ class Service_regular_itinerary extends Base\ModelClass {
     
     public function test() {
         
-        if ($this->checkOrden() == false){
-            return false;
-        }
-        
-        if ($this->checkHora() == false){
-            return false;
-        }
-        
-        if ($this->checkPasajeros() == false){
-            return false;
-        }
+        if ($this->checkParada() == false){return false;}
+        if ($this->checkOrden() == false){return false;}
+        if ($this->checkHora() == false){return false;}
+        if ($this->checkPasajeros() == false){return false;}
         
         // Para evitar la inyección de sql
         $utils = $this->toolBox()->utils();
@@ -159,6 +152,16 @@ class Service_regular_itinerary extends Base\ModelClass {
         {
             $a_devolver = false;
             $this->toolBox()->i18nLog()->error('Falta el hora en la que debe de estar en la parada.');
+        }
+        return $a_devolver;
+    }
+    private function checkParada()
+    {
+        $a_devolver = true;
+        if ( empty($this->idstop) )
+        {
+            $a_devolver = false;
+            $this->toolBox()->i18nLog()->error('Debe de elegir una parada.');
         }
         return $a_devolver;
     }

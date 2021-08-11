@@ -37,6 +37,7 @@ class EditService_regular extends EditController {
         // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
 
         $this->addListView('ListService_regular_period', 'Service_regular_period', 'Periodos', 'fas fa-calendar-day');    
+        $this->addListView('ListService_regular_itinerary', 'Service_regular_itinerary', 'Itinerarios', 'fas fa-road');    
         
         $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
     }
@@ -44,6 +45,12 @@ class EditService_regular extends EditController {
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
     protected function loadData($viewName, $view) {
         switch ($viewName) {
+            case 'ListService_regular_itinerary':
+                $idservice_regular = $this->getViewModelValue('EditService_regular', 'idservice_regular');
+                $where = [new DatabaseWhere('idservice_regular', $idservice_regular)];
+                $view->loadData('', $where);
+                break;
+            
             case 'ListService_regular_period':
                 $idservice_regular = $this->getViewModelValue('EditService_regular', 'idservice_regular');
                 $where = [new DatabaseWhere('idservice_regular', $idservice_regular)];

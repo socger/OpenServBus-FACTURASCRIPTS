@@ -23,7 +23,7 @@
                 </widget>
             </column>
             <column name="stop" numcolumns="4" order="110">
-                <widget type="select" fieldname="idstop" icon="fas fa-stopwatch" onclick="EditStop" readonly="dinamic">
+                <widget type="select" fieldname="idstop" icon="fas fa-stopwatch" onclick="EditStop">
                     <values source="stops" fieldcode="idstop" fieldtitle="nombre" />
                 </widget>
             </column>
