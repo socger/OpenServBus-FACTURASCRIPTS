@@ -56,8 +56,7 @@ class ListService_regular_period extends ListController {
         ];
         $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);        
 
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        // Filtro de TIPO SELECT para filtrar por salida desde nave
         $salidaDesdeNave = [
             ['code' => '1', 'description' => 'Salida desde nave = SI'],
             ['code' => '0', 'description' => 'Salida desde nave = NO'],
