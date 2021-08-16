@@ -66,6 +66,20 @@ class ListService_regular extends ListController {
         ];
         $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);        
 
+        // Filtro de TIPO SELECT para filtrar por SERVICIOS REGULARES FACTURABLES (SI, NO, o TODOS)
+        $crearFtraSN = [
+            ['code' => '1', 'description' => 'Crear ftra. = SI'],
+            ['code' => '0', 'description' => 'Crear ftra. = NO'],
+        ];
+        $this->addFilterSelect($viewName, 'crearFtra', 'Crear ftra. = TODOS', 'facturar_SN', $crearFtraSN);        
+
+        // Filtro de TIPO SELECT para filtrar por SERVICIOS REGULARES facturar agrupando (SI, NO, o TODOS)
+        $facturarAgrupandoSN = [
+            ['code' => '1', 'description' => 'Ftra.agrupando = SI'],
+            ['code' => '0', 'description' => 'Ftra.agrupando = NO'],
+        ];
+        $this->addFilterSelect($viewName, 'facturarAgrupando', 'Ftra.agrupando = TODOS', 'facturar_agrupando', $facturarAgrupandoSN);        
+
         // Filtro autoComplete ... addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode, $fieldtitle)
         // Aunque lo vamos a hacer sobre la tabla empresa que normalmente tiene pocos registros
         // este tipo de filtros está pensado para tablas como clientes, proveedores, etc que tengan muchos registros
