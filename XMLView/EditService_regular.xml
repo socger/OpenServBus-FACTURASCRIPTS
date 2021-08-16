@@ -63,7 +63,7 @@
                 </widget>
             </column>
             <column name="helper" numcolumns="4" order="170">
-                <widget type="select" fieldname="idhelper" icon="fas fa-tractor" onclick="EditVehicle_type">
+                <widget type="select" fieldname="idhelper" icon="fas fa-user-graduate" onclick="EditVehicle_type">
                     <values source="helpers" fieldcode="idhelper" fieldtitle="nombre" />
                 </widget>
             </column>
@@ -98,7 +98,7 @@
             </column>
             
             <column name="service-type" numcolumns="4" order="180">
-                <widget type="select" fieldname="idservice_type" icon="fas fa-tractor" onclick="EditVehicle_type">
+                <widget type="select" fieldname="idservice_type" icon="fas fa-dolly" onclick="EditVehicle_type">
                     <values source="service_types" fieldcode="idservice_type" fieldtitle="nombre" />
                 </widget>
             </column>
