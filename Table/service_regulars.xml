@@ -189,6 +189,53 @@
         <type>text</type>
     </column>
     
+    
+    
+    <column>
+        <name>idservice_regular_period</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>fecha_desde</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>fecha_hasta</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>hora_desde</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>hora_hasta</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>salida_desde_nave_sn</name>
+        <type>boolean</type>
+        <default>true</default>
+    </column>
+    <column>
+        <name>anticipacion_horas</name>
+        <type>integer</type>
+        <default>0</default>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>anticipacion_minutos</name>
+        <type>integer</type>
+        <default>0</default>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>observaciones_periodo</name>
+        <type>text</type>
+    </column>
+        
+    
+    
+    
     <constraint>
         <name>service_regulars_pkey</name>
         <type>PRIMARY KEY (idservice_regular)</type>
@@ -217,6 +264,10 @@
     <constraint>
         <name>ca_service_regulars__empresas</name>
         <type>FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_regulars__service_regular_periods</name>
+        <type>FOREIGN KEY (idservice_regular_period) REFERENCES service_regular_periods (idservice_regular_period) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
 
 
