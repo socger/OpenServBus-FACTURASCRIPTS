@@ -152,7 +152,7 @@ class Employee extends Base\ModelClass {
         return $a_devolver;
     }
     
-    protected function ComprobarSiEsConductor()
+    private function ComprobarSiEsConductor()
     {
         // Comprobar si está creado como conductor
         // Esto lo hacemos porque en EditEmployee.xml hemos creado el widget checkbox para driver_yn como readonly, pero permite modificarlo
@@ -171,7 +171,7 @@ class Employee extends Base\ModelClass {
         }
     }
         
-    protected function actualizarNombreEmpleadoEn()
+    private function actualizarNombreEmpleadoEn()
     {
         // Rellenamos el nombre del empleado en otras tablas
         $sql = "UPDATE drivers SET drivers.nombre = '" . $this->nombre . "' WHERE drivers.idemployee = " . $this->idemployee . ";";
