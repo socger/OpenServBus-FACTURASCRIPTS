@@ -119,6 +119,9 @@ class EditService_regular extends EditController {
              // $this->views[$viewName]->model->user_fecha = date('d-m-Y');
                 $this->views[$viewName]->model->user_fecha = date("Y-m-d H:i:s");
                 
+                $this->prepararFechasParaVista($viewName);
+                $this->prepararHorasParaVista($viewName);
+
                 break;
         }
     }
@@ -127,6 +130,34 @@ class EditService_regular extends EditController {
     // ** *************************************** ** //
     // ** FUNCIONES CREADAS PARA ESTE CONTROLADOR ** //
     // ** *************************************** ** //
-        
+    private function prepararFechasParaVista($viewName)
+    {
+        if (!empty($this->views[$viewName]->model->fecha_desde)){
+            $this->views[$viewName]->model->inicio_dia = date("Y-m-d", strtotime($this->views[$viewName]->model->fecha_desde));
+        } else {
+            $this->views[$viewName]->model->inicio_dia = null;
+        }
+
+        if (!empty($this->views[$viewName]->model->fecha_hasta)){
+            $this->views[$viewName]->model->fin_dia = date("Y-m-d", strtotime($this->views[$viewName]->model->fecha_hasta));
+        } else {
+            $this->views[$viewName]->model->fin_dia = null;
+        }
+    }
+
+    private function prepararHorasParaVista($viewName)
+    {
+        if (!empty($this->views[$viewName]->model->hora_desde)){
+            $this->views[$viewName]->model->inicio_hora = date("H:i:s", strtotime($this->views[$viewName]->model->hora_desde));
+        } else {
+            $this->views[$viewName]->model->inicio_hora = null;
+        }
+
+        if (!empty($this->views[$viewName]->model->hora_hasta)){
+            $this->views[$viewName]->model->fin_hora = date("H:i:s", strtotime($this->views[$viewName]->model->hora_hasta));
+        } else {
+            $this->views[$viewName]->model->fin_hora = null;
+        }
+    }
     
 }
