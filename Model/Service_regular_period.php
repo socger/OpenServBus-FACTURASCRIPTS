@@ -63,7 +63,9 @@ class Service_regular_period extends Base\ModelClass {
             return false;
         }
 
-        return parent::saveUpdate($values);
+        $returnParent = parent::saveUpdate($values);
+        $this->actualizarPeriodoEnServicioRegular();
+        return $returnParent;
     }
 
     // Para realizar cambios en los datos antes de guardar por alta
@@ -81,7 +83,9 @@ class Service_regular_period extends Base\ModelClass {
             return false;
         }
 
-        return parent::saveInsert($values);
+        $returnParent = parent::saveInsert($values);
+        $this->actualizarPeriodoEnServicioRegular();
+        return $returnParent;
     }
     
     public function test() {
@@ -245,6 +249,68 @@ class Service_regular_period extends Base\ModelClass {
             $fecha = $fecha . ' ' . $this->fin_hora;
         }
         $this->hora_hasta = $fecha;
+    }
+        
+    private function actualizarPeriodoEnServicioRegular()
+    {
+        $sql = ' SELECT service_regular_periods.idservice_regular_period '
+             .      ' , service_regular_periods.fecha_desde '
+             .      ' , service_regular_periods.fecha_hasta '
+             .      ' , service_regular_periods.hora_desde '
+             .      ' , service_regular_periods.hora_hasta '
+             .      ' , service_regular_periods.salida_desde_nave_sn '
+             .      ' , service_regular_periods.anticipacion_horas '
+             .      ' , service_regular_periods.anticipacion_minutos '
+             .      ' , service_regular_periods.observaciones '
+             . ' FROM service_regular_periods '
+             . ' WHERE service_regular_periods.idservice_regular = ' . $this->idservice_regular . ' '
+             .   ' AND service_regular_periods.activo = 1 '
+             . ' ORDER BY service_regular_periods.fecha_desde DESC '
+             .        ' , service_regular_periods.fecha_hasta DESC '
+             .        ' , service_regular_periods.hora_desde DESC '
+             .        ' , service_regular_periods.hora_hasta DESC '
+             .        ' , idservice_regular '
+             . ' LIMIT 1 '
+             ;
+
+        $idservice_regular_period = null;
+        $fecha_desde = null;
+        $fecha_hasta = null;
+        $hora_desde = null;
+        $hora_hasta = null;
+        $salida_desde_nave_sn = null;
+        $anticipacion_horas = null;
+        $anticipacion_minutos = null;
+        $observaciones_periodo = null;
+        
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $idservice_regular_period = $fila['idservice_regular_period'];
+            $fecha_desde = $fila['fecha_desde'];
+            $fecha_hasta = $fila['fecha_hasta'];
+            $hora_desde = $fila['hora_desde'];
+            $hora_hasta = $fila['hora_hasta'];
+            $salida_desde_nave_sn = $fila['salida_desde_nave_sn'];
+            $anticipacion_horas = $fila['anticipacion_horas'];
+            $anticipacion_minutos = $fila['anticipacion_minutos'];
+            $observaciones_periodo = $fila['observaciones'];
+        }
+        
+        // Rellenamos el nombre del empleado en otras tablas
+        $sql = "UPDATE service_regulars "
+             . "SET service_regulars.observaciones_periodo = '" . $observaciones_periodo . "' "
+             .   ", service_regulars.fecha_desde = '" . $fecha_desde . "' "
+             .   ", service_regulars.fecha_hasta = '" . $fecha_hasta . "' "
+             .   ", service_regulars.hora_desde = '" . $hora_desde . "' "
+             .   ", service_regulars.hora_hasta = '" . $hora_hasta . "' "
+             .   ", service_regulars.salida_desde_nave_sn = " . $salida_desde_nave_sn . " "
+             .   ", service_regulars.anticipacion_horas = " . $anticipacion_horas . " "
+             .   ", service_regulars.anticipacion_minutos = " . $anticipacion_minutos . " "
+             .   ", service_regulars.idservice_regular_period = " . $idservice_regular_period . " "
+             . "WHERE service_regulars.idservice_regular = " . $this->idservice_regular . ";";
+
+        self::$dataBase->exec($sql);
     }
 
 }
