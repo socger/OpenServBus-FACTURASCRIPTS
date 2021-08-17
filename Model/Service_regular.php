@@ -236,8 +236,6 @@ class Service_regular extends Base\ModelClass {
     
     private function completarDatosUltimoPeriodo()
     {
-        // Rellenamos el campo nombre de este modelo pues está ligado con campo nombre de tabla empleados
-        // no hace falta actualizarlo siempre. porque la tabla employees es de este mismo pluggin y desde el test de employee.php actualizo el campo nombre de tabla dirvers
         $sql = ' SELECT service_regular_periods.idservice_regular_period '
              .      ' , service_regular_periods.fecha_desde '
              .      ' , service_regular_periods.fecha_hasta '
@@ -246,7 +244,7 @@ class Service_regular extends Base\ModelClass {
              .      ' , service_regular_periods.salida_desde_nave_sn '
              .      ' , service_regular_periods.anticipacion_horas '
              .      ' , service_regular_periods.anticipacion_minutos '
-             .      ' , service_regular_periods.observaciones_periodo '
+             .      ' , service_regular_periods.observaciones '
              . ' FROM service_regular_periods '
              . ' WHERE service_regular_periods.idservice_regular = ' . $this->idservice_regular . ' '
              .   ' AND service_regular_periods.activo = 1 '
@@ -254,6 +252,7 @@ class Service_regular extends Base\ModelClass {
              .        ' , service_regular_periods.fecha_hasta DESC '
              .        ' , service_regular_periods.hora_desde DESC '
              .        ' , service_regular_periods.hora_hasta DESC '
+             .        ' , idservice_regular '
              . ' LIMIT 1 '
              ;
 
@@ -278,8 +277,9 @@ class Service_regular extends Base\ModelClass {
             $this->salida_desde_nave_sn = $fila['salida_desde_nave_sn'];
             $this->anticipacion_horas = $fila['anticipacion_horas'];
             $this->anticipacion_minutos = $fila['anticipacion_minutos'];
-            $this->observaciones_periodo = $fila['observaciones_periodo'];
+            $this->observaciones_periodo = $fila['observaciones'];
         }
+
         
     }
 
