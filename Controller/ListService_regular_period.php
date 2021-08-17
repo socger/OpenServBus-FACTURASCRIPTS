@@ -76,14 +76,13 @@ class ListService_regular_period extends ListController {
             // $fieldtitle ... es el campo a mostar al usuario
         $this->addFilterAutocomplete($viewName, 'xIdservice_regular', 'Servicio regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
         
-        
-        
         // Filtro periodo de fechas
         // addFilterPeriod($viewName, $key, $label, $field)
             // $key ... es el nombre que le ponemos al filtro
             // $label ... es la etiqueta a mostrar al cliente
             // $field ... es el campo sobre el que filtraremos
-        // $this->addFilterPeriod($viewName, 'porFechaAlta', 'Fecha de alta', 'fechaalta');
+        $this->addFilterPeriod($viewName, 'porFechaInicio', 'F.inicio', 'fecha_desde');
+        $this->addFilterPeriod($viewName, 'porFechaFin', 'F.fin', 'fecha_hasta');
         
         // Filtro de fecha sin periodo
         // addFilterDatePicker($viewName, $key, $label, $field)

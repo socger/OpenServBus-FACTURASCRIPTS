@@ -88,6 +88,9 @@ class EditService_regular extends EditController {
         $this->views['List' . $model]->addFilterSelect('salidaDesdeNave', 'Salida desde nave = TODOS', 'salida_desde_nave_sn', $salidaDesdeNave);
         
         $this->views['List' . $model]->addFilterAutocomplete('xIdservice_regular', 'Servicio regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
+
+        $this->views['List' . $model]->addFilterPeriod('porFechaInicio', 'F.inicio', 'fecha_desde');
+        $this->views['List' . $model]->addFilterPeriod('porFechaFin', 'F.fin', 'fecha_hasta');
     }
     
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
