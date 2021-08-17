@@ -178,8 +178,8 @@ class Service_regular extends Base\ModelClass {
     private function comprobarFacturacion()
     {
         $a_devolver = true;
-        if ( $this->facturar_SN == false and 
-             $this->facturar_agrupando = true  ) 
+        if ( $this->facturar_SN === false and 
+             $this->facturar_agrupando === true  ) 
         {
             $a_devolver = false;
             $this->toolBox()->i18nLog()->error('Si elige FACTURAR = NO, no puede elegir AGRUPANDO = SI.');
