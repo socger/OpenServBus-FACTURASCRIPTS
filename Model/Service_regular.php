@@ -54,6 +54,17 @@ class Service_regular extends Base\ModelClass {
     public $observaciones_vehiculo;
     public $observaciones_facturacion;
     
+    public $idservice_regular_period;
+    public $fecha_desde;
+    public $fecha_hasta;
+    public $hora_desde;
+    public $hora_hasta;
+    public $salida_desde_nave_sn;
+    public $anticipacion_horas;
+    public $anticipacion_minutos;
+    public $observaciones_periodo;
+    
+    
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {
         parent::clear();
@@ -134,6 +145,8 @@ class Service_regular extends Base\ModelClass {
         if ($this->comprobarFacturacion() == false){
             return false;
         }
+        
+        $this->completarDatosUltimoPeriodo();
         
         $this->evitarInyeccionSQL();
         return parent::test();
@@ -220,5 +233,55 @@ class Service_regular extends Base\ModelClass {
         $this->hoja_ruta_cifnif = $utils->noHtml($this->hoja_ruta_cifnif);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
+    
+    private function completarDatosUltimoPeriodo()
+    {
+        // Rellenamos el campo nombre de este modelo pues está ligado con campo nombre de tabla empleados
+        // no hace falta actualizarlo siempre. porque la tabla employees es de este mismo pluggin y desde el test de employee.php actualizo el campo nombre de tabla dirvers
+        $sql = ' SELECT service_regular_periods.idservice_regular_period '
+             .      ' , service_regular_periods.fecha_desde '
+             .      ' , service_regular_periods.fecha_hasta '
+             .      ' , service_regular_periods.hora_desde '
+             .      ' , service_regular_periods.hora_hasta '
+             .      ' , service_regular_periods.salida_desde_nave_sn '
+             .      ' , service_regular_periods.anticipacion_horas '
+             .      ' , service_regular_periods.anticipacion_minutos '
+             .      ' , service_regular_periods.observaciones_periodo '
+             . ' FROM service_regular_periods '
+             . ' WHERE service_regular_periods.idservice_regular = ' . $this->idservice_regular . ' '
+             .   ' AND service_regular_periods.activo = 1 '
+             . ' ORDER BY service_regular_periods.fecha_desde DESC '
+             .        ' , service_regular_periods.fecha_hasta DESC '
+             .        ' , service_regular_periods.hora_desde DESC '
+             .        ' , service_regular_periods.hora_hasta DESC '
+             . ' LIMIT 1 '
+             ;
+
+        $this->idservice_regular_period = null;
+        $this->fecha_desde = null;
+        $this->fecha_hasta = null;
+        $this->hora_desde = null;
+        $this->hora_hasta = null;
+        $this->salida_desde_nave_sn = null;
+        $this->anticipacion_horas = null;
+        $this->anticipacion_minutos = null;
+        $this->observaciones_periodo = null;
+        
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $this->idservice_regular_period = $fila['idservice_regular_period'];
+            $this->fecha_desde = $fila['fecha_desde'];
+            $this->fecha_hasta = $fila['fecha_hasta'];
+            $this->hora_desde = $fila['hora_desde'];
+            $this->hora_hasta = $fila['hora_hasta'];
+            $this->salida_desde_nave_sn = $fila['salida_desde_nave_sn'];
+            $this->anticipacion_horas = $fila['anticipacion_horas'];
+            $this->anticipacion_minutos = $fila['anticipacion_minutos'];
+            $this->observaciones_periodo = $fila['observaciones_periodo'];
+        }
+        
+    }
+
 	
 }
