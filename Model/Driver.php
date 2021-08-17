@@ -121,6 +121,9 @@ class Driver extends Base\ModelClass {
             return false;
         }
         
+        $this->completarCampoNombre();
+        $this->actualizar_driverYN_en_employees(0); // Se pasa como parámetro 0 para decir que no se está borrando el empleado
+        
         $this->evitarInyeccionSQL();
         return parent::test();
     }
@@ -197,8 +200,6 @@ class Driver extends Base\ModelClass {
     {
         $utils = $this->toolBox()->utils();
         $this->observaciones = $utils->noHtml($this->observaciones);
-        $this->completarCampoNombre();
-        $this->actualizar_driverYN_en_employees(0); // Se pasa como parámetro 0 para decir que no se está borrando el empleado
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
 	
