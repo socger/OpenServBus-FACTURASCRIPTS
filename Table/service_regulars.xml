@@ -190,10 +190,6 @@
     </column>
 
     <column>
-        <name>idservice_regular_combination</name>
-        <type>integer</type>
-    </column>
-    <column>
         <name>iddriver</name>
         <type>integer</type>
     </column>
@@ -280,10 +276,6 @@
     <constraint>
         <name>ca_service_regulars__service_regular_periods</name>
         <type>FOREIGN KEY (idservice_regular_period) REFERENCES service_regular_periods (idservice_regular_period) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
-    </constraint>
-    <constraint>
-        <name>ca_service_regulars__service_regular_combinations</name>
-        <type>FOREIGN KEY (idservice_regular_combination) REFERENCES service_regular_combinations (idservice_regular_combination) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
         <name>ca_service_regulars__drivers</name>
