@@ -19,11 +19,11 @@ class EditService_regular_combination_serv extends EditController {
         $pageData['menu'] = 'Servicios';
         $pageData['title'] = 'Serv. regulares - Combinación - Servicio';
         
-        $pageData['icon'] = 'fas fa-briefcase';
+        $pageData['icon'] = '<i class="fas fa-cogs"></i>';
 
         return $pageData;
     }
-    
+
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
     protected function loadData($viewName, $view) {
         switch ($viewName) {

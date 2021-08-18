@@ -15,7 +15,7 @@ class ListService_regular_combination_serv extends ListController {
         $pageData['submenu'] = 'Servicios';
         $pageData['title'] = 'Serv. regulares - Combinaciones - Servicios';
         
-        $pageData['icon'] = 'fas fa-briefcase';
+        $pageData['icon'] = '<i class="fas fa-cogs"></i>';
         
 
         return $pageData;
