@@ -53,6 +53,10 @@ class Service_regular extends Base\ModelClass {
     public $observaciones_montaje;
     public $observaciones_vehiculo;
     public $observaciones_facturacion;
+
+    public $idservice_regular_combination;
+    public $iddriver;
+    public $idvehicle;
     
     public $idservice_regular_period;
     public $fecha_desde;
