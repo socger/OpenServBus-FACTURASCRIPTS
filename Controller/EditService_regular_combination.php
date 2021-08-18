@@ -24,10 +24,53 @@ class EditService_regular_combination extends EditController {
         return $pageData;
     }
     
+    protected function createViews() {
+        parent::createViews();
+        
+        $this->createView__Service_regular_combination_serv();
+        
+        $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
+    }
+    
+    protected function createView__Service_regular_combination_serv($model = 'Service_regular_combination_serv')
+    {
+        // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
+        // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
+        // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
+        // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
+        // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
+        $this->addListView('List' . $model, $model, 'Servicios', '<i class="fas fa-cogs"></i>');    
+
+
+        $this->views['List' . $model]->addOrderBy(['idservice_regular_combination', 'idservice_regular'], 'Nombre', 1);
+        $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        
+        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
+        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        $activo = [
+            ['code' => '1', 'description' => 'Activos = SI'],
+            ['code' => '0', 'description' => 'Activos = NO'],
+        ];
+        $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+
+        
+        $this->views['List' . $model]->addFilterAutocomplete('xIdDriver', 'driver', 'iddriver', 'drivers', 'iddriver', 'nombre');
+        $this->views['List' . $model]->addFilterAutocomplete('xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
+    }
+    
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
     protected function loadData($viewName, $view) {
         switch ($viewName) {
+            case 'createView__Service_regular_combination_serv':
+                $idservice_regular_combination = $this->getViewModelValue('EditService_regular_combination', 'idservice_regular_combination');
 
+        var_dump($idservice_regular_combination);
+        $this->toolBox()->i18nLog()->error($idservice_regular_combination);
+                
+                $where = [new DatabaseWhere('idservice_regular_combination', $idservice_regular_combination)];
+                $view->loadData('', $where);
+                break;
+                    
             // Pestaña con el mismo nombre que este controlador EditXxxxx
             case 'EditService_regular_combination': 
                 parent::loadData($viewName, $view);
