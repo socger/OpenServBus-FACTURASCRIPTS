@@ -12,8 +12,8 @@ class ListService_regular_combination extends ListController {
         $pageData = parent::getPageData();
         
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Servicios';
-        $pageData['title'] = 'Serv. regulares - Combinaciones';
+        $pageData['submenu'] = 'Serv. regulares';
+        $pageData['title'] = 'Combinaciones';
         
         $pageData['icon'] = 'fas fa-briefcase';
         

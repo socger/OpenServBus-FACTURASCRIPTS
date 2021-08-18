@@ -19,7 +19,7 @@ class EditService_regular_combination_serv extends EditController {
         $pageData['menu'] = 'Servicios';
         $pageData['title'] = 'Serv. regulares - Combinación - Servicio';
         
-        $pageData['icon'] = '<i class="fas fa-cogs"></i>';
+        $pageData['icon'] = 'fas fa-cogs';
 
         return $pageData;
     }

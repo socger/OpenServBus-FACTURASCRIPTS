@@ -10,8 +10,8 @@ class ListService_regular_period extends ListController {
         $pageData = parent::getPageData();
         
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Servicios';
-        $pageData['title'] = 'Serv. regulares - Periodos';
+        $pageData['submenu'] = 'Serv. regulares';
+        $pageData['title'] = 'Periodos';
         
         $pageData['icon'] = 'fas fa-calendar-day';
         
