@@ -123,8 +123,6 @@
         </group>
 
 
-
-
         <group name="actual-period" numcolumns="12" icon="fas fa-calendar-day" title="actual-period">
             <column name="observations-period" numcolumns="6" order="120">
                 <widget type="textarea" fieldname="observaciones_periodo" readonly="true" />
@@ -137,6 +135,7 @@
             </column>
         </group>
 
+
         <group name="anticipation" numcolumns="5" icon="fas fa-hourglass-start" title="anticipation">
             <column name="hours" display="right" numcolums="2" order="100">
                 <widget type="number" decimal="0" fieldname="anticipacion_horas" readonly="true" />
@@ -146,7 +145,7 @@
             </column>
         </group>
 
-                        
+
         <group name="horario" numcolumns="7" icon="far fa-clock" title="horario">
             <column name="inicio_hora" title="start-time" numcolumns="3" order="100">
                 <widget type="time" fieldname="inicio_hora" readonly="true" />
@@ -160,14 +159,23 @@
         </group>
 
 
-
-
-
-
-
-
-
-
+        <group name="assembly-services" numcolumns="12" icon="fas fa-business-time" title="assembly-services">
+            <column name="combination-services" numcolumns="4" order="100">
+                <widget type="select" fieldname="idservice_regular_combination" icon="fas fa-briefcase" onclick="EditService_regular_combination" readonly="true" >
+                    <values source="service_regular_combinations" fieldcode="idservice_regular_combination" fieldtitle="nombre" />
+                </widget>
+            </column>
+            <column name="driver" numcolumns="4" order="110">
+                <widget type="select" fieldname="iddriver" icon="fas fa-user-astronaut" onclick="EditDriver" readonly="true" >
+                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
+                </widget>
+            </column>
+            <column name="vehicle" numcolumns="4" order="120">
+                <widget type="select" fieldname="idvehicle" icon="fas fa-bus-alt" onclick="EditVehicle" readonly="true" >
+                    <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
+                </widget>
+            </column>
+        </group>
 
 
         <group name="observations" numcolumns="12" icon="fas fa-info-circle" title="observations">
