@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <column>
-        <name>idservice_regular_combination_service_regular</name>
+        <name>idservice_regular_combination_serv</name>
         <type>serial</type>
         <null>NO</null>
     </column>
@@ -71,17 +71,17 @@
     
     
     <constraint>
-        <name>service_regular_combination_service_regulars_pkey</name>
-        <type>PRIMARY KEY (idservice_regular_combination_service_regular)</type>
+        <name>service_regular_combination_servs_pkey</name>
+        <type>PRIMARY KEY (idservice_regular_combination_serv)</type>
     </constraint>
     
     
     <constraint>
-        <name>service_regular_combination_service_regulars__drivers</name>
+        <name>service_regular_combination_servs__drivers</name>
         <type>FOREIGN KEY (iddriver) REFERENCES drivers (iddriver) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
-        <name>service_regular_combination_service_regulars__vehicles</name>
+        <name>service_regular_combination_servs__vehicles</name>
         <type>FOREIGN KEY (idvehicle) REFERENCES vehicles (idvehicle) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
 
