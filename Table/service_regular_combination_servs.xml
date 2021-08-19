@@ -84,8 +84,16 @@
         <name>service_regular_combination_servs__vehicles</name>
         <type>FOREIGN KEY (idvehicle) REFERENCES vehicles (idvehicle) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
+    <constraint>
+        <name>service_regular_combination_servs__service_regular_combinations</name>
+        <type>FOREIGN KEY (idservice_regular_combination) REFERENCES service_regular_combinations (idservice_regular_combination) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>service_regular_combination_servs__service_regulars</name>
+        <type>FOREIGN KEY (idservice_regular) REFERENCES service_regulars (idservice_regular) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
 
-        
+
     <constraint>
         <name>uniq_idservice_regular_combination__idservice_regular</name>
         <type>UNIQUE (idservice_regular_combination, idservice_regular)</type>
