@@ -295,6 +295,7 @@ class Service_regular extends Base\ModelClass {
         $sql = ' SELECT COUNT(*) AS cantidad '
              . ' FROM service_regular_combination_servs '
              . ' WHERE service_regular_combination_servs.idservice_regular = ' . $this->idservice_regular . ' '
+             . ' AND service_regular_combination_servs.activo = 1 '
              . ' ORDER BY service_regular_combination_servs.idservice_regular '
              ;
 

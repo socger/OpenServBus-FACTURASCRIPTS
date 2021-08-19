@@ -145,16 +145,17 @@ class Service_regular_combination_serv extends Base\ModelClass {
         $sql = ' SELECT COUNT(*) AS cantidad '
              . ' FROM service_regular_combination_servs '
              . ' WHERE service_regular_combination_servs.idservice_regular = ' . $this->idservice_regular . ' '
+             . ' AND service_regular_combination_servs.activo = 1 '
              . ' ORDER BY service_regular_combination_servs.idservice_regular '
              ;
 
-        $combinadoSN = false;
+        $combinadoSN = 0;
 
         $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
 
         foreach ($registros as $fila) {
             if ($fila['cantidad'] > 0){
-                $combinadoSN = true;
+                $combinadoSN = 1;
             }
         }
         
