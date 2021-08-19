@@ -16,7 +16,7 @@ class EditService_regular_combination_serv extends EditController {
         $pageData = parent::getPageData();
         
         $pagedata['showonmenu'] = false;
-        $pageData['menu'] = 'Servicios';
+        $pageData['menu'] = 'OpenServBus';
         $pageData['title'] = 'Serv. regulares - Combinación - Servicio';
         
         $pageData['icon'] = 'fas fa-cogs';
