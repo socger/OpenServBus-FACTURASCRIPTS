@@ -45,6 +45,17 @@ class Service_regular_combination_serv extends Base\ModelClass {
     public static function tableName(): string {
         return 'service_regular_combination_servs';
     }
+
+
+
+    // Para realizar algo antes o después del borrado ... todo depende de que se ponga antes del parent o después
+    public function delete()
+    {
+        $parent_devuelve = parent::delete();
+        $this->actualizarCombinadoSNEnServicioRegular();
+        return $parent_devuelve;
+    }
+
     
     // Para realizar cambios en los datos antes de guardar por modificación
     protected function saveUpdate(array $values = [])
@@ -55,7 +66,9 @@ class Service_regular_combination_serv extends Base\ModelClass {
             return false;
         }
         
-        return parent::saveUpdate($values);
+        $parent_devuelve = parent::saveUpdate($values);
+        $this->actualizarCombinadoSNEnServicioRegular();
+        return $parent_devuelve;
     }
 
     // Para realizar cambios en los datos antes de guardar por alta
@@ -72,8 +85,10 @@ class Service_regular_combination_serv extends Base\ModelClass {
         if ($this->comprobarSiActivo() == false){
             return false;
         }
-
-        return parent::saveInsert($values);
+        
+        $parent_devuelve = parent::saveInsert($values);
+        $this->actualizarCombinadoSNEnServicioRegular();
+        return $parent_devuelve;
     }
     
     public function test()
@@ -124,5 +139,31 @@ class Service_regular_combination_serv extends Base\ModelClass {
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
-	
+        
+    private function actualizarCombinadoSNEnServicioRegular()
+    {
+        $sql = ' SELECT COUNT(*) AS cantidad '
+             . ' FROM service_regular_combination_servs '
+             . ' WHERE service_regular_combination_servs.idservice_regular = ' . $this->idservice_regular . ' '
+             . ' ORDER BY service_regular_combination_servs.idservice_regular '
+             ;
+
+        $combinadoSN = false;
+
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            if ($fila['cantidad'] > 0){
+                $combinadoSN = true;
+            }
+        }
+        
+        // Rellenamos el nombre del empleado en otras tablas
+        $sql = "UPDATE service_regulars "
+             . "SET service_regulars.combinadoSN = " . $combinadoSN . " "
+             . "WHERE service_regulars.idservice_regular = " . $this->idservice_regular . ";";
+
+        self::$dataBase->exec($sql);
+    }
+
 }
