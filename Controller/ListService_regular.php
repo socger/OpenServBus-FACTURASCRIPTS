@@ -11,8 +11,8 @@ class ListService_regular extends ListController {
         $pageData = parent::getPageData();
         
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Serv. regulares';
-        $pageData['title'] = 'Serv. regulares';
+        $pageData['submenu'] = 'Servicios regulares';
+        $pageData['title'] = 'Servicios regulares';
         
         $pageData['icon'] = 'fas fa-book-open';
 
