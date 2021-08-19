@@ -68,6 +68,18 @@ class Service_regular_period extends Base\ModelClass {
         return $returnParent;
     }
 
+    // Para realizar algo antes o después del borrado ... todo depende de que se ponga antes del parent o después
+    public function delete()
+    {
+        $parent_devuelve = parent::delete();
+        
+        $this->actualizarPeriodoEnServicioRegular();
+                
+        return $parent_devuelve;
+        
+        // return parent::delete();
+    }
+
     // Para realizar cambios en los datos antes de guardar por alta
     protected function saveInsert(array $values = [])
     {
