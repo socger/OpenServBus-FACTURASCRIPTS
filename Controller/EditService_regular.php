@@ -119,6 +119,12 @@ class EditService_regular extends EditController {
              // $this->views[$viewName]->model->user_fecha = date('d-m-Y');
                 $this->views[$viewName]->model->user_fecha = date("Y-m-d H:i:s");
                 
+                if ($this->views[$viewName]->model->combinadoSN === true) {
+                    $this->views[$viewName]->model->combinadoSiNo = 'SI';
+                } else {
+                    $this->views[$viewName]->model->combinadoSiNo = 'NO';
+                }
+
                 $this->prepararFechasParaVista($viewName);
                 $this->prepararHorasParaVista($viewName);
 
