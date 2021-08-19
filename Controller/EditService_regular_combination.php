@@ -57,6 +57,7 @@ class EditService_regular_combination extends EditController {
         
         $this->views['List' . $model]->addFilterAutocomplete('xIdDriver', 'driver', 'iddriver', 'drivers', 'iddriver', 'nombre');
         $this->views['List' . $model]->addFilterAutocomplete('xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
+        $this->views['List' . $model]->addFilterAutocomplete('xIdservice_regular', 'service-regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
     }
     
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
