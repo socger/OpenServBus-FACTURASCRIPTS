@@ -240,6 +240,12 @@
         <name>observaciones_periodo</name>
         <type>text</type>
     </column>
+    
+    <column>
+        <name>combinadoSN</name>
+        <type>boolean</type>
+        <default>false</default>
+    </column>
         
     
     
@@ -272,10 +278,6 @@
     <constraint>
         <name>ca_service_regulars__empresas</name>
         <type>FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
-    </constraint>
-    <constraint>
-        <name>ca_service_regulars__service_regular_periods</name>
-        <type>FOREIGN KEY (idservice_regular_period) REFERENCES service_regular_periods (idservice_regular_period) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
         <name>ca_service_regulars__drivers</name>
