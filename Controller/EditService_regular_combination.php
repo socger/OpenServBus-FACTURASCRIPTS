@@ -2,6 +2,7 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 class EditService_regular_combination extends EditController {
@@ -16,7 +17,7 @@ class EditService_regular_combination extends EditController {
         $pageData = parent::getPageData();
         
         $pagedata['showonmenu'] = false;
-        $pageData['menu'] = 'Servicios';
+        $pageData['menu'] = 'OpenServBus';
         $pageData['title'] = 'Serv. regulares - Combinación';
         
         $pageData['icon'] = 'fas fa-briefcase';
@@ -39,7 +40,7 @@ class EditService_regular_combination extends EditController {
         // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
         // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
         // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model, 'Servicios', '<i class="fas fa-cogs"></i>');    
+        $this->addListView('List' . $model, $model, 'Servicios', 'fas fa-cogs');    
 
 
         $this->views['List' . $model]->addOrderBy(['idservice_regular_combination', 'idservice_regular'], 'Nombre', 1);
@@ -61,12 +62,8 @@ class EditService_regular_combination extends EditController {
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
     protected function loadData($viewName, $view) {
         switch ($viewName) {
-            case 'createView__Service_regular_combination_serv':
+            case 'ListService_regular_combination_serv':
                 $idservice_regular_combination = $this->getViewModelValue('EditService_regular_combination', 'idservice_regular_combination');
-
-        var_dump($idservice_regular_combination);
-        $this->toolBox()->i18nLog()->error($idservice_regular_combination);
-                
                 $where = [new DatabaseWhere('idservice_regular_combination', $idservice_regular_combination)];
                 $view->loadData('', $where);
                 break;
