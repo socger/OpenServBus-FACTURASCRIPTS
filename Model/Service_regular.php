@@ -66,6 +66,8 @@ class Service_regular extends Base\ModelClass {
     public $anticipacion_horas;
     public $anticipacion_minutos;
     public $observaciones_periodo;
+    public $combinadoSN;
+    public $combinadoSiNo;
     
     
     // función que inicializa algunos valores antes de la vista del controlador
@@ -105,7 +107,9 @@ class Service_regular extends Base\ModelClass {
             return false;
         }
 
-        return parent::saveUpdate($values);
+        $this->completarCombinadoSN();
+        $respuesta = parent::saveUpdate($values);
+        return $respuesta;
     }
 
     // Para realizar cambios en los datos antes de guardar por alta
@@ -128,7 +132,9 @@ class Service_regular extends Base\ModelClass {
             return false;
         }
 
-        return parent::saveInsert($values);
+        $this->completarCombinadoSN();
+        $respuesta = parent::saveInsert($values);
+        return $respuesta;
     }
     
     public function test() {
@@ -282,9 +288,25 @@ class Service_regular extends Base\ModelClass {
             $this->anticipacion_minutos = $fila['anticipacion_minutos'];
             $this->observaciones_periodo = $fila['observaciones'];
         }
-
-        
     }
 
+    private function completarCombinadoSN()
+    {
+        $sql = ' SELECT COUNT(*) AS cantidad '
+             . ' FROM service_regular_combination_servs '
+             . ' WHERE service_regular_combination_servs.idservice_regular = ' . $this->idservice_regular . ' '
+             . ' ORDER BY service_regular_combination_servs.idservice_regular '
+             ;
+
+        $this->combinadoSN = false;
+        
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            if ($fila['cantidad'] > 0){
+                $this->combinadoSN = true;
+            }
+        }
+    }
 	
 }
