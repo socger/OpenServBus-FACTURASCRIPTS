@@ -59,7 +59,6 @@ class ListService_regular extends ListController {
          $this->addFilterCheckbox($viewName, 'domingo', 'Domingo', 'domingo');
      
         // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
             ['code' => '0', 'description' => 'Activos = NO'],
@@ -79,6 +78,13 @@ class ListService_regular extends ListController {
             ['code' => '0', 'description' => 'Ftra.agrupando = NO'],
         ];
         $this->addFilterSelect($viewName, 'facturarAgrupando', 'Ftra.agrupando = TODOS', 'facturar_agrupando', $facturarAgrupandoSN);        
+
+        // Filtro de TIPO SELECT para filtrar por SERVICIOS REGULARES facturar agrupando (SI, NO, o TODOS)
+        $combinadosSN = [
+            ['code' => '1', 'description' => 'Combinado = SI'],
+            ['code' => '0', 'description' => 'Combinado = NO'],
+        ];
+        $this->addFilterSelect($viewName, 'xCombinadoSN', 'Combinado = TODOS', 'combinadoSN', $combinadosSN);        
 
         // Filtro autoComplete ... addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode, $fieldtitle)
         // Aunque lo vamos a hacer sobre la tabla empresa que normalmente tiene pocos registros
