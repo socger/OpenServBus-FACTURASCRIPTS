@@ -160,15 +160,18 @@
 
 
         <group name="assembly-services" numcolumns="12" icon="fas fa-business-time" title="assembly-services">
-            <column name="usual-driver" numcolumns="6" order="110">
+            <column name="usual-driver" numcolumns="5" order="100">
                 <widget type="select" fieldname="iddriver" icon="fas fa-user-astronaut" onclick="EditDriver" >
                     <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="usual-vehicle" numcolumns="6" order="120">
+            <column name="usual-vehicle" numcolumns="5" order="110">
                 <widget type="select" fieldname="idvehicle" icon="fas fa-bus-alt" onclick="EditVehicle" >
                     <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
                 </widget>
+            </column>
+            <column name="service-combined" numcolums="2" order="120">
+                <widget type="text" fieldname="combinadoSiNo" readonly="true"/>
             </column>
         </group>
 
