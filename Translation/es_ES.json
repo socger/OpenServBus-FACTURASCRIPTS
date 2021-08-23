@@ -107,6 +107,8 @@
     "horario": "Horario",
     "kms-empty": "Kms en vacío",
     "kms-anotherCountry": "Kms en extranjero",
+    "for-kms-national": "Para kms nacionales",
+    "for-kms-anotherCountry": "Para kms en extranjero",
     "entries": "Entradas",
     "outputs": "Salidas",
     "actual-period": "Periodo actual",
