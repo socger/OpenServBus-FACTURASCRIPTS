@@ -107,7 +107,7 @@
                                                 
         <group name="billing" numcolumns="12" icon="fas fa-file-invoice-dollar" title="billing">
             <column name="amount" display="right" numcolums="3" order="100">
-                <widget type="number" decimal="2" fieldname="importe" />
+                <widget type="number" decimal="3" fieldname="importe" />
             </column>
             <column name="company" titleurl="ListEmpresas" numcolumns="5" order="110">
                 <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa" required="true">
@@ -119,6 +119,20 @@
             </column>
             <column name="bill-grouping" numcolums="2" order="130">
                 <widget type="checkbox" fieldname="facturar_agrupando"/>
+            </column>
+        </group>
+
+                                                
+        <group name="subaccount-sales" numcolumns="12" icon="fas fa-th-list" title="subaccount-sales">
+            <column name="for-kms-national" numcolumns="6" order="100">
+                <widget type="autocomplete" fieldname="codsubcuenta_km_nacional" icon="fas fa-th-list" onclick="EditSubcuenta">
+                    <values source="subcuentas" fieldcode="codsubcuenta" fieldtitle="descripcion" />
+                </widget>
+            </column>
+            <column name="for-kms-anotherCountry" numcolumns="6" order="110">
+                <widget type="autocomplete" fieldname="codsubcuenta_km_extranjero" icon="fas fa-th-list" onclick="EditSubcuenta">
+                    <values source="subcuentas" fieldcode="codsubcuenta" fieldtitle="descripcion" />
+                </widget>
             </column>
         </group>
 
