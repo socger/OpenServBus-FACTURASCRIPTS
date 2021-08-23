@@ -160,12 +160,12 @@
 
 
         <group name="assembly-services" numcolumns="12" icon="fas fa-business-time" title="assembly-services">
-            <column name="usual-driver" numcolumns="5" order="100">
+            <column name="usual-driver" numcolumns="5" order="100" description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular" >
                 <widget type="select" fieldname="iddriver" icon="fas fa-user-astronaut" onclick="EditDriver" >
                     <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="usual-vehicle" numcolumns="5" order="110">
+            <column name="usual-vehicle" numcolumns="5" order="110" description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular" >
                 <widget type="select" fieldname="idvehicle" icon="fas fa-bus-alt" onclick="EditVehicle" >
                     <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
                 </widget>
