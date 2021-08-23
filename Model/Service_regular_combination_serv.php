@@ -171,10 +171,10 @@ class Service_regular_combination_serv extends Base\ModelClass {
         self::$dataBase->exec($sql);
     }
     
-    private function rellenarConductorVehiculoSiVacios() : boolean
+    private function rellenarConductorVehiculoSiVacios() : bool
     {
         $aDevolver = true;
-        
+
         // Comprobar si falta vehículo o conductor
         if (empty($this->iddriver) or empty($this->idvehicle)) {
             // Cargamos el conductor y vehículo de la combinación
@@ -189,15 +189,20 @@ class Service_regular_combination_serv extends Base\ModelClass {
             foreach ($registros as $fila) {
                 if (empty($this->iddriver)) {
                     $this->iddriver = $fila['iddriver'];
-                    $this->toolBox()->i18nLog()->info( "Conductor rellenado automáticamente desde la Combinación." );
+                    if (!empty($this->iddriver)) {
+                        $this->toolBox()->i18nLog()->info( "Conductor rellenado automáticamente desde la Combinación." );
+                    }
                 }
 
                 if (empty($this->idvehicle)) {
                     $this->idvehicle = $fila['idvehicle'];
-                    $this->toolBox()->i18nLog()->info( "Vehículo rellenado automáticamente desde la Combinación." );
+                    if (!empty($this->idvehicle)) {
+                        $this->toolBox()->i18nLog()->info( "Vehículo rellenado automáticamente desde la Combinación." );
+                    }
                 }
             }
 
+        
             // Si tras cargar de la combinación todavía hay falta de vehículo o conductor,
             // intentamos cargar conductor o vehículo del servicio regular
             if (empty($this->iddriver) or empty($this->idvehicle)) {
@@ -212,12 +217,16 @@ class Service_regular_combination_serv extends Base\ModelClass {
                 foreach ($registros as $fila) {
                     if (empty($this->iddriver)) {
                         $this->iddriver = $fila['iddriver'];
-                        $this->toolBox()->i18nLog()->info( "Conductor rellenado automáticamente desde el Servicio Regular." );
+                        if (!empty($this->iddriver)) {
+                            $this->toolBox()->i18nLog()->info( "Conductor rellenado automáticamente desde el Servicio Regular." );
+                        }
                     }
 
                     if (empty($this->idvehicle)) {
                         $this->idvehicle = $fila['idvehicle'];
-                        $this->toolBox()->i18nLog()->info( "Vehículo rellenado automáticamente desde el Servicio Regular." );
+                        if (!empty($this->idvehicle)) {
+                            $this->toolBox()->i18nLog()->info( "Vehículo rellenado automáticamente desde el Servicio Regular." );
+                        }
                     }
                 }
             }
