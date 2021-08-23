@@ -86,6 +86,8 @@ class Service_regular_combination extends Base\ModelClass {
     
     public function test()
     {
+        $this->rellenarConductorVehiculoSiVacios();
+        
         $this->evitarInyeccionSQL();
         return parent::test();
     }
@@ -133,5 +135,13 @@ class Service_regular_combination extends Base\ModelClass {
         $this->nombre = $utils->noHtml($this->nombre);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
-	
+    
+    private function rellenarConductorVehiculoSiVacios()
+    {
+        if (empty($this->iddriver) or empty($this->idvehicle)) {
+            $this->toolBox()->i18nLog()->info( 'Si no rellena el vehículo o el conductor, este será el orden de prioridades para el Montaje de Servicios:'
+                                             . ' 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular' );
+        }
+    }
+    
 }
