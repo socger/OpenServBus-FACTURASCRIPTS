@@ -57,6 +57,9 @@ class Service_regular extends Base\ModelClass {
     public $iddriver;
     public $idvehicle;
     
+    public $codsubcuenta_km_nacional;
+    public $codsubcuenta_km_extranjero;
+    
     public $idservice_regular_period;
     public $fecha_desde;
     public $fecha_hasta;
@@ -159,6 +162,9 @@ class Service_regular extends Base\ModelClass {
         
         $this->rellenarConductorVehiculoSiVacios();
         
+        $this->codsubcuenta_km_nacional = empty($this->codsubcuenta_km_nacional) ? null : $this->codsubcuenta_km_nacional;
+        $this->codsubcuenta_km_extranjero = empty($this->codsubcuenta_km_extranjero) ? null : $this->codsubcuenta_km_extranjero;
+        
         $this->evitarInyeccionSQL();
         return parent::test();
     }
@@ -243,6 +249,8 @@ class Service_regular extends Base\ModelClass {
         $this->hoja_ruta_tipoidfiscal = $utils->noHtml($this->hoja_ruta_tipoidfiscal);
         $this->hoja_ruta_cifnif = $utils->noHtml($this->hoja_ruta_cifnif);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
+        $this->codsubcuenta_km_nacional = $utils->noHtml($this->codsubcuenta_km_nacional);
+        $this->codsubcuenta_km_extranjero = $utils->noHtml($this->codsubcuenta_km_extranjero);
     }
     
     private function completarDatosUltimoPeriodo()
