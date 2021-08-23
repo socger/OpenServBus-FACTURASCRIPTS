@@ -36,12 +36,15 @@
         </group>
 
 
-        <group name="kms" numcolumns="4" icon="fas fa-chair" title="kms">
+        <group name="kms" numcolumns="6" icon="fas fa-chair" title="kms">
             <column name="kms" display="right" numcolums="2" order="140">
                 <widget type="number" decimal="0" fieldname="kms" />
             </column>
             <column name="kms-empty" numcolums="2" order="150">
                 <widget type="checkbox" fieldname="kms_vacios"/>
+            </column>
+            <column name="kms-anotherCountry" numcolums="2" order="155">
+                <widget type="checkbox" fieldname="kms_enExtranjero"/>
             </column>
         </group>
         

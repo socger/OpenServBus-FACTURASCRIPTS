@@ -30,6 +30,7 @@ class Service_regular_itinerary extends Base\ModelClass {
     
     public $kms;
     public $kms_vacios;
+    public $kms_enExtranjero;
     public $pasajeros_entradas;
     public $pasajeros_salidas;
     
@@ -44,6 +45,7 @@ class Service_regular_itinerary extends Base\ModelClass {
         $this->kms_vacios = false;
         $this->pasajeros_entradas = 0;
         $this->pasajeros_salidas = 0;
+        $this->kms_enExtranjero = false;
     }
     
     // función que devuelve el id principal
