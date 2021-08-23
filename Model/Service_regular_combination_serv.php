@@ -93,6 +93,10 @@ class Service_regular_combination_serv extends Base\ModelClass {
     
     public function test()
     {
+        if ($this->rellenarConductorVehiculoSiVacios() === false) {
+            return false;
+        }
+        
         $this->evitarInyeccionSQL();
         return parent::test();
     }
@@ -166,5 +170,88 @@ class Service_regular_combination_serv extends Base\ModelClass {
 
         self::$dataBase->exec($sql);
     }
+    
+    private function rellenarConductorVehiculoSiVacios() : boolean
+    {
+        $aDevolver = true;
+        
+        // Comprobar si falta vehículo o conductor
+        if (empty($this->iddriver) or empty($this->idvehicle)) {
+            // Cargamos el conductor y vehículo de la combinación
+            $sql = ' SELECT service_regular_combinations.iddriver '
+                 .      ' , service_regular_combinations.idvehicle '
+                 . ' FROM service_regular_combinations '
+                 . ' WHERE service_regular_combinations.idservice_regular_combination = ' . $this->idservice_regular_combination
+                 ;
 
+            $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+            foreach ($registros as $fila) {
+                if (empty($this->iddriver)) {
+                    $this->iddriver = $fila['iddriver'];
+                    $this->toolBox()->i18nLog()->info( "Conductor rellenado automáticamente desde la Combinación." );
+                }
+
+                if (empty($this->idvehicle)) {
+                    $this->idvehicle = $fila['idvehicle'];
+                    $this->toolBox()->i18nLog()->info( "Vehículo rellenado automáticamente desde la Combinación." );
+                }
+            }
+
+            // Si tras cargar de la combinación todavía hay falta de vehículo o conductor,
+            // intentamos cargar conductor o vehículo del servicio regular
+            if (empty($this->iddriver) or empty($this->idvehicle)) {
+                $sql = ' SELECT service_regulars.iddriver '
+                     .      ' , service_regulars.idvehicle '
+                     . ' FROM service_regulars '
+                     . ' WHERE service_regulars.idservice_regular = ' . $this->idservice_regular
+                     ;
+
+                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+                foreach ($registros as $fila) {
+                    if (empty($this->iddriver)) {
+                        $this->iddriver = $fila['iddriver'];
+                        $this->toolBox()->i18nLog()->info( "Conductor rellenado automáticamente desde el Servicio Regular." );
+                    }
+
+                    if (empty($this->idvehicle)) {
+                        $this->idvehicle = $fila['idvehicle'];
+                        $this->toolBox()->i18nLog()->info( "Vehículo rellenado automáticamente desde el Servicio Regular." );
+                    }
+                }
+            }
+            
+            // Si todavía sigue faltando el vehículo o el conductor
+            // Saltará la restricción de campo obligatorio de la tabla
+            if (empty($this->iddriver) or empty($this->idvehicle)) {
+                $aRellenar = '';
+                $tampoco = 'Además tampoco estaba rellenado';
+                $noPude = 'No lo pude completar';
+                
+                if (empty($this->iddriver)) {
+                    if ($aRellenar === '') {
+                        $aRellenar .= ' y ';
+                        $tampoco = 'Además tampoco estaban rellenados';
+                        $noPude = 'No los pude completar';
+                    }
+                    $aRellenar .= 'el conductor';
+                }
+                
+                if (empty($this->idvehicle)) {
+                    if ($aRellenar === '') {
+                        $aRellenar .= ' y ';
+                        $tampoco = 'Además tampoco estaban rellenados';
+                    }
+                    $aRellenar .= 'el vehículo';
+                }
+                
+                $this->toolBox()->i18nLog()->error( "Debe completar $aRellenar. $tampoco ni en la Combinación de servicios elegida, ni en el Servicio Regular elegido ... $noPude." );
+                $aDevolver = false;
+            }
+        }
+        
+        return $aDevolver;
+    }
+    
 }
