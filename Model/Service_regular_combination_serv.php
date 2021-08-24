@@ -97,6 +97,10 @@ class Service_regular_combination_serv extends Base\ModelClass {
             return false;
         }
         
+        if ($this->comprobarDiasSemana() === false) {
+            return false;
+        }
+        
         $this->evitarInyeccionSQL();
         return parent::test();
     }
@@ -261,6 +265,129 @@ class Service_regular_combination_serv extends Base\ModelClass {
         }
         
         return $aDevolver;
+    }
+    
+    private function comprobarDiasSemana() : bool
+    {
+        $coincideAlgunDíaDeLaSemana = false;
+        
+        $combinacionLunes = false;
+        $combinacionMartes = false;
+        $combinacionMiercoles = false;
+        $combinacionJueves = false;
+        $combinacionViernes = false;
+        $combinacionSabado = false;
+        $combinacionDomingo = false;
+        
+        $servRegularLunes = false;
+        $servRegularMartes = false;
+        $servRegularMiercoles = false;
+        $servRegularJueves = false;
+        $servRegularViernes = false;
+        $servRegularSabado = false;
+        $servRegularDomingo = false;
+
+        // Traemos los días de la semana de la combinación
+        $sql = ' SELECT service_regular_combinations.lunes '
+             .      ' , service_regular_combinations.martes '
+             .      ' , service_regular_combinations.miercoles '
+             .      ' , service_regular_combinations.jueves '
+             .      ' , service_regular_combinations.viernes '
+             .      ' , service_regular_combinations.sabado '
+             .      ' , service_regular_combinations.domingo '
+             . ' FROM service_regular_combinations '
+             . ' WHERE service_regular_combinations.idservice_regular_combination = ' . $this->idservice_regular_combination
+             ;
+
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $combinacionLunes = $fila['lunes'];
+            $combinacionMartes = $fila['martes'];
+            $combinacionMiercoles = $fila['miercoles'];
+            $combinacionJueves = $fila['jueves'];
+            $combinacionViernes = $fila['viernes'];
+            $combinacionSabado = $fila['sabado'];
+            $combinacionDomingo = $fila['domingo'];
+        }
+        
+        // Traemos los días de la semana del servicio regular
+        $sql = ' SELECT service_regulars.lunes '
+             .      ' , service_regulars.martes '
+             .      ' , service_regulars.miercoles '
+             .      ' , service_regulars.jueves '
+             .      ' , service_regulars.viernes '
+             .      ' , service_regulars.sabado '
+             .      ' , service_regulars.domingo '
+             . ' FROM service_regulars '
+             . ' WHERE service_regulars.idservice_regular = ' . $this->idservice_regular
+             ;
+
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $servRegularLunes = $fila['lunes'];
+            $servRegularMartes = $fila['martes'];
+            $servRegularMiercoles = $fila['miercoles'];
+            $servRegularJueves = $fila['jueves'];
+            $servRegularViernes = $fila['viernes'];
+            $servRegularSabado = $fila['sabado'];
+            $servRegularDomingo = $fila['domingo'];
+        }
+        
+        // Un mismo servicio regular, puede estar en varias combinaciones, pero 
+        // nunca varias veces en la misma combinación.
+        // Por lo que debo de comprobar si alguno de los días de la semana 
+        // elegidos para el servicio regular, corresponde con alguno de los días 
+        // de la semana de la combinación
+        if ($combinacionLunes == 1) {
+            if ($combinacionLunes == $servRegularLunes) {
+                $coincideAlgunDíaDeLaSemana = true;
+            }
+        }
+        
+        if ($combinacionMartes == 1) {
+            if ($combinacionMartes == $servRegularMartes) {
+                $coincideAlgunDíaDeLaSemana = true;
+            }
+        }
+        
+        if ($combinacionMiercoles == 1) {
+            if ($combinacionMiercoles == $servRegularMiercoles) {
+                $coincideAlgunDíaDeLaSemana = true;
+            }
+        }
+        
+        if ($combinacionJueves == 1) {
+            if ($combinacionJueves == $servRegularJueves) {
+                $coincideAlgunDíaDeLaSemana = true;
+            }
+        }
+        
+        if ($combinacionViernes == 1) {
+            if ($combinacionViernes == $servRegularViernes) {
+                $coincideAlgunDíaDeLaSemana = true;
+            }
+        }
+        
+        if ($combinacionSabado == 1) {
+            if ($combinacionSabado == $servRegularSabado) {
+                $coincideAlgunDíaDeLaSemana = true;
+            }
+        }
+        
+        if ($combinacionDomingo === 1) {
+            if ($combinacionDomingo == $servRegularDomingo) {
+                $coincideAlgunDíaDeLaSemana = true;
+            }
+        }
+        
+        if ($coincideAlgunDíaDeLaSemana === false) {
+            $this->toolBox()->i18nLog()->error( "Ninguno de los días de la semana del servicio coincide con los días de la semana de la combinación." );
+        }
+        
+        
+        return $coincideAlgunDíaDeLaSemana;
     }
     
 }
