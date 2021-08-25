@@ -88,6 +88,10 @@ class Service_regular_combination extends Base\ModelClass {
     {
         $this->rellenarConductorVehiculoSiVacios();
         
+        if ($this->hayServiciosQueNoCoincidenLosDiasDeSemana() == true) {
+            return false;
+        }
+        
         $this->evitarInyeccionSQL();
         return parent::test();
     }
@@ -141,6 +145,89 @@ class Service_regular_combination extends Base\ModelClass {
         if (empty($this->iddriver) or empty($this->idvehicle)) {
             $this->toolBox()->i18nLog()->info( 'Si no rellena el vehículo o el conductor, este será el orden de prioridades para el Montaje de Servicios:'
                                              . ' 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular' );
+        }
+    }
+    
+    private function hayServiciosQueNoCoincidenLosDiasDeSemana() : bool
+    {
+        $serviciosConDiasDiferentes = [];
+        
+        $sql = ' SELECT service_regulars.lunes '
+             .      ' , service_regulars.martes '
+             .      ' , service_regulars.miercoles '
+             .      ' , service_regulars.jueves '
+             .      ' , service_regulars.viernes '
+             .      ' , service_regulars.sabado '
+             .      ' , service_regulars.domingo '
+             .      ' , service_regulars.idservice_regular '
+             .      ' , service_regulars.nombre '
+             . ' FROM service_regular_combination_servs '
+             . ' LEFT JOIN service_regulars on (service_regulars.idservice_regular = service_regular_combination_servs.idservice_regular) '
+             . ' WHERE service_regular_combination_servs.idservice_regular_combination = ' . $this->idservice_regular_combination
+             ;
+
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $coincideAlgunDia = false;
+            
+            // Una combinación puede tener varios servicios regulares, por lo 
+            // que tengo que comprobar todos sus servicios
+            if ($this->lunes == 1) {
+                if ($this->lunes == $fila['lunes']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($this->martes == 1) {
+                if ($this->martes == $fila['martes']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($this->miercoles == 1) {
+                if ($this->miercoles == $fila['miercoles']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($this->jueves == 1) {
+                if ($this->jueves == $fila['jueves']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($this->viernes == 1) {
+                if ($this->viernes == $fila['viernes']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($this->sabado == 1) {
+                if ($this->sabado == $fila['sabado']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($this->domingo == 1) {
+                if ($this->domingo == $fila['domingo']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($coincideAlgunDia === false) {
+                $serviciosConDiasDiferentes[] = $fila['nombre'];
+            }
+        }
+        
+        if (empty($serviciosConDiasDiferentes)) {
+            return false;
+        } else {
+            foreach ($serviciosConDiasDiferentes as $servicio) {
+                $this->toolBox()->i18nLog()->error( "Los días de la semana del servicio $servicio no coinciden con los días de la semana de esta combinación." );
+            }
+            
+            return true;
         }
     }
     
