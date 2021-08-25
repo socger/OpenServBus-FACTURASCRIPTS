@@ -165,6 +165,10 @@ class Service_regular extends Base\ModelClass {
         $this->codsubcuenta_km_nacional = empty($this->codsubcuenta_km_nacional) ? null : $this->codsubcuenta_km_nacional;
         $this->codsubcuenta_km_extranjero = empty($this->codsubcuenta_km_extranjero) ? null : $this->codsubcuenta_km_extranjero;
         
+        if ($this->hayCombinacionesDondeEsteElServicioQueNoCoincidenLosDiasDeSemana() == true) {
+            return false;
+        }
+        
         $this->evitarInyeccionSQL();
         return parent::test();
     }
@@ -325,6 +329,89 @@ class Service_regular extends Base\ModelClass {
         if (empty($this->iddriver) or empty($this->idvehicle)) {
             $this->toolBox()->i18nLog()->info( 'Si no rellena el vehículo o el conductor, este será el orden de prioridades para el Montaje de Servicios:'
                                              . ' 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular' );
+        }
+    }
+    
+    private function hayCombinacionesDondeEsteElServicioQueNoCoincidenLosDiasDeSemana() : bool
+    {
+        $combinacionesConDiasDiferentes = [];
+        
+        $sql = ' SELECT service_regular_combinations.lunes '
+             .      ' , service_regular_combinations.martes '
+             .      ' , service_regular_combinations.miercoles '
+             .      ' , service_regular_combinations.jueves '
+             .      ' , service_regular_combinations.viernes '
+             .      ' , service_regular_combinations.sabado '
+             .      ' , service_regular_combinations.domingo '
+             .      ' , service_regular_combinations.idservice_regular_combination '
+             .      ' , service_regular_combinations.nombre '
+             . ' FROM service_regular_combination_servs '
+             . ' LEFT JOIN service_regular_combinations on (service_regular_combinations.idservice_regular_combination = service_regular_combination_servs.idservice_regular_combination) '
+             . ' WHERE service_regular_combination_servs.idservice_regular = ' . $this->idservice_regular
+             ;
+
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $coincideAlgunDia = false;
+            
+            // Una combinación puede tener varios servicios regulares, por lo 
+            // que tengo que comprobar todos sus servicios
+            if ($this->lunes == 1) {
+                if ($this->lunes == $fila['lunes']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($this->martes == 1) {
+                if ($this->martes == $fila['martes']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($this->miercoles == 1) {
+                if ($this->miercoles == $fila['miercoles']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($this->jueves == 1) {
+                if ($this->jueves == $fila['jueves']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($this->viernes == 1) {
+                if ($this->viernes == $fila['viernes']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($this->sabado == 1) {
+                if ($this->sabado == $fila['sabado']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($this->domingo == 1) {
+                if ($this->domingo == $fila['domingo']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($coincideAlgunDia === false) {
+                $combinacionesConDiasDiferentes[] = $fila['nombre'];
+            }
+        }
+        
+        if (empty($combinacionesConDiasDiferentes)) {
+            return false;
+        } else {
+            foreach ($combinacionesConDiasDiferentes as $combinacion) {
+                $this->toolBox()->i18nLog()->error( "Los días de la semana de la combinación $combinacion no coinciden con los días de la semana de este servicio regular." );
+            }
+            
+            return true;
         }
     }
     
