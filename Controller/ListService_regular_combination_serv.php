@@ -12,7 +12,7 @@ class ListService_regular_combination_serv extends ListController {
         $pageData = parent::getPageData();
         
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Servicios regulares';
+        $pageData['submenu'] = 'Serv. regulares';
         $pageData['title'] = 'Combinaciones - Servicios';
         
         $pageData['icon'] = 'fas fa-cogs';

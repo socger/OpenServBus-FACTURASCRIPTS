@@ -10,7 +10,7 @@ class ListService_regular_itinerary extends ListController {
         $pageData = parent::getPageData();
         
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Servicios regulares';
+        $pageData['submenu'] = 'Serv. regulares';
         $pageData['title'] = 'Itinerarios';
         
         $pageData['icon'] = 'fas fa-road';
