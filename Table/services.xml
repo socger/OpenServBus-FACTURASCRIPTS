@@ -69,14 +69,27 @@
         <type>boolean</type>
         <default>true</default>
     </column>
+    
+    
     <column>
         <name>importe</name>
         <type>double precision</type>
         <null>NO</null>
         <default>0</default>
     </column>
-    
-    
+    <column>
+        <name>codimpuesto</name>
+        <type>character varying(10)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>total</name>
+        <type>double precision</type>
+        <null>NO</null>
+        <default>0</default>
+    </column>
+
+
     <column>
         <name>fuera_del_municipio</name>
         <type>boolean</type>
@@ -241,5 +254,9 @@
     <constraint>
         <name>ca_services_km_extranjero__subcuentas</name>
         <type>FOREIGN KEY (codsubcuenta_km_extranjero) REFERENCES subcuentas (codsubcuenta) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_services__impuestos</name>
+        <type>FOREIGN KEY (codimpuesto) REFERENCES impuestos (codimpuesto) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
 </table>

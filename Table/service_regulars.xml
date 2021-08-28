@@ -116,6 +116,8 @@
         <type>boolean</type>
         <default>false</default>
     </column>
+    
+    
     <column>
         <name>importe</name>
         <type>double precision</type>
