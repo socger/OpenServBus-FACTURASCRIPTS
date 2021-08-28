@@ -37,6 +37,11 @@ class Service_regular extends Base\ModelClass {
     
     public $facturar_SN;
     public $facturar_agrupando;
+    
+    public $importe;
+    public $codimpuesto;
+    public $total;
+            
     public $fuera_del_municipio;
     
     public $hoja_ruta_origen;
@@ -89,6 +94,9 @@ class Service_regular extends Base\ModelClass {
     
         $this->facturar_SN = true;
         $this->facturar_agrupando = true;
+
+        $this->importe = 0;
+        $this->total = 0;
     }
     
     // función que devuelve el id principal
@@ -168,6 +176,8 @@ class Service_regular extends Base\ModelClass {
         if ($this->hayCombinacionesDondeEsteElServicioQueNoCoincidenLosDiasDeSemana() == true) {
             return false;
         }
+        
+        $this->rellenarTotal();
         
         $this->evitarInyeccionSQL();
         return parent::test();
@@ -412,6 +422,91 @@ class Service_regular extends Base\ModelClass {
             }
             
             return true;
+        }
+    }
+    
+    private function rellenarTotal()
+    {
+        $cliente_RegimenIVA = '';
+        $cliente_CodRetencion = '';
+        $cliente_PorcentajeRetencion = 0.0;
+        
+        $impto_tipo = 0.0;
+        $impto_IVA = 0.0;
+        $impto_Recargo = 0.0;
+
+        $this->total = $this->importe;
+        
+        if ($this->importe <> 0) {
+            if (!empty($this->codimpuesto)) { 
+                // Cargar datos del cliente que nos interesan
+                $sql = ' SELECT clientes.regimeniva '
+                     .      ' , clientes.codretencion '
+                     .      ' , retenciones.porcentaje '
+                     . ' FROM clientes '
+                     . ' LEFT JOIN retenciones ON (retenciones.codretencion = clientes.codretencion) '                        
+                     . ' WHERE clientes.codcliente = "' . $this->codcliente . '" '
+                     ;
+
+                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+                
+                foreach ($registros as $fila) {
+                    $cliente_RegimenIVA = $fila['regimeniva'];
+                    $cliente_CodRetencion = $fila['codretencion'];
+                    $cliente_PorcentajeRetencion = $fila['porcentaje'];
+                }
+
+                // Cargar datos del impuesto que nos interesan
+                $sql = ' SELECT impuestos.tipo '
+                     .      ' , impuestos.iva '
+                     .      ' , impuestos.recargo '
+                     . ' FROM impuestos '
+                     . ' WHERE impuestos.codimpuesto = "' . $this->codimpuesto . '" '
+                     ;
+
+                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+                
+                foreach ($registros as $fila) {
+                    $impto_tipo = $fila['tipo'];
+                    $impto_IVA = $fila['iva'];
+                    $impto_Recargo = $fila['recargo'];
+                }
+                
+                switch ($impto_tipo) {
+                    case 1:
+                        // calcularlo como porcentaje
+                        if ( !empty($impto_IVA) && trim(strtolower($cliente_RegimenIVA)) <> 'exento' ) {
+                            $this->total = $this->total + (($this->importe * $impto_IVA) / 100);
+                        }
+                        
+                        if ( !empty($impto_Recargo) && trim(strtolower($cliente_RegimenIVA)) === 'recargo' ) {
+                            $this->total = $this->total + (($this->importe * $impto_Recargo) / 100);
+                        }
+                        
+                        break;
+
+                    default:
+                        // calcularlo como suma
+                        if ( !empty($impto_IVA) && trim(strtolower($cliente_RegimenIVA)) <> 'exento' ) {
+                            $this->total = $this->total + $impto_IVA;
+                        }
+                        
+                        if ( !empty($impto_Recargo) && trim(strtolower($cliente_RegimenIVA)) === 'recargo' ) {
+                            $this->total = $this->total + $impto_Recargo;
+                        }
+                        
+                        break;
+                }
+                
+                // Cálculo de las retenciones (IRPF - profesionales)
+                if ( !empty($cliente_CodRetencion) && !empty($cliente_PorcentajeRetencion) ) {
+                    if ($cliente_PorcentajeRetencion <> 0) {
+                        $this->total = $this->total - (($this->importe * $cliente_PorcentajeRetencion) / 100);
+                    }
+                }
+
+                $this->total = \round($this->total, (int) \FS_NF0);
+            }
         }
     }
     
