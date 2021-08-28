@@ -106,18 +106,28 @@
 
                                                 
         <group name="billing" numcolumns="12" icon="fas fa-file-invoice-dollar" title="billing">
-            <column name="amount" display="right" numcolums="3" order="100">
+            <column name="pvp" display="right" numcolums="3" order="100">
                 <widget type="number" decimal="3" fieldname="importe" />
             </column>
-            <column name="company" titleurl="ListEmpresas" numcolumns="5" order="110">
+            <column name="applied-tax" titleurl="ListImpuesto" numcolumns="6" order="110">
+                <widget type="select" fieldname="codimpuesto" icon="fas fa-plus-square" onclick="EditImpuesto" required="true">
+                    <values source="impuestos" fieldcode="codimpuesto" fieldtitle="descripcion" />
+                </widget>
+            </column>
+            <column name="pvp-total" display="right" numcolums="3" order="120">
+                <widget type="number" decimal="2" fieldname="total" readonly="true"/>
+            </column>
+            
+            
+            <column name="company" titleurl="ListEmpresas" numcolumns="6" order="130">
                 <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa" required="true">
                     <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto" />
                 </widget>
             </column>
-            <column name="create-invoice" numcolums="2" order="120">
+            <column name="create-invoice" numcolums="3" order="140">
                 <widget type="checkbox" fieldname="facturar_SN"/>
             </column>
-            <column name="bill-grouping" numcolums="2" order="130">
+            <column name="bill-grouping" numcolums="3" order="150">
                 <widget type="checkbox" fieldname="facturar_agrupando"/>
             </column>
         </group>
