@@ -2,7 +2,7 @@
 <view>
     <columns>
         <column name="code" order="110">
-            <widget type="text" fieldname="idservice_regular"/>
+            <widget type="text" fieldname="idservice"/>
         </column>
         <column name="description" order="120">
             <widget type="text" fieldname="nombre" />
