@@ -18,6 +18,9 @@
             <widget type="date" fieldname="fecha_hasta" required="true" />
         </column>
 
+        <column name="inicio_horaAnt" title="anticipation-hour" order="135">
+            <widget type="time" fieldname="inicio_horaAnt" />
+        </column>
         <column name="departure-from-garages" display="center" order="140">
             <widget type="checkbox" fieldname="salida_desde_nave_sn"/>
         </column>
