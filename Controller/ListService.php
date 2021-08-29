@@ -51,6 +51,13 @@ class ListService extends ListController {
         // $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
 
         // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
+        $aceptados = [
+            ['code' => '1', 'description' => 'Aceptados = SI'],
+            ['code' => '0', 'description' => 'Aceptados = NO'],
+        ];
+        $this->addFilterSelect($viewName, 'soloAceptados', 'Aceptados = TODOS', 'aceptado', $aceptados);        
+
+        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
             ['code' => '0', 'description' => 'Activos = NO'],

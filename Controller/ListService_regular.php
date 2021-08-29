@@ -57,7 +57,14 @@ class ListService_regular extends ListController {
          $this->addFilterCheckbox($viewName, 'viernes', 'Viernes', 'viernes');
          $this->addFilterCheckbox($viewName, 'sabado', 'Sábado', 'sabado');
          $this->addFilterCheckbox($viewName, 'domingo', 'Domingo', 'domingo');
-     
+
+        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
+        $aceptados = [
+            ['code' => '1', 'description' => 'Aceptados = SI'],
+            ['code' => '0', 'description' => 'Aceptados = NO'],
+        ];
+        $this->addFilterSelect($viewName, 'soloAceptados', 'Aceptados = TODOS', 'aceptado', $aceptados);        
+
         // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
