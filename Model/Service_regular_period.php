@@ -158,8 +158,6 @@ class Service_regular_period extends Base\ModelClass {
         $this->fechaalta = $this->user_fecha; 
     }
 
-    
-    
     private function checkFechasPeriodo()
     {
         $a_devolver = true;

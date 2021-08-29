@@ -64,9 +64,16 @@ class Service extends Base\ModelClass {
     public $hora_anticipacion;
     public $hora_desde;
     public $hora_hasta;
+
+    public $inicio_horaAnt;
+    public $inicio_dia;
+    public $inicio_hora;
+    public $fin_dia;
+    public $fin_hora;
     
     public $salida_desde_nave_sn;
     public $observaciones_periodo;
+    
     public $combinadoSN;
     public $combinadoSiNo;
     
@@ -127,6 +134,21 @@ class Service extends Base\ModelClass {
     }
     
     public function test() {
+        $this->crearFechaDesde();
+        $this->crearFechaHasta();
+        
+        $this->crearHoraAnticipacion();
+        $this->crearHoraDesde();
+        $this->crearHoraHasta();
+
+        if ($this->checkFechasPeriodo() == false){
+            return false;
+        }
+        
+        if ($this->checkHorasPeriodo() == false){
+            return false;
+        }
+
         $this->codsubcuenta_km_nacional = empty($this->codsubcuenta_km_nacional) ? null : $this->codsubcuenta_km_nacional;
         $this->codsubcuenta_km_extranjero = empty($this->codsubcuenta_km_extranjero) ? null : $this->codsubcuenta_km_extranjero;
         
@@ -287,5 +309,118 @@ class Service extends Base\ModelClass {
             }
         }
     }
+
+    private function crearFechaDesde()
+    {
+        $fecha = '';
+        if ($this->inicio_dia <> '01-01-1970'){
+            $fecha = $fecha . $this->inicio_dia;
+        }
+        $this->fecha_desde = $fecha;
+    }
+
+    private function crearFechaHasta()
+    {
+        $fecha = '';
+        if ($this->fin_dia <> '01-01-1970'){
+            $fecha = $fecha . $this->fin_dia;
+        }
+        $this->fecha_hasta = $fecha;
+    }
     
+    private function crearHoraAnticipacion()
+    {
+        $fecha = '';
+        if ($this->inicio_dia <> '01-01-1970'){
+            $fecha = $fecha . $this->inicio_dia;
+        }
+        
+        if (!empty($this->inicio_horaAnt)){
+            $fecha = $fecha . ' ' . $this->inicio_horaAnt;
+        }
+        $this->hora_anticipacion = $fecha;
+    }
+
+    private function crearHoraDesde()
+    {
+        $fecha = '';
+        if ($this->inicio_dia <> '01-01-1970'){
+            $fecha = $fecha . $this->inicio_dia;
+        }
+        
+        if (!empty($this->inicio_hora)){
+            $fecha = $fecha . ' ' . $this->inicio_hora;
+        }
+        $this->hora_desde = $fecha;
+    }
+
+    private function crearHoraHasta()
+    {
+        $fecha = '';
+        if ($this->inicio_dia <> '01-01-1970'){
+            $fecha = $fecha . $this->inicio_dia;
+        }
+        
+        if (!empty($this->fin_hora)){
+            $fecha = $fecha . ' ' . $this->fin_hora;
+        }
+        $this->hora_hasta = $fecha;
+    }
+
+    private function checkFechasPeriodo()
+    {
+        $a_devolver = true;
+        
+        // La fecha de inicio es obligatoria
+        if (empty($this->fecha_desde)) 
+        {
+            $a_devolver = false;
+            $this->toolBox()->i18nLog()->error('La fecha de inicio, debe de introducirla.');
+        }
+
+        // Si fecha hasta está introducida y fecha desde no está vacía y además es mayor que fecha hasta ... fallo
+        if (!empty($this->fecha_hasta)) 
+        {
+            if ( !empty($this->fecha_desde) and 
+                 $this->fecha_desde > $this->fecha_hasta ) 
+            {
+                $a_devolver = false;
+                $this->toolBox()->i18nLog()->error('La fecha de inicio, no puede ser mayor que la fecha de fin.');
+            }
+        }
+        return $a_devolver;
+    }
+    
+    private function checkHorasPeriodo()
+    {
+        $a_devolver = true;
+        
+        // La hora de inicio es obligatoria
+        if (empty($this->hora_desde)) 
+        {
+            $a_devolver = false;
+            $this->toolBox()->i18nLog()->error('La hora de inicio, debe de introducirla.');
+        }
+
+        // La hora de fin es obligatoria
+        if (empty($this->hora_hasta)) 
+        {
+            $a_devolver = false;
+            $this->toolBox()->i18nLog()->error('La hora fin, debe de introducirla.');
+        }
+
+        // Si fecha hasta está introducida y fecha desde no está vacía y además es mayor que fecha hasta ... fallo
+        if (!empty($this->hora_hasta)) 
+        {
+            if ( !empty($this->hora_desde) and 
+                 $this->hora_desde > $this->hora_hasta ) 
+            {
+                $a_devolver = false;
+                $this->toolBox()->i18nLog()->error('La hora de inicio, no puede ser mayor que la hora de fin.');
+            }
+        }
+
+        return $a_devolver;
+    }
+	
 }

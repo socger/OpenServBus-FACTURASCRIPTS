@@ -18,12 +18,28 @@
                 <values source="clientes" fieldcode="codcliente" fieldtitle="nombre" />
             </widget>
         </column>
-        <column name="inicio_dia" title="start-date" numcolumns="3" order="140">
-            <widget type="date" fieldname="inicio_dia" readonly="true" />
+            
+        <column name="inicio_horaAnt" title="anticipation-hour" order="135">
+            <widget type="time" fieldname="hora_anticipacion" />
         </column>
-        <column name="fin_dia" title="end-date" numcolumns="3" order="150">
-            <widget type="date" fieldname="fin_dia" readonly="true" />
+        <column name="departure-from-garages" display="center" order="140">
+            <widget type="checkbox" fieldname="salida_desde_nave_sn"/>
         </column>
+
+        <column name="inicio_dia" title="start-date" numcolumns="3" order="145">
+            <widget type="date" fieldname="fecha_desde" required="true" />
+        </column>
+        <column name="inicio_hora" title="start-time" numcolumns="3" order="146">
+            <widget type="time" fieldname="hora_desde" />
+        </column>
+
+        <column name="fin_dia" title="end-date" numcolumns="3" order="147">
+            <widget type="date" fieldname="fecha_hasta" required="true" />
+        </column>
+        <column name="fin_hora" title="end-time" numcolumns="3" order="148">
+            <widget type="time" fieldname="hora_hasta" />
+        </column>
+
 
 
         <column name="active" display="center" order="160">

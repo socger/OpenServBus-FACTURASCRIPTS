@@ -105,6 +105,12 @@ class EditService extends EditController {
 
     private function prepararHorasParaVista($viewName)
     {
+        if (!empty($this->views[$viewName]->model->hora_anticipacion)){
+            $this->views[$viewName]->model->inicio_horaAnt = date("H:i:s", strtotime($this->views[$viewName]->model->hora_anticipacion));
+        } else {
+            $this->views[$viewName]->model->inicio_horaAnt = null;
+        }
+        
         if (!empty($this->views[$viewName]->model->hora_desde)){
             $this->views[$viewName]->model->inicio_hora = date("H:i:s", strtotime($this->views[$viewName]->model->hora_desde));
         } else {
@@ -117,5 +123,5 @@ class EditService extends EditController {
             $this->views[$viewName]->model->fin_hora = null;
         }
     }
-    
+
 }
