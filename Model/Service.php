@@ -50,6 +50,7 @@ class Service extends Base\ModelClass {
     public $observaciones_montaje;
     public $observaciones_vehiculo;
     public $observaciones_facturacion;
+    public $observaciones_liquidacion;
 
     public $iddriver;
     public $idvehicle;
@@ -183,10 +184,13 @@ class Service extends Base\ModelClass {
     {
         $utils = $this->toolBox()->utils();
         $this->nombre = $utils->noHtml($this->nombre);
+
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->observaciones_montaje = $utils->noHtml($this->observaciones_montaje);
         $this->observaciones_vehiculo = $utils->noHtml($this->observaciones_vehiculo);
         $this->observaciones_facturacion = $utils->noHtml($this->observaciones_facturacion);
+        $this->observaciones_liquidacion = $utils->noHtml($this->observaciones_liquidacion);
+        
         $this->hoja_ruta_origen = $utils->noHtml($this->hoja_ruta_origen);
         $this->hoja_ruta_destino = $utils->noHtml($this->hoja_ruta_destino);
         $this->hoja_ruta_expediciones = $utils->noHtml($this->hoja_ruta_expediciones);
