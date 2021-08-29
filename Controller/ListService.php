@@ -66,8 +66,8 @@ class ListService extends ListController {
 
         // Filtro de TIPO SELECT para filtrar por SERVICIOS REGULARES FACTURABLES (SI, NO, o TODOS)
         $crearFtraSN = [
-            ['code' => '1', 'description' => 'Crear ftra. = SI'],
-            ['code' => '0', 'description' => 'Crear ftra. = NO'],
+            ['code' => '1', 'description' => 'Facturable = SI'],
+            ['code' => '0', 'description' => 'Facturable = NO'],
         ];
         $this->addFilterSelect($viewName, 'crearFtra', 'Crear ftra. = TODOS', 'facturar_SN', $crearFtraSN);        
 
