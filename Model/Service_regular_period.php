@@ -24,9 +24,11 @@ class Service_regular_period extends Base\ModelClass {
     public $fecha_desde;
     public $fecha_hasta;
 
+    public $hora_anticipacion;
     public $hora_desde;
     public $hora_hasta;
 
+    public $inicio_horaAnt;
     public $inicio_dia;
     public $inicio_hora;
     public $fin_dia;
@@ -103,6 +105,8 @@ class Service_regular_period extends Base\ModelClass {
     public function test() {
         $this->crearFechaDesde();
         $this->crearFechaHasta();
+        
+        $this->crearHoraAnticipacion();
         $this->crearHoraDesde();
         $this->crearHoraHasta();
 
@@ -237,6 +241,19 @@ class Service_regular_period extends Base\ModelClass {
         $this->fecha_hasta = $fecha;
     }
     
+    private function crearHoraAnticipacion()
+    {
+        $fecha = '';
+        if ($this->inicio_dia <> '01-01-1970'){
+            $fecha = $fecha . $this->inicio_dia;
+        }
+        
+        if (!empty($this->inicio_horaAnt)){
+            $fecha = $fecha . ' ' . $this->inicio_horaAnt;
+        }
+        $this->hora_anticipacion = $fecha;
+    }
+
     private function crearHoraDesde()
     {
         $fecha = '';
@@ -268,11 +285,10 @@ class Service_regular_period extends Base\ModelClass {
         $sql = ' SELECT service_regular_periods.idservice_regular_period '
              .      ' , service_regular_periods.fecha_desde '
              .      ' , service_regular_periods.fecha_hasta '
+             .      ' , service_regular_periods.hora_anticipacion '
              .      ' , service_regular_periods.hora_desde '
              .      ' , service_regular_periods.hora_hasta '
              .      ' , service_regular_periods.salida_desde_nave_sn '
-             .      ' , service_regular_periods.anticipacion_horas '
-             .      ' , service_regular_periods.anticipacion_minutos '
              .      ' , service_regular_periods.observaciones '
              . ' FROM service_regular_periods '
              . ' WHERE service_regular_periods.idservice_regular = ' . $this->idservice_regular . ' '
@@ -288,11 +304,10 @@ class Service_regular_period extends Base\ModelClass {
         $idservice_regular_period = null;
         $fecha_desde = null;
         $fecha_hasta = null;
+        $hora_anticipacion = null;
         $hora_desde = null;
         $hora_hasta = null;
         $salida_desde_nave_sn = null;
-        $anticipacion_horas = null;
-        $anticipacion_minutos = null;
         $observaciones_periodo = null;
         
         $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
@@ -301,11 +316,10 @@ class Service_regular_period extends Base\ModelClass {
             $idservice_regular_period = $fila['idservice_regular_period'];
             $fecha_desde = $fila['fecha_desde'];
             $fecha_hasta = $fila['fecha_hasta'];
+            $hora_anticipacion = $fila['hora_anticipacion'];
             $hora_desde = $fila['hora_desde'];
             $hora_hasta = $fila['hora_hasta'];
             $salida_desde_nave_sn = $fila['salida_desde_nave_sn'];
-            $anticipacion_horas = $fila['anticipacion_horas'];
-            $anticipacion_minutos = $fila['anticipacion_minutos'];
             $observaciones_periodo = $fila['observaciones'];
         }
         
@@ -314,11 +328,10 @@ class Service_regular_period extends Base\ModelClass {
              . "SET service_regulars.observaciones_periodo = '" . $observaciones_periodo . "' "
              .   ", service_regulars.fecha_desde = '" . $fecha_desde . "' "
              .   ", service_regulars.fecha_hasta = '" . $fecha_hasta . "' "
+             .   ", service_regulars.hora_anticipacion = '" . $hora_anticipacion . "' "
              .   ", service_regulars.hora_desde = '" . $hora_desde . "' "
              .   ", service_regulars.hora_hasta = '" . $hora_hasta . "' "
              .   ", service_regulars.salida_desde_nave_sn = " . $salida_desde_nave_sn . " "
-             .   ", service_regulars.anticipacion_horas = " . $anticipacion_horas . " "
-             .   ", service_regulars.anticipacion_minutos = " . $anticipacion_minutos . " "
              .   ", service_regulars.idservice_regular_period = " . $idservice_regular_period . " "
              . "WHERE service_regulars.idservice_regular = " . $this->idservice_regular . ";";
 

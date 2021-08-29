@@ -30,25 +30,22 @@
         </group>
 
                         
-        <group name="anticipation" numcolumns="4" icon="fas fa-hourglass-start" title="anticipation">
-            <column name="hours" display="right" numcolums="2" order="100">
-                <widget type="number" decimal="0" fieldname="anticipacion_horas" />
+        <group name="anticipation" numcolumns="5" icon="fas fa-hourglass-start" title="anticipation">
+            <column name="inicio_horaAnt" title="anticipation-hour" numcolumns="4" order="100">
+                <widget type="time" fieldname="inicio_horaAnt" />
             </column>
-            <column name="minutes" display="right" numcolums="2" order="110">
-                <widget type="number" decimal="0" fieldname="anticipacion_minutos" />
+            <column name="departure-from-garages" numcolums="1" order="110">
+                <widget type="checkbox" fieldname="salida_desde_nave_sn"/>
             </column>
         </group>
 
                         
-        <group name="horario" numcolumns="8" icon="far fa-clock" title="horario">
+        <group name="horario" numcolumns="7" icon="far fa-clock" title="horario">
             <column name="inicio_hora" title="start-time" numcolumns="3" order="100">
                 <widget type="time" fieldname="inicio_hora" />
             </column>
             <column name="fin_hora" title="end-time" numcolumns="3" order="110">
                 <widget type="time" fieldname="fin_hora" />
-            </column>
-            <column name="departure-from-garages" numcolums="2" order="120">
-                <widget type="checkbox" fieldname="salida_desde_nave_sn"/>
             </column>
         </group>
         
