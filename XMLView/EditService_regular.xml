@@ -219,6 +219,9 @@
             <column name="observations-billing" numcolumns="12" order="130">
                 <widget type="textarea" fieldname="observaciones_facturacion" />
             </column>
+            <column name="observations-payment-drivers" numcolumns="12" order="140">
+                <widget type="textarea" fieldname="observaciones_liquidacion" />
+            </column>
         </group>
 
 
