@@ -12,6 +12,9 @@
         <column name="description" order="120">
             <widget type="text" fieldname="nombre" />
         </column>
+        <column name="accepted" order="123">
+            <widget type="checkbox" fieldname="aceptado"/>
+        </column>
         <column name="seats" order="125">
             <widget type="text" fieldname="plazas" />
         </column>
