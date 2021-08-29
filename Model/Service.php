@@ -60,11 +60,12 @@ class Service extends Base\ModelClass {
     
     public $fecha_desde;
     public $fecha_hasta;
+
+    public $hora_anticipacion;
     public $hora_desde;
     public $hora_hasta;
+    
     public $salida_desde_nave_sn;
-    public $anticipacion_horas;
-    public $anticipacion_minutos;
     public $observaciones_periodo;
     public $combinadoSN;
     public $combinadoSiNo;
