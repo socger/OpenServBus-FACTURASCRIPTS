@@ -21,6 +21,7 @@ class Service extends Base\ModelClass {
     public $motivobaja;
 
     public $nombre;
+    public $plazas;
     
     public $codcliente;
     public $idvehicle_type;
@@ -76,6 +77,7 @@ class Service extends Base\ModelClass {
         $this->facturar_SN = true;
         $this->importe = 0;
         $this->total = 0;
+        $this->plazas = 0;
     }
     
     // función que devuelve el id principal
@@ -125,6 +127,11 @@ class Service extends Base\ModelClass {
         $this->codsubcuenta_km_extranjero = empty($this->codsubcuenta_km_extranjero) ? null : $this->codsubcuenta_km_extranjero;
         
         $this->rellenarTotal();
+        
+        if (empty($this->plazas) or $this->plazas <= 0) {
+            $this->toolBox()->i18nLog()->error('Debe de completar las plazas.');
+            return false;
+        }
         
         $this->evitarInyeccionSQL();
         return parent::test();

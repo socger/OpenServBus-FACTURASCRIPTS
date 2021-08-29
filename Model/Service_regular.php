@@ -21,6 +21,7 @@ class Service_regular extends Base\ModelClass {
     public $motivobaja;
 
     public $nombre;
+    public $plazas;
     
     public $cod_servicio;
     public $codcliente;
@@ -97,6 +98,7 @@ class Service_regular extends Base\ModelClass {
 
         $this->importe = 0;
         $this->total = 0;
+        $this->plazas = 0;
     }
     
     // función que devuelve el id principal
@@ -178,6 +180,11 @@ class Service_regular extends Base\ModelClass {
         }
         
         $this->rellenarTotal();
+        
+        if (empty($this->plazas) or $this->plazas <= 0) {
+            $this->toolBox()->i18nLog()->error('Debe de completar las plazas.');
+            return false;
+        }
         
         $this->evitarInyeccionSQL();
         return parent::test();
