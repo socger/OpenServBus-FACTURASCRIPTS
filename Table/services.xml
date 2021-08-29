@@ -166,6 +166,11 @@
         <name>observaciones_facturacion</name>
         <type>text</type>
     </column>
+    <column>
+        <name>observaciones_liquidacion</name>
+        <type>text</type>
+    </column>
+
 
     <column>
         <name>iddriver</name>
