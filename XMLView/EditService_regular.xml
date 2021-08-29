@@ -167,11 +167,12 @@
 
 
         <group name="anticipation" numcolumns="5" icon="fas fa-hourglass-start" title="anticipation">
-            <column name="hours" display="right" numcolums="2" order="100">
-                <widget type="number" decimal="0" fieldname="anticipacion_horas" readonly="true" />
+            <column name="inicio_horaAnt" title="anticipation-hour" numcolumns="4" order="100">
+                <widget type="time" fieldname="inicio_horaAnt" readonly="true"/>
             </column>
-            <column name="minutes" display="right" numcolums="2" order="110">
-                <widget type="number" decimal="0" fieldname="anticipacion_minutos" readonly="true" />
+            <column name="departure-from-garages" numcolums="1" order="110">
+                <widget type="text" fieldname="salida_desde_nave_text" readonly="true"/>
+<!--                <widget type="checkbox" fieldname="salida_desde_nave_sn" readonly="true"/>-->
             </column>
         </group>
 
@@ -182,9 +183,6 @@
             </column>
             <column name="fin_hora" title="end-time" numcolumns="3" order="110">
                 <widget type="time" fieldname="fin_hora" readonly="true" />
-            </column>
-            <column name="departure-from-garages" numcolums="2" order="120">
-                <widget type="checkbox" fieldname="salida_desde_nave_sn" readonly="true"/>
             </column>
         </group>
 

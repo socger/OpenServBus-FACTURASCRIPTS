@@ -163,6 +163,12 @@ class EditService_regular extends EditController {
 
                 $this->prepararFechasParaVista($viewName);
                 $this->prepararHorasParaVista($viewName);
+                
+                if ($this->views[$viewName]->model->salida_desde_nave_sn === true) {
+                    $this->views[$viewName]->model->salida_desde_nave_text = 'SI';
+                } else {
+                    $this->views[$viewName]->model->salida_desde_nave_text = 'NO';
+                }
 
                 break;
         }
@@ -189,6 +195,12 @@ class EditService_regular extends EditController {
 
     private function prepararHorasParaVista($viewName)
     {
+        if (!empty($this->views[$viewName]->model->hora_anticipacion)){
+            $this->views[$viewName]->model->inicio_horaAnt = date("H:i:s", strtotime($this->views[$viewName]->model->hora_anticipacion));
+        } else {
+            $this->views[$viewName]->model->inicio_horaAnt = null;
+        }
+        
         if (!empty($this->views[$viewName]->model->hora_desde)){
             $this->views[$viewName]->model->inicio_hora = date("H:i:s", strtotime($this->views[$viewName]->model->hora_desde));
         } else {

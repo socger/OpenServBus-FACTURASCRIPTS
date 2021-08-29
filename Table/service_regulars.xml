@@ -252,6 +252,10 @@
         <type>timestamp</type>
     </column>
     <column>
+        <name>hora_anticipacion</name>
+        <type>timestamp</type>
+    </column>
+    <column>
         <name>hora_desde</name>
         <type>timestamp</type>
     </column>
@@ -263,18 +267,6 @@
         <name>salida_desde_nave_sn</name>
         <type>boolean</type>
         <default>true</default>
-    </column>
-    <column>
-        <name>anticipacion_horas</name>
-        <type>integer</type>
-        <default>0</default>
-        <null>NO</null>
-    </column>
-    <column>
-        <name>anticipacion_minutos</name>
-        <type>integer</type>
-        <default>0</default>
-        <null>NO</null>
     </column>
     <column>
         <name>observaciones_periodo</name>

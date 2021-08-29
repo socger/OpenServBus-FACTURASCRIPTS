@@ -71,11 +71,16 @@ class Service_regular extends Base\ModelClass {
     public $idservice_regular_period;
     public $fecha_desde;
     public $fecha_hasta;
+
+    public $hora_anticipacion;
     public $hora_desde;
     public $hora_hasta;
+    
+    public $inicio_horaAnt;
+
     public $salida_desde_nave_sn;
-    public $anticipacion_horas;
-    public $anticipacion_minutos;
+    public $salida_desde_nave_text;
+    
     public $observaciones_periodo;
     public $combinadoSN;
     public $combinadoSiNo;
@@ -289,11 +294,10 @@ class Service_regular extends Base\ModelClass {
         $sql = ' SELECT service_regular_periods.idservice_regular_period '
              .      ' , service_regular_periods.fecha_desde '
              .      ' , service_regular_periods.fecha_hasta '
+             .      ' , service_regular_periods.hora_anticipacion '
              .      ' , service_regular_periods.hora_desde '
              .      ' , service_regular_periods.hora_hasta '
              .      ' , service_regular_periods.salida_desde_nave_sn '
-             .      ' , service_regular_periods.anticipacion_horas '
-             .      ' , service_regular_periods.anticipacion_minutos '
              .      ' , service_regular_periods.observaciones '
              . ' FROM service_regular_periods '
              . ' WHERE service_regular_periods.idservice_regular = ' . $this->idservice_regular . ' '
@@ -309,11 +313,10 @@ class Service_regular extends Base\ModelClass {
         $this->idservice_regular_period = null;
         $this->fecha_desde = null;
         $this->fecha_hasta = null;
+        $this->hora_anticipacion = null;
         $this->hora_desde = null;
         $this->hora_hasta = null;
         $this->salida_desde_nave_sn = null;
-        $this->anticipacion_horas = null;
-        $this->anticipacion_minutos = null;
         $this->observaciones_periodo = null;
         
         $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
@@ -322,11 +325,10 @@ class Service_regular extends Base\ModelClass {
             $this->idservice_regular_period = $fila['idservice_regular_period'];
             $this->fecha_desde = $fila['fecha_desde'];
             $this->fecha_hasta = $fila['fecha_hasta'];
+            $this->hora_anticipacion = $fila['hora_anticipacion'];
             $this->hora_desde = $fila['hora_desde'];
             $this->hora_hasta = $fila['hora_hasta'];
             $this->salida_desde_nave_sn = $fila['salida_desde_nave_sn'];
-            $this->anticipacion_horas = $fila['anticipacion_horas'];
-            $this->anticipacion_minutos = $fila['anticipacion_minutos'];
             $this->observaciones_periodo = $fila['observaciones'];
         }
     }
