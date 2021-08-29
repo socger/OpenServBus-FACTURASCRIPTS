@@ -21,6 +21,7 @@ class Service extends Base\ModelClass {
     public $motivobaja;
 
     public $nombre;
+    public $aceptado;
     public $plazas;
     
     public $codcliente;
@@ -78,6 +79,7 @@ class Service extends Base\ModelClass {
         $this->importe = 0;
         $this->total = 0;
         $this->plazas = 0;
+        $this->aceptado = false;
     }
     
     // función que devuelve el id principal
@@ -131,6 +133,10 @@ class Service extends Base\ModelClass {
         if (empty($this->plazas) or $this->plazas <= 0) {
             $this->toolBox()->i18nLog()->error('Debe de completar las plazas.');
             return false;
+        }
+
+        if (!$this->aceptado) {
+            $this->toolBox()->i18nLog()->info('Si no acepta el servicio, no podrá montarse.');
         }
         
         $this->evitarInyeccionSQL();
