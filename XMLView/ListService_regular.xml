@@ -12,6 +12,9 @@
         <column name="description" order="120">
             <widget type="text" fieldname="nombre" />
         </column>
+        <column name="seats" order="125">
+            <widget type="text" fieldname="plazas" />
+        </column>
         <column name="client" order="130">
             <widget type="select" fieldname="codcliente">
                 <values source="clientes" fieldcode="codcliente" fieldtitle="nombre" />
