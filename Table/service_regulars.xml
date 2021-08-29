@@ -47,6 +47,13 @@
         <type>character varying(100)</type>
         <null>NO</null>
     </column>
+
+
+    <column>
+        <name>plazas</name>
+        <type>integer</type>
+        <null>NO</null>
+    </column>
     
     
     <column>
