@@ -2,7 +2,7 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
- use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 class EditService extends EditController {
@@ -29,10 +29,17 @@ class EditService extends EditController {
     protected function createViews() {
         parent::createViews();
         
+        $this->createViewContacts();
         $this->createViewService_itinerary();
         $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
     }
     
+    protected function createViewContacts(string $viewName = 'EditDireccionContacto')
+    {
+        $this->addEditListView($viewName, 'Contacto', 'addresses-and-contacts', 'fas fa-address-book');
+        $this->views[$viewName]->setInLine(true);
+    }
+
     protected function createViewService_itinerary($model = 'Service_itinerary')
     {
         // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
@@ -62,6 +69,12 @@ class EditService extends EditController {
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
     protected function loadData($viewName, $view) {
         switch ($viewName) {
+            case 'EditDireccionContacto':
+                $codcliente = $this->getViewModelValue('EditService', 'codcliente');
+                $where = [new DatabaseWhere('codcliente', $codcliente)];
+                $view->loadData('', $where);
+                break;
+            
             case 'ListService_itinerary':
                 $idservice = $this->getViewModelValue('EditService', 'idservice');
                 $where = [new DatabaseWhere('idservice', $idservice)];
