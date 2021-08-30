@@ -222,6 +222,24 @@ class Service_regular_itinerary extends Base\ModelClass {
         }
         $this->hora = $fecha;
     }
-	
+    
+    public function getServicioRegular() {
+        $servicioRegular = new Service_regular(); // Creamos el modelo
+        $servicioRegular->loadFromCode($this->idservice_regular); // Cargamos un modelo en concreto, identificándolo por idservice_regular
+        return $servicioRegular; // Devolvemos el modelo servicio regular seleccionado
+    }
+    
+    public function url(string $type = 'auto', string $list = 'List'): string {
+        // Le estamos diciendo que si el parámetro $type es de tipo 'list', pues debe de redirigirse a lo que devuelva la function getServicioRegular()->url 
+        // y pestaña ListService_regular_itinerary
+        if ($type == 'list') {
+            return $this->getServicioRegular()->url() . "&activetab=ListService_regular_itinerary"; // "&activetab=ListService_regular_itinerary" corresponde a la pestaña a la que quiero que vuelva
+        } 
+        
+        // Le estamos diciendo que si el parámetro $type NO es de tipo 'list', pues debe de redirigirse a la url por defecto devuelta
+        // por el modelo parent
+        return parent::url($type, $list);
+    }	
+    
 }
 
