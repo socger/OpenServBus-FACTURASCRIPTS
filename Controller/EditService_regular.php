@@ -29,6 +29,7 @@ class EditService_regular extends EditController {
     protected function createViews() {
         parent::createViews();
         
+        $this->createViewContacts();
         $this->createViewService_regular_period();
         $this->createViewService_regular_itinerary();
         $this->createViewService_regular_combination_serv();
@@ -36,6 +37,12 @@ class EditService_regular extends EditController {
         $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
     }
     
+    protected function createViewContacts(string $viewName = 'EditDireccionContacto')
+    {
+        $this->addEditListView($viewName, 'Contacto', 'addresses-and-contacts', 'fas fa-address-book');
+        $this->views[$viewName]->setInLine(true);
+    }
+
     protected function createViewService_regular_combination_serv($model = 'Service_regular_combination_serv')
     {
         // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
@@ -126,6 +133,12 @@ class EditService_regular extends EditController {
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
     protected function loadData($viewName, $view) {
         switch ($viewName) {
+            case 'EditDireccionContacto':
+                $codcliente = $this->getViewModelValue('EditService_regular', 'codcliente');
+                $where = [new DatabaseWhere('codcliente', $codcliente)];
+                $view->loadData('', $where);
+                break;
+            
             case 'ListService_regular_combination_serv':
                 $idservice_regular = $this->getViewModelValue('EditService_regular', 'idservice_regular');
                 $where = [new DatabaseWhere('idservice_regular', $idservice_regular)];
