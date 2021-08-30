@@ -6,8 +6,7 @@ use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
 class ListService_regular_combination_serv extends ListController {
     
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
+    /* Esta parte la quitamos porque ya no será una opción del menú principal, sino que estará dentro del mantenimiento de SERVICIOS REGULARES - COMBINACIONES
     public function getPageData(): array {
         $pageData = parent::getPageData();
         
@@ -20,6 +19,7 @@ class ListService_regular_combination_serv extends ListController {
 
         return $pageData;
     }
+    */
     
     protected function createViews() {
         $this->createViewService_regular_combination_serv();
