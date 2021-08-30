@@ -10,8 +10,6 @@ class EditService_regular_combination_serv extends EditController {
         return 'Service_regular_combination_serv';
     }
     
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Cocheras
     public function getPageData(): array {
         $pageData = parent::getPageData();
         
@@ -23,7 +21,7 @@ class EditService_regular_combination_serv extends EditController {
 
         return $pageData;
     }
-
+    
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
     protected function loadData($viewName, $view) {
         switch ($viewName) {
