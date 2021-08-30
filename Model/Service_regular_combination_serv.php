@@ -390,4 +390,22 @@ class Service_regular_combination_serv extends Base\ModelClass {
         return $coincideAlgunDíaDeLaSemana;
     }
     
+    public function getCombination() {
+        $combination = new Service_regular_combination(); // Creamos el modelo
+        $combination->loadFromCode($this->idservice_regular_combination); // Cargamos un modelo en concreto, identificándolo por idservice_regular
+        return $combination; // Devolvemos el modelo
+    }
+    
+    public function url(string $type = 'auto', string $list = 'List'): string {
+        // Le estamos diciendo que si el parámetro $type es de tipo 'list', pues debe de redirigirse a lo que devuelva la function getServicioRegular()->url 
+        // y pestaña ListService_regular_itinerary
+        if ($type == 'list') {
+            return $this->getCombination()->url() . "&activetab=ListService_regular_combination_serv"; // "&activetab=ListService_regular_combination_serv" corresponde a la pestaña a la que quiero que vuelva
+        } 
+        
+        // Le estamos diciendo que si el parámetro $type NO es de tipo 'list', pues debe de redirigirse a la url por defecto devuelta
+        // por el modelo parent
+        return parent::url($type, $list);
+    }	
+
 }
