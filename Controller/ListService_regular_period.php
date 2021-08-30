@@ -4,8 +4,8 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
 class ListService_regular_period extends ListController {
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
+
+    /* Esta parte no hace falta puesto que no vamos a tener este controlador como parte del menú de OpenServBus
     public function getPageData(): array {
         $pageData = parent::getPageData();
         
@@ -17,6 +17,7 @@ class ListService_regular_period extends ListController {
         
         return $pageData;
     }
+    */
     
     protected function createViews() {
         $this->createViewService_regular_period();
