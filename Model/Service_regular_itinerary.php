@@ -91,10 +91,12 @@ class Service_regular_itinerary extends Base\ModelClass {
     public function test() {
         $this->crearHora();
         
+        if ($this->checkService() == false){return false;}
         if ($this->checkParada() == false){return false;}
-        if ($this->checkOrden() == false){return false;}
         if ($this->checkHora() == false){return false;}
         if ($this->checkPasajeros() == false){return false;}
+        
+        $this->comprobarOrden();
         
         $this->evitarInyeccionSQL();
         return parent::test();
@@ -135,28 +137,53 @@ class Service_regular_itinerary extends Base\ModelClass {
         $this->useralta = $this->user_nick; 
         $this->fechaalta = $this->user_fecha; 
     }
+    
+    private function comprobarOrden()
+    {
+        if (empty($this->orden) or $this->orden === 0) {
+            // Comprobamos si la cuenta existe
+            $sql = ' SELECT MAX(service_regular_itineraries.orden) AS orden '
+                 . ' FROM service_regular_itineraries '
+                 . ' WHERE service_regular_itineraries.idservice_regular = ' . $this->idservice_regular
+                 . ' ORDER BY service_regular_itineraries.idservice_regular '
+                 .        ' , service_regular_itineraries.orden '
+                 ;
+            
+            $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
 
-    private function checkOrden()
+            foreach ($registros as $fila) {
+                if (empty($fila['orden'])) {
+                    $this->orden = 5;
+                } else {
+                    $this->orden = ($fila['orden'] + 5);
+                }
+            }
+
+        }
+    }
+    
+    private function checkService()
     {
         $a_devolver = true;
-        if (empty($this->orden)) 
+        if (empty($this->idservice_regular)) 
         {
             $a_devolver = false;
-            $this->toolBox()->i18nLog()->error('Falta el orden de la línea. Es un valor numérico para ordenar los itinerarios.');
+            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio regular al que pertenece este itinerario.');
         }
         return $a_devolver;
     }
-    
+	
     private function checkHora()
     {
         $a_devolver = true;
         if (empty($this->hora)) 
         {
             $a_devolver = false;
-            $this->toolBox()->i18nLog()->error('Falta el hora en la que debe de estar en la parada.');
+            $this->toolBox()->i18nLog()->error('Falta la hora en la que debe de estar en la parada.');
         }
         return $a_devolver;
     }
+    
     private function checkParada()
     {
         $a_devolver = true;
@@ -186,6 +213,7 @@ class Service_regular_itinerary extends Base\ModelClass {
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
+    
     private function crearHora()
     {
         $fecha = '';

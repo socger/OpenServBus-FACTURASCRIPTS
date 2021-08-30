@@ -10,7 +10,7 @@
                 <widget type="text" fieldname="user_nick" readonly="true"/>
             </column>
             
-            <column name="id"  display="none" order="120">
+            <column name="id" display="none" order="120">
                 <widget type="text" fieldname="idservice_regular_itinerary" readonly="true"/>
             </column>
         </group>
@@ -30,8 +30,8 @@
             <column name="fecha-hora" numcolumns="2" order="130">
                 <widget type="time" fieldname="inicio_hora" />
             </column>
-            <column name="orden" display="right" numcolums="2" order="120">
-                <widget type="number" decimal="0" fieldname="orden" />
+            <column name="sort" display="right" numcolumns="2" order="120">
+                <widget type="number" decimal="0" min="0" max="999" step="5" fieldname="orden" />
             </column>
         </group>
 
