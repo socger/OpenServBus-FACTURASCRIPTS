@@ -11,7 +11,7 @@ class ListService extends ListController {
         $pageData = parent::getPageData();
         
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Serv. discrecionales';
+//        $pageData['submenu'] = 'Serv. discrecionales';
         $pageData['title'] = 'Servicios discrecionales';
         
         $pageData['icon'] = 'fas fa-book-reader';
