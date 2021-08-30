@@ -33,7 +33,7 @@ class EditService extends EditController {
         $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
     }
     
-    protected function createViewService_itinerary($model = 'Service')
+    protected function createViewService_itinerary($model = 'Service_itinerary')
     {
         // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
         // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
@@ -41,6 +41,9 @@ class EditService extends EditController {
         // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
         // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
         $this->addListView('List' . $model, $model, 'Itinerarios', 'fas fa-road');    
+
+        $this->views['List' . $model]->addSearchFields(['nombre']);
+
         
         $this->views['List' . $model]->addOrderBy(['idservice', 'orden'], 'Por itinerario', 1);
         $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
@@ -54,7 +57,6 @@ class EditService extends EditController {
         $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
 
         $this->views['List' . $model]->addFilterAutocomplete('xIdservice', 'Servicio discrecional', 'idservice', 'services', 'idservice', 'nombre');
-        $this->views['List' . $model]->addFilterAutocomplete('xIdstop', 'Parada', 'idstop', 'stops', 'idstop', 'nombre');
     }
     
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
