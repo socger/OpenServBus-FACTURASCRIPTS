@@ -84,6 +84,6 @@ class EditService_regular_period extends EditController {
             $this->views[$viewName]->model->fin_hora = null;
         }
     }
-
+    
 }
 
