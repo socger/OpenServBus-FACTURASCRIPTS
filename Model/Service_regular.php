@@ -41,7 +41,9 @@ class Service_regular extends Base\ModelClass {
     public $facturar_agrupando;
     
     public $importe;
+    public $importe_enextranjero;
     public $codimpuesto;
+    public $codimpuesto_enextranjero;
     public $total;
             
     public $fuera_del_municipio;
@@ -104,6 +106,7 @@ class Service_regular extends Base\ModelClass {
         $this->facturar_agrupando = true;
 
         $this->importe = 0;
+        $this->importe_enextranjero = 0;
         $this->total = 0;
         $this->plazas = 0;
         $this->aceptado = false;
@@ -168,6 +171,12 @@ class Service_regular extends Base\ModelClass {
             return false;
         }
         
+        
+        if (empty($this->codcliente)) {
+            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio a un cliente.');
+            return false;
+        }
+
         if ($this->comprobarDiasServicio() == false){
             return false;
         }
@@ -188,7 +197,7 @@ class Service_regular extends Base\ModelClass {
         }
         
         $this->rellenarTotal();
-        
+
         if (empty($this->plazas) or $this->plazas <= 0) {
             $this->toolBox()->i18nLog()->error('Debe de completar las plazas.');
             return false;
@@ -291,21 +300,25 @@ class Service_regular extends Base\ModelClass {
     
     private function completarDatosUltimoPeriodo()
     {
-        $sql = ' SELECT service_regular_periods.idservice_regular_period '
-             .      ' , service_regular_periods.fecha_desde '
-             .      ' , service_regular_periods.fecha_hasta '
-             .      ' , service_regular_periods.hora_anticipacion '
-             .      ' , service_regular_periods.hora_desde '
-             .      ' , service_regular_periods.hora_hasta '
-             .      ' , service_regular_periods.salida_desde_nave_sn '
-             .      ' , service_regular_periods.observaciones '
+        if (empty($this->idservice_regular)) {
+            return;
+        }
+        
+        $sql = ' SELECT idservice_regular_period '
+             .      ' , fecha_desde '
+             .      ' , fecha_hasta '
+             .      ' , hora_anticipacion '
+             .      ' , hora_desde '
+             .      ' , hora_hasta '
+             .      ' , salida_desde_nave_sn '
+             .      ' , observaciones '
              . ' FROM service_regular_periods '
-             . ' WHERE service_regular_periods.idservice_regular = ' . $this->idservice_regular . ' '
-             .   ' AND service_regular_periods.activo = 1 '
-             . ' ORDER BY service_regular_periods.fecha_desde DESC '
-             .        ' , service_regular_periods.fecha_hasta DESC '
-             .        ' , service_regular_periods.hora_desde DESC '
-             .        ' , service_regular_periods.hora_hasta DESC '
+             . ' WHERE idservice_regular = ' . $this->idservice_regular . ' '
+             .   ' AND activo = 1 '
+             . ' ORDER BY fecha_desde DESC '
+             .        ' , fecha_hasta DESC '
+             .        ' , hora_desde DESC '
+             .        ' , hora_hasta DESC '
              .        ' , idservice_regular '
              . ' LIMIT 1 '
              ;
@@ -335,6 +348,10 @@ class Service_regular extends Base\ModelClass {
 
     private function completarCombinadoSN()
     {
+        if (empty($this->idservice_regular)) {
+            return;
+        }
+        
         $sql = ' SELECT COUNT(*) AS cantidad '
              . ' FROM service_regular_combination_servs '
              . ' WHERE service_regular_combination_servs.idservice_regular = ' . $this->idservice_regular . ' '
@@ -363,6 +380,10 @@ class Service_regular extends Base\ModelClass {
     
     private function hayCombinacionesDondeEsteElServicioQueNoCoincidenLosDiasDeSemana() : bool
     {
+        if (empty($this->idservice_regular)) {
+            return false;
+        }
+        
         $combinacionesConDiasDiferentes = [];
         
         $sql = ' SELECT service_regular_combinations.lunes '
@@ -444,20 +465,81 @@ class Service_regular extends Base\ModelClass {
         }
     }
     
-    private function rellenarTotal()
+    private function calcularImpuesto($importe, $codimpuesto, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, &$total) 
     {
-        $cliente_RegimenIVA = '';
-        $cliente_CodRetencion = '';
-        $cliente_PorcentajeRetencion = 0.0;
-        
         $impto_tipo = 0.0;
         $impto_IVA = 0.0;
         $impto_Recargo = 0.0;
 
-        $this->total = $this->importe;
+        if ($importe <> 0) {
+            if (!empty($codimpuesto)) { 
+                // Cargar datos del impuesto que nos interesan
+                $sql = ' SELECT impuestos.tipo '
+                     .      ' , impuestos.iva '
+                     .      ' , impuestos.recargo '
+                     . ' FROM impuestos '
+                     . ' WHERE impuestos.codimpuesto = "' . $codimpuesto . '" '
+                     ;
+
+                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+                
+                foreach ($registros as $fila) {
+                    $impto_tipo = $fila['tipo'];
+                    $impto_IVA = $fila['iva'];
+                    $impto_Recargo = $fila['recargo'];
+                }
+                
+                switch ($impto_tipo) {
+                    case 1:
+                        // calcularlo como porcentaje
+                        if ( !empty($impto_IVA) && trim(strtolower($cliente_RegimenIVA)) <> 'exento' ) {
+                            $total = $total + (($importe * $impto_IVA) / 100);
+                        }
+                        
+                        if ( !empty($impto_Recargo) && trim(strtolower($cliente_RegimenIVA)) === 'recargo' ) {
+                            $total = $total + (($importe * $impto_Recargo) / 100);
+                        }
+                        
+                        break;
+
+                    default:
+                        // calcularlo como suma
+                        if ( !empty($impto_IVA) && trim(strtolower($cliente_RegimenIVA)) <> 'exento' ) {
+                            $total = $total + $impto_IVA;
+                        }
+                        
+                        if ( !empty($impto_Recargo) && trim(strtolower($cliente_RegimenIVA)) === 'recargo' ) {
+                            $total = $total + $impto_Recargo;
+                        }
+                        
+                        break;
+                }
+                
+                // Cálculo de las retenciones (IRPF - profesionales)
+                if ( !empty($cliente_CodRetencion) && !empty($cliente_PorcentajeRetencion) ) {
+                    if ($cliente_PorcentajeRetencion <> 0) {
+                        $total = $total - (($importe * $cliente_PorcentajeRetencion) / 100);
+                    }
+                }
+
+            }
+        }
         
-        if ($this->importe <> 0) {
-            if (!empty($this->codimpuesto)) { 
+    }
+    
+    private function rellenarTotal()
+    {
+        jerofa no calcula bien el total del servicio regular
+        
+        $cliente_RegimenIVA = '';
+        $cliente_CodRetencion = '';
+        $cliente_PorcentajeRetencion = 0.0;
+        
+        $this->total = $this->importe + $this->importe_enextranjero;
+        
+        // Traemos los datos del cliente sólo si hay algún importe y si hay algún tipo de impuesto
+        if ($this->importe <> 0 or $this->importe_enextranjero <> 0) {
+            if (!empty($this->codimpuesto) or !empty($this->codimpuesto)) { 
                 // Cargar datos del cliente que nos interesan
                 $sql = ' SELECT clientes.regimeniva '
                      .      ' , clientes.codretencion '
@@ -474,59 +556,14 @@ class Service_regular extends Base\ModelClass {
                     $cliente_CodRetencion = $fila['codretencion'];
                     $cliente_PorcentajeRetencion = $fila['porcentaje'];
                 }
-
-                // Cargar datos del impuesto que nos interesan
-                $sql = ' SELECT impuestos.tipo '
-                     .      ' , impuestos.iva '
-                     .      ' , impuestos.recargo '
-                     . ' FROM impuestos '
-                     . ' WHERE impuestos.codimpuesto = "' . $this->codimpuesto . '" '
-                     ;
-
-                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
-                
-                foreach ($registros as $fila) {
-                    $impto_tipo = $fila['tipo'];
-                    $impto_IVA = $fila['iva'];
-                    $impto_Recargo = $fila['recargo'];
-                }
-                
-                switch ($impto_tipo) {
-                    case 1:
-                        // calcularlo como porcentaje
-                        if ( !empty($impto_IVA) && trim(strtolower($cliente_RegimenIVA)) <> 'exento' ) {
-                            $this->total = $this->total + (($this->importe * $impto_IVA) / 100);
-                        }
-                        
-                        if ( !empty($impto_Recargo) && trim(strtolower($cliente_RegimenIVA)) === 'recargo' ) {
-                            $this->total = $this->total + (($this->importe * $impto_Recargo) / 100);
-                        }
-                        
-                        break;
-
-                    default:
-                        // calcularlo como suma
-                        if ( !empty($impto_IVA) && trim(strtolower($cliente_RegimenIVA)) <> 'exento' ) {
-                            $this->total = $this->total + $impto_IVA;
-                        }
-                        
-                        if ( !empty($impto_Recargo) && trim(strtolower($cliente_RegimenIVA)) === 'recargo' ) {
-                            $this->total = $this->total + $impto_Recargo;
-                        }
-                        
-                        break;
-                }
-                
-                // Cálculo de las retenciones (IRPF - profesionales)
-                if ( !empty($cliente_CodRetencion) && !empty($cliente_PorcentajeRetencion) ) {
-                    if ($cliente_PorcentajeRetencion <> 0) {
-                        $this->total = $this->total - (($this->importe * $cliente_PorcentajeRetencion) / 100);
-                    }
-                }
-
-                $this->total = \round($this->total, (int) \FS_NF0);
             }
         }
+
+        $this->calcularImpuesto($this->importe, $this->codimpuesto, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $total);
+        $this->calcularImpuesto($this->importe_enextranjero, $this->codimpuesto_enextranjero, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $total);
+        
+        $this->total = \round($this->total, (int) \FS_NF0);
+        
     }
     
 }
