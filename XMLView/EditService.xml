@@ -83,19 +83,6 @@
 
                                                 
         <group name="billing" numcolumns="12" icon="fas fa-file-invoice-dollar" title="billing">
-            <column name="pvp" display="right" numcolums="3" order="100">
-                <widget type="number" decimal="3" fieldname="importe" />
-            </column>
-            <column name="applied-tax" titleurl="ListImpuesto" numcolumns="6" order="110">
-                <widget type="select" fieldname="codimpuesto" icon="fas fa-plus-square" onclick="EditImpuesto" required="true">
-                    <values source="impuestos" fieldcode="codimpuesto" fieldtitle="descripcion" />
-                </widget>
-            </column>
-            <column name="pvp-total" display="right" numcolums="3" order="120">
-                <widget type="number" decimal="2" fieldname="total" readonly="true"/>
-            </column>
-            
-            
             <column name="company" titleurl="ListEmpresas" numcolumns="6" order="130">
                 <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa" required="true">
                     <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto" />
@@ -103,6 +90,37 @@
             </column>
             <column name="create-invoice" numcolums="3" order="140">
                 <widget type="checkbox" fieldname="facturar_SN"/>
+            </column>
+        </group>
+
+                                                
+        <group name="billing-2" numcolumns="9">
+            <column name="pvp-por-km-nacional" display="right" numcolums="3" required="true">
+                <widget type="number" decimal="3" fieldname="importe" />
+            </column>
+            <column name="codimpuesto" title="applied-tax" titleurl="ListImpuesto" numcolumns="6" order="110">
+                <widget type="select" fieldname="codimpuesto" icon="fas fa-plus-square" onclick="EditImpuesto">
+                    <values source="impuestos" fieldcode="codimpuesto" fieldtitle="descripcion" />
+                </widget>
+            </column>
+        </group>
+
+                                                
+        <group name="billing-3" numcolumns="9">
+            <column name="pvp-por-km-extranjero" display="right" numcolums="3" order="115" required="true">
+                <widget type="number" decimal="3" fieldname="importe_enextranjero" />
+            </column>
+            <column name="codimpuesto_enextranjero" title="applied-tax" titleurl="ListImpuesto" numcolumns="6" order="118">
+                <widget type="select" fieldname="codimpuesto_enextranjero" icon="fas fa-plus-square" onclick="EditImpuesto">
+                    <values source="impuestos" fieldcode="codimpuesto" fieldtitle="descripcion" />
+                </widget>
+            </column>
+        </group>
+
+                                                
+        <group name="billing-4" numcolumns="3">
+            <column name="pvp-total" display="right" numcolums="3" order="120">
+                <widget type="number" decimal="2" fieldname="total" readonly="true"/>
             </column>
         </group>
 
