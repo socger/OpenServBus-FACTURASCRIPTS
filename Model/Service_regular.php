@@ -196,7 +196,7 @@ class Service_regular extends Base\ModelClass {
             return false;
         }
         
-        if ($this->comprobarImpuestos == false) {
+        if ($this->comprobarImpuestos() == false) {
             return false;
         }
         
@@ -535,14 +535,14 @@ class Service_regular extends Base\ModelClass {
     {
         $aDevolver = true;
 
-        if ($this->importe <> 0 and empty($this->codimpuesto)) {
+        if (empty($this->codimpuesto)) {
             $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('No ha elegido el timpo de impuesto para "Importe x km nacional".');
+            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km nacional".');
         }
 
-        if ($this->importe_enextranjero <> 0 and empty($this->codimpuesto_enextranjero)) {
+        if (empty($this->codimpuesto_enextranjero)) {
             $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('No ha elegido el timpo de impuesto para "Importe x km en extrajero".');
+            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km en extrajero".');
         }
         
         return $aDevolver;
