@@ -131,7 +131,7 @@
                 <widget type="number" decimal="3" fieldname="importe" />
             </column>
             <column name="codimpuesto" title="applied-tax" titleurl="ListImpuesto" numcolumns="6" order="110">
-                <widget type="select" fieldname="codimpuesto" icon="fas fa-plus-square" onclick="EditImpuesto" required="true">
+                <widget type="select" fieldname="codimpuesto" icon="fas fa-plus-square" onclick="EditImpuesto">
                     <values source="impuestos" fieldcode="codimpuesto" fieldtitle="descripcion" />
                 </widget>
             </column>
@@ -140,10 +140,10 @@
                                                 
         <group name="billing-3" numcolumns="9">
             <column name="pvp-por-km-extranjero" display="right" numcolums="3" order="115" required="true">
-                <widget type="number" decimal="3" fieldname="importeimporte_enextranjero" />
+                <widget type="number" decimal="3" fieldname="importe_enextranjero" />
             </column>
             <column name="codimpuesto_enextranjero" title="applied-tax" titleurl="ListImpuesto" numcolumns="6" order="118">
-                <widget type="select" fieldname="codimpuesto_enextranjero" icon="fas fa-plus-square" onclick="EditImpuesto" required="true">
+                <widget type="select" fieldname="codimpuesto_enextranjero" icon="fas fa-plus-square" onclick="EditImpuesto">
                     <values source="impuestos" fieldcode="codimpuesto" fieldtitle="descripcion" />
                 </widget>
             </column>
