@@ -31,7 +31,9 @@ class Service extends Base\ModelClass {
     public $facturar_SN;
     
     public $importe;
+    public $importe_enextranjero;
     public $codimpuesto;
+    public $codimpuesto_enextranjero;
     public $total;
             
     public $fuera_del_municipio;
@@ -86,6 +88,7 @@ class Service extends Base\ModelClass {
 
         $this->facturar_SN = true;
         $this->importe = 0;
+        $this->importe_enextranjero = 0;
         $this->total = 0;
         $this->plazas = 0;
         $this->aceptado = false;
@@ -151,6 +154,10 @@ class Service extends Base\ModelClass {
 
         $this->codsubcuenta_km_nacional = empty($this->codsubcuenta_km_nacional) ? null : $this->codsubcuenta_km_nacional;
         $this->codsubcuenta_km_extranjero = empty($this->codsubcuenta_km_extranjero) ? null : $this->codsubcuenta_km_extranjero;
+        
+        if ($this->comprobarImpuestos() == false) {
+            return false;
+        }
         
         $this->rellenarTotal();
         
@@ -231,14 +238,11 @@ class Service extends Base\ModelClass {
         $cliente_CodRetencion = '';
         $cliente_PorcentajeRetencion = 0.0;
         
-        $impto_tipo = 0.0;
-        $impto_IVA = 0.0;
-        $impto_Recargo = 0.0;
-
-        $this->total = $this->importe;
+        $this->total = $this->importe + $this->importe_enextranjero;
         
-        if ($this->importe <> 0) {
-            if (!empty($this->codimpuesto)) { 
+        // Traemos los datos del cliente sólo si hay algún importe y si hay algún tipo de impuesto
+        if ($this->importe <> 0 or $this->importe_enextranjero <> 0) {
+            if (!empty($this->codimpuesto) or !empty($this->codimpuesto)) { 
                 // Cargar datos del cliente que nos interesan
                 $sql = ' SELECT clientes.regimeniva '
                      .      ' , clientes.codretencion '
@@ -255,61 +259,16 @@ class Service extends Base\ModelClass {
                     $cliente_CodRetencion = $fila['codretencion'];
                     $cliente_PorcentajeRetencion = $fila['porcentaje'];
                 }
-
-                // Cargar datos del impuesto que nos interesan
-                $sql = ' SELECT impuestos.tipo '
-                     .      ' , impuestos.iva '
-                     .      ' , impuestos.recargo '
-                     . ' FROM impuestos '
-                     . ' WHERE impuestos.codimpuesto = "' . $this->codimpuesto . '" '
-                     ;
-
-                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
-                
-                foreach ($registros as $fila) {
-                    $impto_tipo = $fila['tipo'];
-                    $impto_IVA = $fila['iva'];
-                    $impto_Recargo = $fila['recargo'];
-                }
-                
-                switch ($impto_tipo) {
-                    case 1:
-                        // calcularlo como porcentaje
-                        if ( !empty($impto_IVA) && trim(strtolower($cliente_RegimenIVA)) <> 'exento' ) {
-                            $this->total = $this->total + (($this->importe * $impto_IVA) / 100);
-                        }
-                        
-                        if ( !empty($impto_Recargo) && trim(strtolower($cliente_RegimenIVA)) === 'recargo' ) {
-                            $this->total = $this->total + (($this->importe * $impto_Recargo) / 100);
-                        }
-                        
-                        break;
-
-                    default:
-                        // calcularlo como suma
-                        if ( !empty($impto_IVA) && trim(strtolower($cliente_RegimenIVA)) <> 'exento' ) {
-                            $this->total = $this->total + $impto_IVA;
-                        }
-                        
-                        if ( !empty($impto_Recargo) && trim(strtolower($cliente_RegimenIVA)) === 'recargo' ) {
-                            $this->total = $this->total + $impto_Recargo;
-                        }
-                        
-                        break;
-                }
-                
-                // Cálculo de las retenciones (IRPF - profesionales)
-                if ( !empty($cliente_CodRetencion) && !empty($cliente_PorcentajeRetencion) ) {
-                    if ($cliente_PorcentajeRetencion <> 0) {
-                        $this->total = $this->total - (($this->importe * $cliente_PorcentajeRetencion) / 100);
-                    }
-                }
-
-                $this->total = \round($this->total, (int) \FS_NF0);
             }
         }
-    }
 
+        $this->calcularImpuesto($this->importe, $this->codimpuesto, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $this->total);
+        $this->calcularImpuesto($this->importe_enextranjero, $this->codimpuesto_enextranjero, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $this->total);
+        
+        $this->total = \round($this->total, (int) \FS_NF0);
+        
+    }
+    
     private function crearFechaDesde()
     {
         $fecha = '';
@@ -422,5 +381,84 @@ class Service extends Base\ModelClass {
 
         return $a_devolver;
     }
-	
+    
+    private function calcularImpuesto($importe, $codimpuesto, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, &$total) 
+    {
+        $impto_tipo = 0.0;
+        $impto_IVA = 0.0;
+        $impto_Recargo = 0.0;
+
+        if ($importe <> 0) {
+            if (!empty($codimpuesto)) { 
+                // Cargar datos del impuesto que nos interesan
+                $sql = ' SELECT impuestos.tipo '
+                     .      ' , impuestos.iva '
+                     .      ' , impuestos.recargo '
+                     . ' FROM impuestos '
+                     . ' WHERE impuestos.codimpuesto = "' . $codimpuesto . '" '
+                     ;
+
+                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+                
+                foreach ($registros as $fila) {
+                    $impto_tipo = $fila['tipo'];
+                    $impto_IVA = $fila['iva'];
+                    $impto_Recargo = $fila['recargo'];
+                }
+                
+                switch ($impto_tipo) {
+                    case 1:
+                        // calcularlo como porcentaje
+                        if ( !empty($impto_IVA) && trim(strtolower($cliente_RegimenIVA)) <> 'exento' ) {
+                            $total = $total + (($importe * $impto_IVA) / 100);
+                        }
+                        
+                        if ( !empty($impto_Recargo) && trim(strtolower($cliente_RegimenIVA)) === 'recargo' ) {
+                            $total = $total + (($importe * $impto_Recargo) / 100);
+                        }
+                        
+                        break;
+
+                    default:
+                        // calcularlo como suma
+                        if ( !empty($impto_IVA) && trim(strtolower($cliente_RegimenIVA)) <> 'exento' ) {
+                            $total = $total + $impto_IVA;
+                        }
+                        
+                        if ( !empty($impto_Recargo) && trim(strtolower($cliente_RegimenIVA)) === 'recargo' ) {
+                            $total = $total + $impto_Recargo;
+                        }
+                        
+                        break;
+                }
+                
+                // Cálculo de las retenciones (IRPF - profesionales)
+                if ( !empty($cliente_CodRetencion) && !empty($cliente_PorcentajeRetencion) ) {
+                    if ($cliente_PorcentajeRetencion <> 0) {
+                        $total = $total - (($importe * $cliente_PorcentajeRetencion) / 100);
+                    }
+                }
+
+            }
+        }
+        
+    }
+    
+    private function comprobarImpuestos()
+    {
+        $aDevolver = true;
+
+        if (empty($this->codimpuesto)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km nacional".');
+        }
+
+        if (empty($this->codimpuesto_enextranjero)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km en extrajero".');
+        }
+        
+        return $aDevolver;
+    }
+    
 }
