@@ -196,6 +196,10 @@ class Service_regular extends Base\ModelClass {
             return false;
         }
         
+        if ($this->comprobarImpuestos == false) {
+            return false;
+        }
+        
         $this->rellenarTotal();
 
         if (empty($this->plazas) or $this->plazas <= 0) {
@@ -527,10 +531,25 @@ class Service_regular extends Base\ModelClass {
         
     }
     
+    private function comprobarImpuestos()
+    {
+        $aDevolver = true;
+
+        if ($this->importe <> 0 and empty($this->codimpuesto)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('No ha elegido el timpo de impuesto para "Importe x km nacional".');
+        }
+
+        if ($this->importe_enextranjero <> 0 and empty($this->codimpuesto_enextranjero)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('No ha elegido el timpo de impuesto para "Importe x km en extrajero".');
+        }
+        
+        return $aDevolver;
+    }
+    
     private function rellenarTotal()
     {
-        jerofa no calcula bien el total del servicio regular
-        
         $cliente_RegimenIVA = '';
         $cliente_CodRetencion = '';
         $cliente_PorcentajeRetencion = 0.0;
@@ -559,8 +578,8 @@ class Service_regular extends Base\ModelClass {
             }
         }
 
-        $this->calcularImpuesto($this->importe, $this->codimpuesto, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $total);
-        $this->calcularImpuesto($this->importe_enextranjero, $this->codimpuesto_enextranjero, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $total);
+     // $this->calcularImpuesto($this->importe, $this->codimpuesto, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $total);
+     // $this->calcularImpuesto($this->importe_enextranjero, $this->codimpuesto_enextranjero, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $total);
         
         $this->total = \round($this->total, (int) \FS_NF0);
         
