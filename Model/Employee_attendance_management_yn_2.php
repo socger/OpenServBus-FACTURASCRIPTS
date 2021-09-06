@@ -1,12 +1,12 @@
 <?php
 
-// NO OLVIDEMOS QUE LOS CAMBIOS QUE HAGAMOS EN ESTE MODELO TENDRÍAMOS QUE HACERLOS TAMBIEN POSIBLEMENTE EN MODELO Employee_attendance_management_yn_2.php
+// NO OLVIDEMOS QUE LOS CAMBIOS QUE HAGAMOS EN ESTE MODELO TENDRÍAMOS QUE HACERLOS TAMBIEN POSIBLEMENTE EN MODELO Employee_attendance_management_yn.php
 
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
 use FacturaScripts\Core\Model\Base;
 
-class Employee_attendance_management_yn extends Base\ModelClass {
+class Employee_attendance_management_yn_2 extends Base\ModelClass {
     use Base\ModelTrait;
 
     public $idemployee_attendance_management_yn;
@@ -139,5 +139,23 @@ class Employee_attendance_management_yn extends Base\ModelClass {
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
-	
+    
+    public function getEmployee() {
+        $employee = new Employee(); // Creamos el modelo
+        $employee->loadFromCode($this->idemployee); // Cargamos un modelo en concreto, identificándolo por idemployee
+        return $employee; // Devolvemos el modelo servicio seleccionado
+    }
+    
+    public function url(string $type = 'auto', string $list = 'List'): string {
+        // Le estamos diciendo que si el parámetro $type es de tipo 'list', pues debe de redirigirse a lo que devuelva la function getServicio()->url 
+        // y pestaña ListService_itinerary
+        if ($type == 'list') {
+            return $this->getEmployee()->url() . "&activetab=ListEmployee_attendance_management_yn"; // "&activetab=ListService_itinerary" corresponde a la pestaña a la que quiero que vuelva
+        } 
+        
+        // Le estamos diciendo que si el parámetro $type NO es de tipo 'list', pues debe de redirigirse a la url por defecto devuelta
+        // por el modelo parent
+        return parent::url($type, $list);
+    }	
+    
 }

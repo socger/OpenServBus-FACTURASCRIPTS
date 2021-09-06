@@ -74,7 +74,7 @@ class EditEmployee extends EditController {
         // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
         // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
         // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model, '¿Está obligado al control de presencia?', 'fas fa-business-timee');  
+        $this->addListView('List' . $model, $model . '_2', '¿Está obligado al control de presencia?', 'fas fa-business-timee');  
         
         
         $this->views['List' . $model]->addSearchFields(['idemployee', 'nombre']);
@@ -91,7 +91,13 @@ class EditEmployee extends EditController {
             ['code' => '0', 'description' => 'Activos = NO'],
         ];
         $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
-        
+//
+//        // disable new button 
+//        $this->setSettings('List' . $model, 'btnNew', false);
+//
+//        // disable delete button
+//        $this->setSettings('List' . $model, 'btnDelete', false);
+//        
     }
     
     protected function createView__Employee_documentation($model = 'Employee_documentation')

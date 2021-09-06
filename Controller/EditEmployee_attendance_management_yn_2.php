@@ -1,15 +1,15 @@
 <?php
 
-// NO OLVIDEMOS QUE LOS CAMBIOS QUE HAGAMOS EN ESTE MODELO TENDRÍAMOS QUE HACERLOS TAMBIEN POSIBLEMENTE EN CONTROLADOR EditEmployee_attendance_management_yn_2.php
+// NO OLVIDEMOS QUE LOS CAMBIOS QUE HAGAMOS EN ESTE MODELO TENDRÍAMOS QUE HACERLOS TAMBIEN POSIBLEMENTE EN CONTROLADOR EditEmployee_attendance_management_yn.php
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
-class EditEmployee_attendance_management_yn extends EditController {
+class EditEmployee_attendance_management_yn_2 extends EditController {
     
     public function getModelClassName() {
-        return 'Employee_attendance_management_yn';
+        return 'Employee_attendance_management_yn_2';
     }
     
     // Para presentar la pantalla del controlador
@@ -31,7 +31,7 @@ class EditEmployee_attendance_management_yn extends EditController {
         switch ($viewName) {
 
             // Pestaña con el mismo nombre que este controlador EditXxxxx
-            case 'EditEmployee_attendance_management_yn': 
+            case 'EditEmployee_attendance_management_yn_2': 
                 parent::loadData($viewName, $view);
                 
                 // Guardamos que usuario y cuando pulsará guardar
