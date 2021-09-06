@@ -1,15 +1,15 @@
 <?php
 
-// NO OLVIDEMOS QUE LOS CAMBIOS QUE HAGAMOS EN ESTE MODELO TENDRÍAMOS QUE HACERLOS TAMBIEN POSIBLEMENTE EN CONTROLADOR EditEmployee_contract_2.php
+// NO OLVIDEMOS QUE LOS CAMBIOS QUE HAGAMOS EN ESTE MODELO TENDRÍAMOS QUE HACERLOS TAMBIEN POSIBLEMENTE EN CONTROLADOR EditEmployee_contract.php
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
-class EditEmployee_contract extends EditController {
+class EditEmployee_contract_2 extends EditController {
     
     public function getModelClassName() {
-        return 'Employee_contract';
+        return 'Employee_contract_2';
     }
     
     // Para presentar la pantalla del controlador
@@ -31,7 +31,7 @@ class EditEmployee_contract extends EditController {
         switch ($viewName) {
 
             // Pestaña con el mismo nombre que este controlador EditXxxxx
-            case 'EditEmployee_contract': 
+            case 'EditEmployee_contract_2': 
                 parent::loadData($viewName, $view);
                 
                 /* No hace falta porque ya tenemos el campo nombre físicamente en tabla collaborators

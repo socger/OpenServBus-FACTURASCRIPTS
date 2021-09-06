@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <view>
 
-<!--NO OLVIDEMOS QUE LOS CAMBIOS QUE HAGAMOS EN ESTE .xml TENDRÍAMOS QUE HACERLOS TAMBIEN POSIBLEMENTE EN .xml EditEmployee_contract_2.xml-->
+<!--NO OLVIDEMOS QUE LOS CAMBIOS QUE HAGAMOS EN ESTE .xml TENDRÍAMOS QUE HACERLOS TAMBIEN POSIBLEMENTE EN .xml EditEmployee_contract.xml-->
 
     <columns>
 
