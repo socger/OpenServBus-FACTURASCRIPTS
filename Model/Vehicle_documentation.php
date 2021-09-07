@@ -2,7 +2,8 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
-//use FacturaScripts\Core\Base\DataBase;
+// Lo que modifiquemos en este modelo, tendríamos que ver si lo modificamos en el modelo Vehicle_documentation.php
+
 use FacturaScripts\Core\Model\Base;
 
 class Vehicle_documentation extends Base\ModelClass {
