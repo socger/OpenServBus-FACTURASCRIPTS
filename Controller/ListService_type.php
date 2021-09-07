@@ -5,8 +5,6 @@ use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
 class ListService_type extends ListController {
     
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
     public function getPageData(): array {
         $pageData = parent::getPageData();
         
@@ -29,7 +27,7 @@ class ListService_type extends ListController {
         $this->addView($viewName, 'Service_type');
         
         // Opciones de búsqueda rápida
-        $this->addSearchFields($viewName, ['nombre', 'ciudad', 'provincia', 'codpostal', 'direccion']);
+        $this->addSearchFields($viewName, ['nombre']);
         
         // Tipos de Ordenación
             // Primer parámetro es la pestaña
