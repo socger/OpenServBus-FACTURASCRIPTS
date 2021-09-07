@@ -1,5 +1,7 @@
 <?php
 
+// Lo que modifiquemos en este modelo, tendríamos que ver si lo modificamos en el modelo Employee_documentation_2.php
+
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
 //use FacturaScripts\Core\Base\DataBase;
