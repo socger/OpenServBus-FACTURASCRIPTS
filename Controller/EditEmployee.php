@@ -107,7 +107,7 @@ class EditEmployee extends EditController {
         // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
         // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
         // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model, 'Documentación', 'far fa-file-pdf');    
+        $this->addListView('List' . $model, $model . '_2', 'Documentación', 'far fa-file-pdf');    
         
         
         $this->views['List' . $model]->addSearchFields(['nombre']);
