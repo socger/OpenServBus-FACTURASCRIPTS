@@ -119,5 +119,20 @@ class Vehicle_equipament extends Base\ModelClass {
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
+    
+    public function getVehicle() {
+        $vehicle = new Vehicle();
+        $vehicle->loadFromCode($this->idvehicle);
+        return $vehicle;
+    }
+    
+    public function url(string $type = 'auto', string $list = 'List'): string {
+        if ($type == 'list') {
+            return $this->getVehicle()->url() . "&activetab=ListVehicle_equipament";
+        } 
+        
+        return parent::url($type, $list);
+    }	
+    
 	
 }
