@@ -36,8 +36,8 @@ class EditVehicle extends EditController {
         $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
         $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
         */
-        $this->createView__Vehicle_documentation();    
         $this->createView__Vehicle_equipament();    
+        $this->createView__Vehicle_documentation();    
         
         $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
     }
