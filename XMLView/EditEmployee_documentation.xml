@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <view>
+    
+<!--     Lo que modifiquemos en esta vista, tendríamos que ver si lo modificamos en la vista EditEmployee_documentation_2.xml-->
+    
     <columns>
 
         
