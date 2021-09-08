@@ -3,6 +3,7 @@
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
 use FacturaScripts\Core\Model\Base;
+use FacturaScripts\Plugins\OpenServBus\Model\Service_regular;
 
 class Service_regular_period extends Base\ModelClass {
     use Base\ModelTrait;
@@ -46,6 +47,21 @@ class Service_regular_period extends Base\ModelClass {
         $this->salida_desde_nave_sn = false;
     }
     
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install()
+    {
+        /// needed dependency proveedores
+        new Service_regular();
+
+        return parent::install();
+    }
+
     // función que devuelve el id principal
     public static function primaryColumn(): string {
         return 'idservice_regular_period';

@@ -3,6 +3,13 @@
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
 use FacturaScripts\Core\Model\Base;
+use FacturaScripts\Plugins\OpenServBus\Model\Vehicle;
+use FacturaScripts\Plugins\OpenServBus\Model\Driver;
+use FacturaScripts\Plugins\OpenServBus\Model\Employee;
+use FacturaScripts\Plugins\OpenServBus\Model\Fuel_type;
+use FacturaScripts\Plugins\OpenServBus\Model\Fuel_pump;
+use FacturaScripts\Plugins\OpenServBus\Model\Proveedor;
+use FacturaScripts\Plugins\OpenServBus\Model\Tarjeta;
 
 class Fuel_km extends Base\ModelClass {
     use Base\ModelTrait;
@@ -47,6 +54,27 @@ class Fuel_km extends Base\ModelClass {
         $this->activo = true; // Por defecto estará activo
     }
     
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install()
+    {
+        /// needed dependency proveedores
+        new Vehicle();
+        new Driver();
+        new Employee();
+        new Fuel_type();
+        new Fuel_pump();
+        new Proveedor(); // Se ha extendido la clase proveedor de FS
+        new Tarjeta();
+        
+        return parent::install();
+    }
+
     // función que devuelve el id principal
     public static function primaryColumn(): string {
         return 'idfuel_km';

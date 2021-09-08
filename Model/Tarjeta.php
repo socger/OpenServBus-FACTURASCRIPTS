@@ -3,6 +3,8 @@
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
 use FacturaScripts\Core\Model\Base;
+use FacturaScripts\Plugins\OpenServBus\Model\Driver;
+use FacturaScripts\Plugins\OpenServBus\Model\Employee;
 
 class Tarjeta extends Base\ModelClass {
     use Base\ModelTrait;
@@ -38,6 +40,22 @@ class Tarjeta extends Base\ModelClass {
         $this->de_pago = false; // Por defecto el tipo de tarjeta no será de pago
     }
     
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install()
+    {
+        /// needed dependency proveedores
+        new Driver();
+        new Employee();
+
+        return parent::install();
+    }
+
     // función que devuelve el id principal
     public static function primaryColumn(): string {
         return 'idtarjeta';

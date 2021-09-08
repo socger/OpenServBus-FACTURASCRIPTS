@@ -3,6 +3,12 @@
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
 use FacturaScripts\Core\Model\Base;
+use FacturaScripts\Plugins\OpenServBus\Model\Vehicle_type;
+use FacturaScripts\Plugins\OpenServBus\Model\Helper;
+use FacturaScripts\Plugins\OpenServBus\Model\Service_type;
+use FacturaScripts\Plugins\OpenServBus\Model\Driver;
+use FacturaScripts\Plugins\OpenServBus\Model\Vehicle;
+use FacturaScripts\Plugins\OpenServBus\Model\Service_valuation_type;
 
 class Service_regular extends Base\ModelClass {
     use Base\ModelTrait;
@@ -112,6 +118,26 @@ class Service_regular extends Base\ModelClass {
         $this->aceptado = false;
     }
     
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install()
+    {
+        /// needed dependency proveedores
+        new Vehicle_type();
+        new Helper();
+        new Service_type();
+        new Driver();
+        new Vehicle();
+        new Service_valuation_type();
+
+        return parent::install();
+    }
+
     // función que devuelve el id principal
     public static function primaryColumn(): string {
         return 'idservice_regular';

@@ -3,6 +3,8 @@
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
 use FacturaScripts\Core\Model\Base;
+use FacturaScripts\Plugins\OpenServBus\Model\Service_regular;
+use FacturaScripts\Plugins\OpenServBus\Model\Stop;
 
 class Service_regular_itinerary extends Base\ModelClass {
     use Base\ModelTrait;
@@ -48,6 +50,22 @@ class Service_regular_itinerary extends Base\ModelClass {
         $this->kms_enExtranjero = false;
     }
     
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install()
+    {
+        /// needed dependency proveedores
+        new Service_regular();
+        new Stop();
+
+        return parent::install();
+    }
+
     // función que devuelve el id principal
     public static function primaryColumn(): string {
         return 'idservice_regular_itinerary';

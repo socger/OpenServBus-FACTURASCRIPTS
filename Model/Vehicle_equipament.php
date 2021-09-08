@@ -3,6 +3,8 @@
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
 use FacturaScripts\Core\Model\Base;
+use FacturaScripts\Plugins\OpenServBus\Model\Vehicle;
+use FacturaScripts\Plugins\OpenServBus\Model\Vehicle_equipament_type;
 
 class Vehicle_equipament extends Base\ModelClass {
     use Base\ModelTrait;
@@ -32,6 +34,22 @@ class Vehicle_equipament extends Base\ModelClass {
         $this->activo = true; // Por defecto estará activo
     }
     
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install()
+    {
+        /// needed dependency proveedores
+        new Vehicle();
+        new Vehicle_equipament_type();
+
+        return parent::install();
+    }
+
     // función que devuelve el id principal
     public static function primaryColumn(): string {
         return 'idvehicle_equipament';

@@ -6,6 +6,8 @@ namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 //use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Model\Base;
+use FacturaScripts\Plugins\OpenServBus\Model\Employee;
+use FacturaScripts\Plugins\OpenServBus\Model\Documentation_type;
 
 class Employee_documentation_2 extends Base\ModelClass {
     use Base\ModelTrait;
@@ -38,6 +40,22 @@ class Employee_documentation_2 extends Base\ModelClass {
         $this->activo = true; // Por defecto estará activo
     }
     
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install()
+    {
+        /// needed dependency proveedores
+        new Employee();
+        new Documentation_type();
+
+        return parent::install();
+    }
+
     // función que devuelve el id principal
     public static function primaryColumn(): string {
         return 'idemployee_documentation';
