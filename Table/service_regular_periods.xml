@@ -96,6 +96,8 @@
         <name>ca_service_regular_periods__service_regulars</name>
         <type>FOREIGN KEY (idservice_regular) REFERENCES service_regulars (idservice_regular) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
+	
+	
     <constraint>
         <name>uniq_service_regular_periods__fechas_horas</name>
         <type>UNIQUE (fecha_desde DESC,fecha_hasta DESC,hora_desde DESC,hora_hasta DESC,idservice_regular)</type>

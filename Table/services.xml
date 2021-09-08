@@ -279,4 +279,8 @@
         <name>ca_services__impuestos</name>
         <type>FOREIGN KEY (codimpuesto) REFERENCES impuestos (codimpuesto) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
+    <constraint>
+        <name>ca_services__impuestos_enextranjero</name>
+        <type>FOREIGN KEY (codimpuesto_enextranjero) REFERENCES impuestos (codimpuesto) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
 </table>

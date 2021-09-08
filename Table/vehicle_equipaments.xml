@@ -64,11 +64,17 @@
         <name>vehicle_equipaments_pkey</name>
         <type>PRIMARY KEY (idvehicle_equipament)</type>
     </constraint>
+	
     
+    <constraint>
+        <name>ca_vehicle_equipaments__vehicles</name>
+        <type>FOREIGN KEY (idvehicle) REFERENCES vehicles (idvehicle) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
     <constraint>
         <name>ca_vehicle_equipaments__vehicle_equipament_types</name>
         <type>FOREIGN KEY (idvehicle_equipament_type) REFERENCES vehicle_equipament_types (idvehicle_equipament_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
+	
     
     <constraint>
         <name>uniq_vehicle_equipaments__idvehicle_idvehicle_equipament_type</name>
