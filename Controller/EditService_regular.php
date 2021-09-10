@@ -30,9 +30,10 @@ class EditService_regular extends EditController {
         parent::createViews();
         
         $this->createViewContacts();
-        $this->createViewService_regular_period();
-        $this->createViewService_regular_itinerary();
-        $this->createViewService_regular_combination_serv();
+        $this->createViewPeriods();
+        $this->createViewItineraries();
+        $this->createViewCombinationServs();
+        $this->createViewValuations();
         
         $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
     }
@@ -43,7 +44,7 @@ class EditService_regular extends EditController {
         $this->views[$viewName]->setInLine(true);
     }
 
-    protected function createViewService_regular_combination_serv($model = 'Service_regular_combination_serv')
+    protected function createViewCombinationServs($model = 'Service_regular_combination_serv')
     {
         // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
         // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
@@ -70,9 +71,9 @@ class EditService_regular extends EditController {
         $this->views['List' . $model]->addFilterAutocomplete('xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
         $this->views['List' . $model]->addFilterAutocomplete('xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
         $this->views['List' . $model]->addFilterAutocomplete('xIdservice_regular_combination', 'combination-service', 'idservice_regular_combination', 'service_regular_combinations', 'idservice_regular_combination', 'nombre');
-}
+    }
     
-    protected function createViewService_regular_itinerary($model = 'Service_regular_itinerary')
+    protected function createViewItineraries($model = 'Service_regular_itinerary')
     {
         // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
         // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
@@ -96,7 +97,7 @@ class EditService_regular extends EditController {
         $this->views['List' . $model]->addFilterAutocomplete('xIdstop', 'Parada', 'idstop', 'stops', 'idstop', 'nombre');
     }
     
-    protected function createViewService_regular_period($model = 'Service_regular_period')
+    protected function createViewPeriods($model = 'Service_regular_period')
     {
         // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
         // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
@@ -130,6 +131,30 @@ class EditService_regular extends EditController {
         $this->views['List' . $model]->addFilterPeriod('porFechaFin', 'F.fin', 'fecha_hasta');
     }
     
+    protected function createViewValuations($model = 'Service_regular_valuation')
+    {
+        // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
+        // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
+        // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
+        // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
+        // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
+        $this->addListView('List' . $model, $model, 'Valoraciones', 'fas fa-dollar-sign');    
+        
+        $this->views['List' . $model]->addOrderBy(['idservice_regular', 'orden'], 'Por valoración', 1);
+        $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        
+        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
+        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        $activo = [
+            ['code' => '1', 'description' => 'Activos = SI'],
+            ['code' => '0', 'description' => 'Activos = NO'],
+        ];
+        $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+
+        $this->views['List' . $model]->addFilterAutocomplete('xIdservice_regular', 'Servicio regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
+        $this->views['List' . $model]->addFilterAutocomplete('xIdservice_valuation_type', 'Conceptos - valoración', 'idservice_valuation_type', 'service_valuation_types', 'idservice_valuation_type', 'nombre');
+    }
+    
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
     protected function loadData($viewName, $view) {
         switch ($viewName) {
@@ -152,6 +177,12 @@ class EditService_regular extends EditController {
                 break;
             
             case 'ListService_regular_period':
+                $idservice_regular = $this->getViewModelValue('EditService_regular', 'idservice_regular');
+                $where = [new DatabaseWhere('idservice_regular', $idservice_regular)];
+                $view->loadData('', $where);
+                break;
+            
+            case 'ListService_regular_valuation':
                 $idservice_regular = $this->getViewModelValue('EditService_regular', 'idservice_regular');
                 $where = [new DatabaseWhere('idservice_regular', $idservice_regular)];
                 $view->loadData('', $where);
