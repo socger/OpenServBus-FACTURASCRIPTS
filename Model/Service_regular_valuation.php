@@ -70,6 +70,58 @@ class Service_regular_valuation extends Base\ModelClass {
         return 'service_regular_valuations';
     }
 
+    private function actualizar_Importes(int $idServiceRegular)
+    {
+        $sql = " UPDATE service_regulars "
+             . " SET service_regulars.importe = ( SELECT SUM(service_regular_valuations.importe) "
+                                              . " FROM service_regular_valuations "
+                                              . " WHERE service_regular_valuations.idservice_regular = " . $idServiceRegular . " "
+                                              . " AND service_regular_valuations.activo = 1 ) "
+               . " , service_regulars.importe_enextranjero = ( SELECT SUM(service_regular_valuations.importe_enextranjero)  "
+                                                           . " FROM service_regular_valuations "
+                                                           . " WHERE service_regular_valuations.idservice_regular = " . $idServiceRegular . " "
+                                                           . " AND service_regular_valuations.activo = 1 ) "
+             . " WHERE service_regulars.idservice_regular = " . $idServiceRegular . ";";
+
+        self::$dataBase->exec($sql);
+        
+        $servicioRegular = new Service_regular(); // Creamos el modelo
+        $servicioRegular->loadFromCode($idServiceRegular);
+        $servicioRegular->rellenarTotal();
+        $servicioRegular->save();
+    }
+
+    private function guardar(string $type, array $values = []): bool
+    {
+        $idServiceRegular = $this->idservice_regular;
+        
+        if ($type === 'U') {
+            $aDevolver = parent::saveUpdate($values);
+        } else {
+            $aDevolver = parent::saveInsert($values);
+        }
+        
+        if (true === $aDevolver) {
+            $this->actualizar_Importes($idServiceRegular);
+        }
+
+        return $aDevolver;
+    }
+
+    // Para realizar algo antes o después del borrado ... todo depende de que se ponga antes del parent o después
+    public function delete()
+    {
+        $idServiceRegular = $this->idservice_regular;
+        
+        $aDevolver = parent::delete();
+        
+        if (true === $aDevolver) {
+            $this->actualizar_Importes($idServiceRegular);
+        }
+
+        return $aDevolver;
+    }
+
     // Para realizar cambios en los datos antes de guardar por modificación
     protected function saveUpdate(array $values = [])
     {
@@ -79,7 +131,7 @@ class Service_regular_valuation extends Base\ModelClass {
             return false;
         }
 
-        return parent::saveUpdate($values);
+        return $this->guardar('U', $values);
     }
 
     // Para realizar cambios en los datos antes de guardar por alta
@@ -97,7 +149,7 @@ class Service_regular_valuation extends Base\ModelClass {
             return false;
         }
 
-        return parent::saveInsert($values);
+        return $this->guardar('I', $values);
     }
     
     public function test() {

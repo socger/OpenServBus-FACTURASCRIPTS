@@ -71,6 +71,58 @@ class Service_valuation extends Base\ModelClass {
         return 'service_valuations';
     }
 
+    private function actualizar_Importes(int $idService)
+    {
+        $sql = " UPDATE services "
+             . " SET services.importe = ( SELECT SUM(service_valuations.importe) "
+                                      . " FROM service_valuations "
+                                      . " WHERE service_valuations.idservice = " . $idService . " "
+                                      . " AND service_valuations.activo = 1 ) "
+               . " , services.importe_enextranjero = ( SELECT SUM(service_valuations.importe_enextranjero)  "
+                                                   . " FROM service_valuations "
+                                                   . " WHERE service_valuations.idservice = " . $idService . " "
+                                                   . " AND service_valuations.activo = 1 ) "
+             . " WHERE services.idservice = " . $idService . ";";
+
+        self::$dataBase->exec($sql);
+        
+        $servicio = new Service(); // Creamos el modelo
+        $servicio->loadFromCode($idService);
+        $servicio->rellenarTotal();
+        $servicio->save();
+    }
+
+    private function guardar(string $type, array $values = []): bool
+    {
+        $idService = $this->idservice;
+        
+        if ($type === 'U') {
+            $aDevolver = parent::saveUpdate($values);
+        } else {
+            $aDevolver = parent::saveInsert($values);
+        }
+        
+        if (true === $aDevolver) {
+            $this->actualizar_Importes($idService);
+        }
+
+        return $aDevolver;
+    }
+
+    // Para realizar algo antes o después del borrado ... todo depende de que se ponga antes del parent o después
+    public function delete()
+    {
+        $idService = $this->idservice;
+        
+        $aDevolver = parent::delete();
+        
+        if (true === $aDevolver) {
+            $this->actualizar_Importes($idService);
+        }
+
+        return $aDevolver;
+    }
+
     // Para realizar cambios en los datos antes de guardar por modificación
     protected function saveUpdate(array $values = [])
     {
@@ -80,7 +132,7 @@ class Service_valuation extends Base\ModelClass {
             return false;
         }
 
-        return parent::saveUpdate($values);
+        return $this->guardar('U', $values);
     }
 
     // Para realizar cambios en los datos antes de guardar por alta
@@ -98,7 +150,7 @@ class Service_valuation extends Base\ModelClass {
             return false;
         }
 
-        return parent::saveInsert($values);
+        return $this->guardar('I', $values);
     }
     
     public function test() {
