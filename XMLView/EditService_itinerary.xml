@@ -18,7 +18,7 @@
 
         <group name="data" numcolumns="12">
             <column name="service" numcolumns="4" order="100">
-                <widget type="select" fieldname="idservice" icon="fas fa-book-open" onclick="EditService_regular" readonly="dinamic">
+                <widget type="select" fieldname="idservice" icon="fas fa-book-open" onclick="EditService" readonly="dinamic">
                     <values source="services" fieldcode="idservice" fieldtitle="nombre" />
                 </widget>
             </column>
