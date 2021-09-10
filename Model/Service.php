@@ -258,7 +258,7 @@ class Service extends Base\ModelClass {
         $this->codsubcuenta_km_extranjero = $utils->noHtml($this->codsubcuenta_km_extranjero);
     }
     
-    private function rellenarTotal()
+    public function rellenarTotal()
     {
         $cliente_RegimenIVA = '';
         $cliente_CodRetencion = '';

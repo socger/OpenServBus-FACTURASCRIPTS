@@ -574,7 +574,7 @@ class Service_regular extends Base\ModelClass {
         return $aDevolver;
     }
     
-    private function rellenarTotal()
+    public function rellenarTotal()
     {
         $cliente_RegimenIVA = '';
         $cliente_CodRetencion = '';
