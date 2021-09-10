@@ -583,8 +583,8 @@ class Service_regular extends Base\ModelClass {
         $this->total = $this->importe + $this->importe_enextranjero;
         
         // Traemos los datos del cliente sólo si hay algún importe y si hay algún tipo de impuesto
-        if ($this->importe <> 0 or $this->importe_enextranjero <> 0) {
-            if (!empty($this->codimpuesto) or !empty($this->codimpuesto)) { 
+        if ($this->importe <> 0 || $this->importe_enextranjero <> 0) {
+            if (!empty($this->codimpuesto) || !empty($this->codimpuesto_enextranjero)) { 
                 // Cargar datos del cliente que nos interesan
                 $sql = ' SELECT clientes.regimeniva '
                      .      ' , clientes.codretencion '
