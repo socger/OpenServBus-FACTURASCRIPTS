@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table>
+    <column>
+        <name>idservice_valuation</name>
+        <type>serial</type>
+        <null>NO</null>
+    </column>
+    
+    
+    <column>
+        <name>fechaalta</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>useralta</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>fechamodificacion</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>usermodificacion</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>activo</name>
+        <type>boolean</type>
+        <default>true</default>
+    </column>
+    <column>
+        <name>fechabaja</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>userbaja</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>motivobaja</name>
+        <type>character varying(100)</type>
+    </column>
+    
+    
+    <column>
+        <name>idservice</name>
+        <type>integer</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>orden</name>
+        <type>integer</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>idservice_valuation_type</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>nombre</name>
+        <type>character varying(200)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>importe</name>
+        <type>double precision</type>
+        <null>NO</null>
+        <default>0</default>
+    </column>
+    <column>
+        <name>importe_enextranjero</name>
+        <type>double precision</type>
+        <null>NO</null>
+        <default>0</default>
+    </column>
+
+    
+    <column>
+        <name>observaciones</name>
+        <type>text</type>
+    </column>
+
+        
+    <constraint>
+        <name>service_valuations_pkey</name>
+        <type>PRIMARY KEY (idservice_valuation)</type>
+    </constraint>
+
+
+    <constraint>
+        <name>ca_service_valuations__services</name>
+        <type>FOREIGN KEY (idservice) REFERENCES services (idservice) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_valuations__service_valuation_types</name>
+        <type>FOREIGN KEY (idservice_valuation_type) REFERENCES service_valuation_types (idservice_valuation_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+
+
+    <constraint>
+        <name>uniq_service_valuations__idservice__orden</name>
+        <type>UNIQUE (idservice, orden)</type>
+    </constraint>
+    
+</table>
+
+
