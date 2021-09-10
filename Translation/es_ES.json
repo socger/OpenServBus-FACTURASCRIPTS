@@ -121,5 +121,6 @@
     "service-combined": "Servicio combinado",
     "accepted": "Aceptado",
     "pvp-por-km-nacional": "Importe x km nacional",
-    "pvp-por-km-extranjero": "Importe x km en extranjero"
+    "pvp-por-km-extranjero": "Importe x km en extranjero",
+    "valuation": "Valoración"
 }
