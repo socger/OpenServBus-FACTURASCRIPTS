@@ -14,12 +14,19 @@
         <column name="description" order="120">
             <widget type="text" fieldname="nombre" />
         </column>
+
+                
         <column name="pvp-por-km-nacional" display="right" order="130">
-            <widget type="number" decimal="0" fieldname="importe" />
+            <widget type="money" fieldname="importe">
+                <option color="danger">lt:0</option>
+            </widget>
         </column>
         <column name="pvp-por-km-extranjero" display="right" order="140">
-            <widget type="number" decimal="0" fieldname="importe_enextranjero" />
+            <widget type="money" fieldname="importe_enextranjero">
+                <option color="danger">lt:0</option>
+            </widget>
         </column>
+        
         
         <column name="active" display="center" order="150">
             <widget type="checkbox" fieldname="activo"/>
