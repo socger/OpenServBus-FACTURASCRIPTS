@@ -88,6 +88,7 @@ class Service_valuation extends Base\ModelClass {
         
         $servicio = new Service(); // Creamos el modelo
         $servicio->loadFromCode($idService);
+        $servicio->llamadoDesdeFuera = true;
         $servicio->rellenarTotal();
         $servicio->save();
     }

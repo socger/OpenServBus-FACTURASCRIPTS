@@ -87,6 +87,7 @@ class Service_regular_valuation extends Base\ModelClass {
         
         $servicioRegular = new Service_regular(); // Creamos el modelo
         $servicioRegular->loadFromCode($idServiceRegular);
+        $servicioRegular->llamadoDesdeFuera = true;
         $servicioRegular->rellenarTotal();
         $servicioRegular->save();
     }
