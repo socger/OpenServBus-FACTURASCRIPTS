@@ -93,6 +93,8 @@ class Service_regular extends Base\ModelClass {
     public $combinadoSN;
     public $combinadoSiNo;
     
+    public $llamadoDesdeFuera; // Para comprobar si se usa el metodo save desde otro sitio que no sea el controlador EditService.php
+    
     
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {
@@ -116,6 +118,8 @@ class Service_regular extends Base\ModelClass {
         $this->total = 0;
         $this->plazas = 0;
         $this->aceptado = false;
+
+        $this->llamadoDesdeFuera = false; // Para comprobar si se usa el metodo save desde otro sitio que no sea el controlador EditService.php
     }
     
     /**
@@ -188,6 +192,11 @@ class Service_regular extends Base\ModelClass {
     }
     
     public function test() {
+        if (true === $this->llamadoDesdeFuera) {
+             // Está siendo usado el metodo save desde otro sitio que no es el controlador EditService.php
+            return parent::test();
+        }
+        
         // Comprobamos que el código se ha introducido correctamente
         if (!empty($this->cod_servicio) && 1 !== \preg_match('/^[A-Z0-9_\+\.\-]{1,10}$/i', $this->cod_servicio)) {
             $this->toolBox()->i18nLog()->error(

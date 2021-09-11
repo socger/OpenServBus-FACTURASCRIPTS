@@ -167,6 +167,11 @@ class Service extends Base\ModelClass {
     }
     
     public function test() {
+        if (true === $this->llamadoDesdeFuera) {
+             // Está siendo usado el metodo save desde otro sitio que no es el controlador EditService.php
+            return parent::test();
+        }
+        
         $this->crearFechaDesde();
         $this->crearFechaHasta();
         
@@ -358,11 +363,6 @@ class Service extends Base\ModelClass {
 
     private function checkFechasPeriodo()
     {
-        if (empty($this->llamadoDesdeFuera)) {
-             // Está siendo usado el metodo save desde otro sitio que no es el controlador EditService.php
-            return false;
-        }
-        
         $a_devolver = true;
         
         // La fecha de inicio es obligatoria
