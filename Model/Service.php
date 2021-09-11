@@ -85,6 +85,8 @@ class Service extends Base\ModelClass {
     public $combinadoSN;
     public $combinadoSiNo;
     
+    public $llamadoDesdeFuera; // Para comprobar si se usa el metodo save desde otro sitio que no sea el controlador EditService.php
+    
     
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {
@@ -98,6 +100,8 @@ class Service extends Base\ModelClass {
         $this->total = 0;
         $this->plazas = 0;
         $this->aceptado = false;
+
+        $this->llamadoDesdeFuera = false; // Para comprobar si se usa el metodo save desde otro sitio que no sea el controlador EditService.php
     }
     
     /**
@@ -354,6 +358,11 @@ class Service extends Base\ModelClass {
 
     private function checkFechasPeriodo()
     {
+        if (empty($this->llamadoDesdeFuera)) {
+             // Está siendo usado el metodo save desde otro sitio que no es el controlador EditService.php
+            return false;
+        }
+        
         $a_devolver = true;
         
         // La fecha de inicio es obligatoria
