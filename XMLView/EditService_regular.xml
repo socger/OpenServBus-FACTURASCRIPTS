@@ -69,7 +69,7 @@
                 </widget>
             </column>
             <column name="helper" numcolumns="4" order="170">
-                <widget type="select" fieldname="idhelper" icon="fas fa-user-graduate" onclick="EditVehicle_type">
+                <widget type="select" fieldname="idhelper" icon="fas fa-user-graduate" onclick="EditHelper">
                     <values source="helpers" fieldcode="idhelper" fieldtitle="nombre" />
                 </widget>
             </column>
@@ -104,7 +104,7 @@
             </column>
             
             <column name="service-type" numcolumns="4" order="180">
-                <widget type="select" fieldname="idservice_type" icon="fas fa-dolly" onclick="EditVehicle_type">
+                <widget type="select" fieldname="idservice_type" icon="fas fa-dolly" onclick="EditService_type">
                     <values source="service_types" fieldcode="idservice_type" fieldtitle="nombre" />
                 </widget>
             </column>
@@ -205,19 +205,77 @@
         </group>
 
 
-        <group name="assembly-services" numcolumns="12" icon="fas fa-business-time" title="assembly-services">
-            <column name="usual-driver" numcolumns="5" order="100" description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular" >
-                <widget type="select" fieldname="iddriver" icon="fas fa-user-astronaut" onclick="EditDriver" >
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
-                </widget>
+        <group name="assembly-services" numcolumns="9" icon="fas fa-business-time" title="assembly-services">
+            <column name="service-combined" numcolums="2" order="110">
+                <widget type="text" fieldname="combinadoSiNo" readonly="true"/>
             </column>
-            <column name="usual-vehicle" numcolumns="5" order="110" description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular" >
+            <column name="usual-vehicle" numcolumns="7" order="120" description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular" >
                 <widget type="select" fieldname="idvehicle" icon="fas fa-bus-alt" onclick="EditVehicle" >
                     <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
                 </widget>
             </column>
-            <column name="service-combined" numcolums="2" order="120">
-                <widget type="text" fieldname="combinadoSiNo" readonly="true"/>
+        </group>
+
+
+        <group name="assembly-services-3-1" numcolumns="12" >
+            <column name="usual-driver-1" numcolumns="4" order="100" description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular" >
+                <widget type="select" fieldname="iddriver_1" icon="fas fa-user-astronaut" onclick="EditDriver" >
+                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
+                </widget>
+            </column>
+            <column name="driver-accommodation-1" numcolumns="4" order="110" >
+                <widget type="select" fieldname="driver_alojamiento_1" translate="true" required="true">
+                    <values title="--------">""</values>
+                    <values title="Libre">"L"</values>
+                    <values title="Alojamiento y desayuno">"AD"</values>
+                    <values title="Media pensión">"MP"</values>
+                    <values title="Pensión completa">"PC"</values>
+                </widget>
+            </column>
+            <column name="driver-observation-1" numcolumns="4" order="120">
+                <widget type="textarea" fieldname="driver_observaciones_1" />
+            </column>
+        </group>
+            
+            
+        <group name="assembly-services-3-2" numcolumns="12" >
+            <column name="usual-driver-2" numcolumns="4" order="130" description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular" >
+                <widget type="select" fieldname="iddriver_2" icon="fas fa-user-astronaut" onclick="EditDriver" >
+                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
+                </widget>
+            </column>
+            <column name="driver-accommodation-2" numcolumns="4" order="140" >
+                <widget type="select" fieldname="driver_alojamiento_2" translate="true" required="true">
+                    <values title="--------">""</values>
+                    <values title="Libre">"L"</values>
+                    <values title="Alojamiento y desayuno">"AD"</values>
+                    <values title="Media pensión">"MP"</values>
+                    <values title="Pensión completa">"PC"</values>
+                </widget>
+            </column>
+            <column name="driver-observation-2" numcolumns="4" order="150">
+                <widget type="textarea" fieldname="driver_observaciones_2" />
+            </column>
+        </group>
+            
+            
+        <group name="assembly-services-3-3" numcolumns="12" >
+            <column name="usual-driver-3" numcolumns="4" order="160" description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular" >
+                <widget type="select" fieldname="iddriver_3" icon="fas fa-user-astronaut" onclick="EditDriver" >
+                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
+                </widget>
+            </column>
+            <column name="driver-accommodation-3" numcolumns="4" order="170" >
+                <widget type="select" fieldname="driver_alojamiento_3" translate="true" required="true">
+                    <values title="--------">""</values>
+                    <values title="Libre">"L"</values>
+                    <values title="Alojamiento y desayuno">"AD"</values>
+                    <values title="Media pensión">"MP"</values>
+                    <values title="Pensión completa">"PC"</values>
+                </widget>
+            </column>
+            <column name="driver-observation-3" numcolumns="4" order="180">
+                <widget type="textarea" fieldname="driver_observaciones_3" />
             </column>
         </group>
 
@@ -228,6 +286,9 @@
             </column>
             <column name="observations-mounting" numcolumns="12" order="110">
                 <widget type="textarea" fieldname="observaciones_montaje" />
+            </column>
+            <column name="observations-drivers" numcolumns="12" order="115">
+                <widget type="textarea" fieldname="observaciones_drivers" />
             </column>
             <column name="observations-vehicle" numcolumns="12" order="120">
                 <widget type="textarea" fieldname="observaciones_vehiculo" />

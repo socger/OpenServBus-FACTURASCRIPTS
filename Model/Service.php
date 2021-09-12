@@ -59,8 +59,20 @@ class Service extends Base\ModelClass {
     public $observaciones_vehiculo;
     public $observaciones_facturacion;
     public $observaciones_liquidacion;
-
-    public $iddriver;
+    public $observaciones_drivers;
+    
+    public $iddriver_1;
+    public $driver_alojamiento_1;
+    public $driver_observaciones_1;
+    
+    public $iddriver_2;
+    public $driver_alojamiento_2;
+    public $driver_observaciones_2;
+    
+    public $iddriver_3;
+    public $driver_alojamiento_3;
+    public $driver_observaciones_3;
+    
     public $idvehicle;
     
     public $codsubcuenta_km_nacional;
@@ -255,6 +267,7 @@ class Service extends Base\ModelClass {
         $this->observaciones_vehiculo = $utils->noHtml($this->observaciones_vehiculo);
         $this->observaciones_facturacion = $utils->noHtml($this->observaciones_facturacion);
         $this->observaciones_liquidacion = $utils->noHtml($this->observaciones_liquidacion);
+        $this->observaciones_drivers = $utils->noHtml($this->observaciones_drivers);
         
         $this->hoja_ruta_origen = $utils->noHtml($this->hoja_ruta_origen);
         $this->hoja_ruta_destino = $utils->noHtml($this->hoja_ruta_destino);
@@ -265,6 +278,15 @@ class Service extends Base\ModelClass {
         $this->motivobaja = $utils->noHtml($this->motivobaja);
         $this->codsubcuenta_km_nacional = $utils->noHtml($this->codsubcuenta_km_nacional);
         $this->codsubcuenta_km_extranjero = $utils->noHtml($this->codsubcuenta_km_extranjero);
+        
+        $this->driver_alojamiento_1 = $utils->noHtml($this->driver_alojamiento_1);
+        $this->driver_observaciones_1 = $utils->noHtml($this->driver_observaciones_1);
+        
+        $this->driver_alojamiento_2 = $utils->noHtml($this->driver_alojamiento_2);
+        $this->driver_observaciones_2 = $utils->noHtml($this->driver_observaciones_2);
+        
+        $this->driver_alojamiento_3 = $utils->noHtml($this->driver_alojamiento_3);
+        $this->driver_observaciones_3 = $utils->noHtml($this->driver_observaciones_3);
     }
     
     public function rellenarTotal()

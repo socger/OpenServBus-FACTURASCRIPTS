@@ -167,13 +167,8 @@
         </group>
 
 
-        <group name="assembly-services-3" numcolumns="12" >
-            <column name="driver" numcolumns="6" order="160" >
-                <widget type="select" fieldname="iddriver" icon="fas fa-user-astronaut" onclick="EditDriver" >
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
-                </widget>
-            </column>
-            <column name="vehicle" numcolumns="6" order="170" >
+        <group name="assembly-services-2-5" numcolumns="12" >
+            <column name="vehicle" numcolumns="7" order="100" >
                 <widget type="select" fieldname="idvehicle" icon="fas fa-bus-alt" onclick="EditVehicle" >
                     <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
                 </widget>
@@ -181,12 +176,77 @@
         </group>
 
 
+        <group name="assembly-services-3-1" numcolumns="12" >
+            <column name="driver-1" numcolumns="4" order="100" >
+                <widget type="select" fieldname="iddriver_1" icon="fas fa-user-astronaut" onclick="EditDriver" >
+                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
+                </widget>
+            </column>
+            <column name="driver-accommodation-1" numcolumns="4" order="110" >
+                <widget type="select" fieldname="driver_alojamiento_1" translate="true" required="true">
+                    <values title="--------">""</values>
+                    <values title="Libre">"L"</values>
+                    <values title="Alojamiento y desayuno">"AD"</values>
+                    <values title="Media pensión">"MP"</values>
+                    <values title="Pensión completa">"PC"</values>
+                </widget>
+            </column>
+            <column name="driver-observation-1" numcolumns="4" order="120">
+                <widget type="textarea" fieldname="driver_observaciones_1" />
+            </column>
+        </group>
+            
+            
+        <group name="assembly-services-3-2" numcolumns="12" >
+            <column name="driver-2" numcolumns="4" order="130" >
+                <widget type="select" fieldname="iddriver_2" icon="fas fa-user-astronaut" onclick="EditDriver" >
+                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
+                </widget>
+            </column>
+            <column name="driver-accommodation-2" numcolumns="4" order="140" >
+                <widget type="select" fieldname="driver_alojamiento_2" translate="true" required="true">
+                    <values title="--------">""</values>
+                    <values title="Libre">"L"</values>
+                    <values title="Alojamiento y desayuno">"AD"</values>
+                    <values title="Media pensión">"MP"</values>
+                    <values title="Pensión completa">"PC"</values>
+                </widget>
+            </column>
+            <column name="driver-observation-2" numcolumns="4" order="150">
+                <widget type="textarea" fieldname="driver_observaciones_2" />
+            </column>
+        </group>
+            
+            
+        <group name="assembly-services-3-3" numcolumns="12" >
+            <column name="driver-3" numcolumns="4" order="160" >
+                <widget type="select" fieldname="iddriver_3" icon="fas fa-user-astronaut" onclick="EditDriver" >
+                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
+                </widget>
+            </column>
+            <column name="driver-accommodation-3" numcolumns="4" order="170" >
+                <widget type="select" fieldname="driver_alojamiento_3" translate="true" required="true">
+                    <values title="--------">""</values>
+                    <values title="Libre">"L"</values>
+                    <values title="Alojamiento y desayuno">"AD"</values>
+                    <values title="Media pensión">"MP"</values>
+                    <values title="Pensión completa">"PC"</values>
+                </widget>
+            </column>
+            <column name="driver-observation-3" numcolumns="4" order="180">
+                <widget type="textarea" fieldname="driver_observaciones_3" />
+            </column>
+        </group>
+
         <group name="observations" numcolumns="12" icon="fas fa-info-circle" title="observations">
             <column name="observations-general" numcolumns="12" order="100">
                 <widget type="textarea" fieldname="observaciones" />
             </column>
             <column name="observations-mounting" numcolumns="12" order="110">
                 <widget type="textarea" fieldname="observaciones_montaje" />
+            </column>
+            <column name="observations-drivers" numcolumns="12" order="115">
+                <widget type="textarea" fieldname="observaciones_drivers" />
             </column>
             <column name="observations-vehicle" numcolumns="12" order="120">
                 <widget type="textarea" fieldname="observaciones_vehiculo" />

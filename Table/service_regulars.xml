@@ -230,12 +230,54 @@
         <name>observaciones_liquidacion</name>
         <type>text</type>
     </column>
+    <column>
+        <name>observaciones_drivers</name>
+        <type>text</type>
+    </column>
 
 
     <column>
-        <name>iddriver</name>
+        <name>iddriver_1</name>
         <type>integer</type>
     </column>
+    <column>
+        <name>driver_alojamiento_1</name>
+        <type>character varying(1)</type>
+    </column>
+    <column>
+        <name>driver_observaciones_1</name>
+        <type>text</type>
+    </column>
+    
+    
+    <column>
+        <name>iddriver_2</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>driver_alojamiento_2</name>
+        <type>character varying(1)</type>
+    </column>
+    <column>
+        <name>driver_observaciones_2</name>
+        <type>text</type>
+    </column>
+    
+    
+    <column>
+        <name>iddriver_3</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>driver_alojamiento_3</name>
+        <type>character varying(1)</type>
+    </column>
+    <column>
+        <name>driver_observaciones_3</name>
+        <type>text</type>
+    </column>
+    
+    
     <column>
         <name>idvehicle</name>
         <type>integer</type>
@@ -325,8 +367,16 @@
         <type>FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
-        <name>ca_service_regulars__drivers</name>
-        <type>FOREIGN KEY (iddriver) REFERENCES drivers (iddriver) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <name>ca_service_regulars__drivers1</name>
+        <type>FOREIGN KEY (iddriver_1) REFERENCES drivers (iddriver) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_regulars__drivers2</name>
+        <type>FOREIGN KEY (iddriver_2) REFERENCES drivers (iddriver) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_regulars__drivers3</name>
+        <type>FOREIGN KEY (iddriver_3) REFERENCES drivers (iddriver) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
         <name>ca_service_regulars__vehicles</name>
