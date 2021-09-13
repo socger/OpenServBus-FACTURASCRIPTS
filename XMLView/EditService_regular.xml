@@ -224,12 +224,12 @@
                 </widget>
             </column>
             <column name="driver-accommodation-1" numcolumns="4" order="110" >
-                <widget type="select" fieldname="driver_alojamiento_1" translate="true" required="true">
-                    <values title="--------">""</values>
-                    <values title="Libre">"L"</values>
-                    <values title="Alojamiento y desayuno">"AD"</values>
-                    <values title="Media pensión">"MP"</values>
-                    <values title="Pensión completa">"PC"</values>
+                <widget type="select" fieldname="driver_alojamiento_1" translate="true">
+                    <values title="--------">0</values>
+                    <values title="Libre">1</values>
+                    <values title="Alojamiento y desayuno">2</values>
+                    <values title="Media pensión">3</values>
+                    <values title="Pensión completa">4</values>
                 </widget>
             </column>
             <column name="driver-observation-1" numcolumns="4" order="120">
@@ -245,12 +245,12 @@
                 </widget>
             </column>
             <column name="driver-accommodation-2" numcolumns="4" order="140" >
-                <widget type="select" fieldname="driver_alojamiento_2" translate="true" required="true">
-                    <values title="--------">""</values>
-                    <values title="Libre">"L"</values>
-                    <values title="Alojamiento y desayuno">"AD"</values>
-                    <values title="Media pensión">"MP"</values>
-                    <values title="Pensión completa">"PC"</values>
+                <widget type="select" fieldname="driver_alojamiento_2" translate="true">
+                    <values title="--------">0</values>
+                    <values title="Libre">1</values>
+                    <values title="Alojamiento y desayuno">2</values>
+                    <values title="Media pensión">3</values>
+                    <values title="Pensión completa">4</values>
                 </widget>
             </column>
             <column name="driver-observation-2" numcolumns="4" order="150">
@@ -266,12 +266,12 @@
                 </widget>
             </column>
             <column name="driver-accommodation-3" numcolumns="4" order="170" >
-                <widget type="select" fieldname="driver_alojamiento_3" translate="true" required="true">
-                    <values title="--------">""</values>
-                    <values title="Libre">"L"</values>
-                    <values title="Alojamiento y desayuno">"AD"</values>
-                    <values title="Media pensión">"MP"</values>
-                    <values title="Pensión completa">"PC"</values>
+                <widget type="select" fieldname="driver_alojamiento_3" translate="true">
+                    <values title="--------">0</values>
+                    <values title="Libre">1</values>
+                    <values title="Alojamiento y desayuno">2</values>
+                    <values title="Media pensión">3</values>
+                    <values title="Pensión completa">4</values>
                 </widget>
             </column>
             <column name="driver-observation-3" numcolumns="4" order="180">
