@@ -1,4 +1,7 @@
 <?php
+    
+// SI MODIFICAMOS ESTE CONTROLADOR TENEMOS QUE VER SI HAY QUE HACER LOS MISMOS CAMBIOS EN ListAdvertisment_user.php
+    
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
@@ -26,9 +29,9 @@ class ListAdvertisment_user2 extends ListController {
 
     }
     
-    protected function createAdvertisment_user($viewName = 'ListAdvertisment_user')
+    protected function createAdvertisment_user($viewName = 'ListAdvertisment_user2')
     {
-        $this->addView($viewName, 'Advertisment_user');
+        $this->addView($viewName, 'Advertisment_user2');
         
         // Opciones de búsqueda rápida
         $this->addSearchFields($viewName, ['nombre']); // Las búsqueda la hará por el campo nombre
@@ -96,7 +99,7 @@ class ListAdvertisment_user2 extends ListController {
         switch ($viewName) {
 
             // Pestaña con el mismo nombre que este controlador EditXxxxx
-            case 'ListAdvertisment_user': 
+            case 'ListAdvertisment_user2': 
                 $usuario = $this->user->nick;
                 // $idvehicle = $this->getViewModelValue('EditVehicle', 'idvehicle'); // Le pedimos que guarde en la variable local $idemployee el valor del campo idemployee del controlador EditEmployee.php
                 $where = [new DatabaseWhere('nick', $usuario)];

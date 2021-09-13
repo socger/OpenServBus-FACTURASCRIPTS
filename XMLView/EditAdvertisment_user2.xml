@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <view>
     
-<!--    SI MODIFICAMOS ESTA VISTA TENEMOS QUE VER SI HAY QUE HACER LOS MISMOS CAMBIOS EN EditAdvertisment_user2.xml-->
+<!--    SI MODIFICAMOS ESTA VISTA TENEMOS QUE VER SI HAY QUE HACER LOS MISMOS CAMBIOS EN EditAdvertisment_user.xml-->
     
     <columns>
 
@@ -39,7 +39,7 @@
             
             
             <column name="nick" title="nick-user" numcolumns="6" order="160">
-                <widget type="select" fieldname="nick" icon="fas fa-user-circle" onclick="EditUser">
+                <widget type="select" fieldname="nick" icon="fas fa-user-circle" onclick="EditUser" readonly="dinamic">
                     <values source="users" fieldcode="nick" fieldtitle="nick" />
                 </widget>
             </column>

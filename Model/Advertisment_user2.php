@@ -1,12 +1,12 @@
 <?php
 
-// SI MODIFICAMOS ESTE MODELO TENEMOS QUE VER SI HAY QUE HACER LOS MISMOS CAMBIOS EN Advertisment_user2.php
+// SI MODIFICAMOS ESTE MODELO TENEMOS QUE VER SI HAY QUE HACER LOS MISMOS CAMBIOS EN Advertisment_user.php
 
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
 use FacturaScripts\Core\Model\Base;
 
-class Advertisment_user extends Base\ModelClass {
+class Advertisment_user2 extends Base\ModelClass {
     use Base\ModelTrait;
 
     public $idadvertisment_user;

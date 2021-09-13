@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <view>
     
-<!--    SI MODIFICAMOS ESTA VISTA TENEMOS QUE VER SI HAY QUE HACER LOS MISMOS CAMBIOS EN ListAdvertisment_user2.xml-->
+<!--    SI MODIFICAMOS ESTA VISTA TENEMOS QUE VER SI HAY QUE HACER LOS MISMOS CAMBIOS EN ListAdvertisment_user.xml-->
     
     <columns>
         <column name="id" display="none" order="100">

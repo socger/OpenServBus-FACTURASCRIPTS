@@ -47,10 +47,50 @@
         <type>character varying(100)</type>
         <null>NO</null>
     </column>
+
+
     <column>
-        <name>iddriver</name>
+        <name>iddriver_1</name>
         <type>integer</type>
     </column>
+    <column>
+        <name>driver_alojamiento_1</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>driver_observaciones_1</name>
+        <type>text</type>
+    </column>
+    
+    
+    <column>
+        <name>iddriver_2</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>driver_alojamiento_2</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>driver_observaciones_2</name>
+        <type>text</type>
+    </column>
+    
+    
+    <column>
+        <name>iddriver_3</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>driver_alojamiento_3</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>driver_observaciones_3</name>
+        <type>text</type>
+    </column>
+    
+    
     <column>
         <name>idvehicle</name>
         <type>integer</type>
@@ -107,8 +147,16 @@
     
     
     <constraint>
-        <name>ca_service_regular_combinations__drivers</name>
-        <type>FOREIGN KEY (iddriver) REFERENCES drivers (iddriver) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <name>ca_service_regular_combinations__drivers1</name>
+        <type>FOREIGN KEY (iddriver_1) REFERENCES drivers (iddriver) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_regular_combinations__drivers2</name>
+        <type>FOREIGN KEY (iddriver_2) REFERENCES drivers (iddriver) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_regular_combinations__drivers3</name>
+        <type>FOREIGN KEY (iddriver_3) REFERENCES drivers (iddriver) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
         <name>ca_service_regular_combinations__vehicles</name>

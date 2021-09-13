@@ -1,15 +1,15 @@
 <?php
     
-// SI MODIFICAMOS ESTE CONTROLADOR TENEMOS QUE VER SI HAY QUE HACER LOS MISMOS CAMBIOS EN EditAdvertisment_user2.php
+// SI MODIFICAMOS ESTE CONTROLADOR TENEMOS QUE VER SI HAY QUE HACER LOS MISMOS CAMBIOS EN EditAdvertisment_user.php
     
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
-class EditAdvertisment_user extends EditController {
+class EditAdvertisment_user2 extends EditController {
     
     public function getModelClassName() {
-        return 'Advertisment_user';
+        return 'Advertisment_user2';
     }
     
     // Para presentar la pantalla del controlador
@@ -31,8 +31,10 @@ class EditAdvertisment_user extends EditController {
         switch ($viewName) {
 
             // Pestaña con el mismo nombre que este controlador EditXxxxx
-            case 'EditAdvertisment_user': 
+            case 'EditAdvertisment_user2': 
                 parent::loadData($viewName, $view);
+                
+                $this->views[$viewName]->model->nick = $this->user->nick;
                 
                 // Guardamos que usuario y cuando pulsará guardar
                 $this->views[$viewName]->model->user_nick = $this->user->nick;
