@@ -26,7 +26,18 @@ class Service_regular_combination extends Base\ModelClass {
     
     public $nombre;
     
-    public $iddriver;
+    public $iddriver_1;
+    public $driver_alojamiento_1;
+    public $driver_observaciones_1;
+    
+    public $iddriver_2;
+    public $driver_alojamiento_2;
+    public $driver_observaciones_2;
+    
+    public $iddriver_3;
+    public $driver_alojamiento_3;
+    public $driver_observaciones_3;
+    
     public $idvehicle;
     
     public $lunes;
@@ -156,11 +167,20 @@ class Service_regular_combination extends Base\ModelClass {
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->nombre = $utils->noHtml($this->nombre);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
+        
+        $this->driver_alojamiento_1 = $utils->noHtml($this->driver_alojamiento_1);
+        $this->driver_observaciones_1 = $utils->noHtml($this->driver_observaciones_1);
+        
+        $this->driver_alojamiento_2 = $utils->noHtml($this->driver_alojamiento_2);
+        $this->driver_observaciones_2 = $utils->noHtml($this->driver_observaciones_2);
+        
+        $this->driver_alojamiento_3 = $utils->noHtml($this->driver_alojamiento_3);
+        $this->driver_observaciones_3 = $utils->noHtml($this->driver_observaciones_3);
     }
     
     private function rellenarConductorVehiculoSiVacios()
     {
-        if (empty($this->iddriver) or empty($this->idvehicle)) {
+        if (empty($this->iddriver_1) || empty($this->idvehicle)) {
             $this->toolBox()->i18nLog()->info( 'Si no rellena el vehículo o el conductor, este será el orden de prioridades para el Montaje de Servicios:'
                                              . ' 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular' );
         }
