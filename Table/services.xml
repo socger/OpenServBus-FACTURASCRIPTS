@@ -193,7 +193,7 @@
     </column>
     <column>
         <name>driver_alojamiento_1</name>
-        <type>character varying(1)</type>
+        <type>integer</type>
     </column>
     <column>
         <name>driver_observaciones_1</name>
@@ -207,7 +207,7 @@
     </column>
     <column>
         <name>driver_alojamiento_2</name>
-        <type>character varying(1)</type>
+        <type>integer</type>
     </column>
     <column>
         <name>driver_observaciones_2</name>
@@ -221,7 +221,7 @@
     </column>
     <column>
         <name>driver_alojamiento_3</name>
-        <type>character varying(1)</type>
+        <type>integer</type>
     </column>
     <column>
         <name>driver_observaciones_3</name>
