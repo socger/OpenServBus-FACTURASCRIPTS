@@ -2,7 +2,7 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
- use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 class EditService_assembly extends EditController {
@@ -48,6 +48,26 @@ class EditService_assembly extends EditController {
                 } else {
                     $this->views[$viewName]->model->salida_desde_nave_text = 'NO';
                 }
+                
+                if ($this->views[$viewName]->model->fuera_del_municipio === true) {
+                    $this->views[$viewName]->model->fuera_del_municipio_text = 'SI';
+                } else {
+                    $this->views[$viewName]->model->fuera_del_municipio_text = 'NO';
+                }
+                
+                if ($this->views[$viewName]->model->facturar_SN === true) {
+                    $this->views[$viewName]->model->facturar_SN_text = 'SI';
+                } else {
+                    $this->views[$viewName]->model->facturar_SN_text = 'NO';
+                }
+                
+                if ($this->views[$viewName]->model->facturar_agrupando === true) {
+                    $this->views[$viewName]->model->facturar_agrupando_text = 'SI';
+                } else {
+                    $this->views[$viewName]->model->facturar_agrupando_text = 'NO';
+                }
+                
+                $this->readOnlyFields($viewName);
 
                 break;
         }
@@ -57,6 +77,81 @@ class EditService_assembly extends EditController {
     // ** *************************************** ** //
     // ** FUNCIONES CREADAS PARA ESTE CONTROLADOR ** //
     // ** *************************************** ** //
+    private function readOnlyField($viewName, $fieldName)
+    {
+        $column = $this->views[$viewName]->columnForField($fieldName);
+        $column->widget->readonly = 'true';
+    }
+
+    private function displayNoneField($viewName, $fieldName)
+    {
+        $column = $this->views[$viewName]->columnForField($fieldName);
+        $column->display = 'none';
+    }
+
+    private function readOnlyFields($viewName)
+    {
+        if (!empty($this->views[$viewName]->model->idservice)) {
+            // Es un servicio discrecional, por lo que estos campos que se ponen 
+            // a readonly=true se modificarán en la ficha del discrecional, no 
+            // en montaje ... si fuese un regular si que se modificarían en el 
+            // montaje, porque la ficha del regular puede cambiar de una 
+            // temporada a otra
+            $this->readOnlyField($viewName, 'plazas');
+            $this->readOnlyField($viewName, 'idvehicle_type');
+            $this->readOnlyField($viewName, 'hoja_ruta_origen');
+            $this->readOnlyField($viewName, 'hoja_ruta_destino');
+            $this->readOnlyField($viewName, 'hoja_ruta_expediciones');
+            
+            
+            $this->readOnlyField($viewName, 'hoja_ruta_contratante');
+            $this->readOnlyField($viewName, 'hoja_ruta_tipoidfiscal');
+            $this->readOnlyField($viewName, 'hoja_ruta_cifnif');
+            $this->readOnlyField($viewName, 'idservice_type');
+            $this->readOnlyField($viewName, 'idempresa');
+            
+            
+            $this->readOnlyField($viewName, 'importe');
+            $this->readOnlyField($viewName, 'codimpuesto');
+            $this->readOnlyField($viewName, 'importe_enextranjero');
+            $this->readOnlyField($viewName, 'codimpuesto_enextranjero');
+            $this->readOnlyField($viewName, 'codsubcuenta_km_nacional');
+            $this->readOnlyField($viewName, 'codsubcuenta_km_extranjero');
+            $this->readOnlyField($viewName, 'inicio_horaAnt');
+            
+            
+            $this->readOnlyField($viewName, 'inicio_dia');
+            $this->readOnlyField($viewName, 'inicio_hora');
+            $this->readOnlyField($viewName, 'fin_dia');
+            $this->readOnlyField($viewName, 'fin_hora');
+            $this->readOnlyField($viewName, 'idvehicle');
+            
+            $this->readOnlyField($viewName, 'iddriver_1');
+            $this->readOnlyField($viewName, 'driver_alojamiento_1');
+            $this->readOnlyField($viewName, 'driver_observaciones_1');
+            
+            $this->readOnlyField($viewName, 'iddriver_2');
+            $this->readOnlyField($viewName, 'driver_alojamiento_2');
+            $this->readOnlyField($viewName, 'driver_observaciones_2');
+            
+            $this->readOnlyField($viewName, 'iddriver_3');
+            $this->readOnlyField($viewName, 'driver_alojamiento_3');
+            $this->readOnlyField($viewName, 'driver_observaciones_3');
+            
+            // Es un discrecional, por lo que se ponen invisibles estos campos
+            $this->displayNoneField($viewName, 'fuera_del_municipio');
+            $this->displayNoneField($viewName, 'facturar_SN');
+            $this->displayNoneField($viewName, 'facturar_agrupando');
+            $this->displayNoneField($viewName, 'salida_desde_nave_sn');
+        } else {
+            // Es un regular, por lo que se ponen invisibles estos campos
+            $this->displayNoneField($viewName, 'fuera_del_municipioe_text');
+            $this->displayNoneField($viewName, 'facturar_SN_text');
+            $this->displayNoneField($viewName, 'facturar_agrupando_text');
+            $this->displayNoneField($viewName, 'salida_desde_nave_text');
+        }
+    }
+
     private function prepararFechasParaVista($viewName)
     {
         if (!empty($this->views[$viewName]->model->fecha_desde)){

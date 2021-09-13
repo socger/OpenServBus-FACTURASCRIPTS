@@ -39,7 +39,10 @@ class Service_assembly extends Base\ModelClass {
     public $idhelper;
 
     public $facturar_SN;
+    public $facturar_SN_text;
+    
     public $facturar_agrupando;
+    public $facturar_agrupando_text;
     
     public $importe;
     public $importe_enextranjero;
@@ -48,6 +51,7 @@ class Service_assembly extends Base\ModelClass {
     public $total;
             
     public $fuera_del_municipio;
+    public $fuera_del_municipio_text;
     
     public $hoja_ruta_origen;
     public $hoja_ruta_destino;
@@ -181,13 +185,13 @@ class Service_assembly extends Base\ModelClass {
     }
     
     public function test() {
+        if ($this->comprobarServicio() == false){return false;}
         
         if (empty($this->codcliente)) {
             $this->toolBox()->i18nLog()->error('Debe de asignar el servicio a un cliente.');
             return false;
         }
-
-        if ($this->comprobarServicio() == false){return false;}
+        
         if ($this->comprobarFacturacion() == false){return false;}
         if ($this->comprobarConductor_1() == false){return false;}
         if ($this->comprobarVehiculo() == false){return false;}
@@ -255,14 +259,21 @@ class Service_assembly extends Base\ModelClass {
 
     private function comprobarServicio()
     {
-        if ( !empty($this->idservice) && !empty($this->idservice_regular) ) 
+        if ( empty($this->idservice) && empty($this->idservice_regular) ) 
         {
-            $this->toolBox()->i18nLog()->error('O es un servicio regular o es un servicio discrecional.');
+            $this->toolBox()->i18nLog()->error('Debe elegir si es un servicio regular o es un servicio discrecional.');
             return false;
         }
-        return true;
+        
+        if ( !empty($this->idservice) && !empty($this->idservice_regular) ) 
+        {
+            $this->toolBox()->i18nLog()->error('O es un servicio regular o es un servicio discrecional. Pero no ambos');
+            return false;
+        }
+        
+        return $this->completarServicio();
     }
-    
+
     private function evitarInyeccionSQL()
     {
         $utils = $this->toolBox()->utils();
@@ -429,6 +440,112 @@ class Service_assembly extends Base\ModelClass {
         
         $this->total = \round($this->total, (int) \FS_NF0);
         
+    }
+
+    private function completarServicio(): bool
+    {
+        $campos = ' nombre, codcliente, idvehicle_type, idhelper, hoja_ruta_origen,' 
+                . ' hoja_ruta_destino, hoja_ruta_expediciones, fuera_del_municipio,' 
+                . ' hoja_ruta_contratante, hoja_ruta_tipoidfiscal, hoja_ruta_cifnif,'
+                . ' idservice_type, idempresa, facturar_SN, importe, codimpuesto, '
+                . ' importe_enextranjero, codimpuesto_enextranjero,'
+                . ' total, codsubcuenta_km_nacional, codsubcuenta_km_extranjero,'
+                
+                . ' fecha_desde, fecha_hasta, hora_anticipacion, '
+                . ' hora_desde, hora_hasta, '
+
+                . ' salida_desde_nave_sn, idvehicle,'
+                . ' iddriver_1, driver_alojamiento_1, driver_observaciones_1,'
+                . ' iddriver_2, driver_alojamiento_2, driver_observaciones_2,'
+                . ' iddriver_3, driver_alojamiento_3, driver_observaciones_3,'
+                . ' observaciones, observaciones_montaje, observaciones_drivers,'
+                . ' observaciones_vehiculo, observaciones_facturacion, observaciones_liquidacion, '
+                . ' activo, fechaalta, useralta, fechamodificacion, '
+                . ' fechabaja, userbaja, motivobaja, usermodificacion';
+        
+        
+                
+        if ( !empty($this->idservice) ) 
+        {
+            $sql = ' SELECT ' . $campos . ', 0 as facturar_agrupando, NULL as observaciones_periodo '
+                 . ' FROM services '
+                 . ' WHERE services.idservice = ' . $this->idservice . ' ' 
+                 ;
+        } else {
+            $sql = ' SELECT ' . $campos . ', facturar_agrupando, observaciones_periodo '
+                 . ' FROM service_regulars '
+                 . ' WHERE service_regulars.idservice_regular = ' . $this->idservice_regular . ' ' 
+                 ;
+        }
+
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            jerofa si es un regular no se debe de actualizar si se ha modificado a mano
+            si es un discrecional se cambia todo, pues la mayoría de estos campos estan readonly=true
+            
+            $this->nombre = $fila['nombre'];
+            $this->codcliente = $fila['codcliente'];
+            $this->idvehicle_type = $fila['idvehicle_type'];
+            $this->idhelper = $fila['idhelper'];
+            $this->hoja_ruta_origen = $fila['hoja_ruta_origen'];
+            $this->hoja_ruta_destino = $fila['hoja_ruta_destino'];
+            $this->hoja_ruta_expediciones = $fila['hoja_ruta_expediciones'];
+            $this->fuera_del_municipio = $fila['fuera_del_municipio'];
+            $this->hoja_ruta_contratante = $fila['hoja_ruta_contratante'];
+            
+            $this->hoja_ruta_tipoidfiscal = $fila['hoja_ruta_tipoidfiscal'];
+            $this->hoja_ruta_cifnif = $fila['hoja_ruta_cifnif'];
+            $this->idservice_type = $fila['idservice_type'];
+            $this->idempresa = $fila['idempresa'];
+            $this->facturar_SN = $fila['facturar_SN'];
+            $this->facturar_agrupando = $fila['facturar_agrupando'];
+            $this->importe = $fila['importe'];
+            $this->codimpuesto = $fila['codimpuesto'];
+            $this->importe_enextranjero = $fila['importe_enextranjero'];
+            $this->codimpuesto_enextranjero = $fila['codimpuesto_enextranjero'];
+            $this->total = $fila['total'];
+            $this->codsubcuenta_km_nacional = $fila['codsubcuenta_km_nacional'];
+            $this->codsubcuenta_km_extranjero = $fila['codsubcuenta_km_extranjero'];
+            $this->observaciones_periodo = $fila['observaciones_periodo'];
+            $this->salida_desde_nave_sn = $fila['salida_desde_nave_sn'];
+            $this->idvehicle = $fila['idvehicle'];
+            $this->iddriver_1 = $fila['iddriver_1'];
+            $this->driver_alojamiento_1 = $fila['driver_alojamiento_1'];
+            $this->driver_observaciones_1 = $fila['driver_observaciones_1'];
+            $this->iddriver_2 = $fila['iddriver_2'];
+            $this->driver_alojamiento_2 = $fila['driver_alojamiento_2'];
+            $this->driver_observaciones_2 = $fila['driver_observaciones_2'];
+            $this->iddriver_3 = $fila['iddriver_3'];
+            $this->driver_alojamiento_3 = $fila['driver_alojamiento_3'];
+            $this->driver_observaciones_3 = $fila['driver_observaciones_3'];
+            $this->observaciones = $fila['observaciones'];
+            $this->observaciones_montaje = $fila['observaciones_montaje'];
+            $this->observaciones_drivers = $fila['observaciones_drivers'];
+            $this->observaciones_vehiculo = $fila['observaciones_vehiculo'];
+            $this->observaciones_facturacion = $fila['observaciones_facturacion'];
+            $this->observaciones_liquidacion = $fila['observaciones_liquidacion'];
+            $this->activo = $fila['activo'];
+            $this->fechaalta = $fila['fechaalta'];
+            $this->useralta = $fila['useralta'];
+            $this->fechamodificacion = $fila['fechamodificacion'];
+            
+            $this->usermodificacion = $fila['usermodificacion'];
+            
+            $this->fechabaja = $fila['fechabaja'];
+            $this->userbaja = $fila['userbaja'];
+            $this->motivobaja = $fila['motivobaja'];
+            $this->fecha_desde = $fila['fecha_desde'];
+            $this->fecha_hasta = $fila['fecha_hasta'];
+            $this->hora_anticipacion = $fila['hora_anticipacion'];
+            $this->hora_desde = $fila['hora_desde'];
+            $this->hora_hasta = $fila['hora_hasta'];
+            
+            return true;
+        }
+        
+        $this->toolBox()->i18nLog()->error('No se pudo completar el servicio. Compruebe que el servicio existe o que no haya sido borrado.');
+        return false;
     }
     
 }
