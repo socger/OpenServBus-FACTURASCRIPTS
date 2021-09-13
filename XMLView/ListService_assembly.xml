@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view>
+    <columns>
+        <column name="id" display="none" order="100">
+            <widget type="text" fieldname="idservice_assembly" />
+        </column>
+        
+        
+        <column name="description" order="120">
+            <widget type="text" fieldname="nombre" />
+        </column>
+        <column name="seats" order="125">
+            <widget type="text" fieldname="plazas" />
+        </column>
+        <column name="client" order="130">
+            <widget type="select" fieldname="codcliente">
+                <values source="clientes" fieldcode="codcliente" fieldtitle="nombre" />
+            </widget>
+        </column>
+
+        <column name="active" display="center" order="210">
+            <widget type="checkbox" fieldname="activo"/>
+        </column>
+        <column name="creation-date" display="right" order="220">
+            <widget type="datetime" fieldname="fechaalta"/>
+        </column>
+    </columns>
+    
+    <rows>
+        <row type="status">
+            <option color="success" fieldname="activo">1</option>
+            <option color="warning" fieldname="activo">0</option>
+        </row>
+    </rows>    
+</view>
