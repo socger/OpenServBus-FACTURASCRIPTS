@@ -2,6 +2,7 @@
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
+//use FacturaScripts\Core\Lib\ExtendedController\PanelController;
 
 class ListService_assembly extends ListController {
     
@@ -19,12 +20,17 @@ class ListService_assembly extends ListController {
         return $pageData;
     }
     
-    protected function createViews() {
+    protected function createViews()
+    {
         $this->createViewAssembly();
     }
-    
+
     protected function createViewAssembly($viewName = 'ListService_assembly')
     {
+        
+        jerofa crear un modal sobre esta vista (ListService_assembly) y llamarlo con un botón
+        mirar lo que me ha aconsejado Carlos en Agentes, pestaña liquidaciones, botón varita mágica (asistente)
+        
         $this->addView($viewName, 'Service_assembly');
         
         $this->addSearchFields($viewName, ['nombre']);

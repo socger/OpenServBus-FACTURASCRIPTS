@@ -25,7 +25,7 @@ class EditService_assembly extends EditController {
 
         return $pageData;
     }
-    
+
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
     protected function loadData($viewName, $view) {
         switch ($viewName) {
@@ -102,15 +102,11 @@ class EditService_assembly extends EditController {
             $this->readOnlyField($viewName, 'hoja_ruta_origen');
             $this->readOnlyField($viewName, 'hoja_ruta_destino');
             $this->readOnlyField($viewName, 'hoja_ruta_expediciones');
-            
-            
             $this->readOnlyField($viewName, 'hoja_ruta_contratante');
             $this->readOnlyField($viewName, 'hoja_ruta_tipoidfiscal');
             $this->readOnlyField($viewName, 'hoja_ruta_cifnif');
             $this->readOnlyField($viewName, 'idservice_type');
             $this->readOnlyField($viewName, 'idempresa');
-            
-            
             $this->readOnlyField($viewName, 'importe');
             $this->readOnlyField($viewName, 'codimpuesto');
             $this->readOnlyField($viewName, 'importe_enextranjero');
@@ -118,33 +114,37 @@ class EditService_assembly extends EditController {
             $this->readOnlyField($viewName, 'codsubcuenta_km_nacional');
             $this->readOnlyField($viewName, 'codsubcuenta_km_extranjero');
             $this->readOnlyField($viewName, 'inicio_horaAnt');
-            
-            
             $this->readOnlyField($viewName, 'inicio_dia');
             $this->readOnlyField($viewName, 'inicio_hora');
             $this->readOnlyField($viewName, 'fin_dia');
             $this->readOnlyField($viewName, 'fin_hora');
             $this->readOnlyField($viewName, 'idvehicle');
-            
             $this->readOnlyField($viewName, 'iddriver_1');
             $this->readOnlyField($viewName, 'driver_alojamiento_1');
             $this->readOnlyField($viewName, 'driver_observaciones_1');
-            
             $this->readOnlyField($viewName, 'iddriver_2');
             $this->readOnlyField($viewName, 'driver_alojamiento_2');
             $this->readOnlyField($viewName, 'driver_observaciones_2');
-            
             $this->readOnlyField($viewName, 'iddriver_3');
             $this->readOnlyField($viewName, 'driver_alojamiento_3');
             $this->readOnlyField($viewName, 'driver_observaciones_3');
+            $this->readOnlyField($viewName, 'observaciones');
+            $this->readOnlyField($viewName, 'observaciones_montaje');
+            $this->readOnlyField($viewName, 'observaciones_drivers');
+            $this->readOnlyField($viewName, 'observaciones_vehiculo');
+            $this->readOnlyField($viewName, 'observaciones_facturacion');
+            $this->readOnlyField($viewName, 'observaciones_liquidacion');
+            $this->readOnlyField($viewName, 'motivobaja');
             
             // Es un discrecional, por lo que se ponen invisibles estos campos
+            $this->displayNoneField($viewName, 'cod_servicio');
             $this->displayNoneField($viewName, 'fuera_del_municipio');
             $this->displayNoneField($viewName, 'facturar_SN');
             $this->displayNoneField($viewName, 'facturar_agrupando');
             $this->displayNoneField($viewName, 'salida_desde_nave_sn');
         } else {
             // Es un regular, por lo que se ponen invisibles estos campos
+            $this->displayNoneField($viewName, 'idservice');
             $this->displayNoneField($viewName, 'fuera_del_municipioe_text');
             $this->displayNoneField($viewName, 'facturar_SN_text');
             $this->displayNoneField($viewName, 'facturar_agrupando_text');
