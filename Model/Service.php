@@ -177,46 +177,19 @@ class Service extends Base\ModelClass {
         $respuesta = parent::saveInsert($values);
         return $respuesta;
     }
-    
+
     public function test() {
         if (true === $this->llamadoDesdeFuera) {
              // Está siendo usado el metodo save desde otro sitio que no es el controlador EditService.php
             return parent::test();
         }
-        
-        $this->crearFechaDesde();
-        $this->crearFechaHasta();
-        
-        $this->crearHoraAnticipacion();
-        $this->crearHoraDesde();
-        $this->crearHoraHasta();
 
-        if ($this->checkFechasPeriodo() == false){
-            return false;
-        }
-        
-        if ($this->checkHorasPeriodo() == false){
+        if ($this->checkFields() == false) {
             return false;
         }
 
-        $this->codsubcuenta_km_nacional = empty($this->codsubcuenta_km_nacional) ? null : $this->codsubcuenta_km_nacional;
-        $this->codsubcuenta_km_extranjero = empty($this->codsubcuenta_km_extranjero) ? null : $this->codsubcuenta_km_extranjero;
-        
-        if ($this->comprobarImpuestos() == false) {
-            return false;
-        }
-        
         $this->rellenarTotal();
-        
-        if (empty($this->plazas) or $this->plazas <= 0) {
-            $this->toolBox()->i18nLog()->error('Debe de completar las plazas.');
-            return false;
-        }
 
-        if (!$this->aceptado) {
-            $this->toolBox()->i18nLog()->info('Si no acepta el servicio, no podrá montarse.');
-        }
-        
         $this->evitarInyeccionSQL();
         return parent::test();
     }
@@ -501,19 +474,111 @@ class Service extends Base\ModelClass {
         
     }
     
-    private function comprobarImpuestos()
+    private function checkFields()
     {
         $aDevolver = true;
+
+        $this->crearFechaDesde();
+        $this->crearFechaHasta();
+        
+        $this->crearHoraAnticipacion();
+        $this->crearHoraDesde();
+        $this->crearHoraHasta();
+
+        if ($this->checkFechasPeriodo() == false){
+            $aDevolver = false;
+        }
+        
+        if ($this->checkHorasPeriodo() == false){
+            $aDevolver = false;
+        }
+
+        if (empty($this->codcliente)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio a un cliente.');
+        }
+
+        if (empty($this->nombre)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('Debe completar la descripción del servicio.');
+        }
+
+        if (empty($this->hoja_ruta_origen)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('Debe completar el origen de la Hoja de Ruta.');
+        }
+
+        if (empty($this->hoja_ruta_destino)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('Debe completar el destino de la Hoja de Ruta.');
+        }
+
+        if (empty($this->hoja_ruta_expediciones)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('Debe completar las expediciones de la Hoja de Ruta.');
+        }
+
+        if (empty($this->hoja_ruta_contratante)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('Debe completar el contratante de la Hoja de Ruta.');
+        }
+
+        if (empty($this->hoja_ruta_tipoidfiscal)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('Debe completar Id. Fiscal de la Hoja de Ruta.');
+        }
+
+        if (empty($this->hoja_ruta_cifnif)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('Debe completar el Num. Fiscal de la Hoja de Ruta.');
+        }
+
+        if (empty($this->idempresa)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('Debe completar la empresa que realiza el servicio.');
+        }
+
+        if (empty($this->importe)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('Debe completar el Importe x km nacional.');
+        }
 
         if (empty($this->codimpuesto)) {
             $aDevolver = false;
             $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km nacional".');
         }
 
+        if (empty($this->importe_enextranjero)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('Debe completar el Importe x km en extranjero.');
+        }
+        
         if (empty($this->codimpuesto_enextranjero)) {
             $aDevolver = false;
             $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km en extrajero".');
         }
+        
+        if (empty($this->inicio_dia)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('No ha elegido la fecha de inicio del servicio.');
+        }
+        
+        if (empty($this->fin_dia)) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('No ha elegido la fecha de fin del servicio.');
+        }
+        
+        if (empty($this->plazas) or $this->plazas <= 0) {
+            $aDevolver = false;
+            $this->toolBox()->i18nLog()->error('Debe de completar las plazas.');
+        }
+
+        if (!$this->aceptado) {
+            $this->toolBox()->i18nLog()->info('Si no acepta el servicio, no podrá montarse.');
+        }
+
+        $this->codsubcuenta_km_nacional = empty($this->codsubcuenta_km_nacional) ? null : $this->codsubcuenta_km_nacional;
+        $this->codsubcuenta_km_extranjero = empty($this->codsubcuenta_km_extranjero) ? null : $this->codsubcuenta_km_extranjero;
         
         return $aDevolver;
     }
