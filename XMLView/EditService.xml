@@ -17,7 +17,7 @@
                 <widget type="text" fieldname="idservice" icon="fas fa-hashtag" readonly="true" />
             </column>
             <column name="description" numcolumns="5" order="110">
-                <widget type="text" fieldname="nombre" maxlength="100" required ="true" />
+                <widget type="text" fieldname="nombre" maxlength="100" />
             </column>
             <column name="accepted" description="Sin aceptar, no podrá montarse." numcolums="2" order="115">
                 <widget type="checkbox" fieldname="aceptado"/>
@@ -49,13 +49,13 @@
 
         <group name="book-roadmap" numcolumns="12" icon="fas fa-atlas" title="book-roadmap">
             <column name="the-origin" numcolumns="4" order="100">
-                <widget type="text" fieldname="hoja_ruta_origen" maxlength="100" required ="true" />
+                <widget type="text" fieldname="hoja_ruta_origen" maxlength="100" />
             </column>
             <column name="the-destination" numcolumns="4" order="110">
-                <widget type="text" fieldname="hoja_ruta_destino" maxlength="100" required ="true" />
+                <widget type="text" fieldname="hoja_ruta_destino" maxlength="100" />
             </column>
             <column name="expeditions" numcolumns="2" order="120">
-                <widget type="text" fieldname="hoja_ruta_expediciones" maxlength="100" required ="true" />
+                <widget type="text" fieldname="hoja_ruta_expediciones" maxlength="100" />
             </column>
             <column name="outside-the-town" numcolums="2" order="120">
                 <widget type="checkbox" fieldname="fuera_del_municipio"/>
@@ -63,10 +63,10 @@
 
                         
             <column name="contracting-party" numcolumns="4" order="140">
-                <widget type="text" fieldname="hoja_ruta_contratante" maxlength="100" required ="true" />
+                <widget type="text" fieldname="hoja_ruta_contratante" maxlength="100" />
             </column>
             <column name="fiscal-id" titleurl="EditSettings?activetab=EditIdentificadorFiscal" numcolumns="2" order="150">
-                <widget type="select" fieldname="hoja_ruta_tipoidfiscal" required="true">
+                <widget type="select" fieldname="hoja_ruta_tipoidfiscal">
                     <values source="idsfiscales" fieldcode="tipoidfiscal" fieldtitle="tipoidfiscal" />
                 </widget>
             </column>
@@ -84,7 +84,7 @@
                                                 
         <group name="billing" numcolumns="12" icon="fas fa-file-invoice-dollar" title="billing">
             <column name="company" titleurl="ListEmpresas" numcolumns="6" order="130">
-                <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa" required="true">
+                <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa">
                     <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto" />
                 </widget>
             </column>
@@ -95,7 +95,7 @@
 
                                                 
         <group name="billing-2" numcolumns="9">
-            <column name="pvp-por-km-nacional" display="right" numcolums="3" required="true">
+            <column name="pvp-por-km-nacional" display="right" numcolums="3">
                 <widget type="number" decimal="3" fieldname="importe" />
             </column>
             <column name="codimpuesto" title="applied-tax" titleurl="ListImpuesto" numcolumns="6" order="110">
@@ -107,7 +107,7 @@
 
                                                 
         <group name="billing-3" numcolumns="9">
-            <column name="pvp-por-km-extranjero" display="right" numcolums="3" order="115" required="true">
+            <column name="pvp-por-km-extranjero" display="right" numcolums="3" order="115">
                 <widget type="number" decimal="3" fieldname="importe_enextranjero" />
             </column>
             <column name="codimpuesto_enextranjero" title="applied-tax" titleurl="ListImpuesto" numcolumns="6" order="118">
@@ -151,7 +151,7 @@
 
         <group name="assembly-services-2" numcolumns="12" >
             <column name="inicio_dia" title="start-date" numcolumns="3" order="120">
-                <widget type="date" fieldname="inicio_dia" required="true" />
+                <widget type="date" fieldname="inicio_dia" />
             </column>
             <column name="inicio_hora" title="start-time" numcolumns="3" order="130">
                 <widget type="time" fieldname="inicio_hora" />
@@ -159,7 +159,7 @@
             
             
             <column name="fin_dia" title="end-date" numcolumns="3" order="140">
-                <widget type="date" fieldname="fin_dia" required="true" />
+                <widget type="date" fieldname="fin_dia" />
             </column>
             <column name="fin_hora" title="end-time" numcolumns="3" order="150">
                 <widget type="time" fieldname="fin_hora" />
