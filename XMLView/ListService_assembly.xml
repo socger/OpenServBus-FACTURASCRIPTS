@@ -25,11 +25,23 @@
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>
+
+    <modals>
+        <group name="gen-assemblies" title="generate-assemblies" icon="fas fa-magic">
+            <column name="date-assembly" order="100">
+                <widget type="date" fieldname="datefrom" />
+            </column>
+        </group>
+    </modals>
     
+            
     <rows>
         <row type="status">
             <option color="success" fieldname="activo">1</option>
             <option color="warning" fieldname="activo">0</option>
+        </row>
+        <row type="actions">
+            <button type="modal" label="generate-assemblies" color="warning" action="gen-assemblies" icon="fas fa-magic" />
         </row>
     </rows>    
 </view>
