@@ -137,5 +137,6 @@
     "pvp-por-km-nacional": "Importe x km nacional",
     "pvp-por-km-extranjero": "Importe x km en extranjero",
     "valuation": "Valoración",
-    "date-assembly": "Fecha del montaje"
+    "date-assembly": "Fecha del montaje",
+    "generate-assemblies": "Generar montajes"
 }
