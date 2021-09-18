@@ -154,8 +154,12 @@ class Service extends Base\ModelClass {
         if ($this->comprobarSiActivo() == false){
             return false;
         }
-
+        
+        $idService = $this->idservice;
         $respuesta = parent::saveUpdate($values);
+        if ($respuesta === true) {
+            $this->actualizarServicioEnMontaje($idService);
+        }
         return $respuesta;
     }
 
@@ -581,6 +585,72 @@ class Service extends Base\ModelClass {
         $this->codsubcuenta_km_extranjero = empty($this->codsubcuenta_km_extranjero) ? null : $this->codsubcuenta_km_extranjero;
         
         return $aDevolver;
+    }
+    
+    private function actualizarServicioEnMontaje($idservice)
+    {
+        // Actualizamos el servicio discrecional en montaje de servicios
+        $sql = ' UPDATE service_assemblies AS S1, services AS S2 '
+             . ' SET S1.nombre = S2.nombre '
+             .    ', S1.fechaalta = S2.fechaalta '
+             .    ', S1.useralta = S2.useralta '
+             .    ', S1.fechamodificacion = S2.fechamodificacion '
+             .    ', S1.usermodificacion = S2.usermodificacion '
+             .    ', S1.activo = S2.activo '
+             .    ', S1.fechabaja = S2.fechabaja '
+             .    ', S1.userbaja = S2.userbaja '
+             .    ', S1.motivobaja = S2.motivobaja '
+             .    ', S1.plazas = S2.plazas '
+                
+             .    ', S1.codcliente = S2.codcliente '
+             .    ', S1.idvehicle_type = S2.idvehicle_type '
+             .    ', S1.idhelper = S2.idhelper '
+             .    ', S1.facturar_SN = S2.facturar_SN '
+             .    ', S1.facturar_agrupando = 0 '
+             .    ', S1.importe = S2.importe '
+             .    ', S1.importe_enextranjero = S2.importe_enextranjero '
+             .    ', S1.codimpuesto = S2.codimpuesto '
+             .    ', S1.codimpuesto_enextranjero = S2.codimpuesto_enextranjero '
+             .    ', S1.total = S2.total '
+             .    ', S1.fuera_del_municipio = S2.fuera_del_municipio '
+             .    ', S1.hoja_ruta_origen = S2.hoja_ruta_origen '
+             .    ', S1.hoja_ruta_destino = S2.hoja_ruta_destino '
+             .    ', S1.hoja_ruta_expediciones = S2.hoja_ruta_expediciones '
+             .    ', S1.hoja_ruta_contratante = S2.hoja_ruta_contratante '
+             .    ', S1.hoja_ruta_tipoidfiscal = S2.hoja_ruta_tipoidfiscal '
+             .    ', S1.hoja_ruta_cifnif = S2.hoja_ruta_cifnif '
+             .    ', S1.idservice_type = S2.idservice_type ' 
+             .    ', S1.idempresa = S2.idempresa '
+             .    ', S1.observaciones = S2.observaciones '
+             .    ', S1.observaciones_montaje = S2.observaciones_montaje '
+             .    ', S1.observaciones_vehiculo = S2.observaciones_vehiculo '
+             .    ', S1.observaciones_facturacion = S2.observaciones_facturacion '
+             .    ', S1.observaciones_liquidacion = S2.observaciones_liquidacion '
+             .    ', S1.observaciones_drivers = S2.observaciones_drivers '
+             .    ', S1.iddriver_1 = S2.iddriver_1 '
+             .    ', S1.driver_alojamiento_1 = S2.driver_alojamiento_1 '
+             .    ', S1.driver_observaciones_1 = S2.driver_observaciones_1 '
+             .    ', S1.iddriver_2 = S2.iddriver_2 '
+             .    ', S1.driver_alojamiento_2 = S2.driver_alojamiento_2 '
+             .    ', S1.driver_observaciones_2 = S2.driver_observaciones_2 '
+             .    ', S1.iddriver_3 = S2.iddriver_3 '
+             .    ', S1.driver_alojamiento_3 = S2.driver_alojamiento_3 '
+             .    ', S1.driver_observaciones_3 = S2.driver_observaciones_3 '
+             .    ', S1.idvehicle = S2.idvehicle '
+             .    ', S1.codsubcuenta_km_nacional = S2.codsubcuenta_km_nacional '
+             .    ', S1.codsubcuenta_km_extranjero = S2.codsubcuenta_km_extranjero '
+             .    ', S1.fecha_desde = S2.fecha_desde '
+             .    ', S1.fecha_hasta = S2.fecha_hasta '
+             .    ', S1.hora_anticipacion = S2.hora_anticipacion '
+             .    ', S1.hora_desde = S2.hora_desde '
+             .    ', S1.hora_hasta = S2.hora_hasta '
+             .    ', S1.salida_desde_nave_sn = S2.salida_desde_nave_sn '
+                
+             . ' WHERE S1.idservice = ' . $idservice . ' '
+             . ' AND S2.idservice = ' . $idservice . ';'
+        ;
+        
+        self::$dataBase->exec($sql);
     }
     
 }
