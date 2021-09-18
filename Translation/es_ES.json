@@ -138,5 +138,7 @@
     "pvp-por-km-extranjero": "Importe x km en extranjero",
     "valuation": "Valoración",
     "date-assembly": "Fecha del montaje",
-    "generate-assemblies": "Generar montajes"
+    "generate-assemblies": "Generar montajes",
+    "active-yes": "Activos = SI",
+    "active-no": "Activos = NO"
 }
