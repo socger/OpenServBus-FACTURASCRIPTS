@@ -43,6 +43,10 @@
     
     
     <column>
+        <name>cod_servicio</name>
+        <type>character varying(20)</type>
+    </column>
+    <column>
         <name>idservice_regular</name>
         <type>integer</type>
     </column>
@@ -359,5 +363,15 @@
     <constraint>
         <name>ca_service_assemblies__services</name>
         <type>FOREIGN KEY (idservice) REFERENCES services (idservice) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+
+        
+    <constraint>
+        <name>uniq_service_assemblies__idservice</name>
+        <type>UNIQUE (idservice)</type>
+    </constraint>
+    <constraint>
+        <name>uniq_service_assemblies__idservice_regular_fechas</name>
+        <type>UNIQUE (idservice_regular, fecha_desde, fecha_hasta)</type>
     </constraint>
 </table>
