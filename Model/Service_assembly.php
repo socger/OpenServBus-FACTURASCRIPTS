@@ -28,6 +28,7 @@ class Service_assembly extends Base\ModelClass {
     public $userbaja;
     public $motivobaja;
 
+    public $cod_servicio;
     public $idservice_regular;
     public $idservice;
             
