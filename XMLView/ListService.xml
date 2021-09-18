@@ -52,8 +52,8 @@
     
     <rows>
         <row type="status">
-            <option color="success" fieldname="activo">1</option>
-            <option color="warning" fieldname="activo">0</option>
+            <option color="success" title="active-yes" fieldname="activo">1</option>
+            <option color="warning" title="active-no" fieldname="activo">0</option>
         </row>
     </rows>    
 </view>

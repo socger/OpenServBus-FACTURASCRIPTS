@@ -6,6 +6,12 @@
         </column>
         
         
+        <column name="code1" title="service-regular" numcolumns="2" order="90">
+            <widget type="text" fieldname="cod_servicio" icon="fas fa-hashtag" maxlength="20" readonly="true" />
+        </column>
+        <column name="code2" title="service-discretionary" numcolumns="2" order="95">
+            <widget type="text" fieldname="idservice" icon="fas fa-hashtag" maxlength="20" readonly="true" />
+        </column>
         <column name="description" order="120">
             <widget type="text" fieldname="nombre" />
         </column>
@@ -58,8 +64,8 @@
             
     <rows>
         <row type="status">
-            <option color="success" fieldname="activo">1</option>
-            <option color="warning" fieldname="activo">0</option>
+            <option color="success" title="active-yes" fieldname="activo">1</option>
+            <option color="warning" title="active-no" fieldname="activo">0</option>
         </row>
         <row type="actions">
             <button type="modal" label="generate-assemblies" color="warning" action="gen-assemblies" icon="fas fa-magic" />
