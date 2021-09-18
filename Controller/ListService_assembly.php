@@ -62,7 +62,7 @@ class ListService_assembly extends ListController {
         $this->addFilterSelect($viewName, 'facturarAgrupando', 'Ftra.agrupando = TODOS', 'facturar_agrupando', $facturarAgrupandoSN);        
 
         $this->addFilterAutocomplete($viewName, 'xCodCliente', 'Cliente', 'codcliente', 'clientes', 'codcliente', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdvehicle_type', 'Vehículo - tipo', 'idvehicle_type', 'vehiculos', 'idvehicle_type', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdvehicle_type', 'Vehículo - tipo', 'idvehicle_type', 'vehicle_types', 'idvehicle_type', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdhelper', 'Monitor/a', 'idhelper', 'helpers', 'idhelper', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdservice_type', 'Servicio - tipo', 'idservice_type', 'service_types', 'idservice_type', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdempresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
@@ -362,8 +362,9 @@ class ListService_assembly extends ListController {
 
             $this->dataBase->exec($sql);
             
+            $this->toolBox()->i18nLog()->notice('items-added-correctly');
             // Me redirije al mismo controlador, para presentarme todos los servicios para montaje
-            $this->redirect($this->url());
+//            $this->redirect($this->url());
 
             
             
