@@ -102,7 +102,8 @@ class ListService_assembly extends ListController {
         
         // Insertamos a tabla de montaje los servicios regulares que todavía no existan
         $sql = ' INSERT INTO service_assemblies ( '
-             . '  idservice_regular '
+             . '  cod_servicio '
+             . ', idservice_regular '
              . ', fechaalta '
              . ', useralta '
              . ', fechamodificacion '
@@ -159,8 +160,8 @@ class ListService_assembly extends ListController {
              . ', salida_desde_nave_sn '
              . ', observaciones_periodo ) '
                 
-             . ' SELECT service_regulars.idservice_regular '
-                
+             . ' SELECT service_regulars.cod_servicio '
+             .      ' , service_regulars.idservice_regular '
              .      ' , service_regulars.fechaalta '
              .      ' , service_regulars.useralta '
              .      ' , service_regulars.fechamodificacion '
