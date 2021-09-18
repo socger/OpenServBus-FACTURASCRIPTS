@@ -160,9 +160,8 @@ class Service_assembly extends Base\ModelClass {
         if ($this->comprobarSiActivo() == false){
             return false;
         }
-
-        $respuesta = parent::saveUpdate($values);
-        return $respuesta;
+        
+        return parent::saveUpdate($values);
     }
 
     // Para realizar cambios en los datos antes de guardar por alta
@@ -180,8 +179,7 @@ class Service_assembly extends Base\ModelClass {
             return false;
         }
 
-        $respuesta = parent::saveInsert($values);
-        return $respuesta;
+        return parent::saveInsert($values);
     }
     
     public function test() {
@@ -579,11 +577,6 @@ class Service_assembly extends Base\ModelClass {
         if ($this->comprobarConductor_1() == false){$aDevolver = false;}
         if ($this->comprobarVehiculo() == false){$aDevolver = false;}
 
-        
-        
-        
-        
-        
         // Comprobamos que el código se ha introducido correctamente
         if (!empty($this->cod_servicio) && 1 !== \preg_match('/^[A-Z0-9_\+\.\-]{1,10}$/i', $this->cod_servicio)) {
             $this->toolBox()->i18nLog()->error(
