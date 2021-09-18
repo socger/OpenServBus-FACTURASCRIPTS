@@ -91,6 +91,9 @@ class Collaborator extends Base\ModelClass {
     
     public function test()
     {
+        $this->actualizarCampoNombre();
+        $this->actualizarNombreColaboradorEn();
+        
         $this->evitarInyeccionSQL();
         return parent::test();
     }
@@ -174,8 +177,6 @@ class Collaborator extends Base\ModelClass {
         $utils = $this->toolBox()->utils();
         $this->codproveedor = $utils->noHtml($this->codproveedor);
         $this->observaciones = $utils->noHtml($this->observaciones);
-        $this->actualizarCampoNombre();
-        $this->actualizarNombreColaboradorEn();
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
 	
