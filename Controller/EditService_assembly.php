@@ -74,6 +74,7 @@ class EditService_assembly extends EditController {
                 }
                 
                 $this->readOnlyFields($viewName);
+//                $this->isBillingThenReadOnlyFields($viewName);
 
                 break;
         }
@@ -141,6 +142,7 @@ class EditService_assembly extends EditController {
             $this->readOnlyField($viewName, 'observaciones_facturacion');
             $this->readOnlyField($viewName, 'observaciones_liquidacion');
             $this->readOnlyField($viewName, 'motivobaja');
+            $this->readOnlyField($viewName, 'idhelper');
             
             // Es un discrecional, por lo que se ponen invisibles estos campos
             $this->displayNoneField($viewName, 'cod_servicio');
