@@ -96,6 +96,67 @@ class EditService_assembly extends EditController {
         $column->display = 'none';
     }
 
+    private function readOnlyAllCommonFields($viewName)
+    {
+        $this->readOnlyField($viewName, 'plazas');
+        $this->readOnlyField($viewName, 'idvehicle_type');
+        $this->readOnlyField($viewName, 'hoja_ruta_origen');
+        $this->readOnlyField($viewName, 'hoja_ruta_destino');
+        $this->readOnlyField($viewName, 'hoja_ruta_expediciones');
+        $this->readOnlyField($viewName, 'hoja_ruta_contratante');
+        $this->readOnlyField($viewName, 'hoja_ruta_tipoidfiscal');
+        $this->readOnlyField($viewName, 'hoja_ruta_cifnif');
+        $this->readOnlyField($viewName, 'idservice_type');
+        $this->readOnlyField($viewName, 'idempresa');
+        $this->readOnlyField($viewName, 'importe');
+        $this->readOnlyField($viewName, 'codimpuesto');
+        $this->readOnlyField($viewName, 'importe_enextranjero');
+        $this->readOnlyField($viewName, 'codimpuesto_enextranjero');
+        $this->readOnlyField($viewName, 'codsubcuenta_km_nacional');
+        $this->readOnlyField($viewName, 'codsubcuenta_km_extranjero');
+        $this->readOnlyField($viewName, 'inicio_horaAnt');
+        $this->readOnlyField($viewName, 'inicio_dia');
+        $this->readOnlyField($viewName, 'inicio_hora');
+        $this->readOnlyField($viewName, 'fin_dia');
+        $this->readOnlyField($viewName, 'fin_hora');
+        $this->readOnlyField($viewName, 'idvehicle');
+        $this->readOnlyField($viewName, 'iddriver_1');
+        $this->readOnlyField($viewName, 'driver_alojamiento_1');
+        $this->readOnlyField($viewName, 'driver_observaciones_1');
+        $this->readOnlyField($viewName, 'iddriver_2');
+        $this->readOnlyField($viewName, 'driver_alojamiento_2');
+        $this->readOnlyField($viewName, 'driver_observaciones_2');
+        $this->readOnlyField($viewName, 'iddriver_3');
+        $this->readOnlyField($viewName, 'driver_alojamiento_3');
+        $this->readOnlyField($viewName, 'driver_observaciones_3');
+        $this->readOnlyField($viewName, 'observaciones');
+        $this->readOnlyField($viewName, 'observaciones_montaje');
+        $this->readOnlyField($viewName, 'observaciones_drivers');
+        $this->readOnlyField($viewName, 'observaciones_vehiculo');
+        $this->readOnlyField($viewName, 'observaciones_facturacion');
+        $this->readOnlyField($viewName, 'observaciones_liquidacion');
+        $this->readOnlyField($viewName, 'motivobaja');
+        $this->readOnlyField($viewName, 'idhelper');
+    }
+
+    private function readOnlyAllNoCommonFields($viewName)
+    {
+        
+        esto falla cuando es un servicio facturado ... ver porque 
+        
+        
+        $this->readOnlyField($viewName, 'cod_servicio');
+        $this->readOnlyField($viewName, 'idservice');
+        
+        if (empty($this->views[$viewName]->model->idservice)) {
+            $this->readOnlyField($viewName, 'fuera_del_municipioe_text');
+            $this->readOnlyField($viewName, 'facturar_SN_text');
+            $this->readOnlyField($viewName, 'facturar_agrupando_text');
+            $this->readOnlyField($viewName, 'salida_desde_nave_text');
+            $this->readOnlyField($viewName, 'activo_text');
+        }
+    }
+
     private function readOnlyFields($viewName)
     {
         if (!empty($this->views[$viewName]->model->idservice)) {
@@ -103,46 +164,8 @@ class EditService_assembly extends EditController {
             // a readonly=true se modificarán en la ficha del discrecional, no 
             // en montaje ... si fuese un regular si que se modificarían en el 
             // montaje, porque la ficha del regular puede cambiar de una 
-            // temporada a otra
-            $this->readOnlyField($viewName, 'plazas');
-            $this->readOnlyField($viewName, 'idvehicle_type');
-            $this->readOnlyField($viewName, 'hoja_ruta_origen');
-            $this->readOnlyField($viewName, 'hoja_ruta_destino');
-            $this->readOnlyField($viewName, 'hoja_ruta_expediciones');
-            $this->readOnlyField($viewName, 'hoja_ruta_contratante');
-            $this->readOnlyField($viewName, 'hoja_ruta_tipoidfiscal');
-            $this->readOnlyField($viewName, 'hoja_ruta_cifnif');
-            $this->readOnlyField($viewName, 'idservice_type');
-            $this->readOnlyField($viewName, 'idempresa');
-            $this->readOnlyField($viewName, 'importe');
-            $this->readOnlyField($viewName, 'codimpuesto');
-            $this->readOnlyField($viewName, 'importe_enextranjero');
-            $this->readOnlyField($viewName, 'codimpuesto_enextranjero');
-            $this->readOnlyField($viewName, 'codsubcuenta_km_nacional');
-            $this->readOnlyField($viewName, 'codsubcuenta_km_extranjero');
-            $this->readOnlyField($viewName, 'inicio_horaAnt');
-            $this->readOnlyField($viewName, 'inicio_dia');
-            $this->readOnlyField($viewName, 'inicio_hora');
-            $this->readOnlyField($viewName, 'fin_dia');
-            $this->readOnlyField($viewName, 'fin_hora');
-            $this->readOnlyField($viewName, 'idvehicle');
-            $this->readOnlyField($viewName, 'iddriver_1');
-            $this->readOnlyField($viewName, 'driver_alojamiento_1');
-            $this->readOnlyField($viewName, 'driver_observaciones_1');
-            $this->readOnlyField($viewName, 'iddriver_2');
-            $this->readOnlyField($viewName, 'driver_alojamiento_2');
-            $this->readOnlyField($viewName, 'driver_observaciones_2');
-            $this->readOnlyField($viewName, 'iddriver_3');
-            $this->readOnlyField($viewName, 'driver_alojamiento_3');
-            $this->readOnlyField($viewName, 'driver_observaciones_3');
-            $this->readOnlyField($viewName, 'observaciones');
-            $this->readOnlyField($viewName, 'observaciones_montaje');
-            $this->readOnlyField($viewName, 'observaciones_drivers');
-            $this->readOnlyField($viewName, 'observaciones_vehiculo');
-            $this->readOnlyField($viewName, 'observaciones_facturacion');
-            $this->readOnlyField($viewName, 'observaciones_liquidacion');
-            $this->readOnlyField($viewName, 'motivobaja');
-            $this->readOnlyField($viewName, 'idhelper');
+            // temporada/periodo a otro
+            $this->readOnlyAllCommonFields($viewName);
             
             // Es un discrecional, por lo que se ponen invisibles estos campos
             $this->displayNoneField($viewName, 'cod_servicio');
@@ -159,6 +182,11 @@ class EditService_assembly extends EditController {
             $this->displayNoneField($viewName, 'facturar_agrupando_text');
             $this->displayNoneField($viewName, 'salida_desde_nave_text');
             $this->displayNoneField($viewName, 'activo_text');
+        }
+        
+        if (!empty($this->views[$viewName]->model->idfactura)) {
+            $this->readOnlyAllCommonFields($viewName);
+            $this->readOnlyAllNoCommonFields($viewName);
         }
     }
 
