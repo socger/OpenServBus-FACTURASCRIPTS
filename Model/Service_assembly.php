@@ -23,7 +23,10 @@ class Service_assembly extends Base\ModelClass {
     public $useralta;
     public $fechamodificacion;
     public $usermodificacion;
+
     public $activo;
+    public $activo_text;
+    
     public $fechabaja;
     public $userbaja;
     public $motivobaja;
@@ -271,6 +274,7 @@ class Service_assembly extends Base\ModelClass {
         
         $this->driver_alojamiento_3 = $utils->noHtml($this->driver_alojamiento_3);
         $this->driver_observaciones_3 = $utils->noHtml($this->driver_observaciones_3);
+        $this->activo_text = $utils->noHtml($this->activo_text);
     }
 
     private function comprobarVehiculo()
