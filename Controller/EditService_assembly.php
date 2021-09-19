@@ -67,6 +67,12 @@ class EditService_assembly extends EditController {
                     $this->views[$viewName]->model->facturar_agrupando_text = 'NO';
                 }
                 
+                if ($this->views[$viewName]->model->activo === true) {
+                    $this->views[$viewName]->model->activo_text = 'SI';
+                } else {
+                    $this->views[$viewName]->model->activo_text = 'NO';
+                }
+                
                 $this->readOnlyFields($viewName);
 
                 break;
@@ -142,6 +148,7 @@ class EditService_assembly extends EditController {
             $this->displayNoneField($viewName, 'facturar_SN');
             $this->displayNoneField($viewName, 'facturar_agrupando');
             $this->displayNoneField($viewName, 'salida_desde_nave_sn');
+            $this->displayNoneField($viewName, 'activo');
         } else {
             // Es un regular, por lo que se ponen invisibles estos campos
             $this->displayNoneField($viewName, 'idservice');
@@ -149,6 +156,7 @@ class EditService_assembly extends EditController {
             $this->displayNoneField($viewName, 'facturar_SN_text');
             $this->displayNoneField($viewName, 'facturar_agrupando_text');
             $this->displayNoneField($viewName, 'salida_desde_nave_text');
+            $this->displayNoneField($viewName, 'activo_text');
         }
     }
 
