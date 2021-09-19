@@ -105,8 +105,7 @@ class Service_assembly extends Base\ModelClass {
     public $salida_desde_nave_text;
     
     public $observaciones_periodo;
-//    public $combinadoSN;
-//    public $combinadoSiNo;
+    public $idfactura;
     
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {
@@ -275,6 +274,7 @@ class Service_assembly extends Base\ModelClass {
         $this->driver_alojamiento_3 = $utils->noHtml($this->driver_alojamiento_3);
         $this->driver_observaciones_3 = $utils->noHtml($this->driver_observaciones_3);
         $this->activo_text = $utils->noHtml($this->activo_text);
+        $this->observaciones_periodo = $utils->noHtml($this->observaciones_periodo);
     }
 
     private function comprobarVehiculo()
@@ -494,65 +494,6 @@ class Service_assembly extends Base\ModelClass {
             $this->hora_anticipacion = empty($this->idservice_regular) ? $fila['hora_anticipacion'] : empty($this->hora_anticipacion) ? $fila['hora_anticipacion'] : $this->hora_anticipacion;
             $this->hora_desde = empty($this->idservice_regular) ? $fila['hora_desde'] : empty($this->hora_desde) ? $fila['hora_desde'] : $this->hora_desde;
             $this->hora_hasta = empty($this->idservice_regular) ? $fila['hora_hasta'] : empty($this->hora_hasta) ? $fila['hora_hasta'] : $this->hora_hasta;
-            
-            
-
-//            $this->nombre = $fila['nombre'];
-//            $this->codcliente = $fila['codcliente'];
-//            $this->idvehicle_type = $fila['idvehicle_type'];
-//            $this->idhelper = $fila['idhelper'];
-//            $this->hoja_ruta_origen = $fila['hoja_ruta_origen'];
-//            $this->hoja_ruta_destino = $fila['hoja_ruta_destino'];
-//            $this->hoja_ruta_expediciones = $fila['hoja_ruta_expediciones'];
-//            $this->fuera_del_municipio = $fila['fuera_del_municipio'];
-//            $this->hoja_ruta_contratante = $fila['hoja_ruta_contratante'];
-//            
-//            $this->hoja_ruta_tipoidfiscal = $fila['hoja_ruta_tipoidfiscal'];
-//            $this->hoja_ruta_cifnif = $fila['hoja_ruta_cifnif'];
-//            $this->idservice_type = $fila['idservice_type'];
-//            $this->idempresa = $fila['idempresa'];
-//            $this->facturar_SN = $fila['facturar_SN'];
-//            $this->facturar_agrupando = $fila['facturar_agrupando'];
-//            $this->importe = $fila['importe'];
-//            $this->codimpuesto = $fila['codimpuesto'];
-//            $this->importe_enextranjero = $fila['importe_enextranjero'];
-//            $this->codimpuesto_enextranjero = $fila['codimpuesto_enextranjero'];
-//            $this->total = $fila['total'];
-//            $this->codsubcuenta_km_nacional = $fila['codsubcuenta_km_nacional'];
-//            $this->codsubcuenta_km_extranjero = $fila['codsubcuenta_km_extranjero'];
-//            $this->observaciones_periodo = $fila['observaciones_periodo'];
-//            $this->salida_desde_nave_sn = $fila['salida_desde_nave_sn'];
-//            $this->idvehicle = $fila['idvehicle'];
-//            $this->iddriver_1 = $fila['iddriver_1'];
-//            $this->driver_alojamiento_1 = $fila['driver_alojamiento_1'];
-//            $this->driver_observaciones_1 = $fila['driver_observaciones_1'];
-//            $this->iddriver_2 = $fila['iddriver_2'];
-//            $this->driver_alojamiento_2 = $fila['driver_alojamiento_2'];
-//            $this->driver_observaciones_2 = $fila['driver_observaciones_2'];
-//            $this->iddriver_3 = $fila['iddriver_3'];
-//            $this->driver_alojamiento_3 = $fila['driver_alojamiento_3'];
-//            $this->driver_observaciones_3 = $fila['driver_observaciones_3'];
-//            $this->observaciones = $fila['observaciones'];
-//            $this->observaciones_montaje = $fila['observaciones_montaje'];
-//            $this->observaciones_drivers = $fila['observaciones_drivers'];
-//            $this->observaciones_vehiculo = $fila['observaciones_vehiculo'];
-//            $this->observaciones_facturacion = $fila['observaciones_facturacion'];
-//            $this->observaciones_liquidacion = $fila['observaciones_liquidacion'];
-//            $this->activo = $fila['activo'];
-//            $this->fechaalta = $fila['fechaalta'];
-//            $this->useralta = $fila['useralta'];
-//            $this->fechamodificacion = $fila['fechamodificacion'];
-//            
-//            $this->usermodificacion = $fila['usermodificacion'];
-//            
-//            $this->fechabaja = $fila['fechabaja'];
-//            $this->userbaja = $fila['userbaja'];
-//            $this->motivobaja = $fila['motivobaja'];
-//            $this->fecha_desde = $fila['fecha_desde'];
-//            $this->fecha_hasta = $fila['fecha_hasta'];
-//            $this->hora_anticipacion = $fila['hora_anticipacion'];
-//            $this->hora_desde = $fila['hora_desde'];
-//            $this->hora_hasta = $fila['hora_hasta'];
             
             return;
         }
