@@ -142,5 +142,6 @@
     "active": "Activo",
     "active-2": "Activo",
     "active-yes": "Activos = SI",
-    "active-no": "Activos = NO"
+    "active-no": "Activos = NO",
+    "number-bill": "Nº.de factura"
 }
