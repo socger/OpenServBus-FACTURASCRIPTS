@@ -139,6 +139,8 @@
     "valuation": "Valoración",
     "date-assembly": "Fecha del montaje",
     "generate-assemblies": "Generar montajes",
+    "active": "Activo",
+    "active-2": "Activo",
     "active-yes": "Activos = SI",
     "active-no": "Activos = NO"
 }
