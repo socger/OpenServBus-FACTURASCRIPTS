@@ -91,6 +91,11 @@
             <column name="create-invoice" numcolums="3" order="140">
                 <widget type="checkbox" fieldname="facturar_SN"/>
             </column>
+            <column name="number-bill" titleurl="ListFacturaCliente" numcolumns="3" order="150">
+                <widget type="select" fieldname="idfactura" icon="fas fa-copy" onclick="EditFacturaCliente" readonly="true" >
+                    <values source="facturascli" fieldcode="idfactura" fieldtitle="codigo" />
+                </widget>
+            </column>
         </group>
 
                                                 

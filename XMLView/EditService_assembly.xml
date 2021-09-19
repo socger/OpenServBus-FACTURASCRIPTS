@@ -99,8 +99,8 @@
         </group>
 
                                                 
-        <group name="billing" numcolumns="9" icon="fas fa-file-invoice-dollar" title="billing">
-            <column name="company" titleurl="ListEmpresas" numcolumns="6" order="100">
+        <group name="billing" numcolumns="12" icon="fas fa-file-invoice-dollar" title="billing">
+            <column name="company" titleurl="ListEmpresas" numcolumns="4" order="100">
                 <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa" >
                     <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto" />
                 </widget>
@@ -116,8 +116,14 @@
             <column name="bill_grouping" title="bill-grouping" numcolums="3" order="120">
                 <widget type="checkbox" fieldname="facturar_agrupando"/>
             </column>
-            <column name="bill_grouping_2" title="bill-grouping" numcolums="2" order="125">
+            <column name="bill_grouping_2" title="bill-grouping" numcolums="5" order="125">
                 <widget type="text" fieldname="facturar_agrupando_text" readonly="true"/>
+            </column>
+            
+            <column name="number-bill" titleurl="ListFacturaCliente" numcolumns="3" order="130">
+                <widget type="select" fieldname="idfactura" icon="fas fa-copy" onclick="EditFacturaCliente" readonly="true" >
+                    <values source="facturascli" fieldcode="idfactura" fieldtitle="codigo" />
+                </widget>
             </column>
         </group>
 
