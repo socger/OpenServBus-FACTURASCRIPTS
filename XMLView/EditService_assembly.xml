@@ -293,9 +293,12 @@
         </group>
 
 
-        <group name="record-status" numcolumns="12" icon="fas fa-cog" title="Estado del registro">
-            <column name="active" numcolums="12" order="100">
+        <group name="record-status" numcolumns="2" icon="fas fa-cog" title="Estado del registro">
+            <column name="active" numcolums="2" order="100">
                 <widget type="checkbox" fieldname="activo"/>
+            </column>
+            <column name="active-2" numcolums="2" order="100">
+                <widget type="text" fieldname="activo_text" readonly="true"/>
             </column>
         </group>
         
