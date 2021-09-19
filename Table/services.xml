@@ -270,6 +270,10 @@
         <type>boolean</type>
         <default>true</default>
     </column>
+    <column>
+        <name>idfactura</name>
+        <type>integer</type>
+    </column>
     
     
     <constraint>
@@ -332,5 +336,9 @@
     <constraint>
         <name>ca_services__impuestos_enextranjero</name>
         <type>FOREIGN KEY (codimpuesto_enextranjero) REFERENCES impuestos (codimpuesto) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_services__facturascli</name>
+        <type>FOREIGN KEY (idfactura) REFERENCES facturascli (idfactura) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
 </table>

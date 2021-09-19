@@ -293,6 +293,10 @@
         <name>observaciones_periodo</name>
         <type>text</type>
     </column>
+    <column>
+        <name>idfactura</name>
+        <type>integer</type>
+    </column>
     
     
     <constraint>
@@ -363,6 +367,10 @@
     <constraint>
         <name>ca_service_assemblies__services</name>
         <type>FOREIGN KEY (idservice) REFERENCES services (idservice) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_assemblies__facturascli</name>
+        <type>FOREIGN KEY (idfactura) REFERENCES facturascli (idfactura) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
 
         
