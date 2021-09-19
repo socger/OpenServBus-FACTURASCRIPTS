@@ -92,10 +92,11 @@ class Service extends Base\ModelClass {
     public $fin_hora;
     
     public $salida_desde_nave_sn;
-    public $observaciones_periodo;
+//    public $observaciones_periodo;
+    public $idfactura;
     
-    public $combinadoSN;
-    public $combinadoSiNo;
+//    public $combinadoSN;
+//    public $combinadoSiNo;
     
     public $llamadoDesdeFuera; // Para comprobar si se usa el metodo save desde otro sitio que no sea el controlador EditService.php
     
