@@ -142,7 +142,7 @@ class EditService_assembly extends EditController {
     private function readOnlyAllNoCommonFields($viewName)
     {
         
-        esto falla cuando es un servicio facturado ... ver porque 
+//        esto falla cuando es un servicio facturado ... ver porque 
         
         
         $this->readOnlyField($viewName, 'cod_servicio');
