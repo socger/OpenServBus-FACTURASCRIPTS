@@ -75,7 +75,7 @@
                 <widget type="checkbox" fieldname="fuera_del_municipio"/>
             </column>
             <column name="outsideTheTown_2" title="outside-the-town" numcolums="2" order="130">
-                <widget type="text" fieldname="fuera_del_municipioe_text" readonly="true"/>
+                <widget type="text" fieldname="fuera_del_municipio_text" readonly="true"/>
             </column>
 
                         

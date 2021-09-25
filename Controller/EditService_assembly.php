@@ -74,8 +74,6 @@ class EditService_assembly extends EditController {
                 }
                 
                 $this->readOnlyFields($viewName);
-//                $this->isBillingThenReadOnlyFields($viewName);
-
                 break;
         }
     }
@@ -157,7 +155,7 @@ class EditService_assembly extends EditController {
     {
         // Es un regular, por lo que se ponen invisibles estos campos
         $this->displayNoneField($viewName, 'idservice');
-        $this->displayNoneField($viewName, 'fuera_del_municipioe_text');
+        $this->displayNoneField($viewName, 'fuera_del_municipio_text');
         $this->displayNoneField($viewName, 'facturar_SN_text');
         $this->displayNoneField($viewName, 'facturar_agrupando_text');
         $this->displayNoneField($viewName, 'salida_desde_nave_text');
