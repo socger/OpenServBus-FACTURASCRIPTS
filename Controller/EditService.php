@@ -127,6 +127,37 @@ class EditService extends EditController {
                 $this->prepararFechasParaVista($viewName);
                 $this->prepararHorasParaVista($viewName);
 
+                if ($this->views[$viewName]->model->aceptado === true) {
+                    $this->views[$viewName]->model->aceptado_text = 'SI';
+                } else {
+                    $this->views[$viewName]->model->aceptado_text = 'NO';
+                }
+                
+                if ($this->views[$viewName]->model->salida_desde_nave_sn === true) {
+                    $this->views[$viewName]->model->salida_desde_nave_text = 'SI';
+                } else {
+                    $this->views[$viewName]->model->salida_desde_nave_text = 'NO';
+                }
+                
+                if ($this->views[$viewName]->model->fuera_del_municipio === true) {
+                    $this->views[$viewName]->model->fuera_del_municipio_text = 'SI';
+                } else {
+                    $this->views[$viewName]->model->fuera_del_municipio_text = 'NO';
+                }
+                
+                if ($this->views[$viewName]->model->facturar_SN === true) {
+                    $this->views[$viewName]->model->facturar_SN_text = 'SI';
+                } else {
+                    $this->views[$viewName]->model->facturar_SN_text = 'NO';
+                }
+                
+                if ($this->views[$viewName]->model->activo === true) {
+                    $this->views[$viewName]->model->activo_text = 'SI';
+                } else {
+                    $this->views[$viewName]->model->activo_text = 'NO';
+                }
+                
+                $this->readOnlyFields($viewName);
                 break;
         }
     }
@@ -135,6 +166,87 @@ class EditService extends EditController {
     // ** *************************************** ** //
     // ** FUNCIONES CREADAS PARA ESTE CONTROLADOR ** //
     // ** *************************************** ** //
+    private function readOnlyField($viewName, $fieldName)
+    {
+        $column = $this->views[$viewName]->columnForField($fieldName);
+        $column->widget->readonly = 'true';
+    }
+
+    private function displayNoneField($viewName, $fieldName)
+    {
+        $column = $this->views[$viewName]->columnForField($fieldName);
+        $column->display = 'none';
+    }
+
+    private function readOnlyFields($viewName)
+    {
+        if (!empty($this->views[$viewName]->model->idfactura)) 
+        { // Está facturado el servicio
+            $this->readOnlyField($viewName, 'idservice');
+            $this->readOnlyField($viewName, 'nombre');
+            $this->readOnlyField($viewName, 'plazas');
+            $this->readOnlyField($viewName, 'codcliente');
+            $this->readOnlyField($viewName, 'idvehicle_type');
+            $this->readOnlyField($viewName, 'idhelper');
+            $this->readOnlyField($viewName, 'hoja_ruta_origen');
+            $this->readOnlyField($viewName, 'hoja_ruta_destino');
+            $this->readOnlyField($viewName, 'hoja_ruta_expediciones');
+            $this->readOnlyField($viewName, 'hoja_ruta_contratante');
+            $this->readOnlyField($viewName, 'hoja_ruta_tipoidfiscal');
+            $this->readOnlyField($viewName, 'hoja_ruta_cifnif');
+            $this->readOnlyField($viewName, 'idservice_type');
+            $this->readOnlyField($viewName, 'idempresa');
+            $this->readOnlyField($viewName, 'idfactura');
+            $this->readOnlyField($viewName, 'importe');
+            $this->readOnlyField($viewName, 'codimpuesto');
+            $this->readOnlyField($viewName, 'importe_enextranjero');
+            $this->readOnlyField($viewName, 'codimpuesto_enextranjero');
+            $this->readOnlyField($viewName, 'total');
+            $this->readOnlyField($viewName, 'codsubcuenta_km_nacional');
+            $this->readOnlyField($viewName, 'codsubcuenta_km_extranjero');
+            $this->readOnlyField($viewName, 'inicio_horaAnt');
+            $this->readOnlyField($viewName, 'salida_desde_nave_sn');
+            $this->readOnlyField($viewName, 'inicio_dia');
+            $this->readOnlyField($viewName, 'inicio_hora');
+            $this->readOnlyField($viewName, 'fin_dia');
+            $this->readOnlyField($viewName, 'fin_hora');
+            $this->readOnlyField($viewName, 'idvehicle');
+            
+            $this->readOnlyField($viewName, 'iddriver_1');
+            $this->readOnlyField($viewName, 'driver_alojamiento_1');
+            $this->readOnlyField($viewName, 'driver_observaciones_1');
+            
+            $this->readOnlyField($viewName, 'iddriver_2');
+            $this->readOnlyField($viewName, 'driver_alojamiento_2');
+            $this->readOnlyField($viewName, 'driver_observaciones_2');
+            
+            $this->readOnlyField($viewName, 'iddriver_3');
+            $this->readOnlyField($viewName, 'driver_alojamiento_3');
+            $this->readOnlyField($viewName, 'driver_observaciones_3');
+            
+            $this->readOnlyField($viewName, 'observaciones');
+            $this->readOnlyField($viewName, 'observaciones_montaje');
+            $this->readOnlyField($viewName, 'observaciones_drivers');
+            $this->readOnlyField($viewName, 'observaciones_vehiculo');
+            $this->readOnlyField($viewName, 'observaciones_facturacion');
+            $this->readOnlyField($viewName, 'observaciones_liquidacion');
+            
+            // Invisibles
+            $this->displayNoneField($viewName, 'aceptado');
+            $this->displayNoneField($viewName, 'fuera_del_municipio');
+            $this->displayNoneField($viewName, 'facturar_SN');
+            $this->displayNoneField($viewName, 'salida_desde_nave_sn');
+            $this->displayNoneField($viewName, 'activo');
+        } else {
+            // Invisibles
+            $this->displayNoneField($viewName, 'aceptado_text');
+            $this->displayNoneField($viewName, 'fuera_del_municipio_text');
+            $this->displayNoneField($viewName, 'facturar_SN_text');
+            $this->displayNoneField($viewName, 'salida_desde_nave_text');
+            $this->displayNoneField($viewName, 'activo_text');
+        }
+    }
+
     private function prepararFechasParaVista($viewName)
     {
         if (!empty($this->views[$viewName]->model->fecha_desde)){

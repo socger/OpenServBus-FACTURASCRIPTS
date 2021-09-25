@@ -19,9 +19,14 @@
             <column name="description" numcolumns="5" order="110">
                 <widget type="text" fieldname="nombre" maxlength="100" />
             </column>
+            
             <column name="accepted" description="Sin aceptar, no podrá montarse." numcolums="2" order="115">
                 <widget type="checkbox" fieldname="aceptado"/>
             </column>
+            <column name="accepted_2" title="accepted" description="Sin aceptar, no podrá montarse." numcolums="2" order="115">
+                <widget type="text" fieldname="aceptado_text" readonly="true"/>
+            </column>
+            
             <column name="seats" numcolumns="2" order="120">
                 <widget type="text" fieldname="plazas" icon="fas fa-chair" />
             </column>
@@ -57,8 +62,12 @@
             <column name="expeditions" numcolumns="2" order="120">
                 <widget type="text" fieldname="hoja_ruta_expediciones" maxlength="100" />
             </column>
-            <column name="outside-the-town" numcolums="2" order="120">
+            
+            <column name="outside-the-town" numcolums="2" order="130">
                 <widget type="checkbox" fieldname="fuera_del_municipio"/>
+            </column>
+            <column name="outsideTheTown_2" title="outside-the-town" numcolums="2" order="130">
+                <widget type="text" fieldname="fuera_del_municipio_text" readonly="true"/>
             </column>
 
                         
@@ -88,9 +97,14 @@
                     <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto" />
                 </widget>
             </column>
+            
             <column name="create-invoice" numcolums="3" order="140">
                 <widget type="checkbox" fieldname="facturar_SN"/>
             </column>
+            <column name="create_invoice_2" title="create-invoice" numcolums="2" order="140">
+                <widget type="text" fieldname="facturar_SN_text" readonly="true"/>
+            </column>
+
             <column name="number-bill" titleurl="ListFacturaCliente" numcolumns="3" order="150">
                 <widget type="select" fieldname="idfactura" icon="fas fa-copy" onclick="EditFacturaCliente" readonly="true" >
                     <values source="facturascli" fieldcode="idfactura" fieldtitle="codigo" />
@@ -144,12 +158,16 @@
         </group>
 
 
-        <group name="assembly-services" numcolumns="12" icon="fas fa-business-time" title="assembly-services">
-            <column name="inicio_horaAnt" title="anticipation-hour" numcolumns="3" order="100">
+        <group name="assembly-services" numcolumns="5" icon="fas fa-business-time" title="assembly-services">
+            <column name="inicio_horaAnt" title="anticipation-hour" numcolumns="4" order="100">
                 <widget type="time" fieldname="inicio_horaAnt" />
             </column>
+            
             <column name="departure-from-garages" numcolums="1" order="110">
                 <widget type="checkbox" fieldname="salida_desde_nave_sn"/>
+            </column>
+            <column name="departure_from_garages_2" title="departure-from-garages" numcolums="1" order="110">
+                <widget type="text" fieldname="salida_desde_nave_text" readonly="true"/>
             </column>
         </group>
 
@@ -265,9 +283,12 @@
         </group>
 
 
-        <group name="record-status" numcolumns="12" icon="fas fa-cog" title="Estado del registro">
-            <column name="active" numcolums="12" order="100">
+        <group name="record-status" numcolumns="2" icon="fas fa-cog" title="Estado del registro">
+            <column name="active" numcolums="2" order="100">
                 <widget type="checkbox" fieldname="activo"/>
+            </column>
+            <column name="active-2" numcolums="2" order="100">
+                <widget type="text" fieldname="activo_text" readonly="true"/>
             </column>
         </group>
         
