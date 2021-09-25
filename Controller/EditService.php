@@ -230,6 +230,7 @@ class EditService extends EditController {
             $this->readOnlyField($viewName, 'observaciones_vehiculo');
             $this->readOnlyField($viewName, 'observaciones_facturacion');
             $this->readOnlyField($viewName, 'observaciones_liquidacion');
+            $this->readOnlyField($viewName, 'motivobaja');
             
             // Invisibles
             $this->displayNoneField($viewName, 'aceptado');
