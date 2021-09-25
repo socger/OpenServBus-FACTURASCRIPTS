@@ -98,6 +98,9 @@ class EditService_assembly extends EditController {
 
     private function readOnlyAllCommonFields($viewName)
     {
+        // Los campos comunes entre discrecionales y regulares = true ... esto se
+        // hará siempre que sea un discrecional sin facturar. En regulares sin facturar no
+        // EN discrecional o regular facturados siempre se hará
         $this->readOnlyField($viewName, 'plazas');
         $this->readOnlyField($viewName, 'idvehicle_type');
         $this->readOnlyField($viewName, 'hoja_ruta_origen');
@@ -139,54 +142,50 @@ class EditService_assembly extends EditController {
         $this->readOnlyField($viewName, 'idhelper');
     }
 
-    private function readOnlyAllNoCommonFields($viewName)
+    private function displayOnlyFieldsForDiscretionalServ($viewName)
     {
-        
-//        esto falla cuando es un servicio facturado ... ver porque 
-        
-        
-        $this->readOnlyField($viewName, 'cod_servicio');
-        $this->readOnlyField($viewName, 'idservice');
-        
-        if (empty($this->views[$viewName]->model->idservice)) {
-            $this->readOnlyField($viewName, 'fuera_del_municipioe_text');
-            $this->readOnlyField($viewName, 'facturar_SN_text');
-            $this->readOnlyField($viewName, 'facturar_agrupando_text');
-            $this->readOnlyField($viewName, 'salida_desde_nave_text');
-            $this->readOnlyField($viewName, 'activo_text');
-        }
+        // Es un discrecional, por lo que se ponen invisibles estos campos
+        $this->displayNoneField($viewName, 'cod_servicio');
+        $this->displayNoneField($viewName, 'fuera_del_municipio');
+        $this->displayNoneField($viewName, 'facturar_SN');
+        $this->displayNoneField($viewName, 'facturar_agrupando');
+        $this->displayNoneField($viewName, 'salida_desde_nave_sn');
+        $this->displayNoneField($viewName, 'activo');
+    }
+
+    private function displayOnlyFieldsForRegularServ($viewName)
+    {
+        // Es un regular, por lo que se ponen invisibles estos campos
+        $this->displayNoneField($viewName, 'idservice');
+        $this->displayNoneField($viewName, 'fuera_del_municipioe_text');
+        $this->displayNoneField($viewName, 'facturar_SN_text');
+        $this->displayNoneField($viewName, 'facturar_agrupando_text');
+        $this->displayNoneField($viewName, 'salida_desde_nave_text');
+        $this->displayNoneField($viewName, 'activo_text');
     }
 
     private function readOnlyFields($viewName)
     {
-        if (!empty($this->views[$viewName]->model->idservice)) {
-            // Es un servicio discrecional, por lo que estos campos que se ponen 
-            // a readonly=true se modificarán en la ficha del discrecional, no 
-            // en montaje ... si fuese un regular si que se modificarían en el 
-            // montaje, porque la ficha del regular puede cambiar de una 
-            // temporada/periodo a otro
-            $this->readOnlyAllCommonFields($viewName);
-            
-            // Es un discrecional, por lo que se ponen invisibles estos campos
-            $this->displayNoneField($viewName, 'cod_servicio');
-            $this->displayNoneField($viewName, 'fuera_del_municipio');
-            $this->displayNoneField($viewName, 'facturar_SN');
-            $this->displayNoneField($viewName, 'facturar_agrupando');
-            $this->displayNoneField($viewName, 'salida_desde_nave_sn');
-            $this->displayNoneField($viewName, 'activo');
-        } else {
-            // Es un regular, por lo que se ponen invisibles estos campos
-            $this->displayNoneField($viewName, 'idservice');
-            $this->displayNoneField($viewName, 'fuera_del_municipioe_text');
-            $this->displayNoneField($viewName, 'facturar_SN_text');
-            $this->displayNoneField($viewName, 'facturar_agrupando_text');
-            $this->displayNoneField($viewName, 'salida_desde_nave_text');
-            $this->displayNoneField($viewName, 'activo_text');
-        }
         
-        if (!empty($this->views[$viewName]->model->idfactura)) {
-            $this->readOnlyAllCommonFields($viewName);
-            $this->readOnlyAllNoCommonFields($viewName);
+        if (!empty($this->views[$viewName]->model->idfactura)) 
+        { // Está facturado el servicio
+            $this->readOnlyAllCommonFields($viewName); // Da igual que sea discrecional o no, los campos comunes a readonly=true
+            $this->displayOnlyFieldsForDiscretionalServ($viewName); // Se hacen invisibles los campos que sólo son para regulares
+        } else {
+            // No está facturado el servicio
+            
+            // Comprobamos si es discrecional o regular
+            if (!empty($this->views[$viewName]->model->idservice)) 
+            {
+                // Discrecional
+                $this->readOnlyAllCommonFields($viewName); // Los campos comunes a readonly=true
+                $this->displayOnlyFieldsForDiscretionalServ($viewName);
+            } else {
+                // Regular, así que las columnas comunes las dejamos como estén en la vista
+                
+                // Se dejan
+                $this->displayOnlyFieldsForRegularServ($viewName);
+            }
         }
     }
 
