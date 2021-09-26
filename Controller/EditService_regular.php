@@ -2,7 +2,7 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
- use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 class EditService_regular extends EditController {
