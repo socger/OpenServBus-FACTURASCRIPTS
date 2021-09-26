@@ -25,10 +25,32 @@ class EditService_assembly extends EditController {
 
         return $pageData;
     }
+    
+    protected function createViews() {
+        parent::createViews();
+        
+        $this->createViewContacts();
+//        $this->createViewItineraries();
+//        $this->createViewValuations();
+        
+        $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
+    }
+    
+    protected function createViewContacts(string $viewName = 'EditDireccionContacto')
+    {
+        $this->addEditListView($viewName, 'Contacto', 'addresses-and-contacts', 'fas fa-address-book');
+        $this->views[$viewName]->setInLine(true);
+    }
 
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
     protected function loadData($viewName, $view) {
         switch ($viewName) {
+            case 'EditDireccionContacto':
+                $codcliente = $this->getViewModelValue('EditService_assembly', 'codcliente');
+                $where = [new DatabaseWhere('codcliente', $codcliente)];
+                $view->loadData('', $where);
+                break;
+            
             // Pestaña con el mismo nombre que este controlador EditXxxxx
             case 'EditService_assembly': 
                 parent::loadData($viewName, $view);
