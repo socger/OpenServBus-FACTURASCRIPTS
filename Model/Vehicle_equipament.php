@@ -4,7 +4,7 @@ namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
 use FacturaScripts\Plugins\OpenServBus\Model\Vehicle;
-use FacturaScripts\Plugins\OpenServBus\Model\Vehicle_equipament_type;
+use FacturaScripts\Plugins\OpenServBus\Model\VehicleequipamentType;
 
 class Vehicle_equipament extends Base\ModelClass {
     use Base\ModelTrait;
@@ -45,7 +45,7 @@ class Vehicle_equipament extends Base\ModelClass {
     {
         /// needed dependency proveedores
         new Vehicle();
-        new Vehicle_equipament_type();
+        new Vehicle_equipamentType();
 
         return parent::install();
     }

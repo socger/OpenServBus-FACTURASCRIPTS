@@ -4,10 +4,10 @@ namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
 
-class Vehicle_type extends Base\ModelClass {
+class TarjetaType extends Base\ModelClass {
     use Base\ModelTrait;
 
-    public $idvehicle_type;
+    public $idtarjeta_type;
         
     public $user_fecha;
     public $user_nick;
@@ -20,6 +20,7 @@ class Vehicle_type extends Base\ModelClass {
     public $userbaja;
     public $motivobaja;
 
+    public $de_pago;
     public $nombre;
     public $observaciones;
     
@@ -28,16 +29,17 @@ class Vehicle_type extends Base\ModelClass {
         parent::clear();
         
         $this->activo = true; // Por defecto estará activo
+        $this->de_pago = false; // Por defecto será de no pago
     }
     
     // función que devuelve el id principal
     public static function primaryColumn(): string {
-        return 'idvehicle_type';
+        return 'idtarjeta_type';
     }
     
     // función que devuelve el nombre de la tabla
     public static function tableName(): string {
-        return 'vehicle_types';
+        return 'tarjeta_types';
     }
 
     // Para realizar cambios en los datos antes de guardar por modificación
@@ -56,8 +58,8 @@ class Vehicle_type extends Base\ModelClass {
     protected function saveInsert(array $values = [])
     {
         // Creamos el nuevo id
-        if (empty($this->idvehicle_type)) {
-            $this->idvehicle_type = $this->newCode();
+        if (empty($this->idtarjeta_type)) {
+            $this->idtarjeta_type = $this->newCode();
         }
 
         $this->rellenarDatosAlta();
@@ -72,8 +74,15 @@ class Vehicle_type extends Base\ModelClass {
     
     public function test()
     {
+        $this->actualizarEnTarjetas_DePago();
+
         $this->evitarInyeccionSQL();
         return parent::test();
+    }
+
+    public function url(string $type = 'auto', string $list = 'ConfigOpenServBus'): string
+    {
+        return parent::url($type, $list . '?activetab=List');
     }
 
 
@@ -99,6 +108,18 @@ class Vehicle_type extends Base\ModelClass {
         }
         return $a_devolver;
     }
+    
+    private function actualizarEnTarjetas_DePago()
+    {
+        $de_pago = 1;
+        if ($this->de_pago == false){
+            $de_pago = 0;
+        }
+        
+        // Rellenamos el de_pago de tabla tarjetas
+        $sql = "UPDATE tarjetas SET tarjetas.de_pago = " . $de_pago . " WHERE tarjetas.idtarjeta_type = " . $this->idtarjeta_type . ";";
+        self::$dataBase->exec($sql);
+    }
 
     private function rellenarDatosModificacion()
     {
@@ -119,5 +140,4 @@ class Vehicle_type extends Base\ModelClass {
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
-	
 }

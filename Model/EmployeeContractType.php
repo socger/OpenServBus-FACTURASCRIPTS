@@ -4,10 +4,10 @@ namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
 
-class Fuel_type extends Base\ModelClass {
+class EmployeeContractType extends Base\ModelClass {
     use Base\ModelTrait;
 
-    public $idfuel_type;
+    public $idemployee_contract_type;
         
     public $user_fecha;
     public $user_nick;
@@ -32,12 +32,12 @@ class Fuel_type extends Base\ModelClass {
     
     // función que devuelve el id principal
     public static function primaryColumn(): string {
-        return 'idfuel_type';
+        return 'idemployee_contract_type';
     }
     
     // función que devuelve el nombre de la tabla
     public static function tableName(): string {
-        return 'fuel_types';
+        return 'employee_contract_types';
     }
 
     // Para realizar cambios en los datos antes de guardar por modificación
@@ -57,7 +57,7 @@ class Fuel_type extends Base\ModelClass {
     {
         // Creamos el nuevo id
         if (empty($this->idfuel_type)) {
-            $this->idfuel_type = $this->newCode();
+            $this->idemployee_contract_type = $this->newCode();
         }
 
         $this->rellenarDatosAlta();
@@ -74,6 +74,11 @@ class Fuel_type extends Base\ModelClass {
     {
         $this->evitarInyeccionSQL();
         return parent::test();
+    }
+
+    public function url(string $type = 'auto', string $list = 'ConfigOpenServBus'): string
+    {
+        return parent::url($type, $list . '?activetab=List');
     }
 
 
@@ -119,5 +124,4 @@ class Fuel_type extends Base\ModelClass {
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
-	
 }

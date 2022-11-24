@@ -4,10 +4,10 @@ namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
 
-class Vehicle_equipament_type extends Base\ModelClass {
+class ServiceType extends Base\ModelClass {
     use Base\ModelTrait;
 
-    public $idvehicle_equipament_type;
+    public $idservice_type;
         
     public $user_fecha;
     public $user_nick;
@@ -33,12 +33,12 @@ class Vehicle_equipament_type extends Base\ModelClass {
     
     // función que devuelve el id principal
     public static function primaryColumn(): string {
-        return 'idvehicle_equipament_type';
+        return 'idservice_type';
     }
     
     // función que devuelve el nombre de la tabla
     public static function tableName(): string {
-        return 'vehicle_equipament_types';
+        return 'service_types';
     }
 
     // Para realizar cambios en los datos antes de guardar por modificación
@@ -57,8 +57,8 @@ class Vehicle_equipament_type extends Base\ModelClass {
     protected function saveInsert(array $values = [])
     {
         // Creamos el nuevo id
-        if (empty($this->idvehicle_equipament_type)) {
-            $this->idvehicle_equipament_type = $this->newCode();
+        if (empty($this->idservice_type)) {
+            $this->idservice_type = $this->newCode();
         }
 
         $this->rellenarDatosAlta();
@@ -74,6 +74,11 @@ class Vehicle_equipament_type extends Base\ModelClass {
     public function test() {
         $this->evitarInyeccionSQL();
         return parent::test();
+    }
+
+    public function url(string $type = 'auto', string $list = 'ConfigOpenServBus'): string
+    {
+        return parent::url($type, $list . '?activetab=List');
     }
 
 
@@ -119,5 +124,4 @@ class Vehicle_equipament_type extends Base\ModelClass {
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
-	
 }

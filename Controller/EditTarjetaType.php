@@ -4,10 +4,10 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
-class EditTarjeta_type extends EditController {
+class EditTarjetaType extends EditController {
     
     public function getModelClassName() {
-        return 'Tarjeta_type';
+        return 'TarjetaType';
     }
     
     // Para presentar la pantalla del controlador
@@ -29,7 +29,7 @@ class EditTarjeta_type extends EditController {
         switch ($viewName) {
 
             // Pestaña con el mismo nombre que este controlador EditXxxxx
-            case 'EditTarjeta_type': 
+            case 'EditTarjetaType':
                 parent::loadData($viewName, $view);
                 
                 // Guardamos que usuario y cuando pulsará guardar

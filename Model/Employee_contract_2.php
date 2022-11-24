@@ -7,7 +7,7 @@ namespace FacturaScripts\Plugins\OpenServBus\Model;
 //use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Model\Base;
 use FacturaScripts\Plugins\OpenServBus\Model\Employee;
-use FacturaScripts\Plugins\OpenServBus\Model\Employee_contract_type;
+use FacturaScripts\Plugins\OpenServBus\Model\EmployeeContractType;
 
 class Employee_contract_2 extends Base\ModelClass {
     use Base\ModelTrait;
@@ -55,7 +55,7 @@ class Employee_contract_2 extends Base\ModelClass {
     {
         /// needed dependency proveedores
         new Employee();
-        new Employee_contract_type();
+        new Employee_contractType();
 
         return parent::install();
     }

@@ -4,10 +4,10 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
-class EditVehicle_equipament_type extends EditController {
+class EditEmployeeContractType extends EditController {
     
     public function getModelClassName() {
-        return 'Vehicle_equipament_type';
+        return 'EmployeeContractType';
     }
     
     // Para presentar la pantalla del controlador
@@ -17,9 +17,9 @@ class EditVehicle_equipament_type extends EditController {
         
         $pagedata['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Equipamiento - Tipo';
+        $pageData['title'] = 'Contrato - tipo';
         
-        $pageData['icon'] = 'fas fa-wheelchair';
+        $pageData['icon'] = 'fas fa-file-signature';
 
         return $pageData;
     }
@@ -29,7 +29,7 @@ class EditVehicle_equipament_type extends EditController {
         switch ($viewName) {
 
             // Pestaña con el mismo nombre que este controlador EditXxxxx
-            case 'EditVehicle_equipament_type': 
+            case 'EditEmployeeContractType':
                 parent::loadData($viewName, $view);
                 
                 // Guardamos que usuario y cuando pulsará guardar

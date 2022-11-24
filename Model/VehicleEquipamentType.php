@@ -4,10 +4,10 @@ namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
 
-class Documentation_type extends Base\ModelClass {
+class VehicleEquipamentType extends Base\ModelClass {
     use Base\ModelTrait;
 
-    public $iddocumentation_type;
+    public $idvehicle_equipament_type;
         
     public $user_fecha;
     public $user_nick;
@@ -21,7 +21,7 @@ class Documentation_type extends Base\ModelClass {
     public $motivobaja;
 
     public $nombre;
-    public $fechacaducidad_obligarla;
+    
     public $observaciones;
     
     // función que inicializa algunos valores antes de la vista del controlador
@@ -29,17 +29,16 @@ class Documentation_type extends Base\ModelClass {
         parent::clear();
         
         $this->activo = true; // Por defecto estará activo
-        $this->fechacaducidad_obligarla = true; // Por defecto obligar a introducir fechacaducidad
     }
     
     // función que devuelve el id principal
     public static function primaryColumn(): string {
-        return 'iddocumentation_type';
+        return 'idvehicle_equipament_type';
     }
     
     // función que devuelve el nombre de la tabla
     public static function tableName(): string {
-        return 'documentation_types';
+        return 'vehicle_equipament_types';
     }
 
     // Para realizar cambios en los datos antes de guardar por modificación
@@ -58,8 +57,8 @@ class Documentation_type extends Base\ModelClass {
     protected function saveInsert(array $values = [])
     {
         // Creamos el nuevo id
-        if (empty($this->iddocumentation_type)) {
-            $this->iddocumentation_type = $this->newCode();
+        if (empty($this->idvehicle_equipament_type)) {
+            $this->idvehicle_equipament_type = $this->newCode();
         }
 
         $this->rellenarDatosAlta();
@@ -72,10 +71,14 @@ class Documentation_type extends Base\ModelClass {
         return parent::saveInsert($values);
     }
     
-    public function test()
-    {
+    public function test() {
         $this->evitarInyeccionSQL();
         return parent::test();
+    }
+
+    public function url(string $type = 'auto', string $list = 'ConfigOpenServBus'): string
+    {
+        return parent::url($type, $list . '?activetab=List');
     }
 
 
@@ -121,5 +124,4 @@ class Documentation_type extends Base\ModelClass {
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
-	
 }
