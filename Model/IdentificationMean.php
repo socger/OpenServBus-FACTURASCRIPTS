@@ -1,13 +1,14 @@
 <?php
+
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
 use FacturaScripts\Core\Model\Base;
 
-class Garage extends Base\ModelClass {
+class IdentificationMean extends Base\ModelClass {
     use Base\ModelTrait;
 
-    public $idgarage;
-    
+    public $ididentification_mean;
+        
     public $user_fecha;
     public $user_nick;
     public $fechaalta;
@@ -19,19 +20,7 @@ class Garage extends Base\ModelClass {
     public $userbaja;
     public $motivobaja;
 
-    public $idempresa;
     public $nombre;
-    public $ciudad;
-    public $provincia;
-    public $codpais;
-    public $codpostal;
-    public $apartado;
-    public $direccion;
-    public $telefono1;
-    public $telefono2;
-    public $fax;
-    public $email;
-    public $web;
     
     public $observaciones;
     
@@ -39,20 +28,17 @@ class Garage extends Base\ModelClass {
     public function clear() {
         parent::clear();
         
-     // $this->fechamodificacion = date('d-m-Y'); // Lo quitamos porque lo vamos a rellenar, por estética, en el saveInsert
-     // $this->fechaalta = date('d-m-Y'); // Rellena automáticamente con la fecha de hoy a el field fechaalta
-        $this->codpais = $this->toolBox()->appSettings()->get('default', 'codpais');
         $this->activo = true; // Por defecto estará activo
     }
     
     // función que devuelve el id principal
     public static function primaryColumn(): string {
-        return 'idgarage';
+        return 'ididentification_mean';
     }
     
     // función que devuelve el nombre de la tabla
     public static function tableName(): string {
-        return 'garages';
+        return 'identification_means';
     }
 
     // Para realizar cambios en los datos antes de guardar por modificación
@@ -71,15 +57,12 @@ class Garage extends Base\ModelClass {
     protected function saveInsert(array $values = [])
     {
         // Creamos el nuevo id
-        if (empty($this->idgarage)) {
-            $this->idgarage = $this->newCode();
+        if (empty($this->ididentification_mean)) {
+            $this->ididentification_mean = $this->newCode();
         }
 
         $this->rellenarDatosAlta();
         $this->rellenarDatosModificacion();
-        
-        // echo $this->active;
-        // sleep(60);
         
         if ($this->comprobarSiActivo() == false){
             return false;
@@ -88,12 +71,7 @@ class Garage extends Base\ModelClass {
         return parent::saveInsert($values);
     }
     
-    public function test()
-    {
-        if (empty($this->idempresa)) {
-            $this->idempresa = $this->toolBox()->appSettings()->get('default', 'idempresa');
-        }
-
+    public function test() {
         $this->evitarInyeccionSQL();
         return parent::test();
     }
@@ -143,17 +121,6 @@ class Garage extends Base\ModelClass {
     {
         $utils = $this->toolBox()->utils();
         $this->nombre = $utils->noHtml($this->nombre);
-        $this->ciudad = $utils->noHtml($this->ciudad);
-        $this->provincia = $utils->noHtml($this->provincia);
-        $this->codpais = $utils->noHtml($this->codpais);
-        $this->codpostal = $utils->noHtml($this->codpostal);
-        $this->apartado = $utils->noHtml($this->apartado);
-        $this->direccion = $utils->noHtml($this->direccion);
-        $this->telefono1 = $utils->noHtml($this->telefono1);
-        $this->telefono2 = $utils->noHtml($this->telefono2);
-        $this->fax = $utils->noHtml($this->fax);
-        $this->email = $utils->noHtml($this->email);
-        $this->web = $utils->noHtml($this->web);
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }

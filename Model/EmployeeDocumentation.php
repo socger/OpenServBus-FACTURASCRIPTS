@@ -1,13 +1,17 @@
 <?php
+
+// Lo que modifiquemos en este modelo, tendríamos que ver si lo modificamos en el modelo Employee_documentation_2.php
+
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
 use FacturaScripts\Core\Model\Base;
 
-class Garage extends Base\ModelClass {
-    use Base\ModelTrait;
 
-    public $idgarage;
+class EmployeeDocumentation extends Base\ModelClass {
+    use Base\ModelTrait;
     
+    public $idemployee_documentation;
+        
     public $user_fecha;
     public $user_nick;
     public $fechaalta;
@@ -19,40 +23,56 @@ class Garage extends Base\ModelClass {
     public $userbaja;
     public $motivobaja;
 
-    public $idempresa;
     public $nombre;
-    public $ciudad;
-    public $provincia;
-    public $codpais;
-    public $codpostal;
-    public $apartado;
-    public $direccion;
-    public $telefono1;
-    public $telefono2;
-    public $fax;
-    public $email;
-    public $web;
+    public $idemployee;
+    public $iddocumentation_type;
+    public $fecha_caducidad;
     
     public $observaciones;
+    
     
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {
         parent::clear();
         
-     // $this->fechamodificacion = date('d-m-Y'); // Lo quitamos porque lo vamos a rellenar, por estética, en el saveInsert
-     // $this->fechaalta = date('d-m-Y'); // Rellena automáticamente con la fecha de hoy a el field fechaalta
-        $this->codpais = $this->toolBox()->appSettings()->get('default', 'codpais');
         $this->activo = true; // Por defecto estará activo
     }
     
+    /**
+     * This function is called when creating the model table. Returns the SQL
+     * that will be executed after the creation of the table. Useful to insert values
+     * default.
+     *
+     * @return string
+     */
+    public function install()
+    {
+        /// needed dependency proveedores
+        new Employee();
+        new DocumentationType();
+
+        return parent::install();
+    }
+
     // función que devuelve el id principal
     public static function primaryColumn(): string {
-        return 'idgarage';
+        return 'idemployee_documentation';
     }
     
     // función que devuelve el nombre de la tabla
     public static function tableName(): string {
-        return 'garages';
+        return 'employee_documentations';
+    }
+
+    // Para realizar algo antes o después del borrado ... todo depende de que se ponga antes del parent o después
+    public function delete()
+    {
+        $parent_devuelve = parent::delete();
+        
+        // $this->Actualizar_idempresa_en_employees();
+                
+        return $parent_devuelve;
+        // return parent::delete();
     }
 
     // Para realizar cambios en los datos antes de guardar por modificación
@@ -64,41 +84,50 @@ class Garage extends Base\ModelClass {
             return false;
         }
         
-        return parent::saveUpdate($values);
+        $parent_devuelve = parent::saveUpdate($values);
+        
+        // $this->Actualizar_idempresa_en_employees();
+        
+        return $parent_devuelve;
     }
 
     // Para realizar cambios en los datos antes de guardar por alta
     protected function saveInsert(array $values = [])
     {
         // Creamos el nuevo id
-        if (empty($this->idgarage)) {
-            $this->idgarage = $this->newCode();
+        if (empty($this->idemployee_documentation)) {
+            $this->idemployee_documentation = $this->newCode();
         }
-
+        
         $this->rellenarDatosAlta();
         $this->rellenarDatosModificacion();
-        
-        // echo $this->active;
-        // sleep(60);
         
         if ($this->comprobarSiActivo() == false){
             return false;
         }
         
-        return parent::saveInsert($values);
+        $parent_devuelve = parent::saveInsert($values);
+        
+        // $this->Actualizar_idempresa_en_employees();
+        
+        return $parent_devuelve;
+        //return parent::saveInsert($values);
     }
     
     public function test()
     {
-        if (empty($this->idempresa)) {
-            $this->idempresa = $this->toolBox()->appSettings()->get('default', 'idempresa');
+        if (empty($this->fecha_caducidad)) {
+            if ($this->ComprobarSiEsObligadaFechaCaducidad() == 1) {
+                $this->toolBox()->i18nLog()->error('Para el tipo de documento elegido, necesitamos rellenar la fecha de caducidad');
+                return false;
+            }
         }
-
+        
         $this->evitarInyeccionSQL();
         return parent::test();
     }
 
-    public function url(string $type = 'auto', string $list = 'ListHelper'): string
+    public function url(string $type = 'auto', string $list = 'ListVehicleDocumentation'): string
     {
         return parent::url($type, $list . '?activetab=List');
     }
@@ -126,6 +155,20 @@ class Garage extends Base\ModelClass {
         }
         return $a_devolver;
     }
+    
+    private function ComprobarSiEsObligadaFechaCaducidad()
+    {
+        $sql = ' SELECT documentation_types.fechacaducidad_obligarla '
+             . ' FROM documentation_types '
+             . ' WHERE documentation_types.iddocumentation_type = ' . $this->iddocumentation_type . " "
+             ;
+
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            return $fila['fechacaducidad_obligarla'];
+        }
+    }
 
     private function rellenarDatosModificacion()
     {
@@ -142,19 +185,8 @@ class Garage extends Base\ModelClass {
     private function evitarInyeccionSQL()
     {
         $utils = $this->toolBox()->utils();
-        $this->nombre = $utils->noHtml($this->nombre);
-        $this->ciudad = $utils->noHtml($this->ciudad);
-        $this->provincia = $utils->noHtml($this->provincia);
-        $this->codpais = $utils->noHtml($this->codpais);
-        $this->codpostal = $utils->noHtml($this->codpostal);
-        $this->apartado = $utils->noHtml($this->apartado);
-        $this->direccion = $utils->noHtml($this->direccion);
-        $this->telefono1 = $utils->noHtml($this->telefono1);
-        $this->telefono2 = $utils->noHtml($this->telefono2);
-        $this->fax = $utils->noHtml($this->fax);
-        $this->email = $utils->noHtml($this->email);
-        $this->web = $utils->noHtml($this->web);
         $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->nombre = $utils->noHtml($this->nombre);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
 	

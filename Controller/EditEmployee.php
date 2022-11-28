@@ -28,129 +28,85 @@ class EditEmployee extends EditController {
     protected function createViews() {
         parent::createViews();
         
-        $this->createView__Employee_contract();
-        $this->createView__Employee_attendance_management_yn();
-        $this->createView__Employee_documentation();
+        $this->createViewEmployeeContract();
+        $this->createViewEmployeeAttendanceManagementYn();
+        $this->createViewEmployeeDocumentation();
         
         $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
     }
     
-    protected function createView__Employee_contract($model = 'Employee_contract')
+    protected function createViewEmployeeContract($viewName = 'ListEmployeeContract')
     {
-        // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
-        // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
-        // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
-        // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
-        // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model . '_2', 'Contratos realizados', 'fas fa-id-badge');    
+        $this->addListView($viewName, 'EmployeeContract_2', 'Contratos realizados', 'fas fa-id-badge');
+        $this->views[$viewName]->addSearchFields(['nombre']);
+        $this->views[$viewName]->addOrderBy(['nombre'], 'Nombre', 1);
+        $this->views[$viewName]->addOrderBy(['fecha_inicio', 'fecha_fin'], 'F.inicio + F.fin.');
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
 
-
-        $this->views['List' . $model]->addSearchFields(['nombre']); 
-
-
-        $this->views['List' . $model]->addOrderBy(['nombre'], 'Nombre', 1);
-        $this->views['List' . $model]->addOrderBy(['fecha_inicio', 'fecha_fin'], 'F.inicio + F.fin.');
-        $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-
-        
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        // Filtros
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
             ['code' => '0', 'description' => 'Activos = NO'],
         ];
-        $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
 
-        
-        $this->views['List' . $model]->addFilterAutocomplete('xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
-        $this->views['List' . $model]->addFilterAutocomplete('xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
-        $this->views['List' . $model]->addFilterAutocomplete('xIdemployee_contract_type', 'Contrato - tipo', 'idemployee_contract_type', 'employee_contract_types', 'idemployee_contract_type', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdemployee_contract_type', 'Contrato - tipo', 'idemployee_contract_type', 'employee_contract_types', 'idemployee_contract_type', 'nombre');
     }
     
-    protected function createView__Employee_attendance_management_yn($model = 'Employee_attendance_management_yn')
+    protected function createViewEmployeeAttendanceManagementYn($viewName = 'ListEmployeeAttendanceManagementYn')
     {
-        // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
-        // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
-        // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
-        // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
-        // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model . '_2', '¿Está obligado al control de presencia?', 'fas fa-business-timee');  
-        
-        
-        $this->views['List' . $model]->addSearchFields(['idemployee', 'nombre']);
+        $this->addListView($viewName, 'EmployeeAttendanceManagementYn_2', '¿Está obligado al control de presencia?', 'fas fa-business-timee');
+        $this->views[$viewName]->addSearchFields(['idemployee', 'nombre']);
+        $this->views[$viewName]->addOrderBy(['nombre'], 'Nombre', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
 
-
-        $this->views['List' . $model]->addOrderBy(['nombre'], 'Nombre', 1);
-        $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-
-
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        // Filtros
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
             ['code' => '0', 'description' => 'Activos = NO'],
         ];
-        $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
-//
-//        // disable new button 
-//        $this->setSettings('List' . $model, 'btnNew', false);
-//
-//        // disable delete button
-//        $this->setSettings('List' . $model, 'btnDelete', false);
-//        
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
     }
     
-    protected function createView__Employee_documentation($model = 'Employee_documentation')
+    protected function createViewEmployeeDocumentation($viewName = 'ListEmployeeDocumentation')
     {
-        // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
-        // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
-        // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
-        // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
-        // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model . '_2', 'Documentación', 'far fa-file-pdf');    
-        
-        
-        $this->views['List' . $model]->addSearchFields(['nombre']);
+        $this->addListView($viewName, 'EmployeeDocumentation_2', 'Documentación', 'far fa-file-pdf');
+        $this->views[$viewName]->addSearchFields(['nombre']);
+        $this->views[$viewName]->addOrderBy(['nombre'], 'Nombre', 1);
+        $this->views[$viewName]->addOrderBy(['iddocumentation_type', 'nombre'], 'Tipo Doc. + nombre');
+        $this->views[$viewName]->addOrderBy(['fecha_caducidad'], 'F. caducidad.');
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
 
-        
-        $this->views['List' . $model]->addOrderBy(['nombre'], 'Nombre', 1);
-        $this->views['List' . $model]->addOrderBy(['iddocumentation_type', 'nombre'], 'Tipo Doc. + nombre');
-        $this->views['List' . $model]->addOrderBy(['fecha_caducidad'], 'F. caducidad.');
-        $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-
-
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        // Filtros
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
             ['code' => '0', 'description' => 'Activos = NO'],
         ];
-        $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
 
-        
-        $this->views['List' . $model]->addFilterAutocomplete('xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
-        $this->views['List' . $model]->addFilterAutocomplete('xiddocumentation_type', 'Documentación - tipo', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
-
-        
-        $this->views['List' . $model]->addFilterPeriod('porFechaCaducidad', 'Fecha de caducidad', 'fecha_caducidad');
+        $this->views[$viewName]->addFilterAutocomplete('xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xiddocumentation_type', 'Documentación - tipo', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
+        $this->views[$viewName]->addFilterPeriod('porFechaCaducidad', 'Fecha de caducidad', 'fecha_caducidad');
     }
     
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
     protected function loadData($viewName, $view) {
         switch ($viewName) {
-            case 'ListEmployee_documentation':
+            case 'ListEmployeeDocumentation':
                 $idemployee = $this->getViewModelValue('EditEmployee', 'idemployee'); // Le pedimos que guarde en la variable local $idemployee el valor del campo idemployee del controlador EditEmployee.php
                 $where = [new DatabaseWhere('idemployee', $idemployee)];
                 $view->loadData('', $where);
                 break;
                     
-            case 'ListEmployee_contract':
+            case 'ListEmployeeContract':
                 $idemployee = $this->getViewModelValue('EditEmployee', 'idemployee'); // Le pedimos que guarde en la variable local $idemployee el valor del campo idemployee del controlador EditEmployee.php
                 $where = [new DatabaseWhere('idemployee', $idemployee)];
                 $view->loadData('', $where);
                 break;
                     
-            case 'ListEmployee_attendance_management_yn':
+            case 'ListEmployeeAttendanceManagementYn':
                 $idemployee = $this->getViewModelValue('EditEmployee', 'idemployee'); // Le pedimos que guarde en la variable local $idemployee el valor del campo idemployee del controlador EditEmployee.php
                 $where = [new DatabaseWhere('idemployee', $idemployee)];
                 $view->loadData('', $where);

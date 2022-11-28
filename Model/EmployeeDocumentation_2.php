@@ -1,16 +1,15 @@
 <?php
 
+// Lo que modifiquemos en este modelo, tendríamos que ver si lo modificamos en el modelo Employee_documentation.php
+
 namespace FacturaScripts\Plugins\OpenServBus\Model; 
 
-// use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
-// use FacturaScripts\Dinamic\Model\Proveedor;
 use FacturaScripts\Core\Model\Base;
-use FacturaScripts\Plugins\OpenServBus\Model\Proveedor; // Proveedor es una extensión de Proveedor de FS
 
-class Collaborator extends Base\ModelClass {
+class EmployeeDocumentation_2 extends Base\ModelClass {
     use Base\ModelTrait;
-
-    public $idcollaborator;
+    
+    public $idemployee_documentation;
         
     public $user_fecha;
     public $user_nick;
@@ -23,9 +22,13 @@ class Collaborator extends Base\ModelClass {
     public $userbaja;
     public $motivobaja;
 
-    public $codproveedor;
-    public $observaciones;
     public $nombre;
+    public $idemployee;
+    public $iddocumentation_type;
+    public $fecha_caducidad;
+    
+    public $observaciones;
+    
     
     // función que inicializa algunos valores antes de la vista del controlador
     public function clear() {
@@ -44,19 +47,31 @@ class Collaborator extends Base\ModelClass {
     public function install()
     {
         /// needed dependency proveedores
-        new Proveedor();
+        new Employee();
+        new DocumentationType();
 
         return parent::install();
     }
 
     // función que devuelve el id principal
     public static function primaryColumn(): string {
-        return 'idcollaborator';
+        return 'idemployee_documentation';
     }
-
+    
     // función que devuelve el nombre de la tabla
     public static function tableName(): string {
-        return 'collaborators';
+        return 'employee_documentations';
+    }
+
+    // Para realizar algo antes o después del borrado ... todo depende de que se ponga antes del parent o después
+    public function delete()
+    {
+        $parent_devuelve = parent::delete();
+        
+        // $this->Actualizar_idempresa_en_employees();
+                
+        return $parent_devuelve;
+        // return parent::delete();
     }
 
     // Para realizar cambios en los datos antes de guardar por modificación
@@ -68,15 +83,19 @@ class Collaborator extends Base\ModelClass {
             return false;
         }
         
-        return parent::saveUpdate($values);
+        $parent_devuelve = parent::saveUpdate($values);
+        
+        // $this->Actualizar_idempresa_en_employees();
+        
+        return $parent_devuelve;
     }
 
     // Para realizar cambios en los datos antes de guardar por alta
     protected function saveInsert(array $values = [])
     {
         // Creamos el nuevo id
-        if (empty($this->idcollaborator)) {
-            $this->idcollaborator = $this->newCode();
+        if (empty($this->idemployee_documentation)) {
+            $this->idemployee_documentation = $this->newCode();
         }
         
         $this->rellenarDatosAlta();
@@ -86,25 +105,26 @@ class Collaborator extends Base\ModelClass {
             return false;
         }
         
-        return parent::saveInsert($values);
+        $parent_devuelve = parent::saveInsert($values);
+        
+        // $this->Actualizar_idempresa_en_employees();
+        
+        return $parent_devuelve;
+        //return parent::saveInsert($values);
     }
     
     public function test()
     {
-        $this->actualizarCampoNombre();
-        $this->actualizarNombreColaboradorEn();
+        if (empty($this->fecha_caducidad)) {
+            if ($this->ComprobarSiEsObligadaFechaCaducidad() == 1) {
+                $this->toolBox()->i18nLog()->error('Para el tipo de documento elegido, necesitamos rellenar la fecha de caducidad');
+                return false;
+            }
+        }
         
         $this->evitarInyeccionSQL();
         return parent::test();
     }
-
-    public function url(string $type = 'auto', string $list = 'ListHelper'): string
-    {
-        return parent::url($type, $list . '?activetab=List');
-    }
-
-
-
 
 
     // ** ********************************** ** //
@@ -130,41 +150,17 @@ class Collaborator extends Base\ModelClass {
         return $a_devolver;
     }
     
-    private function actualizarNombreColaboradorEn()
+    private function ComprobarSiEsObligadaFechaCaducidad()
     {
-        // Rellenamos el nombre del empleado en otras tablas
-        $sql = "UPDATE drivers SET drivers.nombre = '" . $this->nombre . "' WHERE drivers.idcollaborator = " . $this->idcollaborator . ";";
-        self::$dataBase->exec($sql);
+        $sql = ' SELECT documentation_types.fechacaducidad_obligarla '
+             . ' FROM documentation_types '
+             . ' WHERE documentation_types.iddocumentation_type = ' . $this->iddocumentation_type . " "
+             ;
 
-        $sql = "UPDATE helpers SET helpers.nombre = '" . $this->nombre . "' WHERE helpers.idcollaborator = " . $this->idcollaborator . ";";
-        self::$dataBase->exec($sql);
-    }
-      
-    private function actualizarCampoNombre()
-    {
-        // Rellenamos el campo nombre de este modelo pues está ligado con campo nombre de tabla proveedores
-        // pero siempre lo actualizamos porque pueden cambiar el nombre del proveedor
-        if (!empty($this->codproveedor)) {
-            /* Esta podría ser una manera, pero implica hacer un uses al principio contra el modelo proveedor
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
 
-            $proveedorModel = new Proveedor(); // Tengo que poner en el uses la clase modelo Proveedor
-            $where = [new DataBaseWhere('codproveedor', $this->codproveedor)]; // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/databasewhere-478
-            $prov_Buscar = $proveedorModel->all($where);
-
-            foreach ($prov_Buscar as $prov) {
-               $this->nombre = $prov->nombre; 
-            }
-            */
-
-            $sql = ' SELECT PROVEEDORES.NOMBRE AS title '
-                 . ' FROM PROVEEDORES '
-                 . ' WHERE PROVEEDORES.CODPROVEEDOR = ' . $this->codproveedor
-                 ;
-            $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
-
-            foreach ($registros as $fila) {
-                $this->nombre = $fila['title'];
-            }
+        foreach ($registros as $fila) {
+            return $fila['fechacaducidad_obligarla'];
         }
     }
 
@@ -183,9 +179,23 @@ class Collaborator extends Base\ModelClass {
     private function evitarInyeccionSQL()
     {
         $utils = $this->toolBox()->utils();
-        $this->codproveedor = $utils->noHtml($this->codproveedor);
         $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->nombre = $utils->noHtml($this->nombre);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
     }
-	
+    
+    public function getEmployee() {
+        $employee = new Employee();
+        $employee->loadFromCode($this->idemployee);
+        return $employee;
+    }
+    
+    public function url(string $type = 'auto', string $list = 'List'): string {
+        if ($type == 'list') {
+            return $this->getEmployee()->url() . "&activetab=ListEmployee_documentation";
+        } 
+        
+        return parent::url($type, $list);
+    }	
+    
 }

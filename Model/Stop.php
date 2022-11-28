@@ -81,6 +81,11 @@ class Stop extends Base\ModelClass {
         return parent::test();
     }
 
+    public function url(string $type = 'auto', string $list = 'ListService'): string
+    {
+        return parent::url($type, $list . '?activetab=List');
+    }
+
 
     // ** ********************************** ** //
     // ** FUNCIONES CREADAS PARA ESTE MODELO ** //

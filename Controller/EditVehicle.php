@@ -27,93 +27,58 @@ class EditVehicle extends EditController {
     
     protected function createViews() {
         parent::createViews();
-        
-        /*
-        $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
-         * 
-        $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
-        $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
-        $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
-        $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        */
-        $this->createView__Vehicle_equipament();    
-        $this->createView__Vehicle_documentation();    
-        
-        $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
+        $this->createViewVehicleEquipament();
+        $this->createViewVehicleDocumentation();
+        $this->setTabsPosition('top');
     }
     
-    protected function createView__Vehicle_documentation($model = 'Vehicle_documentation')
+    protected function createViewVehicleDocumentation($viewName = 'ListVehicleDocumentation')
     {
-        // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
-        // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
-        // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
-        // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
-        // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model . '_2', 'Documentación', 'far fa-file-pdf'); 
-        
-        
-        $this->views['List' . $model]->addSearchFields(['nombre']); 
+        $this->addListView($viewName, 'VehicleDocumentation_2', 'Documentación', 'far fa-file-pdf');
+        $this->views[$viewName]->addSearchFields(['nombre']);
+        $this->views[$viewName]->addOrderBy(['nombre'], 'Nombre', 1);
+        $this->views[$viewName]->addOrderBy(['idvehicle', 'nombre'], 'Vehículo + Tipo Doc.');
+        $this->views[$viewName]->addOrderBy(['fecha_caducidad'], 'F. caducidad.');
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
 
-        
-        $this->views['List' . $model]->addOrderBy(['nombre'], 'Nombre', 1);
-        $this->views['List' . $model]->addOrderBy(['idvehicle', 'nombre'], 'Vehículo + Tipo Doc.');
-        $this->views['List' . $model]->addOrderBy(['fecha_caducidad'], 'F. caducidad.');
-        $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
-
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        // Filtros
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
             ['code' => '0', 'description' => 'Activos = NO'],
         ];
-        $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
-     
-
-        $this->views['List' . $model]->addFilterAutocomplete('xIdVehicle', 'Vehículo', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
-        $this->views['List' . $model]->addFilterAutocomplete('xiddocumentation_type', 'Documentación - tipo', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
-
-
-        $this->views['List' . $model]->addFilterPeriod('porFechaCaducidad', 'Fecha de caducidad', 'fecha_caducidad');
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterAutocomplete('xIdVehicle', 'Vehículo', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xiddocumentation_type', 'Documentación - tipo', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
+        $this->views[$viewName]->addFilterPeriod('porFechaCaducidad', 'Fecha de caducidad', 'fecha_caducidad');
     }
     
-    protected function createView__Vehicle_equipament($model = 'Vehicle_equipament')
+    protected function createViewVehicleEquipament($viewName = 'ListVehicleEquipament')
     {
-        // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
-        // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
-        // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
-        // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
-        // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model, 'Equipamiento', 'fab fa-accessible-icon'); 
-        
-        
-        $this->views['List' . $model]->addOrderBy(['idvehicle', 'idvehicle_equipament_type'], 'Vehículo + Equipamiento', 1);
-        $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
+        $this->addListView($viewName, 'VehicleEquipament', 'Equipamiento', 'fab fa-accessible-icon');
+        $this->views[$viewName]->addOrderBy(['idvehicle', 'idvehicle_equipament_type'], 'Vehículo + Equipamiento', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
 
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        // Filtros
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
             ['code' => '0', 'description' => 'Activos = NO'],
         ];
-        $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
-     
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
 
-        $this->views['List' . $model]->addFilterAutocomplete('xIdVehicle', 'Vehículo', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
-        $this->views['List' . $model]->addFilterAutocomplete('xIdVehicle_equipament_type', 'Equipamiento - Tipo', 'idvehicle_equipament_type', 'vehicle_equipament_types', 'idvehicle_equipament_type', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdVehicle', 'Vehículo', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdVehicle_equipament_type', 'Equipamiento - Tipo', 'idvehicle_equipament_type', 'vehicle_equipament_types', 'idvehicle_equipament_type', 'nombre');
     }
     
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
     protected function loadData($viewName, $view) {
         switch ($viewName) {
-            case 'ListVehicle_documentation':
+            case 'ListVehicleDocumentation':
                 $idvehicle = $this->getViewModelValue('EditVehicle', 'idvehicle'); // Le pedimos que guarde en la variable local $idemployee el valor del campo idemployee del controlador EditEmployee.php
                 $where = [new DatabaseWhere('idvehicle', $idvehicle)];
                 $view->loadData('', $where);
                 break;
                     
-            case 'ListVehicle_equipament':
+            case 'ListVehicleEquipament':
                 $idvehicle = $this->getViewModelValue('EditVehicle', 'idvehicle'); // Le pedimos que guarde en la variable local $idemployee el valor del campo idemployee del controlador EditEmployee.php
                 $where = [new DatabaseWhere('idvehicle', $idvehicle)];
                 $view->loadData('', $where);

@@ -42,54 +42,38 @@ class EditService extends EditController {
         $this->views[$viewName]->setInLine(true);
     }
 
-    protected function createViewItineraries($model = 'Service_itinerary')
+    protected function createViewItineraries($viewName = 'ListServiceItinerary')
     {
-        // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
-        // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
-        // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
-        // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
-        // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model, 'Itinerarios', 'fas fa-road');    
-
-        $this->views['List' . $model]->addSearchFields(['nombre']);
-
+        $this->addListView($viewName, 'ServiceItinerary', 'Itinerarios', 'fas fa-road');
+        $this->views[$viewName]->addSearchFields(['nombre']);
+        $this->views[$viewName]->addOrderBy(['idservice', 'orden'], 'Por itinerario', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
         
-        $this->views['List' . $model]->addOrderBy(['idservice', 'orden'], 'Por itinerario', 1);
-        $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        // Filtros
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
             ['code' => '0', 'description' => 'Activos = NO'],
         ];
-        $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
 
-        $this->views['List' . $model]->addFilterAutocomplete('xIdservice', 'Servicio discrecional', 'idservice', 'services', 'idservice', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice', 'Servicio discrecional', 'idservice', 'services', 'idservice', 'nombre');
     }
     
-    protected function createViewValuations($model = 'Service_valuation')
+    protected function createViewValuations($viewName = 'ListServiceValuation')
     {
-        // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
-        // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
-        // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
-        // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
-        // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model, 'Valoraciones', 'fas fa-dollar-sign');    
+        $this->addListView($viewName, 'ServiceValuation', 'Valoraciones', 'fas fa-dollar-sign');
+        $this->views[$viewName]->addOrderBy(['idservice', 'orden'], 'Por valoración', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
         
-        $this->views['List' . $model]->addOrderBy(['idservice', 'orden'], 'Por valoración', 1);
-        $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        // Filtros
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
             ['code' => '0', 'description' => 'Activos = NO'],
         ];
-        $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
 
-        $this->views['List' . $model]->addFilterAutocomplete('xIdservice', 'Servicio discrecional', 'idservice', 'services', 'idservice', 'nombre');
-        $this->views['List' . $model]->addFilterAutocomplete('xIdservice_valuation_type', 'Conceptos - valoración', 'idservice_valuation_type', 'service_valuation_types', 'idservice_valuation_type', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice', 'Servicio discrecional', 'idservice', 'services', 'idservice', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice_valuation_type', 'Conceptos - valoración', 'idservice_valuation_type', 'service_valuation_types', 'idservice_valuation_type', 'nombre');
     }
     
     // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
@@ -101,13 +85,13 @@ class EditService extends EditController {
                 $view->loadData('', $where);
                 break;
             
-            case 'ListService_itinerary':
+            case 'ListServiceItinerary':
                 $idservice = $this->getViewModelValue('EditService', 'idservice');
                 $where = [new DatabaseWhere('idservice', $idservice)];
                 $view->loadData('', $where);
                 break;
             
-            case 'ListService_valuation':
+            case 'ListServiceValuation':
                 $idservice = $this->getViewModelValue('EditService', 'idservice');
                 $where = [new DatabaseWhere('idservice', $idservice)];
                 $view->loadData('', $where);

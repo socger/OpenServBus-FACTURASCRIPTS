@@ -4,10 +4,10 @@ namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
 
-class Service extends Base\ModelClass {
+class ServiceRegular extends Base\ModelClass {
     use Base\ModelTrait;
 
-    public $idservice;
+    public $idservice_regular;
         
     public $user_fecha;
     public $user_nick;
@@ -24,11 +24,21 @@ class Service extends Base\ModelClass {
     public $aceptado;
     public $plazas;
     
+    public $cod_servicio;
     public $codcliente;
     public $idvehicle_type;
     public $idhelper;
 
+    public $lunes;
+    public $martes;
+    public $miercoles;
+    public $jueves;
+    public $viernes;
+    public $sabado;
+    public $domingo;
+    
     public $facturar_SN;
+    public $facturar_agrupando;
     
     public $importe;
     public $importe_enextranjero;
@@ -72,25 +82,22 @@ class Service extends Base\ModelClass {
     public $codsubcuenta_km_nacional;
     public $codsubcuenta_km_extranjero;
     
+    public $idservice_regular_period;
     public $fecha_desde;
     public $fecha_hasta;
 
     public $hora_anticipacion;
     public $hora_desde;
     public $hora_hasta;
-
+    
     public $inicio_horaAnt;
-    public $inicio_dia;
-    public $inicio_hora;
-    public $fin_dia;
-    public $fin_hora;
-    
+
     public $salida_desde_nave_sn;
-//    public $observaciones_periodo;
-    public $idfactura;
+    public $salida_desde_nave_text;
     
-//    public $combinadoSN;
-//    public $combinadoSiNo;
+    public $observaciones_periodo;
+    public $combinadoSN;
+    public $combinadoSiNo;
     
     public $llamadoDesdeFuera; // Para comprobar si se usa el metodo save desde otro sitio que no sea el controlador EditService.php
     
@@ -101,7 +108,17 @@ class Service extends Base\ModelClass {
         
         $this->activo = true; // Por defecto estará activo
 
+        $this->lunes = false;
+        $this->martes = false;
+        $this->miercoles = false;
+        $this->jueves = false;
+        $this->viernes = false;
+        $this->sabado = false;
+        $this->domingo = false;
+    
         $this->facturar_SN = true;
+        $this->facturar_agrupando = true;
+
         $this->importe = 0;
         $this->importe_enextranjero = 0;
         $this->total = 0;
@@ -133,12 +150,12 @@ class Service extends Base\ModelClass {
 
     // función que devuelve el id principal
     public static function primaryColumn(): string {
-        return 'idservice';
+        return 'idservice_regular';
     }
     
     // función que devuelve el nombre de la tabla
     public static function tableName(): string {
-        return 'services';
+        return 'service_regulars';
     }
 
     // Para realizar cambios en los datos antes de guardar por modificación
@@ -149,12 +166,8 @@ class Service extends Base\ModelClass {
         if ($this->comprobarSiActivo() == false){
             return false;
         }
-        
-        $idService = $this->idservice;
+
         $respuesta = parent::saveUpdate($values);
-        if ($respuesta === true) {
-            $this->actualizarServicioEnMontaje($idService);
-        }
         return $respuesta;
     }
 
@@ -162,8 +175,13 @@ class Service extends Base\ModelClass {
     protected function saveInsert(array $values = [])
     {
         // Creamos el nuevo id
-        if (empty($this->idservice)) {
-            $this->idservice = $this->newCode();
+        if (empty($this->idservice_regular)) {
+            $this->idservice_regular = $this->newCode();
+        }
+
+        // Rellenamos cod_servicio si no lo introdujo el usuario
+        if (empty($this->cod_servicio)) {
+            $this->cod_servicio = (string) $this->newCode();
         }
 
         $this->rellenarDatosAlta();
@@ -176,14 +194,14 @@ class Service extends Base\ModelClass {
         $respuesta = parent::saveInsert($values);
         return $respuesta;
     }
-
+    
     public function test() {
         if (true === $this->llamadoDesdeFuera) {
              // Está siendo usado el metodo save desde otro sitio que no es el controlador EditService.php
             return parent::test();
         }
 
-        if ($this->checkFields() == false) {
+        if ($this->checkFields() === false) {
             return false;
         }
 
@@ -229,6 +247,35 @@ class Service extends Base\ModelClass {
         $this->fechaalta = $this->user_fecha; 
     }
 
+    private function comprobarFacturacion()
+    {
+        $a_devolver = true;
+        if ( $this->facturar_SN === false and 
+             $this->facturar_agrupando === true  ) 
+        {
+            $a_devolver = false;
+            $this->toolBox()->i18nLog()->error('Si elige FACTURAR = NO, no puede elegir AGRUPANDO = SI.');
+        }
+        return $a_devolver;
+    }
+    
+    private function comprobarDiasServicio()
+    {
+        $a_devolver = true;
+        if ( $this->lunes == false and 
+             $this->martes == false and 
+             $this->miercoles == false and 
+             $this->jueves == false and 
+             $this->viernes == false and 
+             $this->sabado == false and 
+             $this->domingo == false ) 
+        {
+            $a_devolver = false;
+            $this->toolBox()->i18nLog()->error('Ya que es un servicio regular/fijo, debe de elegirme que días de la semana se va a realizar.');
+        }
+        return $a_devolver;
+    }
+	
     private function evitarInyeccionSQL()
     {
         $utils = $this->toolBox()->utils();
@@ -261,154 +308,171 @@ class Service extends Base\ModelClass {
         $this->driver_observaciones_3 = $utils->noHtml($this->driver_observaciones_3);
     }
     
-    public function rellenarTotal()
+    private function completarDatosUltimoPeriodo()
     {
-        $cliente_RegimenIVA = '';
-        $cliente_CodRetencion = '';
-        $cliente_PorcentajeRetencion = 0.0;
+        if (empty($this->idservice_regular)) {
+            return;
+        }
         
-        $this->total = $this->importe + $this->importe_enextranjero;
-        
-        // Traemos los datos del cliente sólo si hay algún importe y si hay algún tipo de impuesto
-        if ($this->importe <> 0 || $this->importe_enextranjero <> 0) {
-            if (!empty($this->codimpuesto) || !empty($this->codimpuesto_enextranjero)) { 
-                // Cargar datos del cliente que nos interesan
-                $sql = ' SELECT clientes.regimeniva '
-                     .      ' , clientes.codretencion '
-                     .      ' , retenciones.porcentaje '
-                     . ' FROM clientes '
-                     . ' LEFT JOIN retenciones ON (retenciones.codretencion = clientes.codretencion) '                        
-                     . ' WHERE clientes.codcliente = "' . $this->codcliente . '" '
-                     ;
+        $sql = ' SELECT idservice_regular_period '
+             .      ' , fecha_desde '
+             .      ' , fecha_hasta '
+             .      ' , hora_anticipacion '
+             .      ' , hora_desde '
+             .      ' , hora_hasta '
+             .      ' , salida_desde_nave_sn '
+             .      ' , observaciones '
+             . ' FROM service_regular_periods '
+             . ' WHERE idservice_regular = ' . $this->idservice_regular . ' '
+             .   ' AND activo = 1 '
+             . ' ORDER BY fecha_desde DESC '
+             .        ' , fecha_hasta DESC '
+             .        ' , hora_desde DESC '
+             .        ' , hora_hasta DESC '
+             .        ' , idservice_regular '
+             . ' LIMIT 1 '
+             ;
 
-                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
-                
-                foreach ($registros as $fila) {
-                    $cliente_RegimenIVA = $fila['regimeniva'];
-                    $cliente_CodRetencion = $fila['codretencion'];
-                    $cliente_PorcentajeRetencion = $fila['porcentaje'];
+        $this->idservice_regular_period = null;
+        $this->fecha_desde = null;
+        $this->fecha_hasta = null;
+        $this->hora_anticipacion = null;
+        $this->hora_desde = null;
+        $this->hora_hasta = null;
+        $this->salida_desde_nave_sn = null;
+        $this->observaciones_periodo = null;
+        
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $this->idservice_regular_period = $fila['idservice_regular_period'];
+            $this->fecha_desde = $fila['fecha_desde'];
+            $this->fecha_hasta = $fila['fecha_hasta'];
+            $this->hora_anticipacion = $fila['hora_anticipacion'];
+            $this->hora_desde = $fila['hora_desde'];
+            $this->hora_hasta = $fila['hora_hasta'];
+            $this->salida_desde_nave_sn = $fila['salida_desde_nave_sn'];
+            $this->observaciones_periodo = $fila['observaciones'];
+        }
+    }
+
+    private function completarCombinadoSN()
+    {
+        if (empty($this->idservice_regular)) {
+            return;
+        }
+        
+        $sql = ' SELECT COUNT(*) AS cantidad '
+             . ' FROM service_regular_combination_servs '
+             . ' WHERE service_regular_combination_servs.idservice_regular = ' . $this->idservice_regular . ' '
+             . ' AND service_regular_combination_servs.activo = 1 '
+             . ' ORDER BY service_regular_combination_servs.idservice_regular '
+             ;
+
+        $this->combinadoSN = false;
+        
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            if ($fila['cantidad'] > 0){
+                $this->combinadoSN = true;
+            }
+        }
+    }
+    
+    private function rellenarConductorVehiculoSiVacios()
+    {
+        if (empty($this->iddriver_1) || empty($this->idvehicle)) {
+            $this->toolBox()->i18nLog()->info( 'Si no rellena el vehículo o el conductor, este será el orden de prioridades para el Montaje de Servicios:'
+                                             . ' 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular' );
+        }
+    }
+    
+    private function hayCombinacionesDondeEsteElServicioQueNoCoincidenLosDiasDeSemana() : bool
+    {
+        if (empty($this->idservice_regular)) {
+            return false;
+        }
+        
+        $combinacionesConDiasDiferentes = [];
+        
+        $sql = ' SELECT service_regular_combinations.lunes '
+             .      ' , service_regular_combinations.martes '
+             .      ' , service_regular_combinations.miercoles '
+             .      ' , service_regular_combinations.jueves '
+             .      ' , service_regular_combinations.viernes '
+             .      ' , service_regular_combinations.sabado '
+             .      ' , service_regular_combinations.domingo '
+             .      ' , service_regular_combinations.idservice_regular_combination '
+             .      ' , service_regular_combinations.nombre '
+             . ' FROM service_regular_combination_servs '
+             . ' LEFT JOIN service_regular_combinations on (service_regular_combinations.idservice_regular_combination = service_regular_combination_servs.idservice_regular_combination) '
+             . ' WHERE service_regular_combination_servs.idservice_regular = ' . $this->idservice_regular
+             ;
+
+        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+        foreach ($registros as $fila) {
+            $coincideAlgunDia = false;
+            
+            // Una combinación puede tener varios servicios regulares, por lo 
+            // que tengo que comprobar todos sus servicios
+            if ($this->lunes == 1) {
+                if ($this->lunes == $fila['lunes']) {
+                    $coincideAlgunDia = true;
                 }
             }
-        }
 
-        $this->calcularImpuesto($this->importe, $this->codimpuesto, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $this->total);
-        $this->calcularImpuesto($this->importe_enextranjero, $this->codimpuesto_enextranjero, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $this->total);
-        
-        $this->total = \round($this->total, (int) \FS_NF0);
-        
-    }
-    
-    private function crearFechaDesde()
-    {
-        $fecha = '';
-        if ($this->inicio_dia <> '01-01-1970'){
-            $fecha = $fecha . $this->inicio_dia;
-        }
-        $this->fecha_desde = $fecha;
-    }
+            if ($this->martes == 1) {
+                if ($this->martes == $fila['martes']) {
+                    $coincideAlgunDia = true;
+                }
+            }
 
-    private function crearFechaHasta()
-    {
-        $fecha = '';
-        if ($this->fin_dia <> '01-01-1970'){
-            $fecha = $fecha . $this->fin_dia;
-        }
-        $this->fecha_hasta = $fecha;
-    }
-    
-    private function crearHoraAnticipacion()
-    {
-        $fecha = '';
-        if ($this->inicio_dia <> '01-01-1970'){
-            $fecha = $fecha . $this->inicio_dia;
-        }
-        
-        if (!empty($this->inicio_horaAnt)){
-            $fecha = $fecha . ' ' . $this->inicio_horaAnt;
-        }
-        $this->hora_anticipacion = $fecha;
-    }
+            if ($this->miercoles == 1) {
+                if ($this->miercoles == $fila['miercoles']) {
+                    $coincideAlgunDia = true;
+                }
+            }
 
-    private function crearHoraDesde()
-    {
-        $fecha = '';
-        if ($this->inicio_dia <> '01-01-1970'){
-            $fecha = $fecha . $this->inicio_dia;
-        }
-        
-        if (!empty($this->inicio_hora)){
-            $fecha = $fecha . ' ' . $this->inicio_hora;
-        }
-        $this->hora_desde = $fecha;
-    }
+            if ($this->jueves == 1) {
+                if ($this->jueves == $fila['jueves']) {
+                    $coincideAlgunDia = true;
+                }
+            }
 
-    private function crearHoraHasta()
-    {
-        $fecha = '';
-        if ($this->inicio_dia <> '01-01-1970'){
-            $fecha = $fecha . $this->inicio_dia;
-        }
-        
-        if (!empty($this->fin_hora)){
-            $fecha = $fecha . ' ' . $this->fin_hora;
-        }
-        $this->hora_hasta = $fecha;
-    }
+            if ($this->viernes == 1) {
+                if ($this->viernes == $fila['viernes']) {
+                    $coincideAlgunDia = true;
+                }
+            }
 
-    private function checkFechasPeriodo()
-    {
-        $a_devolver = true;
-        
-        // La fecha de inicio es obligatoria
-        if (empty($this->fecha_desde)) 
-        {
-            $a_devolver = false;
-            $this->toolBox()->i18nLog()->error('La fecha de inicio, debe de introducirla.');
-        }
+            if ($this->sabado == 1) {
+                if ($this->sabado == $fila['sabado']) {
+                    $coincideAlgunDia = true;
+                }
+            }
 
-        // Si fecha hasta está introducida y fecha desde no está vacía y además es mayor que fecha hasta ... fallo
-        if (!empty($this->fecha_hasta)) 
-        {
-            if ( !empty($this->fecha_desde) and 
-                 $this->fecha_desde > $this->fecha_hasta ) 
-            {
-                $a_devolver = false;
-                $this->toolBox()->i18nLog()->error('La fecha de inicio, no puede ser mayor que la fecha de fin.');
+            if ($this->domingo == 1) {
+                if ($this->domingo == $fila['domingo']) {
+                    $coincideAlgunDia = true;
+                }
+            }
+
+            if ($coincideAlgunDia === false) {
+                $combinacionesConDiasDiferentes[] = $fila['nombre'];
             }
         }
-        return $a_devolver;
-    }
-    
-    private function checkHorasPeriodo()
-    {
-        $a_devolver = true;
         
-        // La hora de inicio es obligatoria
-        if (empty($this->hora_desde)) 
-        {
-            $a_devolver = false;
-            $this->toolBox()->i18nLog()->error('La hora de inicio, debe de introducirla.');
-        }
-
-        // La hora de fin es obligatoria
-        if (empty($this->hora_hasta)) 
-        {
-            $a_devolver = false;
-            $this->toolBox()->i18nLog()->error('La hora fin, debe de introducirla.');
-        }
-
-        // Si fecha hasta está introducida y fecha desde no está vacía y además es mayor que fecha hasta ... fallo
-        if (!empty($this->hora_hasta)) 
-        {
-            if ( !empty($this->hora_desde) and 
-                 $this->hora_desde > $this->hora_hasta ) 
-            {
-                $a_devolver = false;
-                $this->toolBox()->i18nLog()->error('La hora de inicio, no puede ser mayor que la hora de fin.');
+        if (empty($combinacionesConDiasDiferentes)) {
+            return false;
+        } else {
+            foreach ($combinacionesConDiasDiferentes as $combinacion) {
+                $this->toolBox()->i18nLog()->error( "Los días de la semana de la combinación $combinacion no coinciden con los días de la semana de este servicio regular." );
             }
+            
+            return true;
         }
-
-        return $a_devolver;
     }
     
     private function calcularImpuesto($importe, $codimpuesto, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, &$total) 
@@ -472,26 +536,65 @@ class Service extends Base\ModelClass {
         }
         
     }
+
+    public function rellenarTotal()
+    {
+        $cliente_RegimenIVA = '';
+        $cliente_CodRetencion = '';
+        $cliente_PorcentajeRetencion = 0.0;
+        
+        $this->total = $this->importe + $this->importe_enextranjero;
+        
+        // Traemos los datos del cliente sólo si hay algún importe y si hay algún tipo de impuesto
+        if ($this->importe <> 0 || $this->importe_enextranjero <> 0) {
+            if (!empty($this->codimpuesto) || !empty($this->codimpuesto_enextranjero)) { 
+                // Cargar datos del cliente que nos interesan
+                $sql = ' SELECT clientes.regimeniva '
+                     .      ' , clientes.codretencion '
+                     .      ' , retenciones.porcentaje '
+                     . ' FROM clientes '
+                     . ' LEFT JOIN retenciones ON (retenciones.codretencion = clientes.codretencion) '                        
+                     . ' WHERE clientes.codcliente = "' . $this->codcliente . '" '
+                     ;
+
+                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+                
+                foreach ($registros as $fila) {
+                    $cliente_RegimenIVA = $fila['regimeniva'];
+                    $cliente_CodRetencion = $fila['codretencion'];
+                    $cliente_PorcentajeRetencion = $fila['porcentaje'];
+                }
+            }
+        }
+
+        $this->calcularImpuesto($this->importe, $this->codimpuesto, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $this->total);
+        $this->calcularImpuesto($this->importe_enextranjero, $this->codimpuesto_enextranjero, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $this->total);
+        
+        $this->total = \round($this->total, (int) \FS_NF0);
+        
+    }
     
     private function checkFields()
     {
         $aDevolver = true;
-
-        $this->crearFechaDesde();
-        $this->crearFechaHasta();
         
-        $this->crearHoraAnticipacion();
-        $this->crearHoraDesde();
-        $this->crearHoraHasta();
-
-        if ($this->checkFechasPeriodo() == false){
+        // Comprobamos que el código se ha introducido correctamente
+        if (!empty($this->cod_servicio) && 1 !== \preg_match('/^[A-Z0-9_\+\.\-]{1,10}$/i', $this->cod_servicio)) {
+            $this->toolBox()->i18nLog()->error(
+                'invalid-alphanumeric-code',
+                ['%value%' => $this->cod_servicio, '%column%' => 'cod_servicio', '%min%' => '1', '%max%' => '10']
+            );
             $aDevolver = false;
         }
         
-        if ($this->checkHorasPeriodo() == false){
+        if ($this->comprobarDiasServicio() == false){
             $aDevolver = false;
         }
-
+        
+        if ($this->comprobarFacturacion() == false){
+            $aDevolver = false;
+        }
+        
         if (empty($this->codcliente)) {
             $aDevolver = false;
             $this->toolBox()->i18nLog()->error('Debe de asignar el servicio a un cliente.');
@@ -566,7 +669,7 @@ class Service extends Base\ModelClass {
             $aDevolver = false;
             $this->toolBox()->i18nLog()->error('No ha elegido la fecha de fin del servicio.');
         }
-        
+
         if (empty($this->plazas) or $this->plazas <= 0) {
             $aDevolver = false;
             $this->toolBox()->i18nLog()->error('Debe de completar las plazas.');
@@ -576,76 +679,18 @@ class Service extends Base\ModelClass {
             $this->toolBox()->i18nLog()->info('Si no acepta el servicio, no podrá montarse.');
         }
 
+        if ($this->hayCombinacionesDondeEsteElServicioQueNoCoincidenLosDiasDeSemana() == true) {
+            $aDevolver = false;
+        }
+        
+        $this->rellenarConductorVehiculoSiVacios();
+        $this->completarCombinadoSN();
+        $this->completarDatosUltimoPeriodo();
+
         $this->codsubcuenta_km_nacional = empty($this->codsubcuenta_km_nacional) ? null : $this->codsubcuenta_km_nacional;
         $this->codsubcuenta_km_extranjero = empty($this->codsubcuenta_km_extranjero) ? null : $this->codsubcuenta_km_extranjero;
         
         return $aDevolver;
-    }
-    
-    private function actualizarServicioEnMontaje($idservice)
-    {
-        // Actualizamos el servicio discrecional en montaje de servicios
-        $sql = ' UPDATE service_assemblies AS S1, services AS S2 '
-             . ' SET S1.nombre = S2.nombre '
-             .    ', S1.fechaalta = S2.fechaalta '
-             .    ', S1.useralta = S2.useralta '
-             .    ', S1.fechamodificacion = S2.fechamodificacion '
-             .    ', S1.usermodificacion = S2.usermodificacion '
-             .    ', S1.activo = S2.activo '
-             .    ', S1.fechabaja = S2.fechabaja '
-             .    ', S1.userbaja = S2.userbaja '
-             .    ', S1.motivobaja = S2.motivobaja '
-             .    ', S1.plazas = S2.plazas '
-                
-             .    ', S1.codcliente = S2.codcliente '
-             .    ', S1.idvehicle_type = S2.idvehicle_type '
-             .    ', S1.idhelper = S2.idhelper '
-             .    ', S1.facturar_SN = S2.facturar_SN '
-             .    ', S1.facturar_agrupando = 0 '
-             .    ', S1.importe = S2.importe '
-             .    ', S1.importe_enextranjero = S2.importe_enextranjero '
-             .    ', S1.codimpuesto = S2.codimpuesto '
-             .    ', S1.codimpuesto_enextranjero = S2.codimpuesto_enextranjero '
-             .    ', S1.total = S2.total '
-             .    ', S1.fuera_del_municipio = S2.fuera_del_municipio '
-             .    ', S1.hoja_ruta_origen = S2.hoja_ruta_origen '
-             .    ', S1.hoja_ruta_destino = S2.hoja_ruta_destino '
-             .    ', S1.hoja_ruta_expediciones = S2.hoja_ruta_expediciones '
-             .    ', S1.hoja_ruta_contratante = S2.hoja_ruta_contratante '
-             .    ', S1.hoja_ruta_tipoidfiscal = S2.hoja_ruta_tipoidfiscal '
-             .    ', S1.hoja_ruta_cifnif = S2.hoja_ruta_cifnif '
-             .    ', S1.idservice_type = S2.idservice_type ' 
-             .    ', S1.idempresa = S2.idempresa '
-             .    ', S1.observaciones = S2.observaciones '
-             .    ', S1.observaciones_montaje = S2.observaciones_montaje '
-             .    ', S1.observaciones_vehiculo = S2.observaciones_vehiculo '
-             .    ', S1.observaciones_facturacion = S2.observaciones_facturacion '
-             .    ', S1.observaciones_liquidacion = S2.observaciones_liquidacion '
-             .    ', S1.observaciones_drivers = S2.observaciones_drivers '
-             .    ', S1.iddriver_1 = S2.iddriver_1 '
-             .    ', S1.driver_alojamiento_1 = S2.driver_alojamiento_1 '
-             .    ', S1.driver_observaciones_1 = S2.driver_observaciones_1 '
-             .    ', S1.iddriver_2 = S2.iddriver_2 '
-             .    ', S1.driver_alojamiento_2 = S2.driver_alojamiento_2 '
-             .    ', S1.driver_observaciones_2 = S2.driver_observaciones_2 '
-             .    ', S1.iddriver_3 = S2.iddriver_3 '
-             .    ', S1.driver_alojamiento_3 = S2.driver_alojamiento_3 '
-             .    ', S1.driver_observaciones_3 = S2.driver_observaciones_3 '
-             .    ', S1.idvehicle = S2.idvehicle '
-             .    ', S1.codsubcuenta_km_nacional = S2.codsubcuenta_km_nacional '
-             .    ', S1.codsubcuenta_km_extranjero = S2.codsubcuenta_km_extranjero '
-             .    ', S1.fecha_desde = S2.fecha_desde '
-             .    ', S1.fecha_hasta = S2.fecha_hasta '
-             .    ', S1.hora_anticipacion = S2.hora_anticipacion '
-             .    ', S1.hora_desde = S2.hora_desde '
-             .    ', S1.hora_hasta = S2.hora_hasta '
-             .    ', S1.salida_desde_nave_sn = S2.salida_desde_nave_sn '
-                
-             . ' WHERE S1.idservice = ' . $idservice . ' '
-             . ' AND S2.idservice = ' . $idservice . ';'
-        ;
-        
-        self::$dataBase->exec($sql);
     }
     
 }

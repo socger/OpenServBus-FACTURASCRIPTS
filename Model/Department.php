@@ -76,6 +76,11 @@ class Department extends Base\ModelClass {
         return parent::test();
     }
 
+    public function url(string $type = 'auto', string $list = 'ListHelper'): string
+    {
+        return parent::url($type, $list . '?activetab=List');
+    }
+
 
     // ** ********************************** ** //
     // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
