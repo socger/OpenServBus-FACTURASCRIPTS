@@ -31,20 +31,6 @@ class EditVehicleDocumentation extends EditController
         $this->createViewDocFiles();
     }
 
-    protected function loadData($viewName, $view)
-    {
-        switch ($viewName) {
-            case 'docfiles':
-                $this->loadDataDocFiles($view, $this->getModelClassName(), $this->getModel()->primaryColumnValue());
-                break;
-
-            default:
-                parent::loadData($viewName, $view);
-                break;
-
-        }
-    }
-
     protected function execPreviousAction($action): bool
     {
         switch ($action) {
@@ -62,5 +48,19 @@ class EditVehicleDocumentation extends EditController
         }
 
         return parent::execPreviousAction($action);
+    }
+
+    protected function loadData($viewName, $view)
+    {
+        switch ($viewName) {
+            case 'docfiles':
+                $this->loadDataDocFiles($view, $this->getModelClassName(), $this->getModel()->primaryColumnValue());
+                break;
+
+            default:
+                parent::loadData($viewName, $view);
+                break;
+
+        }
     }
 }
