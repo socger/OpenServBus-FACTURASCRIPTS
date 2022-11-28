@@ -1,63 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <column>
-        <name>idemployee_attendance_management</name>
-        <type>serial</type>
-        <null>NO</null>
-    </column>
-    
-    
-    <column>
-        <name>fechaalta</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>useralta</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>fechamodificacion</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>usermodificacion</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
         <name>activo</name>
         <type>boolean</type>
         <default>true</default>
-    </column>
-    <column>
-        <name>fechabaja</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>userbaja</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>motivobaja</name>
-        <type>character varying(100)</type>
-    </column>
-    
-    
-    <column>
-        <name>idemployee</name>
-        <type>integer</type>
-        <null>NO</null>
-    </column>
-    <column>
-        <name>origen</name>
-        <type>integer</type>
-        <null>NO</null>
     </column>
     <column>
         <name>fecha</name>
         <type>timestamp</type>
     </column>
     <column>
+        <name>fechaalta</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>fechabaja</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>fechamodificacion</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>idabsence_reason</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idemployee</name>
+        <type>integer</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>idemployee_attendance_management</name>
+        <type>serial</type>
+        <null>NO</null>
+    </column>
+    <column>
         <name>ididentification_mean</name>
+        <type>integer</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>motivobaja</name>
+        <type>character varying(100)</type>
+    </column>
+    <column>
+        <name>observaciones</name>
+        <type>text</type>
+    </column>
+    <column>
+        <name>origen</name>
         <type>integer</type>
         <null>NO</null>
     </column>
@@ -66,29 +58,44 @@
         <type>integer</type>
         <null>NO</null>
     </column>
-
-
     <column>
-        <name>idabsence_reason</name>
-        <type>integer</type>
+        <name>useralta</name>
+        <type>character varying(50)</type>
     </column>
-
-        
     <column>
-        <name>observaciones</name>
-        <type>text</type>
+        <name>userbaja</name>
+        <type>character varying(50)</type>
     </column>
-    
-    
+    <column>
+        <name>usermodificacion</name>
+        <type>character varying(50)</type>
+    </column>
     <constraint>
         <name>employee_attendance_managements_pkey</name>
         <type>PRIMARY KEY (idemployee_attendance_management)</type>
     </constraint>
-    
-    
     <constraint>
         <name>ca_employee_attendance_managements__employees</name>
         <type>FOREIGN KEY (idemployee) REFERENCES employees (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
+    <constraint>
+        <name>ca_employee_attendance_managements__absence_reasons</name>
+        <type>FOREIGN KEY (idabsence_reason) REFERENCES absence_reasons (idabsence_reason) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_employee_attendance_managements__identification_means</name>
+        <type>FOREIGN KEY (ididentification_mean) REFERENCES identification_means (ididentification_mean) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+    </constraint>
+    <constraint>
+        <name>ca_employee_attendance_managements__users_alta</name>
+        <type>FOREIGN KEY (useralta) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_employee_attendance_managements__users_baja</name>
+        <type>FOREIGN KEY (userbaja) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_employee_attendance_managements__users_modificacion</name>
+        <type>FOREIGN KEY (usermodificacion) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
 </table>
-

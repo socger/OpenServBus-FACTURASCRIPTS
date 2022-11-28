@@ -1,21 +1,22 @@
 <?php
+
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
-class ListEmployeeAttendanceManagement extends ListController {
-    
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
-    public function getPageData(): array {
+class ListEmployeeAttendanceManagement extends ListController
+{
+    public function getPageData(): array
+    {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'OpenServBus';
         $pageData['title'] = 'Control presencial';
         $pageData['icon'] = 'fas fa-hourglass-half';
         return $pageData;
     }
-    
-    protected function createViews() {
+
+    protected function createViews()
+    {
         $this->createViewEmployeeAttendanceManagement();
         $this->createViewAbsenceReason();
         $this->createViewEmployeeAttendanceManagementYn();
@@ -35,19 +36,19 @@ class ListEmployeeAttendanceManagement extends ListController {
         ];
         $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
     }
-    
+
     protected function createViewEmployeeAttendanceManagement($viewName = 'ListEmployeeAttendanceManagement')
     {
         $this->addView($viewName, 'EmployeeAttendanceManagement', 'Fichajes y asistencias', 'fas fa-hourglass-half');
         $this->addOrderBy($viewName, ['fecha'], 'Fecha', 1);
         $this->addOrderBy($viewName, ['idemployee', 'fecha'], 'Empleado + Fecha');
-        
+
         // Filtros
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
             ['code' => '0', 'description' => 'Activos = NO'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);        
+        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
 
         $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdidentification_mean', 'Identificacion - medio', 'ididentification_mean', 'identification_means', 'ididentification_mean', 'nombre');
@@ -58,8 +59,8 @@ class ListEmployeeAttendanceManagement extends ListController {
             ['code' => '0', 'description' => 'Origen = EXTERNO'],
             ['code' => '1', 'description' => 'Origen = MANUAL'],
         ];
-        $this->addFilterSelect($viewName, 'elOrigen', 'Origen = TODOS', 'origen', $origen);        
-     
+        $this->addFilterSelect($viewName, 'elOrigen', 'Origen = TODOS', 'origen', $origen);
+
         $origen = [
             ['code' => '1', 'description' => 'Tipo fichaje = ENTRADA'],
             ['code' => '0', 'description' => 'Tipo fichaje = SALIDA'],

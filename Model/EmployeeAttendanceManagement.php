@@ -1,122 +1,108 @@
 <?php
 
-namespace FacturaScripts\Plugins\OpenServBus\Model; 
+namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
+use FacturaScripts\Core\Session;
 
-class EmployeeAttendanceManagement extends Base\ModelClass {
+class EmployeeAttendanceManagement extends Base\ModelClass
+{
     use Base\ModelTrait;
 
-    public $idemployee_attendance_management;
-        
-    public $user_fecha;
-    public $user_nick;
-    public $fechaalta;
-    public $useralta;
-    public $fechamodificacion;
-    public $usermodificacion;
+    /** @var bool */
     public $activo;
-    public $fechabaja;
-    public $userbaja;
-    public $motivobaja;
 
-    public $idemployee;
-    public $origen;
+    /** @var string */
     public $fecha;
-    public $fecha_dia;
-    public $fecha_hora;
-    public $ididentification_mean;
-    public $tipoFichaje;
+
+    /** @var string */
+    public $fechaalta;
+
+    /** @var string */
+    public $fechabaja;
+
+    /** @var string */
+    public $fechamodificacion;
+
+    /** @var int */
     public $idabsence_reason;
 
+    /** @var int */
+    public $idemployee;
+
+    /** @var int */
+    public $idemployee_attendance_management;
+
+    /** @var int */
+    public $ididentification_mean;
+
+    /** @var string */
+    public $motivobaja;
+
+    /** @var string */
     public $observaciones;
 
-    
-    // función que inicializa algunos valores antes de la vista del controlador
-    public function clear() {
-        parent::clear();
-        
-        $this->activo = true; // Por defecto estará activo
-        $this->origen = 1; // 0=Externo, 1=Manual
-    }
-    
-    /**
-     * This function is called when creating the model table. Returns the SQL
-     * that will be executed after the creation of the table. Useful to insert values
-     * default.
-     *
-     * @return string
-     */
-    public function install()
-    {
-        /// needed dependency proveedores
-        new Employee();
+    /** @var int */
+    public $origen;
 
+    /** @var int */
+    public $tipoFichaje;
+
+    /** @var string */
+    public $useralta;
+
+    /** @var string */
+    public $userbaja;
+
+    /** @var string */
+    public $usermodificacion;
+
+    public function clear()
+    {
+        parent::clear();
+        $this->activo = true;
+        $this->fecha = date(static::DATETIME_STYLE);
+        $this->fechaalta = date(static::DATETIME_STYLE);
+        $this->origen = 1;
+        $this->useralta = Session::get('user')->nick ?? null;
+    }
+
+    public function install(): string
+    {
+        new Employee();
         return parent::install();
     }
 
-    // función que devuelve el id principal
-    public static function primaryColumn(): string {
+    public static function primaryColumn(): string
+    {
         return 'idemployee_attendance_management';
     }
-    
-    // función que devuelve el nombre de la tabla
-    public static function tableName(): string {
+
+    public static function tableName(): string
+    {
         return 'employee_attendance_managements';
     }
 
-    // Para realizar cambios en los datos antes de guardar por modificación
-    protected function saveUpdate(array $values = [])
+    public function test(): bool
     {
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
+        if ($this->comprobarSiActivo() === false) {
             return false;
         }
-        
-        return parent::saveUpdate($values);
-    }
 
-    // Para realizar cambios en los datos antes de guardar por alta
-    protected function saveInsert(array $values = [])
-    {
-        // Creamos el nuevo id
-        if (empty($this->idemployee_attendance_management)) {
-            $this->idemployee_attendance_management = $this->newCode();
-        }
-
-        $this->rellenarDatosAlta();
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
-            return false;
-        }
-        
-        return parent::saveInsert($values);
-    }
-    
-    public function test()
-    {
-        // Guardamos la fecha, porque en EditEmployee_attendance_management.xml separamos el día y la hora en dos widget
-        $this->fecha = $this->fecha_dia . ' ' . $this->fecha_hora;
-
-        $this->evitarInyeccionSQL();
+        $utils = $this->toolBox()->utils();
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
         return parent::test();
     }
 
-
-    // ** ********************************** ** //
-    // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
-    // ** ********************************** ** //
-    private function comprobarSiActivo()
+    protected function comprobarSiActivo(): bool
     {
         $a_devolver = true;
-        
-        if ($this->activo == false) {
+        if ($this->activo === false) {
             $this->fechabaja = $this->fechamodificacion;
             $this->userbaja = $this->usermodificacion;
-            
-            if (empty($this->motivobaja)){
+
+            if (empty($this->motivobaja)) {
                 $a_devolver = false;
                 $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
             }
@@ -128,23 +114,10 @@ class EmployeeAttendanceManagement extends Base\ModelClass {
         return $a_devolver;
     }
 
-    private function rellenarDatosModificacion()
+    protected function saveUpdate(array $values = []): bool
     {
-        $this->usermodificacion = $this->user_nick; 
-        $this->fechamodificacion = $this->user_fecha; 
+        $this->usermodificacion = Session::get('user')->nick ?? null;
+        $this->fechamodificacion = date(static::DATETIME_STYLE);
+        return parent::saveUpdate($values);
     }
-
-    private function rellenarDatosAlta()
-    {
-        $this->useralta = $this->user_nick; 
-        $this->fechaalta = $this->user_fecha; 
-    }
-	
-    private function evitarInyeccionSQL()
-    {
-        $utils = $this->toolBox()->utils();
-        $this->observaciones = $utils->noHtml($this->observaciones);
-        $this->motivobaja = $utils->noHtml($this->motivobaja);
-    }
-	
 }
