@@ -1,54 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <column>
-        <name>idadvertisment_user</name>
-        <type>serial</type>
-        <null>NO</null>
-    </column>
-    
-    
-    <column>
-        <name>fechaalta</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>useralta</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>fechamodificacion</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>usermodificacion</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
         <name>activo</name>
         <type>boolean</type>
         <default>true</default>
+    </column>
+    <column>
+        <name>codrole</name>
+        <type>character varying(20)</type>
+    </column>
+    <column>
+        <name>fechaalta</name>
+        <type>timestamp</type>
     </column>
     <column>
         <name>fechabaja</name>
         <type>timestamp</type>
     </column>
     <column>
-        <name>userbaja</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>motivobaja</name>
-        <type>character varying(100)</type>
-    </column>
-    
-    
-    <column>
-        <name>nombre</name>
-        <type>character varying(200)</type>
-        <null>NO</null>
-    </column>
-    <column>
-        <name>inicio</name>
+        <name>fechamodificacion</name>
         <type>timestamp</type>
     </column>
     <column>
@@ -56,36 +26,57 @@
         <type>timestamp</type>
     </column>
     <column>
+        <name>idadvertisment_user</name>
+        <type>serial</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>inicio</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>motivobaja</name>
+        <type>character varying(100)</type>
+    </column>
+    <column>
         <name>nick</name>
         <type>character varying(50)</type>
     </column>
     <column>
-        <name>codrole</name>
-        <type>character varying(20)</type>
+        <name>nombre</name>
+        <type>character varying(200)</type>
+        <null>NO</null>
     </column>
-    
-    
     <column>
         <name>observaciones</name>
         <type>text</type>
     </column>
-    
-    
+    <column>
+        <name>useralta</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>userbaja</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>usermodificacion</name>
+        <type>character varying(50)</type>
+    </column>
     <constraint>
         <name>advertisment_users_pkey</name>
         <type>PRIMARY KEY (idadvertisment_user)</type>
     </constraint>
-
     <constraint>
-        <name>ca_advertisment_users__roles</name>
-        <type>FOREIGN KEY (codrole) REFERENCES roles (codrole) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <name>ca_advertisment_users__users_alta</name>
+        <type>FOREIGN KEY (useralta) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
     </constraint>
-
     <constraint>
-        <name>ca_advertisment_users__users</name>
-        <type>FOREIGN KEY (nick) REFERENCES users (nick) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <name>ca_gadvertisment_users__users_baja</name>
+        <type>FOREIGN KEY (userbaja) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
     </constraint>
-        
+    <constraint>
+        <name>ca_advertisment_users__users_modificacion</name>
+        <type>FOREIGN KEY (usermodificacion) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
 </table>
-
-

@@ -1,29 +1,28 @@
 <?php
-    
-// SI MODIFICAMOS ESTE CONTROLADOR TENEMOS QUE VER SI HAY QUE HACER LOS MISMOS CAMBIOS EN ListAdvertisment_user2.php
-    
+
+
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
-class ListAdvertismentUser extends ListController {
-    
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
-    public function getPageData(): array {
+class ListAdvertismentUser extends ListController
+{
+    public function getPageData(): array
+    {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'OpenServBus';
         $pageData['title'] = 'Avisos';
         $pageData['icon'] = 'fas fa-exclamation-triangle';
         return $pageData;
     }
-    
-    protected function createViews() {
+
+    protected function createViews()
+    {
         $this->createAdvertismentUser();
         $this->createAdvertismentUserSession();
     }
-    
+
     protected function createAdvertismentUser($viewName = 'ListAdvertismentUser')
     {
         $this->addView($viewName, 'AdvertismentUser', 'Avisos', 'fas fa-exclamation-triangle');

@@ -1,122 +1,98 @@
 <?php
 
-// SI MODIFICAMOS ESTE MODELO TENEMOS QUE VER SI HAY QUE HACER LOS MISMOS CAMBIOS EN Advertisment_user2.php
-
-namespace FacturaScripts\Plugins\OpenServBus\Model; 
+namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
+use FacturaScripts\Core\Session;
 
-class AdvertismentUser extends Base\ModelClass {
+class AdvertismentUser extends Base\ModelClass
+{
     use Base\ModelTrait;
 
-    public $idadvertisment_user;
-        
-    public $user_fecha;
-    public $user_nick;
-    public $fechaalta;
-    public $useralta;
-    public $fechamodificacion;
-    public $usermodificacion;
+    /** @var bool */
     public $activo;
+
+    /** @var string */
+    public $codrole;
+
+    /** @var string */
+    public $fechaalta;
+
+    /** @var string */
     public $fechabaja;
-    public $userbaja;
+
+    /** @var string */
+    public $fechamodificacion;
+
+    /** @var string */
+    public $fin;
+
+    /** @var int */
+    public $idadvertisment_user;
+
+    /** @var string */
+    public $inicio;
+
+    /** @var string */
     public $motivobaja;
 
+    /** @var string */
+    public $nick;
+
+    /** @var string */
     public $nombre;
 
-    public $inicio;
-    public $inicio_dia;
-    public $inicio_hora;
-
-    public $fin;
-    public $fin_dia;
-    public $fin_hora;
-
-    public $nick;
-    public $codrole;
+    /** @var string */
     public $observaciones;
-    
-    
-    // función que inicializa algunos valores antes de la vista del controlador
-    public function clear() {
+
+    /** @var string */
+    public $useralta;
+
+    /** @var string */
+    public $userbaja;
+
+    /** @var string */
+    public $usermodificacion;
+
+    public function clear()
+    {
         parent::clear();
-        
-        $this->activo = true; // Por defecto estará activo
+        $this->activo = true;
+        $this->fechaalta = date(static::DATETIME_STYLE);
+        $this->fin = date(static::DATETIME_STYLE);
+        $this->inicio = date(static::DATETIME_STYLE);
+        $this->nick = Session::get('user')->nick ?? null;
+        $this->useralta = Session::get('user')->nick ?? null;
     }
-    
-    // función que devuelve el id principal
-    public static function primaryColumn(): string {
+
+    public static function primaryColumn(): string
+    {
         return 'idadvertisment_user';
     }
-    
-    // función que devuelve el nombre de la tabla
-    public static function tableName(): string {
+
+    public static function tableName(): string
+    {
         return 'advertisment_users';
     }
 
-    // Para realizar cambios en los datos antes de guardar por modificación
-    protected function saveUpdate(array $values = [])
+    public function test(): bool
     {
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
+        if ($this->comprobarSiActivo() === false) {
             return false;
         }
-        
-        return parent::saveUpdate($values);
-    }
 
-    // Para realizar cambios en los datos antes de guardar por alta
-    protected function saveInsert(array $values = [])
-    {
-        // Creamos el nuevo id
-        if (empty($this->idadvertisment_user)) {
-            $this->idadvertisment_user = $this->newCode();
-        }
-
-        $this->rellenarDatosAlta();
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
-            return false;
-        }
-        
-        return parent::saveInsert($values);
-    }
-    
-    public function test()
-    {
-        // Exijimos que se introduzca idempresa o idcollaborator
-        if ( (!empty($this->nick)) 
-         and (!empty($this->codrole))
-           ) 
-        {
+        // Exigimos que se introduzca idempresa o idcollaborator
+        if ((!empty($this->nick)) && (!empty($this->codrole))) {
             $this->toolBox()->i18nLog()->error('Puede rellenar el usuario o el grupo de usuarios. También puede dejar el usuario y el grupo de usuarios vacío (el aviso sería para cualquier usuario. Pero no puede rellenar ambos.');
             return false;
         }
 
-        // $this->inicio = $this->inicio_dia . ' ' . $this->inicio_hora;
-        $fecha = '';
-        if ($this->inicio_dia <> '01-01-1970'){
-            $fecha = $fecha . $this->inicio_dia;
-        }
-        if (!empty($this->inicio_hora)){
-            $fecha = $fecha . ' ' . $this->inicio_hora;
-        }
-        $this->inicio = $fecha;
-        
-        // $this->fin = $this->fin_dia . ' ' . $this->fin_hora;
-        $fecha = '';
-        if ($this->fin_dia <> '01-01-1970'){
-        //if (!empty($this->fin_dia)){
-            $fecha = $fecha . $this->fin_dia;
-        }
-        if (!empty($this->fin_hora)){
-            $fecha = $fecha . ' ' . $this->fin_hora;
-        }
-        $this->fin = $fecha;
-
-        $this->evitarInyeccionSQL();
+        $utils = $this->toolBox()->utils();
+        $this->nombre = $utils->noHtml($this->nombre);
+        $this->nick = $utils->noHtml($this->nick);
+        $this->codrole = $utils->noHtml($this->codrole);
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
         return parent::test();
     }
 
@@ -125,19 +101,14 @@ class AdvertismentUser extends Base\ModelClass {
         return parent::url($type, $list . '?activetab=List');
     }
 
-
-    // ** ********************************** ** //
-    // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
-    // ** ********************************** ** //
-    private function comprobarSiActivo()
+    protected function comprobarSiActivo(): bool
     {
         $a_devolver = true;
-        
-        if ($this->activo == false) {
+        if ($this->activo === false) {
             $this->fechabaja = $this->fechamodificacion;
             $this->userbaja = $this->usermodificacion;
-            
-            if (empty($this->motivobaja)){
+
+            if (empty($this->motivobaja)) {
                 $a_devolver = false;
                 $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
             }
@@ -149,27 +120,10 @@ class AdvertismentUser extends Base\ModelClass {
         return $a_devolver;
     }
 
-    private function rellenarDatosModificacion()
+    protected function saveUpdate(array $values = []): bool
     {
-        $this->usermodificacion = $this->user_nick; 
-        $this->fechamodificacion = $this->user_fecha; 
+        $this->usermodificacion = Session::get('user')->nick ?? null;
+        $this->fechamodificacion = date(static::DATETIME_STYLE);
+        return parent::saveUpdate($values);
     }
-
-    private function rellenarDatosAlta()
-    {
-        $this->useralta = $this->user_nick; 
-        $this->fechaalta = $this->user_fecha; 
-    }
-
-    private function evitarInyeccionSQL()
-    {
-        // Para evitar la inección de sql
-        $utils = $this->toolBox()->utils();
-        $this->nombre = $utils->noHtml($this->nombre);
-        $this->nick = $utils->noHtml($this->nick);
-        $this->codrole = $utils->noHtml($this->codrole);
-        $this->observaciones = $utils->noHtml($this->observaciones);
-        $this->motivobaja = $utils->noHtml($this->motivobaja);
-    }
-
 }
