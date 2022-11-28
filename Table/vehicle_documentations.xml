@@ -1,53 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <column>
-        <name>idvehicle_documentation</name>
-        <type>serial</type>
-        <null>NO</null>
+        <name>activo</name>
+        <type>boolean</type>
+        <default>true</default>
     </column>
     <column>
         <name>fechaalta</name>
         <type>timestamp</type>
     </column>
     <column>
-        <name>useralta</name>
-        <type>character varying(50)</type>
+        <name>fechabaja</name>
+        <type>timestamp</type>
     </column>
     <column>
         <name>fechamodificacion</name>
         <type>timestamp</type>
     </column>
     <column>
-        <name>usermodificacion</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>activo</name>
-        <type>boolean</type>
-        <default>true</default>
-    </column>
-    <column>
-        <name>fechabaja</name>
+        <name>fecha_caducidad</name>
         <type>timestamp</type>
-    </column>
-    <column>
-        <name>userbaja</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>motivobaja</name>
-        <type>character varying(100)</type>
-    </column>
-
-
-    <column>
-        <name>nombre</name>
-        <type>character varying(100)</type>
-        <null>NO</null>
-    </column>
-    <column>
-        <name>idvehicle</name>
-        <type>integer</type>
     </column>
     <column>
         <name>iddocumentation_type</name>
@@ -55,22 +27,43 @@
         <null>NO</null>
     </column>
     <column>
-        <name>fecha_caducidad</name>
-        <type>timestamp</type>
+        <name>idvehicle</name>
+        <type>integer</type>
     </column>
-    
+    <column>
+        <name>idvehicle_documentation</name>
+        <type>serial</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>motivobaja</name>
+        <type>character varying(100)</type>
+    </column>
+    <column>
+        <name>nombre</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
     <column>
         <name>observaciones</name>
         <type>text</type>
     </column>
-    
-
+    <column>
+        <name>useralta</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>userbaja</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>usermodificacion</name>
+        <type>character varying(50)</type>
+    </column>
     <constraint>
         <name>vehicle_documentations_pkey</name>
         <type>PRIMARY KEY (idvehicle_documentation)</type>
     </constraint>
-
-    
     <constraint>
         <name>ca_vehicle_documentations__vehicles</name>
         <type>FOREIGN KEY (idvehicle) REFERENCES vehicles (idvehicle) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
@@ -79,12 +72,20 @@
         <name>ca_vehicle_documentations__documentation_types</name>
         <type>FOREIGN KEY (iddocumentation_type) REFERENCES documentation_types (iddocumentation_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
-
-    
+    <constraint>
+        <name>ca_vehicle_documentations_users_alta</name>
+        <type>FOREIGN KEY (useralta) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_vehicle_documentations_users_baja</name>
+        <type>FOREIGN KEY (userbaja) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_vehicle_documentations_users_modificacion</name>
+        <type>FOREIGN KEY (usermodificacion) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
     <constraint>
         <name>uniq_vehicle_documentations__idvehicle_iddocumentationtype</name>
         <type>UNIQUE (idvehicle,iddocumentation_type)</type>
     </constraint>
-    
 </table>
-
