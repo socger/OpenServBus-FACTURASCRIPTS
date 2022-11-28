@@ -130,7 +130,7 @@ class Collaborator extends Base\ModelClass {
         return $a_devolver;
     }
     
-    private function actualizarNombreColaboradorEn()
+    public function actualizarNombreColaboradorEn()
     {
         // Rellenamos el nombre del empleado en otras tablas
         $sql = "UPDATE drivers SET drivers.nombre = '" . $this->nombre . "' WHERE drivers.idcollaborator = " . $this->idcollaborator . ";";

@@ -171,7 +171,7 @@ class Employee extends Base\ModelClass {
         }
     }
         
-    private function actualizarNombreEmpleadoEn()
+    public function actualizarNombreEmpleadoEn()
     {
         // Rellenamos el nombre del empleado en otras tablas
         $sql = "UPDATE drivers SET drivers.nombre = '" . $this->nombre . "' WHERE drivers.idemployee = " . $this->idemployee . ";";

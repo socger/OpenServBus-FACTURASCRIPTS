@@ -59,7 +59,7 @@ class ListHelper extends ListController
     protected function createViewGarage($viewName = 'ListGarage')
     {
         $this->addView($viewName, 'Garage', 'Garajes', 'fas fa-warehouse');
-        $this->addSearchFields($viewName, ['nombre','direccion']);
+        $this->addSearchFields($viewName, ['nombre', 'direccion']);
         $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
 
@@ -87,15 +87,12 @@ class ListHelper extends ListController
         ];
         $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
 
-        $this->addFilterSelectWhere(
-            $viewName,
-            'status',
-            [
-                ['label' => 'Colaboradores/Empleados - Todos', 'where' => []],
-                ['label' => 'Colaboradores sólo', 'where' => [new DataBaseWhere('idcollaborator', '0', '>')]],
-                ['label' => 'Empleados sólo', 'where' => [new DataBaseWhere('idemployee', '0', '>')]]
-            ]
-        );
+        $status = [
+            ['label' => 'Colaboradores/Empleados - Todos', 'where' => []],
+            ['label' => 'Colaboradores sólo', 'where' => [new DataBaseWhere('idcollaborator', '0', '>')]],
+            ['label' => 'Empleados sólo', 'where' => [new DataBaseWhere('idemployee', '0', '>')]]
+        ];
+        $this->addFilterSelectWhere($viewName, 'status', $status);
 
         $this->addFilterAutocomplete($viewName, 'xIdEmpleado', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdCollaborator', 'Colaborador', 'idcollaborator', 'collaborators', 'idcollaborator', 'nombre');
