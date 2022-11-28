@@ -7,9 +7,6 @@ use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
 class ListDriver extends ListController
 {
-
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
     public function getPageData(): array
     {
         $pageData = parent::getPageData();
