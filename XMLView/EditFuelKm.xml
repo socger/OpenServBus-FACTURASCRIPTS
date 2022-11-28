@@ -81,7 +81,7 @@
 
 
         <group name="refueled-with" numcolumns="12" icon="fas fa-cog" title="refueled-with">
-            <column name="identification-mean" titleurl="ListIdentification_mean" numcolumns="4" order="210">
+            <column name="identification-mean" titleurl="ListIdentificationMean" numcolumns="4" order="210">
                 <widget type="select" fieldname="ididentification_mean" icon="far fa-hand-point-right" onclick="EditIdentification_mean" >
                     <values source="identification_means" fieldcode="ididentification_mean" fieldtitle="nombre" />
                 </widget>

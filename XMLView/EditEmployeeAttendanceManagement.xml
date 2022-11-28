@@ -44,7 +44,7 @@
                     <values title="Salida">0</values>
                 </widget>            
             </column>
-            <column name="identification-mean" titleurl="ListIdentification_mean" numcolumns="5" order="160">
+            <column name="identification-mean" titleurl="ListIdentificationMean" numcolumns="5" order="160">
                 <widget type="select" fieldname="ididentification_mean" icon="far fa-hand-point-right" onclick="EditIdentification_mean" required="true">
                     <values source="identification_means" fieldcode="ididentification_mean" fieldtitle="nombre" />
                 </widget>
