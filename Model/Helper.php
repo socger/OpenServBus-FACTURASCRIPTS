@@ -97,20 +97,6 @@ class Helper extends Base\ModelClass
         return parent::test();
     }
 
-    protected function getCollaborator(): Collaborator
-    {
-        $collaborator = new Collaborator();
-        $collaborator->loadFromCode($this->idcollaborator);
-        return $collaborator;
-    }
-
-    protected function getEmployee(): Employee
-    {
-        $employee = new Employee();
-        $employee->loadFromCode($this->idemployee);
-        return $employee;
-    }
-
     protected function comprobarSiActivo(): bool
     {
         $a_devolver = true;
@@ -129,6 +115,20 @@ class Helper extends Base\ModelClass
             $this->motivobaja = null;
         }
         return $a_devolver;
+    }
+
+    protected function getCollaborator(): Collaborator
+    {
+        $collaborator = new Collaborator();
+        $collaborator->loadFromCode($this->idcollaborator);
+        return $collaborator;
+    }
+
+    protected function getEmployee(): Employee
+    {
+        $employee = new Employee();
+        $employee->loadFromCode($this->idemployee);
+        return $employee;
     }
 
     protected function saveInsert(array $values = []): bool
