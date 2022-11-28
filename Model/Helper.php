@@ -144,6 +144,10 @@ class Helper extends Base\ModelClass
 
     protected function saveUpdate(array $values = []): bool
     {
+        if ($this->comprobarSiActivo() === false) {
+            return false;
+        }
+
         $this->usermodificacion = Session::get('user')->nick ?? null;
         $this->fechamodificacion = date(static::DATETIME_STYLE);
         return parent::saveUpdate($values);
