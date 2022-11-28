@@ -68,6 +68,18 @@
         <type>FOREIGN KEY (idcollaborator) REFERENCES collaborators (idcollaborator) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
+        <name>ca_garages_users_alta</name>
+        <type>FOREIGN KEY (useralta) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_garages_users_baja</name>
+        <type>FOREIGN KEY (userbaja) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_garages_users_modificacion</name>
+        <type>FOREIGN KEY (usermodificacion) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
         <name>uniq_idemployee</name>
         <type>UNIQUE (idemployee)</type>
     </constraint>
