@@ -59,6 +59,13 @@ class VehicleDocumentation extends Base\ModelClass
         $this->useralta = Session::get('user')->nick ?? null;
     }
 
+    public function getDocumentarioType(): DocumentationType
+    {
+        $documentation_type = new DocumentationType();
+        $documentation_type->loadFromCode($this->iddocumentation_type);
+        return $documentation_type;
+    }
+
     public function install()
     {
         new Vehicle();
@@ -83,7 +90,7 @@ class VehicleDocumentation extends Base\ModelClass
         }
 
         if (empty($this->fecha_caducidad)) {
-            if ($this->ComprobarSiEsObligadaFechaCaducidad() == 1) {
+            if ($this->getDocumentarioType()->fechacaducidad_obligarla) {
                 $this->toolBox()->i18nLog()->error('Para el tipo de documento elegido, necesitamos rellenar la fecha de caducidad');
                 return false;
             }
@@ -113,18 +120,6 @@ class VehicleDocumentation extends Base\ModelClass
             $this->motivobaja = null;
         }
         return $a_devolver;
-    }
-
-    protected function ComprobarSiEsObligadaFechaCaducidad()
-    {
-        $sql = ' SELECT fechacaducidad_obligarla '
-            . ' FROM documentation_types '
-            . ' WHERE iddocumentation_type = ' . $this->iddocumentation_type . " ";
-        $registros = self::$dataBase->select($sql);
-        foreach ($registros as $fila) {
-            return $fila['fechacaducidad_obligarla'];
-        }
-        return false;
     }
 
     protected function saveUpdate(array $values = []): bool
