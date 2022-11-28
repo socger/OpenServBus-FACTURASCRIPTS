@@ -51,6 +51,10 @@ class Department extends Base\ModelClass
 
     public function test(): bool
     {
+        if ($this->comprobarSiActivo() === false) {
+            return false;
+        }
+
         $utils = $this->toolBox()->utils();
         $this->nombre = $utils->noHtml($this->nombre);
         $this->observaciones = $utils->noHtml($this->observaciones);
@@ -82,20 +86,8 @@ class Department extends Base\ModelClass
         return $a_devolver;
     }
 
-    protected function saveInsert(array $values = []): bool
-    {
-        if ($this->comprobarSiActivo() === false) {
-            return false;
-        }
-
-        return parent::saveInsert($values);
-    }
-
     protected function saveUpdate(array $values = []): bool
     {
-        if ($this->comprobarSiActivo() === false) {
-            return false;
-        }
         $this->usermodificacion = Session::get('user')->nick ?? null;
         $this->fechamodificacion = date(static::DATETIME_STYLE);
         return parent::saveUpdate($values);

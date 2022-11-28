@@ -99,6 +99,10 @@ class Garage extends Base\ModelClass
 
     public function test(): bool
     {
+        if ($this->comprobarSiActivo() === false) {
+            return false;
+        }
+
         if (empty($this->idempresa)) {
             $this->idempresa = $this->toolBox()->appSettings()->get('default', 'idempresa');
         }
@@ -145,20 +149,8 @@ class Garage extends Base\ModelClass
         return $a_devolver;
     }
 
-    protected function saveInsert(array $values = []): bool
-    {
-        if ($this->comprobarSiActivo() === false) {
-            return false;
-        }
-
-        return parent::saveInsert($values);
-    }
-
     protected function saveUpdate(array $values = []): bool
     {
-        if ($this->comprobarSiActivo() === false) {
-            return false;
-        }
         $this->usermodificacion = Session::get('user')->nick ?? null;
         $this->fechamodificacion = date(static::DATETIME_STYLE);
         return parent::saveUpdate($values);
