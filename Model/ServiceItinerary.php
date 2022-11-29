@@ -1,118 +1,134 @@
 <?php
 
-namespace FacturaScripts\Plugins\OpenServBus\Model; 
+namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
+use FacturaScripts\Core\Session;
 
-class ServiceItinerary extends Base\ModelClass {
+class ServiceItinerary extends Base\ModelClass
+{
     use Base\ModelTrait;
 
-    public $idservice_itinerary;
-        
-    public $user_fecha;
-    public $user_nick;
-    public $fechaalta;
-    public $useralta;
-    public $fechamodificacion;
-    public $usermodificacion;
+    /** @var bool */
     public $activo;
+
+    /** @var string */
+    public $fechaalta;
+
+    /** @var string */
     public $fechabaja;
-    public $userbaja;
-    public $motivobaja;
-    
+
+    /** @var string */
+    public $fechamodificacion;
+
+    /** @var string */
+    public $hora;
+
+    /** @var int */
     public $idservice;
 
-    public $orden;
+    /** @var int */
+    public $idservice_itinerary;
+
+    /** @var int */
+    public $kms;
+
+    /** @var bool */
+    public $kms_enExtranjero;
+
+    /** @var bool */
+    public $kms_vacios;
+
+    /** @var string */
+    public $motivobaja;
+
+    /** @var string */
     public $nombre;
 
-    public $hora;
-    public $inicio_hora;
-    
-    public $kms;
-    public $kms_vacios;
-    public $kms_enExtranjero;
-    public $pasajeros_entradas;
-    public $pasajeros_salidas;
-    
+    /** @var string */
     public $observaciones;
-    
-    // función que inicializa algunos valores antes de la vista del controlador
-    public function clear() {
+
+    /** @var int */
+    public $orden;
+
+    /** @var int */
+    public $pasajeros_entradas;
+
+    /** @var int */
+    public $pasajeros_salidas;
+
+    /** @var string */
+    public $useralta;
+
+    /** @var string */
+    public $userbaja;
+
+    /** @var string */
+    public $usermodificacion;
+
+    public function clear()
+    {
         parent::clear();
-        
-        $this->activo = true; // Por defecto estará activo
+        $this->activo = true;
+        $this->fechaalta = date(static::DATETIME_STYLE);
         $this->kms = 0;
         $this->kms_vacios = false;
         $this->pasajeros_entradas = 0;
         $this->pasajeros_salidas = 0;
         $this->kms_enExtranjero = false;
+        $this->useralta = Session::get('user')->nick ?? null;
     }
-    
-    /**
-     * This function is called when creating the model table. Returns the SQL
-     * that will be executed after the creation of the table. Useful to insert values
-     * default.
-     *
-     * @return string
-     */
-    public function install()
-    {
-        /// needed dependency proveedores
-        new Service();
 
+    public function getServicio(): Service
+    {
+        $servicio = new Service();
+        $servicio->loadFromCode($this->idservice);
+        return $servicio;
+    }
+
+    public function install(): string
+    {
+        new Service();
         return parent::install();
     }
 
-    // función que devuelve el id principal
-    public static function primaryColumn(): string {
+    public static function primaryColumn(): string
+    {
         return 'idservice_itinerary';
     }
-    
-    // función que devuelve el nombre de la tabla
-    public static function tableName(): string {
+
+    public static function tableName(): string
+    {
         return 'service_itineraries';
     }
 
-    // Para realizar cambios en los datos antes de guardar por modificación
-    protected function saveUpdate(array $values = [])
+    public function test(): bool
     {
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
+        if ($this->comprobarSiActivo() === false) {
             return false;
         }
 
-        return parent::saveUpdate($values);
-    }
-
-    // Para realizar cambios en los datos antes de guardar por alta
-    protected function saveInsert(array $values = [])
-    {
-        // Creamos el nuevo id
-        if (empty($this->idservice_itinerary)) {
-            $this->idservice_itinerary = $this->newCode();
-        }
-
-        $this->rellenarDatosAlta();
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
+        if (empty($this->idservice)) {
+            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio discrecional al que pertenece este itinerario.');
             return false;
         }
 
-        return parent::saveInsert($values);
-    }
-    
-    public function test() {
-        $this->crearHora();
-        
-        if ($this->checkService() == false){return false;}
-        if ($this->checkHora() == false){return false;}
-        if ($this->checkPasajeros() == false){return false;}
-        
+        if (empty($this->hora)) {
+            $this->toolBox()->i18nLog()->error('Falta la hora en la que debe de estar en la parada.');
+            return false;
+        }
+
+        if (empty($this->pasajeros_entradas) && empty($this->pasajeros_salidas)) {
+            $this->toolBox()->i18nLog()->info('Debe de asignar la cantidad de pasajeros a recoger/dejar.');
+            return false;
+        }
+
         $this->comprobarOrden();
-        
-        $this->evitarInyeccionSQL();
+
+        $utils = $this->toolBox()->utils();
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+        $this->nombre = $utils->noHtml($this->nombre);
         return parent::test();
     }
 
@@ -121,54 +137,17 @@ class ServiceItinerary extends Base\ModelClass {
         return parent::url($type, $list . '?activetab=List');
     }
 
-
-    // ** ********************************** ** //
-    // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
-    // ** ********************************** ** //
-    private function comprobarSiActivo()
+    protected function comprobarOrden()
     {
-        $a_devolver = true;
-        
-        if ($this->activo == false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-            
-            if (empty($this->motivobaja)){
-                $a_devolver = false;
-                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
-            }
-        } else { // Por si se vuelve a poner Activo = true
-            $this->fechabaja = null;
-            $this->userbaja = null;
-            $this->motivobaja = null;
-        }
-        return $a_devolver;
-    }
-
-    private function rellenarDatosModificacion()
-    {
-        $this->usermodificacion = $this->user_nick; 
-        $this->fechamodificacion = $this->user_fecha; 
-    }
-
-    private function rellenarDatosAlta()
-    {
-        $this->useralta = $this->user_nick; 
-        $this->fechaalta = $this->user_fecha; 
-    }
-    
-    private function comprobarOrden()
-    {
-        if (empty($this->orden) or $this->orden === 0) {
+        if (empty($this->orden)) {
             // Comprobamos si la cuenta existe
             $sql = ' SELECT MAX(service_itineraries.orden) AS orden '
-                 . ' FROM service_itineraries '
-                 . ' WHERE service_itineraries.idservice = ' . $this->idservice
-                 . ' ORDER BY service_itineraries.idservice '
-                 .        ' , service_itineraries.orden '
-                 ;
+                . ' FROM service_itineraries '
+                . ' WHERE service_itineraries.idservice = ' . $this->idservice
+                . ' ORDER BY service_itineraries.idservice '
+                . ' , service_itineraries.orden ';
 
-            $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+            $registros = self::$dataBase->select($sql);
 
             foreach ($registros as $fila) {
                 if (empty($fila['orden'])) {
@@ -177,78 +156,33 @@ class ServiceItinerary extends Base\ModelClass {
                     $this->orden = ($fila['orden'] + 5);
                 }
             }
+        }
+    }
 
-        }
-    }
-    
-    private function checkService()
+    protected function comprobarSiActivo(): bool
     {
         $a_devolver = true;
-        if (empty($this->idservice)) 
-        {
-            $a_devolver = false;
-            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio discrecional al que pertenece este itinerario.');
+        if ($this->activo === false) {
+            $this->fechabaja = $this->fechamodificacion;
+            $this->userbaja = $this->usermodificacion;
+
+            if (empty($this->motivobaja)) {
+                $a_devolver = false;
+                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
+            }
+        } else {
+            // Por si se vuelve a poner Activo = true
+            $this->fechabaja = null;
+            $this->userbaja = null;
+            $this->motivobaja = null;
         }
         return $a_devolver;
     }
-	
-    private function checkHora()
+
+    protected function saveUpdate(array $values = []): bool
     {
-        $a_devolver = true;
-        if (empty($this->hora)) 
-        {
-            $a_devolver = false;
-            $this->toolBox()->i18nLog()->error('Falta la hora en la que debe de estar en la parada.');
-        }
-        return $a_devolver;
+        $this->usermodificacion = Session::get('user')->nick ?? null;
+        $this->fechamodificacion = date(static::DATETIME_STYLE);
+        return parent::saveUpdate($values);
     }
-    
-    private function checkPasajeros()
-    {
-        $a_devolver = true;
-        if ( empty($this->pasajeros_entradas) and
-             empty($this->pasajeros_salidas) ) 
-        {
-            // $a_devolver = false;
-            $this->toolBox()->i18nLog()->info('Debe de asignar la cantidad de pasajeros a recoger/dejar.');
-        }
-        return $a_devolver;
-    }
-	
-    private function evitarInyeccionSQL()
-    {
-        $utils = $this->toolBox()->utils();
-        $this->observaciones = $utils->noHtml($this->observaciones);
-        $this->motivobaja = $utils->noHtml($this->motivobaja);
-        $this->nombre = $utils->noHtml($this->nombre);
-    }
-    
-    private function crearHora()
-    {
-        $fecha = '';
-        if (!empty($this->inicio_hora)){
-            $fecha = date('d-m-Y') . ' ' . $this->inicio_hora;
-        }
-        $this->hora = $fecha;
-    }
-    
-    public function getServicio() {
-        $servicio = new Service(); // Creamos el modelo
-        $servicio->loadFromCode($this->idservice); // Cargamos un modelo en concreto, identificándolo por idservice
-        return $servicio; // Devolvemos el modelo servicio seleccionado
-    }
-    
-    /*public function url(string $type = 'auto', string $list = 'List'): string {
-        // Le estamos diciendo que si el parámetro $type es de tipo 'list', pues debe de redirigirse a lo que devuelva la function getServicio()->url 
-        // y pestaña ListService_itinerary
-        if ($type == 'list') {
-            return $this->getServicio()->url() . "&activetab=ListService_itinerary"; // "&activetab=ListService_itinerary" corresponde a la pestaña a la que quiero que vuelva
-        } 
-        
-        // Le estamos diciendo que si el parámetro $type NO es de tipo 'list', pues debe de redirigirse a la url por defecto devuelta
-        // por el modelo parent
-        return parent::url($type, $list);
-    }	*/
-    
 }
-
