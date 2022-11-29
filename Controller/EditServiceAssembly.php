@@ -5,110 +5,83 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
-class EditServiceAssembly extends EditController {
-    
-    public function getModelClassName() {
+class EditServiceAssembly extends EditController
+{
+
+    public function getModelClassName(): string
+    {
         return 'ServiceAssembly';
     }
-    
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Cocheras
-    public function getPageData(): array {
+
+    public function getPageData(): array
+    {
         $pageData = parent::getPageData();
-        $pagedata['showonmenu'] = false;
+        $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
         $pageData['title'] = 'Montaje de servicios';
         $pageData['icon'] = 'fas fa-business-time';
         return $pageData;
     }
-    
-    protected function createViews() {
+
+    protected function createViews()
+    {
         parent::createViews();
         $this->createViewContacts();
-        $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
+        $this->setTabsPosition('top');
     }
-    
+
     protected function createViewContacts(string $viewName = 'EditDireccionContacto')
     {
         $this->addEditListView($viewName, 'Contacto', 'addresses-and-contacts', 'fas fa-address-book');
         $this->views[$viewName]->setInLine(true);
     }
 
-    // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
-    protected function loadData($viewName, $view) {
+    protected function displayOnlyFieldsForDiscretionalServ($viewName)
+    {
+        // Es un discrecional, por lo que se ponen invisibles estos campos
+        $this->displayNoneField($viewName, 'cod_servicio');
+        $this->displayNoneField($viewName, 'fuera_del_municipio');
+        $this->displayNoneField($viewName, 'facturar_SN');
+        $this->displayNoneField($viewName, 'facturar_agrupando');
+        $this->displayNoneField($viewName, 'salida_desde_nave_sn');
+        $this->displayNoneField($viewName, 'activo');
+    }
+
+    protected function displayOnlyFieldsForRegularServ($viewName)
+    {
+        // Es un regular, por lo que se ponen invisibles estos campos
+        $this->displayNoneField($viewName, 'idservice');
+        $this->displayNoneField($viewName, 'fuera_del_municipio_text');
+        $this->displayNoneField($viewName, 'facturar_SN_text');
+        $this->displayNoneField($viewName, 'facturar_agrupando_text');
+        $this->displayNoneField($viewName, 'salida_desde_nave_text');
+        $this->displayNoneField($viewName, 'activo_text');
+    }
+
+    protected function displayNoneField($viewName, $fieldName)
+    {
+        $column = $this->views[$viewName]->columnForField($fieldName);
+        $column->display = 'none';
+    }
+
+    protected function loadData($viewName, $view)
+    {
+        $mvn = $this->getMainViewName();
         switch ($viewName) {
             case 'EditDireccionContacto':
                 $codcliente = $this->getViewModelValue('EditService_assembly', 'codcliente');
                 $where = [new DatabaseWhere('codcliente', $codcliente)];
                 $view->loadData('', $where);
                 break;
-            
-            // Pestaña con el mismo nombre que este controlador EditXxxxx
-            case 'EditServiceAssembly':
-                parent::loadData($viewName, $view);
-                
-                // Guardamos que usuario pulsará guardar
-                $this->views[$viewName]->model->user_nick = $this->user->nick;
 
-                // Guardamos cuando el usuario pulsará guardar
-             // $this->views[$viewName]->model->user_fecha = date('d-m-Y');
-                $this->views[$viewName]->model->user_fecha = date("Y-m-d H:i:s");
-                
-                $this->prepararFechasParaVista($viewName);
-                $this->prepararHorasParaVista($viewName);
-                
-                if ($this->views[$viewName]->model->salida_desde_nave_sn === true) {
-                    $this->views[$viewName]->model->salida_desde_nave_text = 'SI';
-                } else {
-                    $this->views[$viewName]->model->salida_desde_nave_text = 'NO';
-                }
-                
-                if ($this->views[$viewName]->model->fuera_del_municipio === true) {
-                    $this->views[$viewName]->model->fuera_del_municipio_text = 'SI';
-                } else {
-                    $this->views[$viewName]->model->fuera_del_municipio_text = 'NO';
-                }
-                
-                if ($this->views[$viewName]->model->facturar_SN === true) {
-                    $this->views[$viewName]->model->facturar_SN_text = 'SI';
-                } else {
-                    $this->views[$viewName]->model->facturar_SN_text = 'NO';
-                }
-                
-                if ($this->views[$viewName]->model->facturar_agrupando === true) {
-                    $this->views[$viewName]->model->facturar_agrupando_text = 'SI';
-                } else {
-                    $this->views[$viewName]->model->facturar_agrupando_text = 'NO';
-                }
-                
-                if ($this->views[$viewName]->model->activo === true) {
-                    $this->views[$viewName]->model->activo_text = 'SI';
-                } else {
-                    $this->views[$viewName]->model->activo_text = 'NO';
-                }
-                
+            case $mvn:
+                parent::loadData($viewName, $view);
                 $this->readOnlyFields($viewName);
                 break;
         }
     }
 
-
-    // ** *************************************** ** //
-    // ** FUNCIONES CREADAS PARA ESTE CONTROLADOR ** //
-    // ** *************************************** ** //
-    private function readOnlyField($viewName, $fieldName)
-    {
-        $column = $this->views[$viewName]->columnForField($fieldName);
-        $column->widget->readonly = 'true';
-    }
-
-    private function displayNoneField($viewName, $fieldName)
-    {
-        $column = $this->views[$viewName]->columnForField($fieldName);
-        $column->display = 'none';
-    }
-
-    private function readOnlyAllCommonFields($viewName)
+    protected function readOnlyAllCommonFields($viewName)
     {
         // Los campos comunes entre discrecionales y regulares = true ... esto se
         // hará siempre que sea un discrecional sin facturar. En regulares sin facturar no
@@ -154,87 +127,31 @@ class EditServiceAssembly extends EditController {
         $this->readOnlyField($viewName, 'idhelper');
     }
 
-    private function displayOnlyFieldsForDiscretionalServ($viewName)
+    protected function readOnlyField($viewName, $fieldName)
     {
-        // Es un discrecional, por lo que se ponen invisibles estos campos
-        $this->displayNoneField($viewName, 'cod_servicio');
-        $this->displayNoneField($viewName, 'fuera_del_municipio');
-        $this->displayNoneField($viewName, 'facturar_SN');
-        $this->displayNoneField($viewName, 'facturar_agrupando');
-        $this->displayNoneField($viewName, 'salida_desde_nave_sn');
-        $this->displayNoneField($viewName, 'activo');
+        $column = $this->views[$viewName]->columnForField($fieldName);
+        $column->widget->readonly = 'true';
     }
 
-    private function displayOnlyFieldsForRegularServ($viewName)
+    protected function readOnlyFields($viewName)
     {
-        // Es un regular, por lo que se ponen invisibles estos campos
-        $this->displayNoneField($viewName, 'idservice');
-        $this->displayNoneField($viewName, 'fuera_del_municipio_text');
-        $this->displayNoneField($viewName, 'facturar_SN_text');
-        $this->displayNoneField($viewName, 'facturar_agrupando_text');
-        $this->displayNoneField($viewName, 'salida_desde_nave_text');
-        $this->displayNoneField($viewName, 'activo_text');
-    }
-
-    private function readOnlyFields($viewName)
-    {
-        
-        if (!empty($this->views[$viewName]->model->idfactura)) 
-        { // Está facturado el servicio
+        if (!empty($this->views[$viewName]->model->idfactura)) { // Está facturado el servicio
             $this->readOnlyAllCommonFields($viewName); // Da igual que sea discrecional o no, los campos comunes a readonly=true
             $this->displayOnlyFieldsForDiscretionalServ($viewName); // Se hacen invisibles los campos que sólo son para regulares
         } else {
             // No está facturado el servicio
-            
+
             // Comprobamos si es discrecional o regular
-            if (!empty($this->views[$viewName]->model->idservice)) 
-            {
+            if (!empty($this->views[$viewName]->model->idservice)) {
                 // Discrecional
                 $this->readOnlyAllCommonFields($viewName); // Los campos comunes a readonly=true
                 $this->displayOnlyFieldsForDiscretionalServ($viewName);
             } else {
                 // Regular, así que las columnas comunes las dejamos como estén en la vista
-                
+
                 // Se dejan
                 $this->displayOnlyFieldsForRegularServ($viewName);
             }
         }
     }
-
-    private function prepararFechasParaVista($viewName)
-    {
-        if (!empty($this->views[$viewName]->model->fecha_desde)){
-            $this->views[$viewName]->model->inicio_dia = date("Y-m-d", strtotime($this->views[$viewName]->model->fecha_desde));
-        } else {
-            $this->views[$viewName]->model->inicio_dia = null;
-        }
-
-        if (!empty($this->views[$viewName]->model->fecha_hasta)){
-            $this->views[$viewName]->model->fin_dia = date("Y-m-d", strtotime($this->views[$viewName]->model->fecha_hasta));
-        } else {
-            $this->views[$viewName]->model->fin_dia = null;
-        }
-    }
-
-    private function prepararHorasParaVista($viewName)
-    {
-        if (!empty($this->views[$viewName]->model->hora_anticipacion)){
-            $this->views[$viewName]->model->inicio_horaAnt = date("H:i:s", strtotime($this->views[$viewName]->model->hora_anticipacion));
-        } else {
-            $this->views[$viewName]->model->inicio_horaAnt = null;
-        }
-        
-        if (!empty($this->views[$viewName]->model->hora_desde)){
-            $this->views[$viewName]->model->inicio_hora = date("H:i:s", strtotime($this->views[$viewName]->model->hora_desde));
-        } else {
-            $this->views[$viewName]->model->inicio_hora = null;
-        }
-
-        if (!empty($this->views[$viewName]->model->hora_hasta)){
-            $this->views[$viewName]->model->fin_hora = date("H:i:s", strtotime($this->views[$viewName]->model->hora_hasta));
-        } else {
-            $this->views[$viewName]->model->fin_hora = null;
-        }
-    }
-    
 }

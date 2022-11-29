@@ -3,178 +3,269 @@
 namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
+use FacturaScripts\Core\Session;
 
 class ServiceAssembly extends Base\ModelClass
 {
     use Base\ModelTrait;
 
-    public $idservice_assembly;
-
-    public $user_fecha;
-    public $user_nick;
-    public $fechaalta;
-    public $useralta;
-    public $fechamodificacion;
-    public $usermodificacion;
-
+    /** @var bool */
     public $activo;
-    public $activo_text;
 
-    public $fechabaja;
-    public $userbaja;
-    public $motivobaja;
-
-    public $cod_servicio;
-    public $idservice_regular;
-    public $idservice;
-
-    public $nombre;
-    public $plazas;
-
+    /** @var string */
     public $codcliente;
-    public $idvehicle_type;
-    public $idhelper;
 
-    public $facturar_SN;
-    public $facturar_SN_text;
-
-    public $facturar_agrupando;
-    public $facturar_agrupando_text;
-
-    public $importe;
-    public $importe_enextranjero;
+    /** @var string */
     public $codimpuesto;
+
+    /** @var string */
     public $codimpuesto_enextranjero;
-    public $total;
 
-    public $fuera_del_municipio;
-    public $fuera_del_municipio_text;
-
-    public $hoja_ruta_origen;
-    public $hoja_ruta_destino;
-    public $hoja_ruta_expediciones;
-    public $hoja_ruta_contratante;
-    public $hoja_ruta_tipoidfiscal;
-    public $hoja_ruta_cifnif;
-
-    public $idservice_type;
-    public $idempresa;
-
-    public $observaciones;
-    public $observaciones_montaje;
-    public $observaciones_vehiculo;
-    public $observaciones_facturacion;
-    public $observaciones_liquidacion;
-    public $observaciones_drivers;
-
-    public $iddriver_1;
-    public $driver_alojamiento_1;
-    public $driver_observaciones_1;
-
-    public $iddriver_2;
-    public $driver_alojamiento_2;
-    public $driver_observaciones_2;
-
-    public $iddriver_3;
-    public $driver_alojamiento_3;
-    public $driver_observaciones_3;
-
-    public $idvehicle;
-
-    public $codsubcuenta_km_nacional;
+    /** @var string */
     public $codsubcuenta_km_extranjero;
 
-    public $idservice_regular_period;
+    /** @var string */
+    public $codsubcuenta_km_nacional;
+
+    /** @var string */
+    public $cod_servicio;
+
+    /** @var int */
+    public $driver_alojamiento_1;
+
+    /** @var int */
+    public $driver_alojamiento_2;
+
+    /** @var int */
+    public $driver_alojamiento_3;
+
+    /** @var string */
+    public $driver_observaciones_1;
+
+    /** @var string */
+    public $driver_observaciones_2;
+
+    /** @var string */
+    public $driver_observaciones_3;
+
+    /** @var bool */
+    public $facturar_agrupando;
+
+    /** @var bool */
+    public $facturar_SN;
+
+    /** @var string */
+    public $fechaalta;
+
+    /** @var string */
+    public $fechabaja;
+
+    /** @var string */
+    public $fechamodificacion;
+
+    /** @var string */
     public $fecha_desde;
+
+    /** @var string */
     public $fecha_hasta;
 
+    /** @var bool */
+    public $fuera_del_municipio;
+
+    /** @var string */
+    public $hoja_ruta_contratante;
+
+    /** @var string */
+    public $hoja_ruta_destino;
+
+    /** @var string */
+    public $hoja_ruta_expediciones;
+
+    /** @var string */
+    public $hoja_ruta_origen;
+
+    /** @var string */
+    public $hoja_ruta_tipoidfiscal;
+
+    /** @var string */
+    public $hoja_ruta_cifnif;
+
+    /** @var string */
     public $hora_anticipacion;
+
+    /** @var string */
     public $hora_desde;
+
+    /** @var string */
     public $hora_hasta;
 
-    public $inicio_horaAnt;
+    /** @var int */
+    public $iddriver_1;
 
-    public $salida_desde_nave_sn;
-    public $salida_desde_nave_text;
+    /** @var int */
+    public $iddriver_2;
 
-    public $observaciones_periodo;
+    /** @var int */
+    public $iddriver_3;
+
+    /** @var int */
+    public $idempresa;
+
+    /** @var int */
     public $idfactura;
 
-    // función que inicializa algunos valores antes de la vista del controlador
+    /** @var int */
+    public $idhelper;
+
+    /** @var int */
+    public $idservice;
+
+    /** @var int */
+    public $idservice_assembly;
+
+    /** @var int */
+    public $idvehicle;
+
+    /** @var int */
+    public $idservice_type;
+
+    /** @var int */
+    public $idservice_regular;
+
+    /** @var int */
+    public $idservice_regular_period;
+
+    /** @var int */
+    public $idvehicle_type;
+
+    /** @var float */
+    public $importe;
+
+    /** @var float */
+    public $importe_enextranjero;
+
+    /** @var string */
+    public $motivobaja;
+
+    /** @var string */
+    public $nombre;
+
+    /** @var string */
+    public $observaciones;
+
+    /** @var string */
+    public $observaciones_drivers;
+
+    /** @var string */
+    public $observaciones_facturacion;
+
+    /** @var string */
+    public $observaciones_liquidacion;
+
+    /** @var string */
+    public $observaciones_montaje;
+
+    /** @var string */
+    public $observaciones_periodo;
+
+    /** @var string */
+    public $observaciones_vehiculo;
+
+    /** @var int */
+    public $plazas;
+
+    /** @var bool */
+    public $salida_desde_nave_sn;
+
+    /** @var float */
+    public $total;
+
+    /** @var string */
+    public $useralta;
+
+    /** @var string */
+    public $userbaja;
+
+    /** @var string */
+    public $usermodificacion;
+
     public function clear()
     {
         parent::clear();
-
-        $this->activo = true; // Por defecto estará activo
-
+        $this->activo = true;
         $this->facturar_SN = true;
         $this->facturar_agrupando = true;
-
+        $this->fechaalta = date(static::DATETIME_STYLE);
         $this->importe = 0;
         $this->importe_enextranjero = 0;
-        $this->total = 0;
         $this->plazas = 0;
+        $this->total = 0;
+        $this->useralta = Session::get('user')->nick ?? null;
     }
 
     public function install(): string
     {
-        // needed dependencies
         new VehicleType();
         new Helper();
         new ServiceType();
         new Driver();
         new Vehicle();
-        new Service_valuationType();
+        new ServiceValuationType();
         new Service();
-        new Service_regular();
-
+        new ServiceRegular();
         return parent::install();
     }
 
-    // función que devuelve el id principal
     public static function primaryColumn(): string
     {
         return 'idservice_assembly';
     }
 
-    // función que devuelve el nombre de la tabla
+    public function rellenarTotal()
+    {
+        $cliente_RegimenIVA = '';
+        $cliente_CodRetencion = '';
+        $cliente_PorcentajeRetencion = 0.0;
+
+        $this->total = $this->importe + $this->importe_enextranjero;
+
+        // Traemos los datos del cliente solo si hay algún importe y si hay algún tipo de impuesto
+        if ($this->importe <> 0 || $this->importe_enextranjero <> 0) {
+            if (!empty($this->codimpuesto) || !empty($this->codimpuesto_enextranjero)) {
+                // Cargar datos del cliente que nos interesan
+                $sql = ' SELECT clientes.regimeniva '
+                    . ' , clientes.codretencion '
+                    . ' , retenciones.porcentaje '
+                    . ' FROM clientes '
+                    . ' LEFT JOIN retenciones ON (retenciones.codretencion = clientes.codretencion) '
+                    . ' WHERE clientes.codcliente = "' . $this->codcliente . '" ';
+
+                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+
+                foreach ($registros as $fila) {
+                    $cliente_RegimenIVA = $fila['regimeniva'];
+                    $cliente_CodRetencion = $fila['codretencion'];
+                    $cliente_PorcentajeRetencion = $fila['porcentaje'];
+                }
+            }
+        }
+
+        $this->calcularImpuesto($this->importe, $this->codimpuesto, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $this->total);
+        $this->calcularImpuesto($this->importe_enextranjero, $this->codimpuesto_enextranjero, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $this->total);
+        $this->total = round($this->total, FS_NF0);
+    }
+
     public static function tableName(): string
     {
         return 'service_assemblies';
     }
 
-    // Para realizar cambios en los datos antes de guardar por modificación
-    protected function saveUpdate(array $values = []): bool
-    {
-        $this->rellenarDatosModificacion();
-
-        if ($this->comprobarSiActivo() == false) {
-            return false;
-        }
-
-        return parent::saveUpdate($values);
-    }
-
-    // Para realizar cambios en los datos antes de guardar por alta
-    protected function saveInsert(array $values = []): bool
-    {
-        // Creamos el nuevo id
-        if (empty($this->idservice_regular)) {
-            $this->idservice_regular = $this->newCode();
-        }
-
-        $this->rellenarDatosAlta();
-        $this->rellenarDatosModificacion();
-
-        if ($this->comprobarSiActivo() == false) {
-            return false;
-        }
-
-        return parent::saveInsert($values);
-    }
-
     public function test(): bool
     {
+        if ($this->comprobarSiActivo() === false) {
+            return false;
+        }
+
         $this->completarServicio();
 
         if ($this->checkFields() === false) {
@@ -187,104 +278,7 @@ class ServiceAssembly extends Base\ModelClass
         return parent::test();
     }
 
-
-    // ** ********************************** ** //
-    // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
-    // ** ********************************** ** //
-    private function comprobarSiActivo()
-    {
-        $a_devolver = true;
-
-        if ($this->activo == false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-
-            if (empty($this->motivobaja)) {
-                $a_devolver = false;
-                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
-            }
-        } else { // Por si se vuelve a poner Activo = true
-            $this->fechabaja = null;
-            $this->userbaja = null;
-            $this->motivobaja = null;
-        }
-        return $a_devolver;
-    }
-
-    private function rellenarDatosModificacion()
-    {
-        $this->usermodificacion = $this->user_nick;
-        $this->fechamodificacion = $this->user_fecha;
-    }
-
-    private function rellenarDatosAlta()
-    {
-        $this->useralta = $this->user_nick;
-        $this->fechaalta = $this->user_fecha;
-    }
-
-    private function comprobarFacturacion()
-    {
-        if ($this->facturar_SN === false && $this->facturar_agrupando === true) {
-            $this->toolBox()->i18nLog()->error('Si elige FACTURAR = NO, no puede elegir AGRUPANDO = SI.');
-            return false;
-        }
-        return true;
-    }
-
-    private function evitarInyeccionSQL()
-    {
-        $utils = $this->toolBox()->utils();
-        $this->nombre = $utils->noHtml($this->nombre);
-
-        $this->observaciones = $utils->noHtml($this->observaciones);
-        $this->observaciones_montaje = $utils->noHtml($this->observaciones_montaje);
-        $this->observaciones_vehiculo = $utils->noHtml($this->observaciones_vehiculo);
-        $this->observaciones_facturacion = $utils->noHtml($this->observaciones_facturacion);
-        $this->observaciones_liquidacion = $utils->noHtml($this->observaciones_liquidacion);
-        $this->observaciones_drivers = $utils->noHtml($this->observaciones_drivers);
-
-        $this->hoja_ruta_origen = $utils->noHtml($this->hoja_ruta_origen);
-        $this->hoja_ruta_destino = $utils->noHtml($this->hoja_ruta_destino);
-        $this->hoja_ruta_expediciones = $utils->noHtml($this->hoja_ruta_expediciones);
-        $this->hoja_ruta_contratante = $utils->noHtml($this->hoja_ruta_contratante);
-        $this->hoja_ruta_tipoidfiscal = $utils->noHtml($this->hoja_ruta_tipoidfiscal);
-        $this->hoja_ruta_cifnif = $utils->noHtml($this->hoja_ruta_cifnif);
-        $this->motivobaja = $utils->noHtml($this->motivobaja);
-        $this->codsubcuenta_km_nacional = $utils->noHtml($this->codsubcuenta_km_nacional);
-        $this->codsubcuenta_km_extranjero = $utils->noHtml($this->codsubcuenta_km_extranjero);
-
-        $this->driver_alojamiento_1 = $utils->noHtml($this->driver_alojamiento_1);
-        $this->driver_observaciones_1 = $utils->noHtml($this->driver_observaciones_1);
-
-        $this->driver_alojamiento_2 = $utils->noHtml($this->driver_alojamiento_2);
-        $this->driver_observaciones_2 = $utils->noHtml($this->driver_observaciones_2);
-
-        $this->driver_alojamiento_3 = $utils->noHtml($this->driver_alojamiento_3);
-        $this->driver_observaciones_3 = $utils->noHtml($this->driver_observaciones_3);
-        $this->activo_text = $utils->noHtml($this->activo_text);
-        $this->observaciones_periodo = $utils->noHtml($this->observaciones_periodo);
-    }
-
-    private function comprobarVehiculo()
-    {
-        if (empty($this->idvehicle)) {
-            $this->toolBox()->i18nLog()->error('Debe de completar el vehículo.');
-            return false;
-        }
-        return true;
-    }
-
-    private function comprobarConductor_1()
-    {
-        if (empty($this->iddriver_1)) {
-            $this->toolBox()->i18nLog()->error('Debe de completar el conductor 1.');
-            return false;
-        }
-        return true;
-    }
-
-    private function calcularImpuesto($importe, $codimpuesto, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, &$total)
+    protected function calcularImpuesto($importe, $codimpuesto, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, &$total)
     {
         $impto_tipo = 0.0;
         $impto_IVA = 0.0;
@@ -299,7 +293,7 @@ class ServiceAssembly extends Base\ModelClass
                     . ' FROM impuestos '
                     . ' WHERE impuestos.codimpuesto = "' . $codimpuesto . '" ';
 
-                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+                $registros = self::$dataBase->select($sql);
 
                 foreach ($registros as $fila) {
                     $impto_tipo = $fila['tipo'];
@@ -342,46 +336,131 @@ class ServiceAssembly extends Base\ModelClass
 
             }
         }
-
     }
 
-    public function rellenarTotal()
+    protected function checkFields(): bool
     {
-        $cliente_RegimenIVA = '';
-        $cliente_CodRetencion = '';
-        $cliente_PorcentajeRetencion = 0.0;
-
-        $this->total = $this->importe + $this->importe_enextranjero;
-
-        // Traemos los datos del cliente sólo si hay algún importe y si hay algún tipo de impuesto
-        if ($this->importe <> 0 || $this->importe_enextranjero <> 0) {
-            if (!empty($this->codimpuesto) || !empty($this->codimpuesto_enextranjero)) {
-                // Cargar datos del cliente que nos interesan
-                $sql = ' SELECT clientes.regimeniva '
-                    . ' , clientes.codretencion '
-                    . ' , retenciones.porcentaje '
-                    . ' FROM clientes '
-                    . ' LEFT JOIN retenciones ON (retenciones.codretencion = clientes.codretencion) '
-                    . ' WHERE clientes.codcliente = "' . $this->codcliente . '" ';
-
-                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
-
-                foreach ($registros as $fila) {
-                    $cliente_RegimenIVA = $fila['regimeniva'];
-                    $cliente_CodRetencion = $fila['codretencion'];
-                    $cliente_PorcentajeRetencion = $fila['porcentaje'];
-                }
-            }
+        if (empty($this->idservice) && empty($this->idservice_regular)) {
+            $this->toolBox()->i18nLog()->error('Debe elegir si es un servicio regular o es un servicio discrecional.');
+            return false;
         }
 
-        $this->calcularImpuesto($this->importe, $this->codimpuesto, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $this->total);
-        $this->calcularImpuesto($this->importe_enextranjero, $this->codimpuesto_enextranjero, $cliente_RegimenIVA, $cliente_PorcentajeRetencion, $this->total);
+        if (!empty($this->idservice) && !empty($this->idservice_regular)) {
+            $this->toolBox()->i18nLog()->error('O es un servicio regular o es un servicio discrecional. Pero no ambos');
+            return false;
+        }
 
-        $this->total = round($this->total, (int)\FS_NF0);
+        if (empty($this->iddriver_1)) {
+            $this->toolBox()->i18nLog()->error('Debe de completar el conductor 1.');
+            return false;
+        }
 
+        if (empty($this->idvehicle)) {
+            $this->toolBox()->i18nLog()->error('Debe de completar el vehículo.');
+            return false;
+        }
+
+        // Comprobamos que el código se ha introducido correctamente
+        if (!empty($this->cod_servicio) && 1 !== preg_match('/^[A-Z0-9_\+\.\-]{1,10}$/i', $this->cod_servicio)) {
+            $this->toolBox()->i18nLog()->error(
+                'invalid-alphanumeric-code',
+                ['%value%' => $this->cod_servicio, '%column%' => 'cod_servicio', '%min%' => '1', '%max%' => '10']
+            );
+            return false;
+        }
+
+        if ($this->facturar_SN === false && $this->facturar_agrupando === true) {
+            $this->toolBox()->i18nLog()->error('Si elige FACTURAR = NO, no puede elegir AGRUPANDO = SI.');
+            return false;
+        }
+
+        if (empty($this->codcliente)) {
+            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio a un cliente.');
+            return false;
+        }
+
+        if (empty($this->nombre)) {
+            $this->toolBox()->i18nLog()->error('Debe completar la descripción del servicio.');
+            return false;
+        }
+
+        if (empty($this->hoja_ruta_origen)) {
+            $this->toolBox()->i18nLog()->error('Debe completar el origen de la Hoja de Ruta.');
+            return false;
+        }
+
+        if (empty($this->hoja_ruta_destino)) {
+            $this->toolBox()->i18nLog()->error('Debe completar el destino de la Hoja de Ruta.');
+            return false;
+        }
+
+        if (empty($this->hoja_ruta_expediciones)) {
+            $this->toolBox()->i18nLog()->error('Debe completar las expediciones de la Hoja de Ruta.');
+            return false;
+        }
+
+        if (empty($this->hoja_ruta_contratante)) {
+            $this->toolBox()->i18nLog()->error('Debe completar el contratante de la Hoja de Ruta.');
+            return false;
+        }
+
+        if (empty($this->hoja_ruta_tipoidfiscal)) {
+            $this->toolBox()->i18nLog()->error('Debe completar Id. Fiscal de la Hoja de Ruta.');
+            return false;
+        }
+
+        if (empty($this->hoja_ruta_cifnif)) {
+            $this->toolBox()->i18nLog()->error('Debe completar el Num. Fiscal de la Hoja de Ruta.');
+            return false;
+        }
+
+        if (empty($this->idempresa)) {
+            $this->toolBox()->i18nLog()->error('Debe completar la empresa que realiza el servicio.');
+            return false;
+        }
+
+        if (empty($this->importe)) {
+            $this->toolBox()->i18nLog()->error('Debe completar el Importe x km nacional.');
+            return false;
+        }
+
+        if (empty($this->codimpuesto)) {
+            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km nacional".');
+            return false;
+        }
+
+        if (empty($this->importe_enextranjero)) {
+            $this->toolBox()->i18nLog()->error('Debe completar el Importe x km en extranjero.');
+            return false;
+        }
+
+        if (empty($this->codimpuesto_enextranjero)) {
+            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km en extrajero".');
+            return false;
+        }
+
+        if (empty($this->inicio_dia)) {
+            $this->toolBox()->i18nLog()->error('No ha elegido la fecha de inicio del servicio.');
+            return false;
+        }
+
+        if (empty($this->fin_dia)) {
+            $this->toolBox()->i18nLog()->error('No ha elegido la fecha de fin del servicio.');
+            return false;
+        }
+
+        if (empty($this->plazas) or $this->plazas <= 0) {
+            $this->toolBox()->i18nLog()->error('Debe de completar las plazas.');
+            return false;
+        }
+
+        $this->codsubcuenta_km_nacional = empty($this->codsubcuenta_km_nacional) ? null : $this->codsubcuenta_km_nacional;
+        $this->codsubcuenta_km_extranjero = empty($this->codsubcuenta_km_extranjero) ? null : $this->codsubcuenta_km_extranjero;
+
+        return true;
     }
 
-    private function completarServicio()
+    protected function completarServicio()
     {
         $campos = ' nombre, codcliente, idvehicle_type, idhelper, hoja_ruta_origen,'
             . ' hoja_ruta_destino, hoja_ruta_expediciones, fuera_del_municipio,'
@@ -413,7 +492,7 @@ class ServiceAssembly extends Base\ModelClass
                 . ' WHERE service_regulars.idservice_regular = ' . $this->idservice_regular . ' ';
         }
 
-        $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+        $registros = self::$dataBase->select($sql);
 
         foreach ($registros as $fila) {
             //jerofa si es un regular no se debe de actualizar si se ha modificado a mano
@@ -481,128 +560,61 @@ class ServiceAssembly extends Base\ModelClass
 
         // No habían registros
         $this->toolBox()->i18nLog()->error('No se pudo completar el servicio. Compruebe que el servicio existe o que no haya sido borrado.');
-        return;
     }
 
-    private function checkFields()
+    protected function comprobarSiActivo(): bool
     {
-        $aDevolver = true;
+        $a_devolver = true;
+        if ($this->activo === false) {
+            $this->fechabaja = $this->fechamodificacion;
+            $this->userbaja = $this->usermodificacion;
 
-        if (empty($this->idservice) && empty($this->idservice_regular)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('Debe elegir si es un servicio regular o es un servicio discrecional.');
+            if (empty($this->motivobaja)) {
+                $a_devolver = false;
+                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
+            }
+        } else {
+            // Por si se vuelve a poner Activo = true
+            $this->fechabaja = null;
+            $this->userbaja = null;
+            $this->motivobaja = null;
         }
-
-        if (!empty($this->idservice) && !empty($this->idservice_regular)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('O es un servicio regular o es un servicio discrecional. Pero no ambos');
-        }
-
-        if ($this->comprobarConductor_1() == false) {
-            $aDevolver = false;
-        }
-        if ($this->comprobarVehiculo() == false) {
-            $aDevolver = false;
-        }
-
-        // Comprobamos que el código se ha introducido correctamente
-        if (!empty($this->cod_servicio) && 1 !== preg_match('/^[A-Z0-9_\+\.\-]{1,10}$/i', $this->cod_servicio)) {
-            $this->toolBox()->i18nLog()->error(
-                'invalid-alphanumeric-code',
-                ['%value%' => $this->cod_servicio, '%column%' => 'cod_servicio', '%min%' => '1', '%max%' => '10']
-            );
-            $aDevolver = false;
-        }
-
-        if ($this->comprobarFacturacion() == false) {
-            $aDevolver = false;
-        }
-
-        if (empty($this->codcliente)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio a un cliente.');
-        }
-
-        if (empty($this->nombre)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('Debe completar la descripción del servicio.');
-        }
-
-        if (empty($this->hoja_ruta_origen)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('Debe completar el origen de la Hoja de Ruta.');
-        }
-
-        if (empty($this->hoja_ruta_destino)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('Debe completar el destino de la Hoja de Ruta.');
-        }
-
-        if (empty($this->hoja_ruta_expediciones)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('Debe completar las expediciones de la Hoja de Ruta.');
-        }
-
-        if (empty($this->hoja_ruta_contratante)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('Debe completar el contratante de la Hoja de Ruta.');
-        }
-
-        if (empty($this->hoja_ruta_tipoidfiscal)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('Debe completar Id. Fiscal de la Hoja de Ruta.');
-        }
-
-        if (empty($this->hoja_ruta_cifnif)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('Debe completar el Num. Fiscal de la Hoja de Ruta.');
-        }
-
-        if (empty($this->idempresa)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('Debe completar la empresa que realiza el servicio.');
-        }
-
-        if (empty($this->importe)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('Debe completar el Importe x km nacional.');
-        }
-
-        if (empty($this->codimpuesto)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km nacional".');
-        }
-
-        if (empty($this->importe_enextranjero)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('Debe completar el Importe x km en extranjero.');
-        }
-
-        if (empty($this->codimpuesto_enextranjero)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km en extrajero".');
-        }
-
-        if (empty($this->inicio_dia)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('No ha elegido la fecha de inicio del servicio.');
-        }
-
-        if (empty($this->fin_dia)) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('No ha elegido la fecha de fin del servicio.');
-        }
-
-        if (empty($this->plazas) or $this->plazas <= 0) {
-            $aDevolver = false;
-            $this->toolBox()->i18nLog()->error('Debe de completar las plazas.');
-        }
-
-        $this->codsubcuenta_km_nacional = empty($this->codsubcuenta_km_nacional) ? null : $this->codsubcuenta_km_nacional;
-        $this->codsubcuenta_km_extranjero = empty($this->codsubcuenta_km_extranjero) ? null : $this->codsubcuenta_km_extranjero;
-
-        return $aDevolver;
+        return $a_devolver;
     }
 
+    protected function evitarInyeccionSQL()
+    {
+        $utils = $this->toolBox()->utils();
+        $this->nombre = $utils->noHtml($this->nombre);
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->observaciones_montaje = $utils->noHtml($this->observaciones_montaje);
+        $this->observaciones_vehiculo = $utils->noHtml($this->observaciones_vehiculo);
+        $this->observaciones_facturacion = $utils->noHtml($this->observaciones_facturacion);
+        $this->observaciones_liquidacion = $utils->noHtml($this->observaciones_liquidacion);
+        $this->observaciones_drivers = $utils->noHtml($this->observaciones_drivers);
+        $this->hoja_ruta_origen = $utils->noHtml($this->hoja_ruta_origen);
+        $this->hoja_ruta_destino = $utils->noHtml($this->hoja_ruta_destino);
+        $this->hoja_ruta_expediciones = $utils->noHtml($this->hoja_ruta_expediciones);
+        $this->hoja_ruta_contratante = $utils->noHtml($this->hoja_ruta_contratante);
+        $this->hoja_ruta_tipoidfiscal = $utils->noHtml($this->hoja_ruta_tipoidfiscal);
+        $this->hoja_ruta_cifnif = $utils->noHtml($this->hoja_ruta_cifnif);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+        $this->codsubcuenta_km_nacional = $utils->noHtml($this->codsubcuenta_km_nacional);
+        $this->codsubcuenta_km_extranjero = $utils->noHtml($this->codsubcuenta_km_extranjero);
+        $this->driver_alojamiento_1 = $utils->noHtml($this->driver_alojamiento_1);
+        $this->driver_observaciones_1 = $utils->noHtml($this->driver_observaciones_1);
+        $this->driver_alojamiento_2 = $utils->noHtml($this->driver_alojamiento_2);
+        $this->driver_observaciones_2 = $utils->noHtml($this->driver_observaciones_2);
+        $this->driver_alojamiento_3 = $utils->noHtml($this->driver_alojamiento_3);
+        $this->driver_observaciones_3 = $utils->noHtml($this->driver_observaciones_3);
+        $this->observaciones_periodo = $utils->noHtml($this->observaciones_periodo);
+    }
+
+    protected function saveUpdate(array $values = []): bool
+    {
+        $this->usermodificacion = Session::get('user')->nick ?? null;
+        $this->fechamodificacion = date(static::DATETIME_STYLE);
+        return parent::saveUpdate($values);
+    }
 }
 

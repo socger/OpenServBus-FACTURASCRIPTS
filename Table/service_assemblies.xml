@@ -1,112 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <column>
-        <name>idservice_assembly</name>
-        <type>serial</type>
-        <null>NO</null>
-    </column>
-    
-    
-    <column>
-        <name>fechaalta</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>useralta</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>fechamodificacion</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>usermodificacion</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
         <name>activo</name>
         <type>boolean</type>
         <default>true</default>
     </column>
     <column>
-        <name>fechabaja</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>userbaja</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>motivobaja</name>
-        <type>character varying(100)</type>
-    </column>
-    
-    
-    <column>
-        <name>cod_servicio</name>
-        <type>character varying(20)</type>
-    </column>
-    <column>
-        <name>idservice_regular</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>idservice</name>
-        <type>integer</type>
-    </column>
-    
-    <column>
-        <name>nombre</name>
-        <type>character varying(100)</type>
-        <null>NO</null>
-    </column>
-
-
-    <column>
-        <name>plazas</name>
-        <type>integer</type>
-        <null>NO</null>
-    </column>
-    
-    
-    <column>
         <name>codcliente</name>
         <type>character varying(10)</type>
         <null>NO</null>
-    </column>
-    <column>
-        <name>idvehicle_type</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>idhelper</name>
-        <type>integer</type>
-    </column>
-    
-
-    <column>
-        <name>facturar_SN</name>
-        <type>boolean</type>
-        <default>true</default>
-    </column>
-    <column>
-        <name>facturar_agrupando</name>
-        <type>boolean</type>
-        <default>false</default>
-    </column>
-    
-    
-    <column>
-        <name>importe</name>
-        <type>double precision</type>
-        <null>NO</null>
-        <default>0</default>
-    </column>
-    <column>
-        <name>importe_enextranjero</name>
-        <type>double precision</type>
-        <null>NO</null>
-        <default>0</default>
     </column>
     <column>
         <name>codimpuesto</name>
@@ -119,24 +21,78 @@
         <null>NO</null>
     </column>
     <column>
-        <name>total</name>
-        <type>double precision</type>
-        <null>NO</null>
-        <default>0</default>
+        <name>codsubcuenta_km_extranjero</name>
+        <type>character varying(15)</type>
     </column>
-    
-    
-    
-    
+    <column>
+        <name>codsubcuenta_km_nacional</name>
+        <type>character varying(15)</type>
+    </column>
+    <column>
+        <name>cod_servicio</name>
+        <type>character varying(20)</type>
+    </column>
+    <column>
+        <name>driver_alojamiento_1</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>driver_alojamiento_2</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>driver_alojamiento_3</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>driver_observaciones_1</name>
+        <type>text</type>
+    </column>
+    <column>
+        <name>driver_observaciones_2</name>
+        <type>text</type>
+    </column>
+    <column>
+        <name>driver_observaciones_3</name>
+        <type>text</type>
+    </column>
+    <column>
+        <name>facturar_agrupando</name>
+        <type>boolean</type>
+        <default>false</default>
+    </column>
+    <column>
+        <name>facturar_SN</name>
+        <type>boolean</type>
+        <default>true</default>
+    </column>
+    <column>
+        <name>fechaalta</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>fechabaja</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>fechamodificacion</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>fecha_desde</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>fecha_hasta</name>
+        <type>timestamp</type>
+    </column>
     <column>
         <name>fuera_del_municipio</name>
         <type>boolean</type>
         <default>false</default>
     </column>
-
-    
     <column>
-        <name>hoja_ruta_origen</name>
+        <name>hoja_ruta_contratante</name>
         <type>character varying(100)</type>
         <null>NO</null>
     </column>
@@ -151,7 +107,7 @@
         <null>NO</null>
     </column>
     <column>
-        <name>hoja_ruta_contratante</name>
+        <name>hoja_ruta_origen</name>
         <type>character varying(100)</type>
         <null>NO</null>
     </column>
@@ -164,28 +120,98 @@
         <type>character varying(30)</type>
         <null>NO</null>
     </column>
-
-        
     <column>
-        <name>idservice_type</name>
+        <name>hora_anticipacion</name>
+        <type>time</type>
+    </column>
+    <column>
+        <name>hora_desde</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>hora_hasta</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>iddriver_1</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>iddriver_2</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>iddriver_3</name>
         <type>integer</type>
     </column>
     <column>
         <name>idempresa</name>
         <type>integer</type>
     </column>
-
-        
+    <column>
+        <name>idfactura</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idhelper</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idservice</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idservice_assembly</name>
+        <type>serial</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>idvehicle</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idservice_type</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idservice_regular</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idservice_regular_period</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idvehicle_type</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>importe</name>
+        <type>double precision</type>
+        <null>NO</null>
+        <default>0</default>
+    </column>
+    <column>
+        <name>importe_enextranjero</name>
+        <type>double precision</type>
+        <null>NO</null>
+        <default>0</default>
+    </column>
+    <column>
+        <name>motivobaja</name>
+        <type>character varying(100)</type>
+    </column>
+    <column>
+        <name>nombre</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
     <column>
         <name>observaciones</name>
         <type>text</type>
     </column>
     <column>
-        <name>observaciones_montaje</name>
-        <type>text</type>
-    </column>
-    <column>
-        <name>observaciones_vehiculo</name>
+        <name>observaciones_drivers</name>
         <type>text</type>
     </column>
     <column>
@@ -197,92 +223,21 @@
         <type>text</type>
     </column>
     <column>
-        <name>observaciones_drivers</name>
+        <name>observaciones_montaje</name>
         <type>text</type>
     </column>
-
-
     <column>
-        <name>iddriver_1</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>driver_alojamiento_1</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>driver_observaciones_1</name>
+        <name>observaciones_periodo</name>
         <type>text</type>
     </column>
-    
-    
     <column>
-        <name>iddriver_2</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>driver_alojamiento_2</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>driver_observaciones_2</name>
+        <name>observaciones_vehiculo</name>
         <type>text</type>
     </column>
-    
-    
     <column>
-        <name>iddriver_3</name>
+        <name>plazas</name>
         <type>integer</type>
-    </column>
-    <column>
-        <name>driver_alojamiento_3</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>driver_observaciones_3</name>
-        <type>text</type>
-    </column>
-    
-    
-    <column>
-        <name>idvehicle</name>
-        <type>integer</type>
-    </column>
-
-
-    <column>
-        <name>codsubcuenta_km_nacional</name>
-        <type>character varying(15)</type>
-    </column>
-    <column>
-        <name>codsubcuenta_km_extranjero</name>
-        <type>character varying(15)</type>
-    </column>
-    
-    
-    <column>
-        <name>idservice_regular_period</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>fecha_desde</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>fecha_hasta</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>hora_anticipacion</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>hora_desde</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>hora_hasta</name>
-        <type>timestamp</type>
+        <null>NO</null>
     </column>
     <column>
         <name>salida_desde_nave_sn</name>
@@ -290,27 +245,36 @@
         <default>true</default>
     </column>
     <column>
-        <name>observaciones_periodo</name>
-        <type>text</type>
+        <name>total</name>
+        <type>double precision</type>
+        <null>NO</null>
+        <default>0</default>
     </column>
     <column>
-        <name>idfactura</name>
-        <type>integer</type>
+        <name>useralta</name>
+        <type>character varying(50)</type>
     </column>
-    
-    
+    <column>
+        <name>userbaja</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>usermodificacion</name>
+        <type>character varying(50)</type>
+    </column>
     <constraint>
         <name>service_assemblies_pkey</name>
         <type>PRIMARY KEY (idservice_assembly)</type>
     </constraint>
-
     <constraint>
         <name>ca_service_assemblies__clientes</name>
         <type>FOREIGN KEY (codcliente) REFERENCES clientes (codcliente) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
         <name>ca_service_assemblies__vehicle_types</name>
-        <type>FOREIGN KEY (idvehicle_type) REFERENCES vehicle_types (idvehicle_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <type>FOREIGN KEY (idvehicle_type) REFERENCES vehicle_types (idvehicle_type) ON DELETE RESTRICT ON UPDATE
+            RESTRICT
+        </type>
     </constraint>
     <constraint>
         <name>ca_service_assemblies__helpers</name>
@@ -318,11 +282,15 @@
     </constraint>
     <constraint>
         <name>ca_service_assemblies__idsfiscales</name>
-        <type>FOREIGN KEY (hoja_ruta_tipoidfiscal) REFERENCES idsfiscales (tipoidfiscal) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <type>FOREIGN KEY (hoja_ruta_tipoidfiscal) REFERENCES idsfiscales (tipoidfiscal) ON DELETE RESTRICT ON UPDATE
+            RESTRICT
+        </type>
     </constraint>
     <constraint>
         <name>ca_service_assemblies__service_types</name>
-        <type>FOREIGN KEY (idservice_type) REFERENCES service_types (idservice_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <type>FOREIGN KEY (idservice_type) REFERENCES service_types (idservice_type) ON DELETE RESTRICT ON UPDATE
+            RESTRICT
+        </type>
     </constraint>
     <constraint>
         <name>ca_service_assemblies__empresas</name>
@@ -346,11 +314,15 @@
     </constraint>
     <constraint>
         <name>ca_service_assemblies_km_nacional__subcuentas</name>
-        <type>FOREIGN KEY (codsubcuenta_km_nacional) REFERENCES subcuentas (codsubcuenta) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <type>FOREIGN KEY (codsubcuenta_km_nacional) REFERENCES subcuentas (codsubcuenta) ON DELETE RESTRICT ON UPDATE
+            RESTRICT
+        </type>
     </constraint>
     <constraint>
         <name>ca_service_assemblies_km_extranjero__subcuentas</name>
-        <type>FOREIGN KEY (codsubcuenta_km_extranjero) REFERENCES subcuentas (codsubcuenta) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <type>FOREIGN KEY (codsubcuenta_km_extranjero) REFERENCES subcuentas (codsubcuenta) ON DELETE RESTRICT ON UPDATE
+            RESTRICT
+        </type>
     </constraint>
     <constraint>
         <name>ca_service_assemblies__impuestos</name>
@@ -358,11 +330,15 @@
     </constraint>
     <constraint>
         <name>ca_service_assemblies__impuestos_enextranjero</name>
-        <type>FOREIGN KEY (codimpuesto_enextranjero) REFERENCES impuestos (codimpuesto) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <type>FOREIGN KEY (codimpuesto_enextranjero) REFERENCES impuestos (codimpuesto) ON DELETE RESTRICT ON UPDATE
+            RESTRICT
+        </type>
     </constraint>
     <constraint>
         <name>ca_service_assemblies__service_regulars</name>
-        <type>FOREIGN KEY (idservice_regular) REFERENCES service_regulars (idservice_regular) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <type>FOREIGN KEY (idservice_regular) REFERENCES service_regulars (idservice_regular) ON DELETE RESTRICT ON
+            UPDATE RESTRICT
+        </type>
     </constraint>
     <constraint>
         <name>ca_service_assemblies__services</name>
@@ -372,8 +348,18 @@
         <name>ca_service_assemblies__facturascli</name>
         <type>FOREIGN KEY (idfactura) REFERENCES facturascli (idfactura) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
-
-        
+    <constraint>
+        <name>ca_service_assemblies__users_alta</name>
+        <type>FOREIGN KEY (useralta) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_assemblies__users_baja</name>
+        <type>FOREIGN KEY (userbaja) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_assemblies__users_modificacion</name>
+        <type>FOREIGN KEY (usermodificacion) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
     <constraint>
         <name>uniq_service_assemblies__idservice</name>
         <type>UNIQUE (idservice)</type>
