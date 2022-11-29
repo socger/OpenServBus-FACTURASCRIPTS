@@ -1,167 +1,159 @@
 <?php
 
-namespace FacturaScripts\Plugins\OpenServBus\Model; 
+namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
-use FacturaScripts\Plugins\OpenServBus\Model\Collaborator;
-use FacturaScripts\Plugins\OpenServBus\Model\Garage;
+use FacturaScripts\Core\Session;
 
-class Vehicle extends Base\ModelClass {
+class Vehicle extends Base\ModelClass
+{
     use Base\ModelTrait;
 
-    public $idvehicle;
-        
-    public $user_fecha;
-    public $user_nick;
-    public $fechaalta;
-    public $useralta;
-    public $fechamodificacion;
-    public $usermodificacion;
+    /** @var bool */
     public $activo;
+
+    /** @var string */
+    public $carroceria;
+
+    /** @var string */
+    public $cod_vehicle;
+
+    /** @var string */
+    public $configuraciones_especiales;
+
+    /** @var string */
+    public $fechaalta;
+
+    /** @var string */
     public $fechabaja;
-    public $userbaja;
+
+    /** @var string */
+    public $fechamodificacion;
+
+    /** @var string */
+    public $fecha_km_actuales;
+
+    /** @var string */
+    public $fecha_matriculacion_actual;
+
+    /** @var string */
+    public $fecha_matriculacion_primera;
+
+    /** @var int */
+    public $idcollaborator;
+
+    /** @var int */
+    public $iddriver_usual;
+
+    /** @var int */
+    public $idempresa;
+
+    /** @var int */
+    public $idfuel_type;
+
+    /** @var int */
+    public $idgarage;
+
+    /** @var int */
+    public $idvehicle;
+
+    /** @var int */
+    public $idvehicle_type;
+
+    /** @var int */
+    public $km_actuales;
+
+    /** @var string */
+    public $matricula;
+
+    /** @var string */
     public $motivobaja;
 
-    public $cod_vehicle;
-    public $nombre;
-    public $matricula;
+    /** @var string */
     public $motor_chasis;
+
+    /** @var string */
+    public $nombre;
+
+    /** @var string */
     public $numero_bastidor;
-    public $carroceria;
-    public $numero_obra;
-    public $fecha_matriculacion_primera;
-    public $fecha_matriculacion_actual;
-    public $plazas_segun_permiso;
-    public $plazas_segun_ficha_tecnica;
-    public $plazas_ofertables;
-    public $configuraciones_especiales;
-    public $idempresa;
-    public $idcollaborator;
-    public $idgarage;
+
+    /** @var string */
     public $observaciones;
-    public $idfuel_type;
-    public $km_actuales;
-    public $fecha_km_actuales;
-    public $idvehicle_type;
-    public $iddriver_usual;
-    
-    // función que inicializa algunos valores antes de la vista del controlador
-    public function clear() {
+
+    /** @var string */
+    public $numero_obra;
+
+    /** @var int */
+    public $plazas_ofertables;
+
+    /** @var string */
+    public $plazas_segun_ficha_tecnica;
+
+    /** @var int */
+    public $plazas_segun_permiso;
+
+    /** @var string */
+    public $useralta;
+
+    /** @var string */
+    public $userbaja;
+
+    /** @var string */
+    public $usermodificacion;
+
+    public function clear()
+    {
         parent::clear();
-        
-        $this->activo = true; // Por defecto estará activo
+        $this->activo = true;
+        $this->fechaalta = date(static::DATETIME_STYLE);
         $this->km_actuales = 0;
+        $this->useralta = Session::get('user')->nick ?? null;
     }
-    
-    /**
-     * This function is called when creating the model table. Returns the SQL
-     * that will be executed after the creation of the table. Useful to insert values
-     * default.
-     *
-     * @return string
-     */
+
     public function install()
     {
-        /// needed dependency proveedores
         new Collaborator();
         new Garage();
-
         return parent::install();
     }
 
-    // función que devuelve el id principal
-    public static function primaryColumn(): string {
+    public static function primaryColumn(): string
+    {
         return 'idvehicle';
     }
-    
-    // función que devuelve el nombre de la tabla
-    public static function tableName(): string {
+
+    public static function tableName(): string
+    {
         return 'vehicles';
     }
 
-    // Para realizar cambios en los datos antes de guardar por modificación
-    protected function saveUpdate(array $values = [])
+    public function test(): bool
     {
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
+        if ($this->comprobarSiActivo() === false) {
             return false;
         }
-        
-        return parent::saveUpdate($values);
-    }
 
-    // Para realizar cambios en los datos antes de guardar por alta
-    protected function saveInsert(array $values = [])
-    {
-        // Creamos el nuevo id
-        if (empty($this->idvehicle)) {
-            $this->idvehicle = $this->newCode();
-        }
-
-        // Rellenamos el cod_vehicle si no lo introdujo el usuario
-        if (empty($this->cod_vehicle)) {
-            $this->cod_vehicle = (string) $this->newCode();
-        }
-
-        $this->rellenarDatosAlta();
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
-            return false;
-        }
-        
-        return parent::saveInsert($values);
-    }
-    
-    public function test()
-    {
-        /* Lo quitamos de momento para probar lo último comentado por neorazorx
-           Mirar como rellenamos en editVehicle.php el controlador Colaborador
-         
-        // Desde que rellenamos los valores del widget Colaborador, he tenido que poner un valor 0
-        // Por lo tanto no me viene como empty, así que lo pongo a pelo yo si es = 0
-        if ( $this->idcollaborator == 0) 
-        {
-            $this->toolBox()->i18nLog()->info('Ponemos a null al colaborador');
-            $this->idcollaborator = null;
-        }
-        */
-      
         // Comprobamos que el código se ha introducido correctamente
         if (!empty($this->cod_vehicle) && 1 !== \preg_match('/^[A-Z0-9_\+\.\-]{1,10}$/i', $this->cod_vehicle)) {
             $this->toolBox()->i18nLog()->error(
                 'invalid-alphanumeric-code',
                 ['%value%' => $this->cod_vehicle, '%column%' => 'cod_vehicle', '%min%' => '1', '%max%' => '10']
             );
-            
             return false;
         }
-        
-        // Exijimos que se introduzca idempresa o idcollaborator
-        if ( (empty($this->idempresa)) 
-         and (empty($this->idcollaborator))
-           ) 
-        {
+
+        // Exigimos que se introduzca idempresa o idcollaborator
+        if ((empty($this->idempresa)) && (empty($this->idcollaborator))) {
             $this->toolBox()->i18nLog()->error('Debe de confirmar si es un vehículo nuestro o de una empresa colaboradora');
             return false;
         }
 
-        if ( (!empty($this->idempresa)) 
-         and (!empty($this->idcollaborator))
-           ) 
-        {
+        if ((!empty($this->idempresa)) && (!empty($this->idcollaborator))) {
             $this->toolBox()->i18nLog()->error('O es un vehículo nuestro o de una empresa colaboradora, pero ambos no');
             return false;
         }
-        
-        /* Quitamos esta parte porque si el usuario rellenaba idControllator y idempresa estaba vacío, lo rellenaba automáticamente con la empresa por defecto
-            // Nos rellena la empresa (si no se ha elegido) con la empresa por defecto
-            if (empty($this->idempresa)) {
-                $this->idempresa = $this->toolBox()->appSettings()->get('default', 'idempresa');
-            }
-        */
-        
+
         // Si Fecha Matriculación Actual está vacía, pero Fecha Matriculación Primera está rellena, pues
         // Fecha Matriculacion Actual = Fecha Matriculación Primera
         if (empty($this->fecha_matriculacion_actual)) {
@@ -170,49 +162,7 @@ class Vehicle extends Base\ModelClass {
                 $this->fecha_matriculacion_actual = $this->fecha_matriculacion_primera;
             }
         }
-        
-        $this->evitarInyeccionSQL();
-        return parent::test();
-    }
 
-
-    // ** ********************************** ** //
-    // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
-    // ** ********************************** ** //
-    private function comprobarSiActivo()
-    {
-        $a_devolver = true;
-        
-        if ($this->activo == false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-            
-            if (empty($this->motivobaja)){
-                $a_devolver = false;
-                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
-            }
-        } else { // Por si se vuelve a poner Activo = true
-            $this->fechabaja = null;
-            $this->userbaja = null;
-            $this->motivobaja = null;
-        }
-        return $a_devolver;
-    }
-
-    private function rellenarDatosModificacion()
-    {
-        $this->usermodificacion = $this->user_nick; 
-        $this->fechamodificacion = $this->user_fecha; 
-    }
-
-    private function rellenarDatosAlta()
-    {
-        $this->useralta = $this->user_nick; 
-        $this->fechaalta = $this->user_fecha; 
-    }
-	
-    private function evitarInyeccionSQL()
-    {
         $utils = $this->toolBox()->utils();
         $this->cod_vehicle = $utils->noHtml($this->cod_vehicle);
         $this->nombre = $utils->noHtml($this->nombre);
@@ -225,6 +175,33 @@ class Vehicle extends Base\ModelClass {
         $this->configuraciones_especiales = $utils->noHtml($this->configuraciones_especiales);
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
+        return parent::test();
     }
-	
+
+    protected function comprobarSiActivo(): bool
+    {
+        $a_devolver = true;
+        if ($this->activo === false) {
+            $this->fechabaja = $this->fechamodificacion;
+            $this->userbaja = $this->usermodificacion;
+
+            if (empty($this->motivobaja)) {
+                $a_devolver = false;
+                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
+            }
+        } else {
+            // Por si se vuelve a poner Activo = true
+            $this->fechabaja = null;
+            $this->userbaja = null;
+            $this->motivobaja = null;
+        }
+        return $a_devolver;
+    }
+
+    protected function saveUpdate(array $values = []): bool
+    {
+        $this->usermodificacion = Session::get('user')->nick ?? null;
+        $this->fechamodificacion = date(static::DATETIME_STYLE);
+        return parent::saveUpdate($values);
+    }
 }
