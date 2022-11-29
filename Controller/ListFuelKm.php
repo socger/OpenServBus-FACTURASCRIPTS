@@ -1,35 +1,39 @@
 <?php
+
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
-class ListFuelKm extends ListController {
-    
-    public function getPageData(): array {
+class ListFuelKm extends ListController
+{
+
+    public function getPageData(): array
+    {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'OpenServBus';
         $pageData['title'] = 'Repostajes / kms';
         $pageData['icon'] = 'fas fa-gas-pump';
         return $pageData;
     }
-    
-    protected function createViews() {
+
+    protected function createViews()
+    {
         $this->createViewFuelKm();
         $this->createViewFuel_pump();
     }
-    
+
     protected function createViewFuelKm($viewName = 'ListFuelKm')
     {
         $this->addView($viewName, 'FuelKm', 'Repostajes / kms', 'fas fa-gas-pump');
         $this->addOrderBy($viewName, ['fecha'], 'Fecha', 1);
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
+
         // Filtros
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
             ['code' => '0', 'description' => 'Activos = NO'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);        
+        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
 
         $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdVehicle', 'Vehículo', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
