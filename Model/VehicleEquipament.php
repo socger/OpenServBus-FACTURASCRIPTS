@@ -1,95 +1,79 @@
 <?php
 
-namespace FacturaScripts\Plugins\OpenServBus\Model; 
+namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
+use FacturaScripts\Core\Session;
 
-class VehicleEquipament extends Base\ModelClass {
+class VehicleEquipament extends Base\ModelClass
+{
     use Base\ModelTrait;
 
-    public $idvehicle_equipament;
-        
-    public $user_fecha;
-    public $user_nick;
-    public $fechaalta;
-    public $useralta;
-    public $fechamodificacion;
-    public $usermodificacion;
     public $activo;
+
+    public $fechaalta;
+
     public $fechabaja;
-    public $userbaja;
-    public $motivobaja;
+
+    public $fechamodificacion;
 
     public $idvehicle;
+
+    public $idvehicle_equipament;
+
     public $idvehicle_equipament_type;
-    
+
+    public $motivobaja;
+
     public $observaciones;
-    
-    // función que inicializa algunos valores antes de la vista del controlador
-    public function clear() {
-        parent::clear();
-        
-        $this->activo = true; // Por defecto estará activo
-    }
-    
-    /**
-     * This function is called when creating the model table. Returns the SQL
-     * that will be executed after the creation of the table. Useful to insert values
-     * default.
-     *
-     * @return string
-     */
-    public function install()
+
+    public $useralta;
+
+    public $userbaja;
+
+    public $usermodificacion;
+
+    public function clear()
     {
-        /// needed dependency proveedores
+        parent::clear();
+        $this->activo = true;
+        $this->fechaalta = date(static::DATETIME_STYLE);
+        $this->useralta = Session::get('user')->nick ?? null;
+    }
+
+    public function getVehicle(): Vehicle
+    {
+        $vehicle = new Vehicle();
+        $vehicle->loadFromCode($this->idvehicle);
+        return $vehicle;
+    }
+
+    public function install(): string
+    {
         new Vehicle();
         new VehicleEquipamentType();
-
         return parent::install();
     }
 
-    // función que devuelve el id principal
-    public static function primaryColumn(): string {
+    public static function primaryColumn(): string
+    {
         return 'idvehicle_equipament';
     }
-    
-    // función que devuelve el nombre de la tabla
-    public static function tableName(): string {
+
+    public static function tableName(): string
+    {
         return 'vehicle_equipaments';
     }
 
-    // Para realizar cambios en los datos antes de guardar por modificación
-    protected function saveUpdate(array $values = [])
+    public function test(): bool
     {
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
+        if ($this->comprobarSiActivo() === false) {
             return false;
         }
-        
-        return parent::saveUpdate($values);
-    }
 
-    // Para realizar cambios en los datos antes de guardar por alta
-    protected function saveInsert(array $values = [])
-    {
-        // Creamos el nuevo id
-        if (empty($this->idvehicle_equipament)) {
-            $this->idvehicle_equipament = $this->newCode();
-        }
-
-        $this->rellenarDatosAlta();
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
-            return false;
-        }
-        
-        return parent::saveInsert($values);
-    }
-    
-    public function test() {
-        $this->evitarInyeccionSQL();
+        $utils = $this->toolBox()->utils();
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
         return parent::test();
     }
 
@@ -98,23 +82,19 @@ class VehicleEquipament extends Base\ModelClass {
         return parent::url($type, $list . '?activetab=List');
     }
 
-
-    // ** ********************************** ** //
-    // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
-    // ** ********************************** ** //
-    private function comprobarSiActivo()
+    protected function comprobarSiActivo(): bool
     {
         $a_devolver = true;
-        
-        if ($this->activo == false) {
+        if ($this->activo === false) {
             $this->fechabaja = $this->fechamodificacion;
             $this->userbaja = $this->usermodificacion;
-            
-            if (empty($this->motivobaja)){
+
+            if (empty($this->motivobaja)) {
                 $a_devolver = false;
                 $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
             }
-        } else { // Por si se vuelve a poner Activo = true
+        } else {
+            // Por si se vuelve a poner Activo = true
             $this->fechabaja = null;
             $this->userbaja = null;
             $this->motivobaja = null;
@@ -122,38 +102,10 @@ class VehicleEquipament extends Base\ModelClass {
         return $a_devolver;
     }
 
-    private function rellenarDatosModificacion()
+    protected function saveUpdate(array $values = []): bool
     {
-        $this->usermodificacion = $this->user_nick; 
-        $this->fechamodificacion = $this->user_fecha; 
+        $this->usermodificacion = Session::get('user')->nick ?? null;
+        $this->fechamodificacion = date(static::DATETIME_STYLE);
+        return parent::saveUpdate($values);
     }
-
-    private function rellenarDatosAlta()
-    {
-        $this->useralta = $this->user_nick; 
-        $this->fechaalta = $this->user_fecha; 
-    }
-	
-    private function evitarInyeccionSQL()
-    {
-        $utils = $this->toolBox()->utils();
-        $this->observaciones = $utils->noHtml($this->observaciones);
-        $this->motivobaja = $utils->noHtml($this->motivobaja);
-    }
-    
-    public function getVehicle() {
-        $vehicle = new Vehicle();
-        $vehicle->loadFromCode($this->idvehicle);
-        return $vehicle;
-    }
-    
-    /*public function url(string $type = 'auto', string $list = 'ListVehicle'): string {
-        if ($type == 'list') {
-            return $this->getVehicle()->url() . "&activetab=ListVehicle_equipament";
-        }
-        
-        return parent::url($type, $list);
-    }	*/
-    
-	
 }

@@ -2,34 +2,29 @@
 <view>
     <columns>
         <column name="id" display="none" order="100">
-            <widget type="text" fieldname="idvehicle_equipament" />
+            <widget type="text" fieldname="idvehicle_equipament"/>
         </column>
-
-
         <column name="vehicle" order="110">
-            <widget type="select" fieldname="idvehicle" >
-                <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
+            <widget type="select" fieldname="idvehicle">
+                <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre"/>
             </widget>
         </column>
         <column name="description" order="120">
-            <widget type="select" fieldname="idvehicle_equipament_type" >
-                <values source="vehicle_equipament_types" fieldcode="idvehicle_equipament_type" fieldtitle="nombre" />
+            <widget type="select" fieldname="idvehicle_equipament_type">
+                <values source="vehicle_equipament_types" fieldcode="idvehicle_equipament_type" fieldtitle="nombre"/>
             </widget>
         </column>
-        
-        
-        <column name="active" display="center" order="150">
+        <column name="active" display="center" order="130">
             <widget type="checkbox" fieldname="activo"/>
         </column>
-        <column name="creation-date" display="right" order="160">
+        <column name="creation-date" display="right" order="140">
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>
-    
     <rows>
         <row type="status">
             <option color="success" title="active-yes" fieldname="activo">1</option>
             <option color="warning" title="active-no" fieldname="activo">0</option>
         </row>
-    </rows>    
+    </rows>
 </view>
