@@ -2,26 +2,21 @@
 <view>
     <columns>
         <column name="id" display="none" order="100">
-            <widget type="text" fieldname="idservice_regular_combination" />
+            <widget type="text" fieldname="idservice_regular_combination"/>
         </column>
-        
-        
-        <column name="description" order="110" >
-            <widget type="text" fieldname="nombre" />
+        <column name="description" order="110">
+            <widget type="text" fieldname="nombre"/>
         </column>
-        
         <column name="usual-driver" order="120">
             <widget type="select" fieldname="iddriver">
-                <values source="drivers" fieldcode="iddriver" fieldtitle="nombre" />
+                <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
             </widget>
         </column>
         <column name="usual-vehicle" order="130">
             <widget type="select" fieldname="idvehicle">
-                <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre" />
+                <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre"/>
             </widget>
         </column>
-        
-
         <column name="monday" order="140">
             <widget type="checkbox" fieldname="lunes"/>
         </column>
@@ -43,8 +38,6 @@
         <column name="sunday" order="200">
             <widget type="checkbox" fieldname="domingo"/>
         </column>
-
-
         <column name="active" display="center" order="210">
             <widget type="checkbox" fieldname="activo"/>
         </column>
@@ -52,11 +45,10 @@
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>
-    
     <rows>
         <row type="status">
             <option color="success" title="active-yes" fieldname="activo">1</option>
             <option color="warning" title="active-no" fieldname="activo">0</option>
         </row>
-    </rows>    
+    </rows>
 </view>
