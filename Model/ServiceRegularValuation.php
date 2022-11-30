@@ -1,213 +1,191 @@
 <?php
 
-namespace FacturaScripts\Plugins\OpenServBus\Model; 
+namespace FacturaScripts\Plugins\OpenServBus\Model;
 
 use FacturaScripts\Core\Model\Base;
 use FacturaScripts\Core\Model\Impuesto;
+use FacturaScripts\Core\Session;
 
-class ServiceRegularValuation extends Base\ModelClass {
+class ServiceRegularValuation extends Base\ModelClass
+{
     use Base\ModelTrait;
+    use OpenServBusModelTrait;
 
-    public $idservice_regular_valuation;
-        
-    public $user_fecha;
-    public $user_nick;
-    public $fechaalta;
-    public $useralta;
-    public $fechamodificacion;
-    public $usermodificacion;
+    /** @var bool */
     public $activo;
-    public $fechabaja;
-    public $userbaja;
-    public $motivobaja;
-    
-    public $idservice_regular;
-    public $orden;
-    
-    public $idservice_valuation_type;
-    public $nombre;
-    
-    public $importe;
-    public $importe_enextranjero;
-    
-    public $observaciones;
-    
-    // función que inicializa algunos valores antes de la vista del controlador
-    public function clear() {
-        parent::clear();
-        
-        $this->activo = true; // Por defecto estará activo
-        $this->improte = 0;
-        $this->total = 0;
-    }
-    
-    /**
-     * This function is called when creating the model table. Returns the SQL
-     * that will be executed after the creation of the table. Useful to insert values
-     * default.
-     *
-     * @return string
-     */
-    public function install()
-    {
-        // needed dependency
-        new ServiceRegular();
-        new Service_valuationType();
-        new Impuesto();
 
+    /** @var string */
+    public $fechaalta;
+
+    /** @var string */
+    public $fechabaja;
+
+    /** @var string */
+    public $fechamodificacion;
+
+    /** @var int */
+    public $idservice_regular;
+
+    /** @var int */
+    public $idservice_valuation_type;
+
+    /** @var int */
+    public $idservice_regular_valuation;
+
+    /** @var float */
+    public $importe;
+
+    /** @var float */
+    public $importe_enextranjero;
+
+    /** @var string */
+    public $motivobaja;
+
+    /** @var string */
+    public $nombre;
+
+    /** @var string */
+    public $observaciones;
+
+    /** @var int */
+    public $orden;
+
+    /** @var string */
+    public $useralta;
+
+    /** @var string */
+    public $userbaja;
+
+    /** @var string */
+    public $usermodificacion;
+
+    public function clear()
+    {
+        parent::clear();
+        $this->activo = true;
+        $this->fechaalta = date(static::DATETIME_STYLE);
+        $this->importe = 0;
+        $this->useralta = Session::get('user')->nick ?? null;
+    }
+
+    public function delete(): bool
+    {
+        if (false === parent::delete()) {
+            return false;
+        }
+
+        $this->actualizar_Importes();
+        return true;
+    }
+
+    public function getServicioRegular(): ServiceRegular
+    {
+        $servicioRegular = new ServiceRegular();
+        $servicioRegular->loadFromCode($this->idservice_regular);
+        return $servicioRegular;
+    }
+
+    public function install(): string
+    {
+        new ServiceRegular();
+        new ServiceValuationType();
+        new Impuesto();
         return parent::install();
     }
 
-    // función que devuelve el id principal
-    public static function primaryColumn(): string {
+    public static function primaryColumn(): string
+    {
         return 'idservice_regular_valuation';
     }
-    
-    // función que devuelve el nombre de la tabla
-    public static function tableName(): string {
+
+    public static function tableName(): string
+    {
         return 'service_regular_valuations';
     }
 
-    private function actualizar_Importes(int $idServiceRegular)
+    public function test(): bool
+    {
+        if ($this->comprobarSiActivo() === false) {
+            return false;
+        }
+
+        if (empty($this->idservice_regular)) {
+            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio regular al que pertenece este itinerario.');
+            return false;
+        }
+
+        if ($this->checkDescripcion() === false) {
+            return false;
+        }
+
+        $this->comprobarOrden();
+
+        $utils = $this->toolBox()->utils();
+        $this->observaciones = $utils->noHtml($this->observaciones);
+        $this->motivobaja = $utils->noHtml($this->motivobaja);
+        $this->nombre = $utils->noHtml($this->nombre);
+        return parent::test();
+    }
+
+    public function url(string $type = 'auto', string $list = 'ListServiceRegular'): string
+    {
+        return parent::url($type, $list . '?activetab=List');
+    }
+
+    protected function actualizar_Importes()
     {
         $sql = " UPDATE service_regulars "
-             . " SET service_regulars.importe = ( SELECT SUM(service_regular_valuations.importe) "
-                                              . " FROM service_regular_valuations "
-                                              . " WHERE service_regular_valuations.idservice_regular = " . $idServiceRegular . " "
-                                              . " AND service_regular_valuations.activo = 1 ) "
-               . " , service_regulars.importe_enextranjero = ( SELECT SUM(service_regular_valuations.importe_enextranjero)  "
-                                                           . " FROM service_regular_valuations "
-                                                           . " WHERE service_regular_valuations.idservice_regular = " . $idServiceRegular . " "
-                                                           . " AND service_regular_valuations.activo = 1 ) "
-             . " WHERE service_regulars.idservice_regular = " . $idServiceRegular . ";";
+            . " SET service_regulars.importe = ( SELECT SUM(service_regular_valuations.importe) "
+            . " FROM service_regular_valuations "
+            . " WHERE service_regular_valuations.idservice_regular = " . $this->idservice_regular . " "
+            . " AND service_regular_valuations.activo = 1 ) "
+            . " , service_regulars.importe_enextranjero = ( SELECT SUM(service_regular_valuations.importe_enextranjero)  "
+            . " FROM service_regular_valuations "
+            . " WHERE service_regular_valuations.idservice_regular = " . $this->idservice_regular . " "
+            . " AND service_regular_valuations.activo = 1 ) "
+            . " WHERE service_regulars.idservice_regular = " . $this->idservice_regular . ";";
 
         self::$dataBase->exec($sql);
-        
-        $servicioRegular = new Service_regular(); // Creamos el modelo
-        $servicioRegular->loadFromCode($idServiceRegular);
-        $servicioRegular->llamadoDesdeFuera = true;
+
+        $servicioRegular = $this->getServicioRegular();
         $servicioRegular->rellenarTotal();
         $servicioRegular->save();
     }
 
-    private function guardar(string $type, array $values = []): bool
+    protected function checkDescripcion(): bool
     {
-        $idServiceRegular = $this->idservice_regular;
-        
-        if ($type === 'U') {
-            $aDevolver = parent::saveUpdate($values);
-        } else {
-            $aDevolver = parent::saveInsert($values);
-        }
-        
-        if (true === $aDevolver) {
-            $this->actualizar_Importes($idServiceRegular);
+        if (false === empty($this->nombre)) {
+            return true;
         }
 
-        return $aDevolver;
-    }
-
-    // Para realizar algo antes o después del borrado ... todo depende de que se ponga antes del parent o después
-    public function delete()
-    {
-        $idServiceRegular = $this->idservice_regular;
-        
-        $aDevolver = parent::delete();
-        
-        if (true === $aDevolver) {
-            $this->actualizar_Importes($idServiceRegular);
-        }
-
-        return $aDevolver;
-    }
-
-    // Para realizar cambios en los datos antes de guardar por modificación
-    protected function saveUpdate(array $values = [])
-    {
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
+        if (empty($this->idservice_valuation_type)) {
+            $this->toolBox()->i18nLog()->error('Debe de completar la descripción.');
             return false;
         }
 
-        return $this->guardar('U', $values);
-    }
+        $sql = ' SELECT nombre '
+            . ' FROM service_valuation_types '
+            . ' WHERE idservice_valuation_type = ' . $this->idservice_valuation_type
+            . ' ORDER BY idservice_valuation_type ';
 
-    // Para realizar cambios en los datos antes de guardar por alta
-    protected function saveInsert(array $values = [])
-    {
-        // Creamos el nuevo id
-        if (empty($this->idservice_regular_valuation)) {
-            $this->idservice_regular_valuation = $this->newCode();
+        $registros = self::$dataBase->select($sql);
+        foreach ($registros as $fila) {
+            $this->nombre = $fila['nombre'];
         }
 
-        $this->rellenarDatosAlta();
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
-            return false;
-        }
-
-        return $this->guardar('I', $values);
-    }
-    
-    public function test() {
-        if ($this->checkService() == false){return false;}
-        if ($this->checkDescripcion() == false){return false;}
-        
-        $this->comprobarOrden();
-        
-        $this->evitarInyeccionSQL();
-        return parent::test();
+        return true;
     }
 
-
-    // ** ********************************** ** //
-    // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
-    // ** ********************************** ** //
-    private function comprobarSiActivo()
+    protected function comprobarOrden()
     {
-        $a_devolver = true;
-        
-        if ($this->activo == false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-            
-            if (empty($this->motivobaja)){
-                $a_devolver = false;
-                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
-            }
-        } else { // Por si se vuelve a poner Activo = true
-            $this->fechabaja = null;
-            $this->userbaja = null;
-            $this->motivobaja = null;
-        }
-        return $a_devolver;
-    }
-
-    private function rellenarDatosModificacion()
-    {
-        $this->usermodificacion = $this->user_nick; 
-        $this->fechamodificacion = $this->user_fecha; 
-    }
-
-    private function rellenarDatosAlta()
-    {
-        $this->useralta = $this->user_nick; 
-        $this->fechaalta = $this->user_fecha; 
-    }
-    
-    private function comprobarOrden()
-    {
-        if (empty($this->orden) || $this->orden === 0) {
+        if (empty($this->orden)) {
             // Comprobamos si la cuenta existe
             $sql = ' SELECT MAX(service_regular_valuations.orden) AS orden '
-                 . ' FROM service_regular_valuations '
-                 . ' WHERE service_regular_valuations.idservice_regular = ' . $this->idservice_regular
-                 . ' ORDER BY service_regular_valuations.idservice_regular '
-                 .        ' , service_regular_valuations.orden '
-                 ;
-            
+                . ' FROM service_regular_valuations '
+                . ' WHERE service_regular_valuations.idservice_regular = ' . $this->idservice_regular
+                . ' ORDER BY service_regular_valuations.idservice_regular '
+                . ' , service_regular_valuations.orden ';
+
             $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
 
             foreach ($registros as $fila) {
@@ -217,68 +195,26 @@ class ServiceRegularValuation extends Base\ModelClass {
                     $this->orden = ($fila['orden'] + 5);
                 }
             }
-
         }
     }
-    
-    private function evitarInyeccionSQL()
-    {
-        $utils = $this->toolBox()->utils();
-        $this->observaciones = $utils->noHtml($this->observaciones);
-        $this->motivobaja = $utils->noHtml($this->motivobaja);
-        $this->nombre = $utils->noHtml($this->nombre);
-    }
-    
-    public function getServicioRegular() {
-        $servicioRegular = new Service_regular();
-        $servicioRegular->loadFromCode($this->idservice_regular);
-        return $servicioRegular;
-    }
-    
-    public function url(string $type = 'auto', string $list = 'List'): string {
-        if ($type == 'list') {
-            return $this->getServicioRegular()->url() . "&activetab=ListService_regular_valuation";
-        } 
-        
-        return parent::url($type, $list);
-    }	
-    
-    private function checkDescripcion()
-    {
-        if (empty($this->nombre)) 
-        {
-            if (empty($this->idservice_valuation_type)) {
-                $this->toolBox()->i18nLog()->error('Debe de completar la descripción.');
-                return false;
-            } else {
-                $sql = ' SELECT nombre '
-                     . ' FROM service_valuation_types '
-                     . ' WHERE idservice_valuation_type = ' . $this->idservice_valuation_type
-                     . ' ORDER BY idservice_valuation_type '
-                     ;
 
-                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
-
-                foreach ($registros as $fila) {
-                        $this->nombre = $fila['nombre'];
-                }
-                return true;
-            }
-            
+    protected function saveInsert(array $values = []): bool
+    {
+        if (false === parent::saveInsert($values)) {
+            return false;
         }
+
+        $this->actualizar_Importes();
         return true;
     }
-	
-    private function checkService()
-    {
-        $a_devolver = true;
-        if (empty($this->idservice_regular)) 
-        {
-            $a_devolver = false;
-            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio regular al que pertenece este itinerario.');
-        }
-        return $a_devolver;
-    }
-	
-}
 
+    protected function saveUpdate(array $values = []): bool
+    {
+        if (false === parent::saveUpdate($values)) {
+            return false;
+        }
+
+        $this->actualizar_Importes();
+        return true;
+    }
+}

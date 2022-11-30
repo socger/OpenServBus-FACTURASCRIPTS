@@ -22,6 +22,7 @@ class ListServiceRegular extends ListController
         $this->createViewServiceRegularCombinationServ();
         $this->createViewServiceRegularPeriod();
         $this->createViewServiceRegularItinerary();
+        $this->createViewValuations();
     }
 
     protected function createViewServiceRegular($viewName = 'ListServiceRegular')
@@ -154,5 +155,23 @@ class ListServiceRegular extends ListController
         $this->addFilterAutocomplete($viewName, 'xIdservice_regular', 'Servicio regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
         $this->addFilterPeriod($viewName, 'porFechaInicio', 'F.inicio', 'fecha_desde');
         $this->addFilterPeriod($viewName, 'porFechaFin', 'F.fin', 'fecha_hasta');
+    }
+
+    protected function createViewValuations($viewName = 'ListServiceRegularValuation')
+    {
+        $this->addView($viewName, 'ServiceRegularValuation', 'Valoraciones', 'fas fa-dollar-sign');
+
+        $this->views[$viewName]->addOrderBy(['idservice_regular', 'orden'], 'Por valoración', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+
+        // Filtros
+        $activo = [
+            ['code' => '1', 'description' => 'Activos = SI'],
+            ['code' => '0', 'description' => 'Activos = NO'],
+        ];
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice_regular', 'Servicio regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice_valuation_type', 'Conceptos - valoración', 'idservice_valuation_type', 'service_valuation_types', 'idservice_valuation_type', 'nombre');
     }
 }
