@@ -19,6 +19,7 @@ class ListService extends ListController
     {
         $this->createViewService();
         $this->createViewServiceItinerary();
+        $this->createViewServiceValuation();
         $this->createViewServiceValuationType();
         $this->createViewStop();
     }
@@ -75,6 +76,23 @@ class ListService extends ListController
         $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
 
         $this->addFilterAutocomplete($viewName, 'xIdservice', 'Serv. discrecional', 'idservice', 'services', 'idservice', 'nombre');
+    }
+
+    protected function createViewServiceValuation($viewName = 'ListServiceValuation')
+    {
+        $this->addView($viewName, 'ServiceValuation', 'Valoraciones', 'fas fa-dollar-sign');
+        $this->views[$viewName]->addOrderBy(['idservice', 'orden'], 'Por valoración', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+
+        // Filtros
+        $activo = [
+            ['code' => '1', 'description' => 'Activos = SI'],
+            ['code' => '0', 'description' => 'Activos = NO'],
+        ];
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice', 'Servicio discrecional', 'idservice', 'services', 'idservice', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice_valuation_type', 'Conceptos - valoración', 'idservice_valuation_type', 'service_valuation_types', 'idservice_valuation_type', 'nombre');
     }
 
     protected function createViewServiceValuationType($viewName = 'ListServiceValuationType')

@@ -2,20 +2,16 @@
 <view>
     <columns>
         <column name="id" display="none" order="100">
-            <widget type="text" fieldname="idservice_valuation" />
+            <widget type="text" fieldname="idservice_valuation"/>
         </column>
-        
         <column name="service" order="110">
             <widget type="select" fieldname="idservice">
-                <values source="services" fieldcode="idservice" fieldtitle="nombre" />
+                <values source="services" fieldcode="idservice" fieldtitle="nombre"/>
             </widget>
         </column>
-
         <column name="description" order="120">
-            <widget type="text" fieldname="nombre" />
+            <widget type="text" fieldname="nombre"/>
         </column>
-
-                
         <column name="pvp-por-km-nacional" display="right" order="130">
             <widget type="money" fieldname="importe">
                 <option color="danger">lt:0</option>
@@ -26,8 +22,6 @@
                 <option color="danger">lt:0</option>
             </widget>
         </column>
-        
-        
         <column name="active" display="center" order="150">
             <widget type="checkbox" fieldname="activo"/>
         </column>
@@ -35,11 +29,10 @@
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>
-    
     <rows>
         <row type="status">
             <option color="success" title="active-yes" fieldname="activo">1</option>
             <option color="warning" title="active-no" fieldname="activo">0</option>
         </row>
-    </rows>    
+    </rows>
 </view>
