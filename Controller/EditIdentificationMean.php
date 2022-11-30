@@ -6,7 +6,6 @@ use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 class EditIdentificationMean extends EditController
 {
-
     public function getModelClassName(): string
     {
         return 'IdentificationMean';

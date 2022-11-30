@@ -6,7 +6,6 @@ use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 class EditDriver extends EditController
 {
-
     public function getModelClassName(): string
     {
         return 'Driver';

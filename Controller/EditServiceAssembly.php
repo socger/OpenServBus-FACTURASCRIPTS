@@ -78,6 +78,10 @@ class EditServiceAssembly extends EditController
                 parent::loadData($viewName, $view);
                 $this->readOnlyFields($viewName);
                 break;
+
+            default:
+                parent::loadData($viewName, $view);
+                break;
         }
     }
 

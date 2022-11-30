@@ -60,7 +60,6 @@ class EditEmployeeDocumentation extends EditController
             default:
                 parent::loadData($viewName, $view);
                 break;
-
         }
     }
 }

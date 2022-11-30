@@ -52,6 +52,10 @@ class EditFuelKm extends EditController
                 parent::loadData($viewName, $view);
                 $this->getTipoTarjeta($viewName);
                 break;
+
+            default:
+                parent::loadData($viewName, $view);
+                break;
         }
     }
 }

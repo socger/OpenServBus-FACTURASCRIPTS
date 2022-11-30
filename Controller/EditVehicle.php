@@ -82,6 +82,10 @@ class EditVehicle extends EditController
                 parent::loadData($viewName, $view);
                 $this->PonerEnVistaLaEdad($viewName);
                 break;
+
+            default:
+                parent::loadData($viewName, $view);
+                break;
         }
     }
 

@@ -7,7 +7,6 @@ use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 class EditEmployee extends EditController
 {
-
     public function getModelClassName(): string
     {
         return 'Employee';
