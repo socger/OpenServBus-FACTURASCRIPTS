@@ -10,7 +10,7 @@
             </column>
             <column name="service-regular" numcolumns="4" order="120">
                 <widget type="select" fieldname="idservice_regular" icon="fas fa-book-open"
-                        onclick="EditService_regular" readonly="true">
+                        onclick="EditServiceRegular" readonly="true">
                     <values source="service_regulars" fieldcode="idservice_regular" fieldtitle="nombre"/>
                 </widget>
             </column>
@@ -31,7 +31,7 @@
                 </widget>
             </column>
             <column name="vehicle-type" numcolumns="4" order="110">
-                <widget type="select" fieldname="idvehicle_type" icon="fas fa-tractor" onclick="EditVehicle_type">
+                <widget type="select" fieldname="idvehicle_type" icon="fas fa-tractor" onclick="EditVehicleType">
                     <values source="vehicle_types" fieldcode="idvehicle_type" fieldtitle="nombre"/>
                 </widget>
             </column>
@@ -70,7 +70,7 @@
                 <widget type="text" fieldname="hoja_ruta_cifnif" maxlength="30" icon="fas fa-id-card"/>
             </column>
             <column name="service-type" numcolumns="4" order="180">
-                <widget type="select" fieldname="idservice_type" icon="fas fa-dolly" onclick="EditService_type">
+                <widget type="select" fieldname="idservice_type" icon="fas fa-dolly" onclick="EditServiceType">
                     <values source="service_types" fieldcode="idservice_type" fieldtitle="nombre"/>
                 </widget>
             </column>

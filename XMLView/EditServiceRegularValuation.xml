@@ -4,13 +4,13 @@
         <group name="data" numcolumns="12">
             <column name="service-regular" numcolumns="3" order="100">
                 <widget type="select" fieldname="idservice_regular" icon="fas fa-book-open"
-                        onclick="EditService_regular" readonly="dinamic">
+                        onclick="EditServiceRegular" readonly="dinamic">
                     <values source="service_regulars" fieldcode="idservice_regular" fieldtitle="nombre"/>
                 </widget>
             </column>
             <column name="valuation-type" numcolumns="4" order="110">
                 <widget type="select" fieldname="idservice_valuation_type" icon="fas fa-hand-holding-usd"
-                        onclick="EditService_valuation_type">
+                        onclick="EditServicevaluationtype">
                     <values source="service_valuation_types" fieldcode="idservice_valuation_type" fieldtitle="nombre"/>
                 </widget>
             </column>

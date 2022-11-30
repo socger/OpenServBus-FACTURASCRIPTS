@@ -4,7 +4,7 @@
         <group name="data" numcolumns="12">
             <column name="service-regular" numcolumns="4" order="100">
                 <widget type="select" fieldname="idservice_regular" icon="fas fa-book-open"
-                        onclick="EditService_regular" readonly="dinamic">
+                        onclick="EditServiceRegular" readonly="dinamic">
                     <values source="service_regulars" fieldcode="idservice_regular" fieldtitle="nombre"/>
                 </widget>
             </column>

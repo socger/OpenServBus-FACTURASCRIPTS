@@ -28,12 +28,12 @@
             </column>
             <column name="identification-mean" titleurl="ListIdentificationMean" numcolumns="6" order="150">
                 <widget type="select" fieldname="ididentification_mean" icon="far fa-hand-point-right"
-                        onclick="EditIdentification_mean" required="true">
+                        onclick="EditIdentificationMean" required="true">
                     <values source="identification_means" fieldcode="ididentification_mean" fieldtitle="nombre"/>
                 </widget>
             </column>
             <column name="absence-reason" titleurl="ListAbsence_reason" numcolumns="6" order="160">
-                <widget type="select" fieldname="idabsence_reason" icon="fas fa-first-aid" onclick="EditAbsence_reason">
+                <widget type="select" fieldname="idabsence_reason" icon="fas fa-first-aid" onclick="EditAbsenceReason">
                     <values source="absence_reasons" fieldcode="idabsence_reason" fieldtitle="nombre"/>
                 </widget>
             </column>

@@ -24,7 +24,7 @@
                 </widget>
             </column>
             <column name="fuel-type" titleurl="ListFuel_type" numcolumns="4" order="150">
-                <widget type="select" fieldname="idfuel_type" icon="fas fa-charging-station" onclick="EditFuel_type"
+                <widget type="select" fieldname="idfuel_type" icon="fas fa-charging-station" onclick="EditFuelType"
                         required="true">
                     <values source="fuel_types" fieldcode="idfuel_type" fieldtitle="nombre"/>
                 </widget>
@@ -40,7 +40,7 @@
                 </widget>
             </column>
             <column name="internal-fuel-dispenser" titleurl="ListFuel_pump" numcolumns="6" order="190">
-                <widget type="select" fieldname="idfuel_pump" icon="fas fa-thumbtack" onclick="EditFuel_pump">
+                <widget type="select" fieldname="idfuel_pump" icon="fas fa-thumbtack" onclick="EditFuelPump">
                     <values source="fuel_pumps" fieldcode="idfuel_pump" fieldtitle="nombre"/>
                 </widget>
             </column>
@@ -65,7 +65,7 @@
         <group name="refueled-with" numcolumns="12" icon="fas fa-cog" title="refueled-with">
             <column name="identification-mean" titleurl="ListIdentificationMean" numcolumns="4" order="100">
                 <widget type="select" fieldname="ididentification_mean" icon="far fa-hand-point-right"
-                        onclick="EditIdentification_mean">
+                        onclick="EditIdentificationMean">
                     <values source="identification_means" fieldcode="ididentification_mean" fieldtitle="nombre"/>
                 </widget>
             </column>

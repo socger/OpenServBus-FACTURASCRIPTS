@@ -12,7 +12,7 @@
             </column>
             <column name="document-type" titleurl="ListDocumentation_type" numcolumns="3" order="120">
                 <widget type="select" fieldname="iddocumentation_type" icon="far fa-address-card"
-                        onclick="EditDocumentation_type" required="true">
+                        onclick="EditDocumentationType" required="true">
                     <values source="documentation_types" fieldcode="iddocumentation_type" fieldtitle="nombre"/>
                 </widget>
             </column>

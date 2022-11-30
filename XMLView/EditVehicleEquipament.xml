@@ -12,7 +12,7 @@
             </column>
             <column name="vehicle-equipment" titleurl="ListVehicle_equipament_type" numcolumns="5" order="120">
                 <widget type="select" fieldname="idvehicle_equipament_type" icon="fas fa-wheelchair"
-                        onclick="EditVehicle_equipament_type" required="true">
+                        onclick="EditVehicleEquipamentType" required="true">
                     <values source="vehicle_equipament_types" fieldcode="idvehicle_equipament_type"
                             fieldtitle="nombre"/>
                 </widget>

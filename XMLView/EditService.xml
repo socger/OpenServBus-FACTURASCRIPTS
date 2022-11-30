@@ -26,12 +26,12 @@
                 </widget>
             </column>
             <column name="vehicle-type" numcolumns="4" order="110">
-                <widget type="select" fieldname="idvehicle_type" icon="fas fa-tractor" onclick="EditVehicle_type">
+                <widget type="select" fieldname="idvehicle_type" icon="fas fa-tractor" onclick="EditVehicleType">
                     <values source="vehicle_types" fieldcode="idvehicle_type" fieldtitle="nombre"/>
                 </widget>
             </column>
             <column name="helper" numcolumns="4" order="120">
-                <widget type="select" fieldname="idhelper" icon="fas fa-user-graduate" onclick="EditVehicle_type">
+                <widget type="select" fieldname="idhelper" icon="fas fa-user-graduate" onclick="EditVehicleType">
                     <values source="helpers" fieldcode="idhelper" fieldtitle="nombre"/>
                 </widget>
             </column>
@@ -65,7 +65,7 @@
                 <widget type="text" fieldname="hoja_ruta_cifnif" maxlength="30" icon="fas fa-id-card"/>
             </column>
             <column name="service-type" numcolumns="4" order="180">
-                <widget type="select" fieldname="idservice_type" icon="fas fa-dolly" onclick="EditVehicle_type">
+                <widget type="select" fieldname="idservice_type" icon="fas fa-dolly" onclick="EditVehicleType">
                     <values source="service_types" fieldcode="idservice_type" fieldtitle="nombre"/>
                 </widget>
             </column>

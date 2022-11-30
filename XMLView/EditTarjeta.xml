@@ -9,7 +9,7 @@
                 <widget type="text" fieldname="nombre" maxlength="100" required="true"/>
             </column>
             <column name="card-type" titleurl="ListTarjeta_type" numcolumns="4" order="120">
-                <widget type="select" fieldname="idtarjeta_type" icon="far fa-credit-card" onclick="EditTarjeta_type"
+                <widget type="select" fieldname="idtarjeta_type" icon="far fa-credit-card" onclick="EditTarjetaType"
                         required="true">
                     <values source="tarjeta_types" fieldcode="idtarjeta_type" fieldtitle="nombre"/>
                 </widget>

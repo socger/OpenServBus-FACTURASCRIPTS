@@ -10,7 +10,7 @@
             </column>
             <column name="valuation-type" numcolumns="4" order="110">
                 <widget type="select" fieldname="idservice_valuation_type" icon="fas fa-hand-holding-usd"
-                        onclick="EditService_valuation_type">
+                        onclick="EditServiceValuationType">
                     <values source="service_valuation_types" fieldcode="idservice_valuation_type" fieldtitle="nombre"/>
                 </widget>
             </column>
@@ -25,7 +25,7 @@
             <column name="pvp-por-km-nacional" display="right" numcolums="3" required="true" order="100">
                 <widget type="number" decimal="3" fieldname="importe"/>
             </column>
-            <column name="pvp-por-km-extranjero" display="right" numcolums="3" order="115" required="true" order="110">
+            <column name="pvp-por-km-extranjero" display="right" numcolums="3" required="true" order="110">
                 <widget type="number" decimal="3" fieldname="importe_enextranjero"/>
             </column>
         </group>

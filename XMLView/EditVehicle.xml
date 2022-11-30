@@ -75,12 +75,12 @@
                 <widget type="datetime" fieldname="fecha_km_actuales" readonly="true"/>
             </column>
             <column name="fuel-type" numcolumns="6" order="130">
-                <widget type="select" fieldname="idfuel_type" icon="fas fa-gas-pump" onclick="EditFuel_type">
+                <widget type="select" fieldname="idfuel_type" icon="fas fa-gas-pump" onclick="EditFuelType">
                     <values source="fuel_types" fieldcode="idfuel_type" fieldtitle="nombre"/>
                 </widget>
             </column>
             <column name="vehicle-type" numcolumns="6" order="140">
-                <widget type="select" fieldname="idvehicle_type" icon="fas fa-tractor" onclick="EditVehicle_type">
+                <widget type="select" fieldname="idvehicle_type" icon="fas fa-tractor" onclick="EditVehicleType">
                     <values source="vehicle_types" fieldcode="idvehicle_type" fieldtitle="nombre"/>
                 </widget>
             </column>

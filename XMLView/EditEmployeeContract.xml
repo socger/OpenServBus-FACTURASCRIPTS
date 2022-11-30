@@ -16,7 +16,7 @@
             </column>
             <column name="contract-type" titleurl="ListEmployee_contract_type" numcolumns="6" order="130">
                 <widget type="select" fieldname="idemployee_contract_type" icon="fas fa-building"
-                        onclick="EditEmployee_contract_type" required="true">
+                        onclick="EditEmployeeContractType" required="true">
                     <values source="employee_contract_types" fieldcode="idemployee_contract_type" fieldtitle="nombre"/>
                 </widget>
             </column>
