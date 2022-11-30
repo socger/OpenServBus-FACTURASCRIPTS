@@ -1,28 +1,29 @@
 <?php
+
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
-class ListServiceRegular extends ListController {
-    
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
-    public function getPageData(): array {
+class ListServiceRegular extends ListController
+{
+    public function getPageData(): array
+    {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'OpenServBus';
         $pageData['title'] = 'Servicios regulares';
         $pageData['icon'] = 'fas fa-book-open';
         return $pageData;
     }
-    
-    protected function createViews() {
+
+    protected function createViews()
+    {
         $this->createViewServiceRegular();
         $this->createViewServiceRegularCombination();
         $this->createViewServiceRegularCombinationServ();
         $this->createViewServiceRegularPeriod();
         $this->createViewServiceRegularItinerary();
     }
-    
+
     protected function createViewServiceRegular($viewName = 'ListServiceRegular')
     {
         $this->addView($viewName, 'ServiceRegular', 'Servicios regulares', 'fas fa-book-open');
@@ -30,45 +31,45 @@ class ListServiceRegular extends ListController {
         $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
         $this->addOrderBy($viewName, ['cod_servicio'], 'Código');
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
+
         // Filtros
-         $this->addFilterCheckbox($viewName, 'lunes', 'Lunes', 'lunes');
-         $this->addFilterCheckbox($viewName, 'martes', 'Martes', 'martes');
-         $this->addFilterCheckbox($viewName, 'miercoles', 'Miercoles', 'miercoles');
-         $this->addFilterCheckbox($viewName, 'jueves', 'Jueves', 'jueves');
-         $this->addFilterCheckbox($viewName, 'viernes', 'Viernes', 'viernes');
-         $this->addFilterCheckbox($viewName, 'sabado', 'Sábado', 'sabado');
-         $this->addFilterCheckbox($viewName, 'domingo', 'Domingo', 'domingo');
+        $this->addFilterCheckbox($viewName, 'lunes', 'Lunes', 'lunes');
+        $this->addFilterCheckbox($viewName, 'martes', 'Martes', 'martes');
+        $this->addFilterCheckbox($viewName, 'miercoles', 'Miercoles', 'miercoles');
+        $this->addFilterCheckbox($viewName, 'jueves', 'Jueves', 'jueves');
+        $this->addFilterCheckbox($viewName, 'viernes', 'Viernes', 'viernes');
+        $this->addFilterCheckbox($viewName, 'sabado', 'Sábado', 'sabado');
+        $this->addFilterCheckbox($viewName, 'domingo', 'Domingo', 'domingo');
 
         $aceptados = [
             ['code' => '1', 'description' => 'Aceptados = SI'],
             ['code' => '0', 'description' => 'Aceptados = NO'],
         ];
-        $this->addFilterSelect($viewName, 'soloAceptados', 'Aceptados = TODOS', 'aceptado', $aceptados);        
+        $this->addFilterSelect($viewName, 'soloAceptados', 'Aceptados = TODOS', 'aceptado', $aceptados);
 
         $activo = [
             ['code' => '1', 'description' => 'Activos = SI'],
             ['code' => '0', 'description' => 'Activos = NO'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);        
+        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
 
         $crearFtraSN = [
             ['code' => '1', 'description' => 'Facturable = SI'],
             ['code' => '0', 'description' => 'Facturable = NO'],
         ];
-        $this->addFilterSelect($viewName, 'crearFtra', 'Crear ftra. = TODOS', 'facturar_SN', $crearFtraSN);        
+        $this->addFilterSelect($viewName, 'crearFtra', 'Crear ftra. = TODOS', 'facturar_SN', $crearFtraSN);
 
         $facturarAgrupandoSN = [
             ['code' => '1', 'description' => 'Ftra.agrupando = SI'],
             ['code' => '0', 'description' => 'Ftra.agrupando = NO'],
         ];
-        $this->addFilterSelect($viewName, 'facturarAgrupando', 'Ftra.agrupando = TODOS', 'facturar_agrupando', $facturarAgrupandoSN);        
+        $this->addFilterSelect($viewName, 'facturarAgrupando', 'Ftra.agrupando = TODOS', 'facturar_agrupando', $facturarAgrupandoSN);
 
         $combinadosSN = [
             ['code' => '1', 'description' => 'Combinado = SI'],
             ['code' => '0', 'description' => 'Combinado = NO'],
         ];
-        $this->addFilterSelect($viewName, 'xCombinadoSN', 'Combinado = TODOS', 'combinadoSN', $combinadosSN);        
+        $this->addFilterSelect($viewName, 'xCombinadoSN', 'Combinado = TODOS', 'combinadoSN', $combinadosSN);
 
         $this->addFilterAutocomplete($viewName, 'xCodCliente', 'Cliente', 'codcliente', 'clientes', 'codcliente', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdvehicle_type', 'Vehículo - tipo', 'idvehicle_type', 'vehiculos', 'idvehicle_type', 'nombre');
