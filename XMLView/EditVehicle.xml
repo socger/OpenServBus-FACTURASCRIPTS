@@ -61,7 +61,7 @@
                 </widget>
             </column>
         </group>
-        <group name="ours-or-external-vehicle" numcolumns="12" icon="fas fa-truck-loading"
+        <group name="ours-or-external-vehicle-2" numcolumns="12" icon="fas fa-truck-loading"
                title="ours-or-external-vehicle">
             <column name="usual-driver" titleurl="ListDriver" numcolumns="8" order="100">
                 <widget type="select" fieldname="iddriver_usual" icon="fas fa-user-astronaut" onclick="EditDriver">
