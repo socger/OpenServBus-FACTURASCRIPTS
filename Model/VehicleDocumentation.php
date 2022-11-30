@@ -8,6 +8,7 @@ use FacturaScripts\Core\Session;
 class VehicleDocumentation extends Base\ModelClass
 {
     use Base\ModelTrait;
+    use OpenServBusModelTrait;
 
     /** @var bool */
     public $activo;
@@ -101,25 +102,6 @@ class VehicleDocumentation extends Base\ModelClass
         $this->nombre = $utils->noHtml($this->nombre);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
         return parent::test();
-    }
-
-    protected function comprobarSiActivo(): bool
-    {
-        $a_devolver = true;
-        if ($this->activo === false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-
-            if (empty($this->motivobaja)) {
-                $a_devolver = false;
-                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
-            }
-        } else { // Por si se vuelve a poner Activo = true
-            $this->fechabaja = null;
-            $this->userbaja = null;
-            $this->motivobaja = null;
-        }
-        return $a_devolver;
     }
 
     protected function saveUpdate(array $values = []): bool

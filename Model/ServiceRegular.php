@@ -8,6 +8,7 @@ use FacturaScripts\Core\Session;
 class ServiceRegular extends Base\ModelClass
 {
     use Base\ModelTrait;
+    use OpenServBusModelTrait;
 
     /** @var bool */
     public $aceptado;
@@ -553,26 +554,6 @@ class ServiceRegular extends Base\ModelClass
             $this->salida_desde_nave_sn = $fila['salida_desde_nave_sn'];
             $this->observaciones_periodo = $fila['observaciones'];
         }
-    }
-
-    protected function comprobarSiActivo(): bool
-    {
-        $a_devolver = true;
-        if ($this->activo === false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-
-            if (empty($this->motivobaja)) {
-                $a_devolver = false;
-                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
-            }
-        } else {
-            // Por si se vuelve a poner Activo = true
-            $this->fechabaja = null;
-            $this->userbaja = null;
-            $this->motivobaja = null;
-        }
-        return $a_devolver;
     }
 
     protected function evitarInyeccionSQL()

@@ -9,6 +9,7 @@ use FacturaScripts\Dinamic\Model\Proveedor;
 class Collaborator extends Base\ModelClass
 {
     use Base\ModelTrait;
+    use OpenServBusModelTrait;
 
     /** @var bool */
     public $activo;
@@ -97,25 +98,6 @@ class Collaborator extends Base\ModelClass
         $proveedor = new Proveedor();
         $proveedor->loadFromCode($this->codproveedor);
         return $proveedor;
-    }
-
-    protected function comprobarSiActivo(): bool
-    {
-        $a_devolver = true;
-        if ($this->activo === false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-
-            if (empty($this->motivobaja)) {
-                $a_devolver = false;
-                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
-            }
-        } else {
-            $this->fechabaja = null;
-            $this->userbaja = null;
-            $this->motivobaja = null;
-        }
-        return $a_devolver;
     }
 
     protected function saveInsert(array $values = []): bool

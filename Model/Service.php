@@ -8,6 +8,7 @@ use FacturaScripts\Core\Session;
 class Service extends Base\ModelClass
 {
     use Base\ModelTrait;
+    use OpenServBusModelTrait;
 
     /** @var bool */
     public $activo;
@@ -528,25 +529,6 @@ class Service extends Base\ModelClass
         $this->codsubcuenta_km_extranjero = empty($this->codsubcuenta_km_extranjero) ? null : $this->codsubcuenta_km_extranjero;
 
         return true;
-    }
-
-    protected function comprobarSiActivo(): bool
-    {
-        $a_devolver = true;
-        if ($this->activo === false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-
-            if (empty($this->motivobaja)) {
-                $a_devolver = false;
-                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
-            }
-        } else { // Por si se vuelve a poner Activo = true
-            $this->fechabaja = null;
-            $this->userbaja = null;
-            $this->motivobaja = null;
-        }
-        return $a_devolver;
     }
 
     protected function evitarInyeccionSQL()

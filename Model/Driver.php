@@ -8,6 +8,7 @@ use FacturaScripts\Core\Session;
 class Driver extends Base\ModelClass
 {
     use Base\ModelTrait;
+    use OpenServBusModelTrait;
 
     public $activo;
 
@@ -115,25 +116,6 @@ class Driver extends Base\ModelClass
         }
 
         self::$dataBase->exec($sql);
-    }
-
-    protected function comprobarSiActivo(): bool
-    {
-        $a_devolver = true;
-        if ($this->activo === false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-
-            if (empty($this->motivobaja)) {
-                $a_devolver = false;
-                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
-            }
-        } else { // Por si se vuelve a poner Activo = true
-            $this->fechabaja = null;
-            $this->userbaja = null;
-            $this->motivobaja = null;
-        }
-        return $a_devolver;
     }
 
     protected function getCollaborator(): Collaborator
