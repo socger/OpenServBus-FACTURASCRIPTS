@@ -12,7 +12,7 @@
                 <widget type="datetime" fieldname="inicio" required="true"/>
             </column>
             <column name="end-date" order="130">
-                <widget type="date" fieldname="fin" required="true"/>
+                <widget type="datetime" fieldname="fin" required="true"/>
             </column>
             <column name="nick" title="nick-user" order="140">
                 <widget type="select" fieldname="nick" icon="fas fa-user-circle" onclick="EditUser">

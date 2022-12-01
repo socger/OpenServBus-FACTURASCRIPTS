@@ -35,7 +35,6 @@ class EditEmployee extends EditController
     {
         $this->addListView($viewName, 'EmployeeContract', 'Contratos realizados', 'fas fa-id-badge');
         $this->views[$viewName]->addSearchFields(['nombre']);
-        $this->views[$viewName]->addOrderBy(['nombre'], 'Nombre', 1);
         $this->views[$viewName]->addOrderBy(['fecha_inicio', 'fecha_fin'], 'F.inicio + F.fin.');
         $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
 
@@ -55,7 +54,6 @@ class EditEmployee extends EditController
     {
         $this->addListView($viewName, 'EmployeeAttendanceManagementYn', '¿Está obligado al control de presencia?', 'fas fa-business-timee');
         $this->views[$viewName]->addSearchFields(['idemployee', 'nombre']);
-        $this->views[$viewName]->addOrderBy(['nombre'], 'Nombre', 1);
         $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
 
         // Filtros

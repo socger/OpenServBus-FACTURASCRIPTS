@@ -97,23 +97,6 @@ class Employee extends Base\ModelClass
     /** @var string */
     public $web;
 
-    public function actualizarNombreEmpleadoEn()
-    {
-        // Rellenamos el nombre del empleado en otras tablas
-        $sql = "UPDATE drivers SET drivers.nombre = '" . $this->nombre . "' WHERE drivers.idemployee = " . $this->idemployee . ";";
-        self::$dataBase->exec($sql);
-
-        $sql = "UPDATE employees_attendance_management_yn SET employees_attendance_management_yn.nombre = '" . $this->nombre . "' WHERE employees_attendance_management_yn.idemployee = " . $this->idemployee . ";";
-        self::$dataBase->exec($sql);
-
-        $sql = "UPDATE employee_contracts SET employee_contracts.nombre = '" . $this->nombre . "' WHERE employee_contracts.idemployee = " . $this->idemployee . ";";
-        self::$dataBase->exec($sql);
-
-        $sql = "UPDATE helpers SET helpers.nombre = '" . $this->nombre . "' WHERE helpers.idemployee = " . $this->idemployee . ";";
-        self::$dataBase->exec($sql);
-
-    }
-
     public function clear()
     {
         parent::clear();
@@ -126,16 +109,6 @@ class Employee extends Base\ModelClass
     public static function primaryColumn(): string
     {
         return 'idemployee';
-    }
-
-    public function save(): bool
-    {
-        if (false === parent::save()) {
-            return false;
-        }
-
-        $this->actualizarNombreEmpleadoEn();
-        return true;
     }
 
     public static function tableName(): string

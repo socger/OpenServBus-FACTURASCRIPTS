@@ -57,7 +57,7 @@
             </column>
             <column name="collaborator" numcolumns="6" order="110">
                 <widget type="select" fieldname="idcollaborator" icon="fas fa-business-time" onclick="EditCollaborator">
-                    <values source="collaborators" fieldcode="idcollaborator" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
         </group>
@@ -65,7 +65,7 @@
                title="ours-or-external-vehicle">
             <column name="usual-driver" titleurl="ListDriver" numcolumns="8" order="100">
                 <widget type="select" fieldname="iddriver_usual" icon="fas fa-user-astronaut" onclick="EditDriver">
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
             <column name="current-km" numcolumns="2" display="center" order="110">

@@ -2,6 +2,7 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Model;
 
+use FacturaScripts\Core\App\AppSettings;
 use FacturaScripts\Core\Model\Base;
 use FacturaScripts\Core\Session;
 
@@ -62,6 +63,7 @@ class Stop extends Base\ModelClass
     {
         parent::clear();
         $this->activo = true;
+        $this->codpais = AppSettings::get('default', 'codpais');
         $this->fechaalta = date(static::DATETIME_STYLE);
         $this->useralta = Session::get('user')->nick ?? null;
     }

@@ -14,7 +14,7 @@
             <column name="collaborator" description="once-created-are-not-allowed-to-modify" numcolumns="5" order="120">
                 <widget type="select" fieldname="idcollaborator" icon="fas fa-business-time" onclick="EditCollaborator"
                         readonly="dinamic">
-                    <values source="collaborators" fieldcode="idcollaborator" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
             <column name="observations" numcolumns="12" order="130">

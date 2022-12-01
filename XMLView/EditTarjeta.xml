@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <view>
     <columns>
-        <group name="data" numcolumns="12">
+        <group name="data" numcolumns="12" valign="bottom">
             <column name="id" numcolumns="2" order="100">
                 <widget type="text" fieldname="idtarjeta" readonly="true"/>
             </column>
@@ -15,7 +15,7 @@
                 </widget>
             </column>
             <column name="es-de-pago" numcolums="2" order="130">
-                <widget type="text" fieldname="es_DePago" readonly="true"/>
+                <widget type="checkbox" fieldname="es_DePago" readonly="true"/>
             </column>
             <column name="empleado" title="Empleado" titleurl="ListEmployee" numcolumns="4" order="140">
                 <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee">
@@ -24,7 +24,7 @@
             </column>
             <column name="conductor" title="Conductor" titleurl="ListDriver" numcolumns="4" order="150">
                 <widget type="select" fieldname="iddriver" icon="fas fa-user-astronaut" onclick="EditDriver">
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
             <column name="company" titleurl="ListEmpresas" numcolumns="4" order="160">

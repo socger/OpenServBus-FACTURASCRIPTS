@@ -71,8 +71,6 @@ class ListEmployeeAttendanceManagement extends ListController
     protected function createViewEmployeeAttendanceManagementYn($viewName = 'ListEmployeeAttendanceManagementYn')
     {
         $this->addView($viewName, 'EmployeeAttendanceManagementYn', 'Obligar control presencial a ...', 'fas fa-fingerprint');
-        $this->addSearchFields($viewName, ['idemployee', 'nombre']);
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
 
         // Filtros
@@ -81,5 +79,7 @@ class ListEmployeeAttendanceManagement extends ListController
             ['code' => '0', 'description' => 'Activos = NO'],
         ];
         $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+
+        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
     }
 }

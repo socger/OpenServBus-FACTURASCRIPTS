@@ -3,6 +3,7 @@
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
+use FacturaScripts\Plugins\OpenServBus\Model\Driver;
 
 class EditFuelKm extends EditController
 {
@@ -51,11 +52,29 @@ class EditFuelKm extends EditController
             case $mvn:
                 parent::loadData($viewName, $view);
                 $this->getTipoTarjeta($viewName);
+                $this->loadValuesSelectDrivers($mvn);
                 break;
 
             default:
                 parent::loadData($viewName, $view);
                 break;
+        }
+    }
+
+    protected function loadValuesSelectDrivers(string $mvn)
+    {
+        $column = $this->views[$mvn]->columnForName('driver');
+        if($column && $column->widget->getType() === 'select') {
+            // obtenemos los conductores
+            $customValues = [];
+            $driversModel = new Driver();
+            foreach ($driversModel->all([], [], 0, 0) as $driver) {
+                $customValues[] = [
+                    'value' => $driver->iddriver,
+                    'title' => $driver->nombre,
+                ];
+            }
+            $column->widget->setValuesFromArray($customValues, false, true);
         }
     }
 }

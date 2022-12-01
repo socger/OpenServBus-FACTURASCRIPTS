@@ -19,7 +19,7 @@
     </column>
     <column>
         <name>hora</name>
-        <type>timestamp</type>
+        <type>time</type>
     </column>
     <column>
         <name>idservice</name>

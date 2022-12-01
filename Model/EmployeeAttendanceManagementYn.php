@@ -32,9 +32,6 @@ class EmployeeAttendanceManagementYn extends Base\ModelClass
     public $motivobaja;
 
     /** @var string */
-    public $nombre;
-
-    /** @var string */
     public $observaciones;
 
     /** @var string */
@@ -100,11 +97,5 @@ class EmployeeAttendanceManagementYn extends Base\ModelClass
         $this->usermodificacion = Session::get('user')->nick ?? null;
         $this->fechamodificacion = date(static::DATETIME_STYLE);
         return parent::saveUpdate($values);
-    }
-
-    protected function saveInsert(array $values = []): bool
-    {
-        $this->nombre = $this->getEmployee()->nombre;
-        return parent::saveInsert($values);
     }
 }

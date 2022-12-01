@@ -44,7 +44,7 @@
             <column name="usual-driver-1" numcolumns="4" order="100"
                     description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular">
                 <widget type="select" fieldname="iddriver_1" icon="fas fa-user-astronaut" onclick="EditDriver">
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
             <column name="driver-accommodation-1" numcolumns="4" order="110">
@@ -64,7 +64,7 @@
             <column name="usual-driver-2" numcolumns="4" order="100"
                     description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular">
                 <widget type="select" fieldname="iddriver_2" icon="fas fa-user-astronaut" onclick="EditDriver">
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
             <column name="driver-accommodation-2" numcolumns="4" order="110">
@@ -84,7 +84,7 @@
             <column name="usual-driver-3" numcolumns="4" order="100"
                     description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular">
                 <widget type="select" fieldname="iddriver_3" icon="fas fa-user-astronaut" onclick="EditDriver">
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
             <column name="driver-accommodation-3" numcolumns="4" order="110">

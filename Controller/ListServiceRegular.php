@@ -3,6 +3,7 @@
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
+use FacturaScripts\Plugins\OpenServBus\Model\Driver;
 
 class ListServiceRegular extends ListController
 {
@@ -74,7 +75,6 @@ class ListServiceRegular extends ListController
 
         $this->addFilterAutocomplete($viewName, 'xCodCliente', 'Cliente', 'codcliente', 'clientes', 'codcliente', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdvehicle_type', 'Vehículo - tipo', 'idvehicle_type', 'vehiculos', 'idvehicle_type', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdhelper', 'Monitor/a', 'idhelper', 'helpers', 'idhelper', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdservice_type', 'Servicio - tipo', 'idservice_type', 'service_types', 'idservice_type', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdempresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
     }
@@ -93,7 +93,6 @@ class ListServiceRegular extends ListController
         ];
         $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
 
-        $this->addFilterAutocomplete($viewName, 'xIdDriver', 'driver', 'iddriver', 'drivers', 'iddriver', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
     }
 
@@ -110,7 +109,6 @@ class ListServiceRegular extends ListController
         ];
         $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
 
-        $this->addFilterAutocomplete($viewName, 'xIdDriver', 'driver', 'iddriver', 'drivers', 'iddriver', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdservice_regular_combination', 'combination-service', 'idservice_regular_combination', 'service_regular_combinations', 'idservice_regular_combination', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdservice_regular', 'service-regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
@@ -173,5 +171,35 @@ class ListServiceRegular extends ListController
 
         $this->views[$viewName]->addFilterAutocomplete('xIdservice_regular', 'Servicio regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
         $this->views[$viewName]->addFilterAutocomplete('xIdservice_valuation_type', 'Conceptos - valoración', 'idservice_valuation_type', 'service_valuation_types', 'idservice_valuation_type', 'nombre');
+    }
+
+    protected function loadData($viewName, $view)
+    {
+        $mvn = $this->getMainViewName();
+        switch ($viewName) {
+            case 'ListServiceRegularCombination':
+            case 'ListServiceRegularCombinationServ':
+                $this->loadValuesSelectDrivers($mvn, 'usual-driver');
+            default:
+                $view->loadData();
+                break;
+        }
+    }
+
+    protected function loadValuesSelectDrivers(string $mvn, string $columnName)
+    {
+        $column = $this->views[$mvn]->columnForName($columnName);
+        if($column && $column->widget->getType() === 'select') {
+            // obtenemos los conductores
+            $customValues = [];
+            $driversModel = new Driver();
+            foreach ($driversModel->all([], [], 0, 0) as $driver) {
+                $customValues[] = [
+                    'value' => $driver->iddriver,
+                    'title' => $driver->nombre,
+                ];
+            }
+            $column->widget->setValuesFromArray($customValues, false, true);
+        }
     }
 }

@@ -44,9 +44,6 @@ class EmployeeContract extends Base\ModelClass
     public $motivobaja;
 
     /** @var string */
-    public $nombre;
-
-    /** @var string */
     public $observaciones;
 
     /** @var string */
@@ -186,16 +183,6 @@ class EmployeeContract extends Base\ModelClass
                 self::$dataBase->exec($sql);
             }
         }
-    }
-
-    protected function saveInsert(array $values = []): bool
-    {
-        if (false === parent::saveInsert($values)) {
-            return false;
-        }
-
-        $this->nombre = $this->$this->getEmployee()->nombre;
-        return true;
     }
 
     protected function saveUpdate(array $values = []): bool

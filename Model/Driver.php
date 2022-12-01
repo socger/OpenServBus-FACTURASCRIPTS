@@ -26,8 +26,6 @@ class Driver extends Base\ModelClass
 
     public $motivobaja;
 
-    public $nombre;
-
     public $observaciones;
 
     public $useralta;
@@ -35,6 +33,20 @@ class Driver extends Base\ModelClass
     public $userbaja;
 
     public $usermodificacion;
+
+    public function __get($name)
+    {
+        if ($name === 'nombre') {
+            if (false === empty($this->idcollaborator)) {
+                $collaborator = $this->getCollaborator();
+                return $collaborator->getProveedor()->nombre;
+            } elseif (false === empty($this->idemployee)) {
+                $employee = $this->getEmployee();
+                return $employee->nombre;
+            }
+        }
+        return null;
+    }
 
     public function clear()
     {
@@ -50,9 +62,27 @@ class Driver extends Base\ModelClass
             return false;
         }
 
-        // Se pasa valor 1, en parámetro, porque se está borrando el registro
-        $this->actualizar_driverYN_en_employees(true);
+        $empleado = $this->getEmployee();
+        if ($empleado->exists()) {
+            $empleado->driver_yn = 0;
+            $empleado->save();
+        }
+
         return true;
+    }
+
+    public function getCollaborator(): Collaborator
+    {
+        $collaborator = new Collaborator();
+        $collaborator->loadFromCode($this->idcollaborator);
+        return $collaborator;
+    }
+
+    public function getEmployee(): Employee
+    {
+        $employee = new Employee();
+        $employee->loadFromCode($this->idemployee);
+        return $employee;
     }
 
     public function install(): string
@@ -60,6 +90,21 @@ class Driver extends Base\ModelClass
         new Employee();
         new Collaborator();
         return parent::install();
+    }
+
+    public function save(): bool
+    {
+        if (false === parent::save()) {
+            return false;
+        }
+
+        $empleado = $this->getEmployee();
+        if ($empleado->exists()) {
+            $empleado->driver_yn = 1;
+            $empleado->save();
+        }
+
+        return true;
     }
 
     public static function primaryColumn(): string
@@ -74,6 +119,10 @@ class Driver extends Base\ModelClass
 
     public function test(): bool
     {
+        if ($this->comprobarSiActivo() === false) {
+            return false;
+        }
+
         // Exigimos que se introduzca idempresa o idcollaborator
         if ((empty($this->idemployee)) && (empty($this->idcollaborator))) {
             $this->toolBox()->i18nLog()->error('Debe de confirmar si es un empleado nuestro o de una empresa colaboradora');
@@ -86,61 +135,10 @@ class Driver extends Base\ModelClass
             return false;
         }
 
-        if ($this->comprobarSiActivo() === false) {
-            return false;
-        }
-
-        // Se pasa como parámetro 0 para decir que no se está borrando el empleado
-        $this->actualizar_driverYN_en_employees(false);
-
         $utils = $this->toolBox()->utils();
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
         return parent::test();
-    }
-
-    protected function actualizar_driverYN_en_employees(bool $p_borrando)
-    {
-        // Completamos el campo driver_yn de la tabla employee
-        if ($p_borrando) {
-            // Se está borrando el registro
-            if (!empty($this->idemployee)) {
-                $sql = "UPDATE employees SET employees.driver_yn = 0 WHERE employees.idemployee = " . $this->idemployee . ";";
-            }
-        } else {
-            // Se está creando/editando el registro
-            if (!empty($this->idemployee)) {
-                // Si al crear/modificar el registro es un empleado
-                $sql = "UPDATE employees SET employees.driver_yn = 1 WHERE employees.idemployee = " . $this->idemployee . ";";
-            }
-        }
-
-        self::$dataBase->exec($sql);
-    }
-
-    protected function getCollaborator(): Collaborator
-    {
-        $collaborator = new Collaborator();
-        $collaborator->loadFromCode($this->idcollaborator);
-        return $collaborator;
-    }
-
-    protected function getEmployee(): Employee
-    {
-        $employee = new Employee();
-        $employee->loadFromCode($this->idemployee);
-        return $employee;
-    }
-
-    protected function saveInsert(array $values = []): bool
-    {
-        if (false === parent::saveInsert($values)) {
-            return false;
-        }
-
-        $this->getEmployee()->actualizarNombreEmpleadoEn();
-        $this->getCollaborator()->actualizarNombreColaboradorEn();
-        return true;
     }
 
     protected function saveUpdate(array $values = []): bool

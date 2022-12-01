@@ -17,7 +17,7 @@
         </column>
         <column name="usual-driver" order="130">
             <widget type="select" fieldname="iddriver">
-                <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
+                <values/>
             </widget>
         </column>
         <column name="usual-vehicle" order="140">

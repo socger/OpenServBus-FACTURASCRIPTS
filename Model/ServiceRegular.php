@@ -452,16 +452,6 @@ class ServiceRegular extends Base\ModelClass
             return false;
         }
 
-        if (empty($this->inicio_dia)) {
-            $this->toolBox()->i18nLog()->error('No ha elegido la fecha de inicio del servicio.');
-            return false;
-        }
-
-        if (empty($this->fin_dia)) {
-            $this->toolBox()->i18nLog()->error('No ha elegido la fecha de fin del servicio.');
-            return false;
-        }
-
         if (empty($this->plazas) or $this->plazas <= 0) {
             $this->toolBox()->i18nLog()->error('Debe de completar las plazas.');
             return false;

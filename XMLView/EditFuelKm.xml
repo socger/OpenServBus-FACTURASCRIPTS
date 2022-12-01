@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <view>
     <columns>
-        <group name="data" numcolumns="12">
+        <group name="data" numcolumns="12" valign="bottom">
             <column name="id" numcolumns="2" order="100">
                 <widget type="text" fieldname="idFuel_km" readonly="true"/>
             </column>
@@ -44,7 +44,7 @@
                     <values source="fuel_pumps" fieldcode="idfuel_pump" fieldtitle="nombre"/>
                 </widget>
             </column>
-            <column name="codproveedor" titleurl="ListProveedor" numcolumns="6" order="200">
+            <column name="supplier" titleurl="ListProveedor" numcolumns="6" order="200">
                 <widget type="select" fieldname="codproveedor" icon="fas fa-users" onclick="EditProveedor">
                     <values source="proveedores" fieldcode="codproveedor" fieldtitle="nombre"/>
                 </widget>
@@ -53,7 +53,7 @@
         <group name="made-by" numcolumns="12" icon="fas fa-cog" title="made-by">
             <column name="driver" titleurl="ListDriver" numcolumns="6" order="100">
                 <widget type="select" fieldname="iddriver" icon="fas fa-user-astronaut" onclick="EditDriver">
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
             <column name="employee" titleurl="ListEmployee" numcolumns="6" order="110">

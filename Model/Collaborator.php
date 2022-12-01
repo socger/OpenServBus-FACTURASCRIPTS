@@ -33,9 +33,6 @@ class Collaborator extends Base\ModelClass
     public $motivobaja;
 
     /** @var string */
-    public $nombre;
-
-    /** @var string */
     public $observaciones;
 
     /** @var string */
@@ -47,14 +44,13 @@ class Collaborator extends Base\ModelClass
     /** @var string */
     public $usermodificacion;
 
-    public function actualizarNombreColaboradorEn()
+    public function __get($name)
     {
-        // Rellenamos el nombre del colaborador en otras tablas
-        $sql = "UPDATE drivers SET drivers.nombre = '" . $this->nombre . "' WHERE drivers.idcollaborator = " . $this->idcollaborator . ";";
-        self::$dataBase->exec($sql);
-
-        $sql = "UPDATE helpers SET helpers.nombre = '" . $this->nombre . "' WHERE helpers.idcollaborator = " . $this->idcollaborator . ";";
-        self::$dataBase->exec($sql);
+        if ($name === 'nombre') {
+            $proveedor = $this->getProveedor();
+            return $proveedor->nombre;
+        }
+        return null;
     }
 
     public function clear()
@@ -63,6 +59,13 @@ class Collaborator extends Base\ModelClass
         $this->activo = true;
         $this->fechaalta = date(static::DATETIME_STYLE);
         $this->useralta = Session::get('user')->nick ?? null;
+    }
+
+    public function getProveedor(): Proveedor
+    {
+        $proveedor = new Proveedor();
+        $proveedor->loadFromCode($this->codproveedor);
+        return $proveedor;
     }
 
     public static function primaryColumn(): string
@@ -91,19 +94,6 @@ class Collaborator extends Base\ModelClass
     public function url(string $type = 'auto', string $list = 'ListHelper'): string
     {
         return parent::url($type, $list . '?activetab=List');
-    }
-
-    protected function getProveedor(): Proveedor
-    {
-        $proveedor = new Proveedor();
-        $proveedor->loadFromCode($this->codproveedor);
-        return $proveedor;
-    }
-
-    protected function saveInsert(array $values = []): bool
-    {
-        $this->nombre = $this->getProveedor()->nombre;
-        return parent::saveInsert($values);
     }
 
     protected function saveUpdate(array $values = []): bool

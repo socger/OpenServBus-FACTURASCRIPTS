@@ -60,16 +60,6 @@ class TarjetaType extends Base\ModelClass
         return 'idtarjeta_type';
     }
 
-    public function save(): bool
-    {
-        if (false === parent::save()) {
-            return false;
-        }
-
-        $this->actualizarEnTarjetas_DePago();
-        return true;
-    }
-
     public static function tableName(): string
     {
         return 'tarjeta_types';
@@ -91,17 +81,6 @@ class TarjetaType extends Base\ModelClass
     public function url(string $type = 'auto', string $list = 'ConfigOpenServBus'): string
     {
         return parent::url($type, $list . '?activetab=List');
-    }
-
-    protected function actualizarEnTarjetas_DePago()
-    {
-        if ($this->de_pago === false) {
-            return;
-        }
-
-        // Rellenamos el de_pago de tabla tarjetas
-        $sql = 'UPDATE tarjetas SET de_pago = 1 WHERE idtarjeta_type = ' . $this->idtarjeta_type . ';';
-        self::$dataBase->exec($sql);
     }
 
     protected function saveUpdate(array $values = []): bool

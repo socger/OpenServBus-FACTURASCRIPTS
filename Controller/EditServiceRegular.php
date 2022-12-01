@@ -4,6 +4,8 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
+use FacturaScripts\Plugins\OpenServBus\Model\Driver;
+use FacturaScripts\Plugins\OpenServBus\Model\Helper;
 
 class EditServiceRegular extends EditController
 {
@@ -52,7 +54,6 @@ class EditServiceRegular extends EditController
         ];
         $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
 
-        $this->views[$viewName]->addFilterAutocomplete('xIdDriver', 'driver', 'iddriver', 'drivers', 'iddriver', 'nombre');
         $this->views[$viewName]->addFilterAutocomplete('xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
         $this->views[$viewName]->addFilterAutocomplete('xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
         $this->views[$viewName]->addFilterAutocomplete('xIdservice_regular_combination', 'combination-service', 'idservice_regular_combination', 'service_regular_combinations', 'idservice_regular_combination', 'nombre');
@@ -130,15 +131,58 @@ class EditServiceRegular extends EditController
             case 'ListServiceRegularValuation':
             case 'ListServiceRegularItinerary':
             case 'ListServiceRegularCombinationServ':
+            $this->loadValuesSelectDrivers($mvn, 'usual-driver');
             case 'ListServiceRegularPeriod':
                 $idservice_regular = $this->getViewModelValue($mvn, 'idservice_regular');
                 $where = [new DatabaseWhere('idservice_regular', $idservice_regular)];
                 $view->loadData('', $where);
                 break;
 
+            case $mvn:
+                parent::loadData($viewName, $view);
+                $this->loadValuesSelectHelpers($mvn);
+                $this->loadValuesSelectDrivers($mvn, 'usual-driver-1');
+                $this->loadValuesSelectDrivers($mvn, 'usual-driver-2');
+                $this->loadValuesSelectDrivers($mvn, 'usual-driver-3');
+                break;
+
             default:
                 parent::loadData($viewName, $view);
                 break;
+        }
+    }
+
+    protected function loadValuesSelectDrivers(string $mvn, string $columnName)
+    {
+        $column = $this->views[$mvn]->columnForName($columnName);
+        if($column && $column->widget->getType() === 'select') {
+            // obtenemos los conductores
+            $customValues = [];
+            $driversModel = new Driver();
+            foreach ($driversModel->all([], [], 0, 0) as $driver) {
+                $customValues[] = [
+                    'value' => $driver->iddriver,
+                    'title' => $driver->nombre,
+                ];
+            }
+            $column->widget->setValuesFromArray($customValues, false, true);
+        }
+    }
+
+    protected function loadValuesSelectHelpers(string $mvn)
+    {
+        $column = $this->views[$mvn]->columnForName('helper');
+        if($column && $column->widget->getType() === 'select') {
+            // obtenemos los monitores
+            $customValues = [];
+            $helpersModel = new Helper();
+            foreach ($helpersModel->all([], [], 0, 0) as $helper) {
+                $customValues[] = [
+                    'value' => $helper->idhelper,
+                    'title' => $helper->nombre,
+                ];
+            }
+            $column->widget->setValuesFromArray($customValues, false, true);
         }
     }
 }

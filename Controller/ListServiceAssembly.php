@@ -69,7 +69,7 @@ class ListServiceAssembly extends ListController
         return parent::execPreviousAction($action);
     }
 
-    protected function generateAssembliesAction()
+    protected function generateAssembliesAction(): bool
     {
         // Nos traemos todos los campos del form modal
         $form = $this->request->request->all();

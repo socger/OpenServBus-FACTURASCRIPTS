@@ -20,7 +20,6 @@ class ListAdvertismentUser extends ListController
     protected function createViews()
     {
         $this->createAdvertismentUser();
-        $this->createAdvertismentUserSession();
     }
 
     protected function createAdvertismentUser($viewName = 'ListAdvertismentUser')
@@ -43,40 +42,5 @@ class ListAdvertismentUser extends ListController
             ['code' => '0', 'description' => 'Activos = NO'],
         ];
         $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
-    }
-
-    protected function createAdvertismentUserSession($viewName = 'ListAdvertismentUser-2')
-    {
-        $this->addView($viewName, 'AdvertismentUser', 'Avisos Usuario/Sesión', 'fas fa-exclamation-triangle');
-        $this->addSearchFields($viewName, ['nombre']);
-        $this->addOrderBy($viewName, ['nombre', 'inicio', 'fin'], 'Aviso + Inicio + Fin', 1);
-        $this->addOrderBy($viewName, ['codrole', 'nombre', 'inicio', 'fin'], 'Grupo Usuarios + Aviso + Inicio + Fin');
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-
-        // Filtros
-        $this->addFilterAutocomplete($viewName, 'xCodRole', 'Grupos de usuarios', 'codrole', 'roles', 'codrole', 'descripcion');
-        $this->addFilterDatePicker($viewName, 'inicio', 'Avisos desde ...', 'inicio');
-        $this->addFilterDatePicker($viewName, 'fin', 'Avisos hasta ...', 'fin');
-
-        $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
-        ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
-    }
-
-    protected function loadData($viewName, $view)
-    {
-        switch ($viewName) {
-            case 'ListAdvertismentUser-2':
-                $usuario = $this->user->nick;
-                $where = [new DatabaseWhere('nick', $usuario)];
-                $view->loadData('', $where);
-                break;
-
-            default:
-                parent::loadData($viewName, $view);
-                break;
-        }
     }
 }

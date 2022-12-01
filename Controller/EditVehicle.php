@@ -4,6 +4,8 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
+use FacturaScripts\Plugins\OpenServBus\Model\Collaborator;
+use FacturaScripts\Plugins\OpenServBus\Model\Driver;
 
 class EditVehicle extends EditController
 {
@@ -81,11 +83,47 @@ class EditVehicle extends EditController
             case $mvn:
                 parent::loadData($viewName, $view);
                 $this->PonerEnVistaLaEdad($viewName);
+                $this->loadValuesSelectCollaborators($mvn);
+                $this->loadValuesSelectDrivers($mvn);
                 break;
 
             default:
                 parent::loadData($viewName, $view);
                 break;
+        }
+    }
+
+    protected function loadValuesSelectCollaborators(string $mvn)
+    {
+        $column = $this->views[$mvn]->columnForName('collaborator');
+        if($column && $column->widget->getType() === 'select') {
+            // obtenemos los colaboradores
+            $customValues = [];
+            $collaboratorsModel = new Collaborator();
+            foreach ($collaboratorsModel->all([], [], 0, 0) as $collaborator) {
+                $customValues[] = [
+                    'value' => $collaborator->idcollaborator,
+                    'title' => $collaborator->getProveedor()->nombre,
+                ];
+            }
+            $column->widget->setValuesFromArray($customValues, false, true);
+        }
+    }
+
+    protected function loadValuesSelectDrivers(string $mvn)
+    {
+        $column = $this->views[$mvn]->columnForName('usual-driver');
+        if($column && $column->widget->getType() === 'select') {
+            // obtenemos los conductores
+            $customValues = [];
+            $driversModel = new Driver();
+            foreach ($driversModel->all([], [], 0, 0) as $driver) {
+                $customValues[] = [
+                    'value' => $driver->iddriver,
+                    'title' => $driver->nombre,
+                ];
+            }
+            $column->widget->setValuesFromArray($customValues, false, true);
         }
     }
 

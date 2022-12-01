@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <view>
     <columns>
-        <group name="data" numcolumns="8" valign="bottom">
+        <group name="data" numcolumns="8">
             <column name="code" description="its-optional" numcolumns="3" order="100">
                 <widget type="text" fieldname="cod_servicio" icon="fas fa-hashtag" maxlength="20" readonly="dinamic"/>
             </column>
@@ -51,7 +51,7 @@
             </column>
             <column name="helper" numcolumns="4" order="120">
                 <widget type="select" fieldname="idhelper" icon="fas fa-user-graduate" onclick="EditHelper">
-                    <values source="helpers" fieldcode="idhelper" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
         </group>
@@ -145,26 +145,26 @@
                 <widget type="textarea" fieldname="observaciones_periodo" readonly="true"/>
             </column>
             <column name="inicio_dia" title="start-date" numcolumns="3" order="110">
-                <widget type="date" fieldname="fecha_desde" readonly="true"/>
+                <widget type="date" fieldname="fecha_desde"/>
             </column>
             <column name="fin_dia" title="end-date" numcolumns="3" order="120">
-                <widget type="date" fieldname="fecha_hasta" readonly="true"/>
+                <widget type="date" fieldname="fecha_hasta"/>
             </column>
         </group>
-        <group name="anticipation" numcolumns="5" icon="fas fa-hourglass-start" title="anticipation">
+        <group name="anticipation" numcolumns="5" icon="fas fa-hourglass-start" title="anticipation" valign="bottom">
             <column name="inicio_horaAnt" title="anticipation-hour" numcolumns="4" order="100">
-                <widget type="time" fieldname="hora_anticipacion" readonly="true"/>
+                <widget type="time" fieldname="hora_anticipacion"/>
             </column>
             <column name="departure-from-garages" numcolums="1" order="110">
-                <widget type="text" fieldname="salida_desde_nave_text" readonly="true"/>
+                <widget type="checkbox" fieldname="salida_desde_nave_text" readonly="true"/>
             </column>
         </group>
         <group name="horario" numcolumns="7" icon="far fa-clock" title="horario">
             <column name="inicio_hora" title="start-time" numcolumns="3" order="100">
-                <widget type="time" fieldname="hora_desde" readonly="true"/>
+                <widget type="time" fieldname="hora_desde"/>
             </column>
             <column name="fin_hora" title="end-time" numcolumns="3" order="110">
-                <widget type="time" fieldname="hora_hasta" readonly="true"/>
+                <widget type="time" fieldname="hora_hasta"/>
             </column>
         </group>
         <group name="assembly-services" numcolumns="9" icon="fas fa-business-time" title="assembly-services">
@@ -182,7 +182,7 @@
             <column name="usual-driver-1" numcolumns="4" order="100"
                     description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular">
                 <widget type="select" fieldname="iddriver_1" icon="fas fa-user-astronaut" onclick="EditDriver">
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
             <column name="driver-accommodation-1" numcolumns="4" order="110">
@@ -202,7 +202,7 @@
             <column name="usual-driver-2" numcolumns="4" order="100"
                     description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular">
                 <widget type="select" fieldname="iddriver_2" icon="fas fa-user-astronaut" onclick="EditDriver">
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
             <column name="driver-accommodation-2" numcolumns="4" order="110">
@@ -222,7 +222,7 @@
             <column name="usual-driver-3" numcolumns="4" order="100"
                     description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular">
                 <widget type="select" fieldname="iddriver_3" icon="fas fa-user-astronaut" onclick="EditDriver">
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
             <column name="driver-accommodation-3" numcolumns="4" order="110">

@@ -5,18 +5,22 @@
             <column name="id" numcolumns="2" order="100">
                 <widget type="text" fieldname="idhelper" readonly="true"/>
             </column>
-            <column name="employee" description="once-created-are-not-allowed-to-modify-it-but-can-delete-it" numcolumns="5" order="110">
-                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee" readonly="dinamic" >
-                    <values source="employees" fieldcode="idemployee" fieldtitle="nombre" />
+            <column name="employee" description="once-created-are-not-allowed-to-modify-it-but-can-delete-it"
+                    numcolumns="5" order="110">
+                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee"
+                        readonly="dinamic">
+                    <values source="employees" fieldcode="idemployee" fieldtitle="nombre"/>
                 </widget>
             </column>
-            <column name="collaborator" description="once-created-are-not-allowed-to-modify-it-but-can-delete-it" numcolumns="5" order="120">
-                <widget type="select" fieldname="idcollaborator" icon="fas fa-business-time" onclick="EditCollaborator" readonly="dinamic" >
-                    <values source="collaborators" fieldcode="idcollaborator" fieldtitle="nombre" />
+            <column name="collaborator" description="once-created-are-not-allowed-to-modify-it-but-can-delete-it"
+                    numcolumns="5" order="120">
+                <widget type="select" fieldname="idcollaborator" icon="fas fa-business-time" onclick="EditCollaborator"
+                        readonly="dinamic">
+                    <values/>
                 </widget>
             </column>
             <column name="observations" numcolumns="12" order="130">
-                <widget type="textarea" fieldname="observaciones" />
+                <widget type="textarea" fieldname="observaciones"/>
             </column>
         </group>
         <group name="record-status" numcolumns="12" icon="fas fa-cog" title="Estado del registro">
@@ -44,7 +48,7 @@
                 <widget type="text" icon="fas fa-user-circle" fieldname="userbaja" readonly="true"/>
             </column>
             <column name="deleted-motif" description="only-fill-inactive-record" numcolumns="12" order="160">
-                <widget type="text" fieldname="motivobaja" maxlength="100" />
+                <widget type="text" fieldname="motivobaja" maxlength="100"/>
             </column>
         </group>
     </columns>

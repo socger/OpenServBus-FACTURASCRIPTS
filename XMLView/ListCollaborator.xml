@@ -5,7 +5,9 @@
             <widget type="text" fieldname="idcollaborator"/>
         </column>
         <column name="collaborating-company" order="110">
-            <widget type="text" fieldname="nombre"/>
+            <widget type="select" fieldname="idcollaborator">
+                <values source="proveedores" fieldcode="codproveedor" fieldtitle="nombre"/>
+            </widget>
         </column>
         <column name="active" display="center" order="120">
             <widget type="checkbox" fieldname="activo"/>

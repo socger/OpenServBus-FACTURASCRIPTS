@@ -9,7 +9,7 @@
                 <values source="employees" fieldcode="idemployee" fieldtitle="nombre"/>
             </widget>
         </column>
-        <column name="description" order="120">
+        <column name="name" order="120">
             <widget type="text" fieldname="nombre"/>
         </column>
         <column name="document-type" order="130">

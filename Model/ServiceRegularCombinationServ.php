@@ -93,7 +93,7 @@ class ServiceRegularCombinationServ extends Base\ModelClass
 
     public function save(): bool
     {
-        if (false === $this->comprobarSiActivo()) {
+        if (false === parent::save()) {
             return false;
         }
 

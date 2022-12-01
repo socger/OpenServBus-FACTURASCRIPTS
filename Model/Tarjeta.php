@@ -58,6 +58,15 @@ class Tarjeta extends Base\ModelClass
     /** @var string */
     public $usermodificacion;
 
+    public function __get(string $name)
+    {
+        if ($name === 'es_DePago') {
+            $type = $this->getTarjetaType();
+            return (bool)$type->de_pago;
+        }
+        return null;
+    }
+
     public function clear()
     {
         parent::clear();

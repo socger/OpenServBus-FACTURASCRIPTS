@@ -4,6 +4,7 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
+use FacturaScripts\Plugins\OpenServBus\Model\Driver;
 
 class EditServiceRegularCombination extends EditController
 {
@@ -56,9 +57,33 @@ class EditServiceRegularCombination extends EditController
                 $view->loadData('', $where);
                 break;
 
+            case $mvn:
+                parent::loadData($viewName, $view);
+                $this->loadValuesSelectDrivers($mvn, 'usual-driver-1');
+                $this->loadValuesSelectDrivers($mvn, 'usual-driver-2');
+                $this->loadValuesSelectDrivers($mvn, 'usual-driver-3');
+                break;
+
             default:
                 parent::loadData($viewName, $view);
                 break;
+        }
+    }
+
+    protected function loadValuesSelectDrivers(string $mvn, string $columnName)
+    {
+        $column = $this->views[$mvn]->columnForName($columnName);
+        if($column && $column->widget->getType() === 'select') {
+            // obtenemos los conductores
+            $customValues = [];
+            $driversModel = new Driver();
+            foreach ($driversModel->all([], [], 0, 0) as $driver) {
+                $customValues[] = [
+                    'value' => $driver->iddriver,
+                    'title' => $driver->nombre,
+                ];
+            }
+            $column->widget->setValuesFromArray($customValues, false, true);
         }
     }
 }

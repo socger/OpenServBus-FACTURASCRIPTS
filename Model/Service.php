@@ -384,7 +384,7 @@ class Service extends Base\ModelClass
         }
     }
 
-    protected function checkFechasPeriodo(): bool
+    protected function checkFields(): bool
     {
         // La fecha de inicio es obligatoria
         if (empty($this->fecha_desde)) {
@@ -392,22 +392,20 @@ class Service extends Base\ModelClass
             return false;
         }
 
-        // Si fecha hasta está introducida y fecha desde no está vacía y además es mayor que fecha hasta ... fallo
-        if (!empty($this->fecha_hasta)) {
-            if (!empty($this->fecha_desde) and
-                $this->fecha_desde > $this->fecha_hasta) {
-                $this->toolBox()->i18nLog()->error('La fecha de inicio, no puede ser mayor que la fecha de fin.');
-                return false;
-            }
+        // La fecha de fin es obligatoria
+        if (empty($this->fecha_hasta)) {
+            $this->toolBox()->i18nLog()->error('La fecha de fin, debe de introducirla.');
+            return false;
         }
-        return true;
-    }
 
-    protected function checkHorasPeriodo(): bool
-    {
+        // Si fecha hasta está introducida y fecha desde no está vacía y además es mayor que fecha hasta ... fallo
+        if ($this->fecha_desde > $this->fecha_hasta) {
+            $this->toolBox()->i18nLog()->error('La fecha de inicio, no puede ser mayor que la fecha de fin.');
+            return false;
+        }
+
         // La hora de inicio es obligatoria
         if (empty($this->hora_desde)) {
-            $a_devolver = false;
             $this->toolBox()->i18nLog()->error('La hora de inicio, debe de introducirla.');
             return false;
         }
@@ -419,24 +417,8 @@ class Service extends Base\ModelClass
         }
 
         // Si fecha hasta está introducida y fecha desde no está vacía y además es mayor que fecha hasta ... fallo
-        if (!empty($this->hora_hasta)) {
-            if (!empty($this->hora_desde) and
-                $this->hora_desde > $this->hora_hasta) {
-                $this->toolBox()->i18nLog()->error('La hora de inicio, no puede ser mayor que la hora de fin.');
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    protected function checkFields(): bool
-    {
-        if ($this->checkFechasPeriodo() === false) {
-            return false;
-        }
-
-        if ($this->checkHorasPeriodo() === false) {
+        if ($this->hora_desde > $this->hora_hasta) {
+            $this->toolBox()->i18nLog()->error('La hora de inicio, no puede ser mayor que la hora de fin.');
             return false;
         }
 
@@ -502,16 +484,6 @@ class Service extends Base\ModelClass
 
         if (empty($this->codimpuesto_enextranjero)) {
             $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km en extrajero".');
-            return false;
-        }
-
-        if (empty($this->inicio_dia)) {
-            $this->toolBox()->i18nLog()->error('No ha elegido la fecha de inicio del servicio.');
-            return false;
-        }
-
-        if (empty($this->fin_dia)) {
-            $this->toolBox()->i18nLog()->error('No ha elegido la fecha de fin del servicio.');
             return false;
         }
 

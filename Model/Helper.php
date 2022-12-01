@@ -35,9 +35,6 @@ class Helper extends Base\ModelClass
     public $motivobaja;
 
     /** @var string */
-    public $nombre;
-
-    /** @var string */
     public $observaciones;
 
     /** @var string */
@@ -48,6 +45,20 @@ class Helper extends Base\ModelClass
 
     /** @var string */
     public $usermodificacion;
+
+    public function __get($name)
+    {
+        if ($name === 'nombre') {
+            if (false === empty($this->idcollaborator)) {
+                $collaborator = $this->getCollaborator();
+                return $collaborator->getProveedor()->nombre;
+            } elseif (false === empty($this->idemployee)) {
+                $employee = $this->getEmployee();
+                return $employee->nombre;
+            }
+        }
+        return null;
+    }
 
     public function clear()
     {
@@ -110,17 +121,6 @@ class Helper extends Base\ModelClass
         $employee = new Employee();
         $employee->loadFromCode($this->idemployee);
         return $employee;
-    }
-
-    protected function saveInsert(array $values = []): bool
-    {
-        if (false === parent::saveInsert($values)) {
-            return false;
-        }
-
-        $this->getEmployee()->actualizarNombreEmpleadoEn();
-        $this->getCollaborator()->actualizarNombreColaboradorEn();
-        return true;
     }
 
     protected function saveUpdate(array $values = []): bool

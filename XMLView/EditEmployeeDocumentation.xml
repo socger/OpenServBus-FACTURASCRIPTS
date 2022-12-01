@@ -2,7 +2,7 @@
 <view>
     <columns>
         <group name="data" numcolumns="12">
-            <column name="description" numcolumns="4" order="100">
+            <column name="name" numcolumns="4" order="100">
                 <widget type="text" fieldname="nombre" maxlength="100" required="true"/>
             </column>
             <column name="employee" titleurl="ListEmployee" numcolumns="3" order="110">

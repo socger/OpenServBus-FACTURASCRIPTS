@@ -7,7 +7,7 @@
         <column name="code" order="110">
             <widget type="text" fieldname="cod_employee"/>
         </column>
-        <column name="description" order="120">
+        <column name="name" order="120">
             <widget type="text" fieldname="nombre"/>
         </column>
         <column name="city" order="130">

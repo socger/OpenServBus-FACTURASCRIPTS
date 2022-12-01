@@ -49,7 +49,6 @@ class ListEmployee extends ListController
     {
         $this->addView($viewName, 'EmployeeContract', 'Contratos', 'fas fa-file-contract');
         $this->addSearchFields($viewName, ['nombre']);
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
         $this->addOrderBy($viewName, ['fecha_inicio', 'fecha_fin'], 'F.inicio + F.fin.');
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
 

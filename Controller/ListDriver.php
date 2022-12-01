@@ -24,8 +24,6 @@ class ListDriver extends ListController
     protected function createViewDriver($viewName = 'ListDriver')
     {
         $this->addView($viewName, 'Driver', 'Conductores', 'fas fa-user-astronaut');
-        $this->addSearchFields($viewName, ['idemployee', 'nombre']);
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
 
         // Filtros
@@ -44,8 +42,5 @@ class ListDriver extends ListController
                 ['label' => 'Empleados sólo', 'where' => [new DataBaseWhere('idemployee', '0', '>')]]
             ]
         );
-
-        $this->addFilterAutocomplete($viewName, 'xIdEmpleado', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdCollaborator', 'Colaborador', 'idcollaborator', 'collaborators', 'idcollaborator', 'nombre');
     }
 }

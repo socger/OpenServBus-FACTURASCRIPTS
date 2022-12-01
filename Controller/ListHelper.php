@@ -29,7 +29,6 @@ class ListHelper extends ListController
     {
         $this->addView($viewName, 'Collaborator', 'collaborator', 'fas fa-business-time');
         $this->addSearchFields($viewName, ['codproveedor', 'nombre']);
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
         $this->addOrderBy($viewName, ['codproveedor'], 'Cod.Proveedor');
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
 
@@ -76,8 +75,6 @@ class ListHelper extends ListController
     protected function createViewHelper($viewName = 'ListHelper')
     {
         $this->addView($viewName, 'Helper', 'Monitores', 'fas fa-user-graduate');
-        $this->addSearchFields($viewName, ['idemployee', 'nombre']);
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
         $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
 
         // Filtros
@@ -93,9 +90,6 @@ class ListHelper extends ListController
             ['label' => 'Empleados sólo', 'where' => [new DataBaseWhere('idemployee', '0', '>')]]
         ];
         $this->addFilterSelectWhere($viewName, 'status', $status);
-
-        $this->addFilterAutocomplete($viewName, 'xIdEmpleado', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdCollaborator', 'Colaborador', 'idcollaborator', 'collaborators', 'idcollaborator', 'nombre');
     }
 
     protected function createViewIdentificationMean($viewName = 'ListIdentificationMean')

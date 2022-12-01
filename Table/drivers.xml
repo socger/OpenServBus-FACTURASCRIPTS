@@ -35,11 +35,6 @@
         <type>character varying(100)</type>
     </column>
     <column>
-        <name>nombre</name>
-        <type>character varying(100)</type>
-        <null>NO</null>
-    </column>
-    <column>
         <name>observaciones</name>
         <type>text</type>
     </column>
