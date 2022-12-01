@@ -110,7 +110,7 @@ class ServiceRegularValuation extends Base\ModelClass
         }
 
         if (empty($this->idservice_regular)) {
-            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio regular al que pertenece este itinerario.');
+            $this->toolBox()->i18nLog()->error('assign-regular-service-itinerary');
             return false;
         }
 
@@ -159,7 +159,7 @@ class ServiceRegularValuation extends Base\ModelClass
         }
 
         if (empty($this->idservice_valuation_type)) {
-            $this->toolBox()->i18nLog()->error('Debe de completar la descripción.');
+            $this->toolBox()->i18nLog()->error('complete-to-description');
             return false;
         }
 
@@ -186,7 +186,7 @@ class ServiceRegularValuation extends Base\ModelClass
                 . ' ORDER BY service_regular_valuations.idservice_regular '
                 . ' , service_regular_valuations.orden ';
 
-            $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+            $registros = self::$dataBase->select($sql);
 
             foreach ($registros as $fila) {
                 if (empty($fila['orden'])) {

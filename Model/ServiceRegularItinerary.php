@@ -111,22 +111,22 @@ class ServiceRegularItinerary extends Base\ModelClass
         }
 
         if (empty($this->idservice_regular)) {
-            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio regular al que pertenece este itinerario.');
+            $this->toolBox()->i18nLog()->error('assign-regular-service-itinerary');
             return false;
         }
 
         if (empty($this->idstop)) {
-            $this->toolBox()->i18nLog()->error('Debe de elegir una parada.');
+            $this->toolBox()->i18nLog()->error('must-choose-a-stop');
             return false;
         }
 
         if (empty($this->hora)) {
-            $this->toolBox()->i18nLog()->error('Falta la hora en la que debe de estar en la parada.');
+            $this->toolBox()->i18nLog()->error('time-should-stop-missing');
             return false;
         }
 
         if (empty($this->pasajeros_entradas) && empty($this->pasajeros_salidas)) {
-            $this->toolBox()->i18nLog()->error('Debe de asignar la cantidad de pasajeros a recoger/dejar.');
+            $this->toolBox()->i18nLog()->error('assign-number-passengers-up-drop');
             return false;
         }
 

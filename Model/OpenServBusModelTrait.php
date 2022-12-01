@@ -21,7 +21,7 @@ trait OpenServBusModelTrait
         $this->userbaja = Session::get('user')->nick ?? null;
 
         if (empty($this->motivobaja)) {
-            $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
+            $this->toolBox()->i18nLog()->error('record-is-not-active-specify-reason');
             return false;
         }
 

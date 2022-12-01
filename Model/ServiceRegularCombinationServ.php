@@ -271,7 +271,7 @@ class ServiceRegularCombinationServ extends Base\ModelClass
         }
 
         if ($coincideAlgunDiaDeLaSemana === false) {
-            $this->toolBox()->i18nLog()->error("Ninguno de los días de la semana del servicio coincide con los días de la semana de la combinación.");
+            $this->toolBox()->i18nLog()->error("none-weekdays-service-match-weekdays-combination");
         }
 
 
@@ -294,14 +294,14 @@ class ServiceRegularCombinationServ extends Base\ModelClass
                 if (empty($this->iddriver)) {
                     $this->iddriver = $fila['iddriver'];
                     if (!empty($this->iddriver)) {
-                        $this->toolBox()->i18nLog()->info("Conductor rellenado automáticamente desde la Combinación.");
+                        $this->toolBox()->i18nLog()->info("driver-auto-filled-from-combination");
                     }
                 }
 
                 if (empty($this->idvehicle)) {
                     $this->idvehicle = $fila['idvehicle'];
                     if (!empty($this->idvehicle)) {
-                        $this->toolBox()->i18nLog()->info("Vehículo rellenado automáticamente desde la Combinación.");
+                        $this->toolBox()->i18nLog()->info("vehicle-auto-filled-from-combination.");
                     }
                 }
             }
@@ -315,20 +315,20 @@ class ServiceRegularCombinationServ extends Base\ModelClass
                     . ' FROM service_regulars '
                     . ' WHERE service_regulars.idservice_regular = ' . $this->idservice_regular;
 
-                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+                $registros = self::$dataBase->select($sql);
 
                 foreach ($registros as $fila) {
                     if (empty($this->iddriver)) {
                         $this->iddriver = $fila['iddriver'];
                         if (!empty($this->iddriver)) {
-                            $this->toolBox()->i18nLog()->info("Conductor rellenado automáticamente desde el Servicio Regular.");
+                            $this->toolBox()->i18nLog()->info("driver-auto-filled-from-regular-service");
                         }
                     }
 
                     if (empty($this->idvehicle)) {
                         $this->idvehicle = $fila['idvehicle'];
                         if (!empty($this->idvehicle)) {
-                            $this->toolBox()->i18nLog()->info("Vehículo rellenado automáticamente desde el Servicio Regular.");
+                            $this->toolBox()->i18nLog()->info("vehicle-auto-filled-from-regular-service");
                         }
                     }
                 }
@@ -338,27 +338,27 @@ class ServiceRegularCombinationServ extends Base\ModelClass
             // Saltará la restricción de campo obligatorio de la tabla
             if (empty($this->iddriver) or empty($this->idvehicle)) {
                 $aRellenar = '';
-                $tampoco = 'Además tampoco estaba rellenado';
-                $noPude = 'No lo pude completar';
+                $tampoco = $this->toolBox()->i18n()->trans('also-it-was-not-filled');
+                $noPude = $this->toolBox()->i18n()->trans('i-couldnt-complete');
 
                 if (empty($this->iddriver)) {
                     if ($aRellenar === '') {
-                        $aRellenar .= ' y ';
-                        $tampoco = 'Además tampoco estaban rellenados';
-                        $noPude = 'No los pude completar';
+                        $aRellenar .= ' ' . $this->toolBox()->i18n()->trans('and') . ' ';
+                        $tampoco = $this->toolBox()->i18n()->trans('also-they-were-not-refilled');
+                        $noPude = $this->toolBox()->i18n()->trans('i-couldnt-complete-them');
                     }
-                    $aRellenar .= 'el conductor';
+                    $aRellenar .= $this->toolBox()->i18n()->trans('the-driver');
                 }
 
                 if (empty($this->idvehicle)) {
                     if ($aRellenar === '') {
                         $aRellenar .= ' y ';
-                        $tampoco = 'Además tampoco estaban rellenados';
+                        $tampoco = $this->toolBox()->i18n()->trans('also-they-were-not-refilled');
                     }
-                    $aRellenar .= 'el vehículo';
+                    $aRellenar .= $this->toolBox()->i18n()->trans('the-vehicle');
                 }
 
-                $this->toolBox()->i18nLog()->error("Debe completar $aRellenar. $tampoco ni en la Combinación de servicios elegida, ni en el Servicio Regular elegido ... $noPude.");
+                $this->toolBox()->i18nLog()->error("complete-combination-service-or-regular-service", ['%aRellenar%' => $aRellenar, '%tampoco%' => $tampoco, '%noPude%' => $noPude]);
                 return false;
             }
         }

@@ -146,12 +146,12 @@ class Vehicle extends Base\ModelClass
 
         // Exigimos que se introduzca idempresa o idcollaborator
         if ((empty($this->idempresa)) && (empty($this->idcollaborator))) {
-            $this->toolBox()->i18nLog()->error('Debe de confirmar si es un vehículo nuestro o de una empresa colaboradora');
+            $this->toolBox()->i18nLog()->error('confirm-vehicle-is-collaboratin-or-our');
             return false;
         }
 
         if ((!empty($this->idempresa)) && (!empty($this->idcollaborator))) {
-            $this->toolBox()->i18nLog()->error('O es un vehículo nuestro o de una empresa colaboradora, pero ambos no');
+            $this->toolBox()->i18nLog()->error('the-vehicle-is-collaboratin-or-our-bat-not-both');
             return false;
         }
 
@@ -159,7 +159,7 @@ class Vehicle extends Base\ModelClass
         // Fecha Matriculacion Actual = Fecha Matriculación Primera
         if (empty($this->fecha_matriculacion_actual)) {
             if (!empty($this->fecha_matriculacion_primera)) {
-                $this->toolBox()->i18nLog()->info('La Fecha Matriculación Actual se ha rellenado con el valor de la Fecha de Matriculación Actual, por estar vacía');
+                $this->toolBox()->i18nLog()->info('current-registration-date-is-empty');
                 $this->fecha_matriculacion_actual = $this->fecha_matriculacion_primera;
             }
         }

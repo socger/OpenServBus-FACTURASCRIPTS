@@ -224,7 +224,7 @@ class Service extends Base\ModelClass
                     . ' LEFT JOIN retenciones ON (retenciones.codretencion = clientes.codretencion) '
                     . ' WHERE clientes.codcliente = "' . $this->codcliente . '" ';
 
-                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+                $registros = self::$dataBase->select($sql);
 
                 foreach ($registros as $fila) {
                     $cliente_RegimenIVA = $fila['regimeniva'];
@@ -339,7 +339,7 @@ class Service extends Base\ModelClass
                     . ' FROM impuestos '
                     . ' WHERE impuestos.codimpuesto = "' . $codimpuesto . '" ';
 
-                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+                $registros = self::$dataBase->select($sql);
 
                 foreach ($registros as $fila) {
                     $impto_tipo = $fila['tipo'];
@@ -388,112 +388,112 @@ class Service extends Base\ModelClass
     {
         // La fecha de inicio es obligatoria
         if (empty($this->fecha_desde)) {
-            $this->toolBox()->i18nLog()->error('La fecha de inicio, debe de introducirla.');
+            $this->toolBox()->i18nLog()->error('date-start-is-required');
             return false;
         }
 
         // La fecha de fin es obligatoria
         if (empty($this->fecha_hasta)) {
-            $this->toolBox()->i18nLog()->error('La fecha de fin, debe de introducirla.');
+            $this->toolBox()->i18nLog()->error('date-end-is-required');
             return false;
         }
 
         // Si fecha hasta está introducida y fecha desde no está vacía y además es mayor que fecha hasta ... fallo
         if ($this->fecha_desde > $this->fecha_hasta) {
-            $this->toolBox()->i18nLog()->error('La fecha de inicio, no puede ser mayor que la fecha de fin.');
+            $this->toolBox()->i18nLog()->error('date-start-not-greater-date-end');
             return false;
         }
 
         // La hora de inicio es obligatoria
         if (empty($this->hora_desde)) {
-            $this->toolBox()->i18nLog()->error('La hora de inicio, debe de introducirla.');
+            $this->toolBox()->i18nLog()->error('hour-start-is-required');
             return false;
         }
 
         // La hora de fin es obligatoria
         if (empty($this->hora_hasta)) {
-            $this->toolBox()->i18nLog()->error('La hora fin, debe de introducirla.');
+            $this->toolBox()->i18nLog()->error('hour-end-is-required');
             return false;
         }
 
         // Si fecha hasta está introducida y fecha desde no está vacía y además es mayor que fecha hasta ... fallo
         if ($this->hora_desde > $this->hora_hasta) {
-            $this->toolBox()->i18nLog()->error('La hora de inicio, no puede ser mayor que la hora de fin.');
+            $this->toolBox()->i18nLog()->error('hour-start-not-greater-hour-end');
             return false;
         }
 
         if (empty($this->codcliente)) {
-            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio a un cliente.');
+            $this->toolBox()->i18nLog()->error('assign-service-to-customer');
             return false;
         }
 
         if (empty($this->nombre)) {
-            $this->toolBox()->i18nLog()->error('Debe completar la descripción del servicio.');
+            $this->toolBox()->i18nLog()->error('complete-description-of-service');
             return false;
         }
 
         if (empty($this->hoja_ruta_origen)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el origen de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-origin-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_destino)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el destino de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-destination-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_expediciones)) {
-            $this->toolBox()->i18nLog()->error('Debe completar las expediciones de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-expeditions-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_contratante)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el contratante de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-contracting-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_tipoidfiscal)) {
-            $this->toolBox()->i18nLog()->error('Debe completar Id. Fiscal de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-fiscal-id-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_cifnif)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el Num. Fiscal de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-fiscal-number-of-roadmap');
             return false;
         }
 
         if (empty($this->idempresa)) {
-            $this->toolBox()->i18nLog()->error('Debe completar la empresa que realiza el servicio.');
+            $this->toolBox()->i18nLog()->error('complete-company-performs-service');
             return false;
         }
 
         if (empty($this->importe)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el Importe x km nacional.');
+            $this->toolBox()->i18nLog()->error('complete-amount-national-km');
             return false;
         }
 
         if (empty($this->codimpuesto)) {
-            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km nacional".');
+            $this->toolBox()->i18nLog()->error('have-not-type-tax-national-km');
             return false;
         }
 
         if (empty($this->importe_enextranjero)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el Importe x km en extranjero.');
+            $this->toolBox()->i18nLog()->error('complete-amount-abroad-km');
             return false;
         }
 
         if (empty($this->codimpuesto_enextranjero)) {
-            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km en extrajero".');
+            $this->toolBox()->i18nLog()->error('have-not-type-tax-abroad-km');
             return false;
         }
 
         if (empty($this->plazas) or $this->plazas <= 0) {
-            $this->toolBox()->i18nLog()->error('Debe de completar las plazas.');
+            $this->toolBox()->i18nLog()->error('complete-squares');
             return false;
         }
 
         if (!$this->aceptado) {
-            $this->toolBox()->i18nLog()->info('Si no acepta el servicio, no podrá montarse.');
+            $this->toolBox()->i18nLog()->info('accept-service-able-mount');
             return false;
         }
 

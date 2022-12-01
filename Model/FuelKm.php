@@ -165,7 +165,7 @@ class FuelKm extends Base\ModelClass
         if (!empty($this->idempresa)) {
             if (!empty($idempresa)) {
                 if ($idempresa <> $this->idempresa) {
-                    $this->toolBox()->i18nLog()->info('Pero para su información ... la empresa del conductor/empleado ("' . $nombreEmpresa . '") no es la misma que la empresa elegida para esta tarjeta.');
+                    $this->toolBox()->i18nLog()->info('company-not-equals-company-of-driver', ['%company%' => $nombreEmpresa]);
                 }
             }
         }
@@ -178,7 +178,7 @@ class FuelKm extends Base\ModelClass
                 . ' LEFT JOIN empresas ON (empresas.idempresa = vehicles.idempresa) '
                 . ' WHERE vehicles.idvehicle = ' . $this->idvehicle;
 
-            $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+            $registros = self::$dataBase->select($sql);
 
             foreach ($registros as $fila) {
                 $idempresa = $fila['idempresa'];
@@ -188,7 +188,7 @@ class FuelKm extends Base\ModelClass
             if (!empty($this->idempresa)) {
                 if (!empty($idempresa)) {
                     if ($idempresa <> $this->idempresa) {
-                        $this->toolBox()->i18nLog()->info('Pero para su información ... la empresa del vehículo ("' . $nombreEmpresa . '") no es la misma que la empresa elegida para esta tarjeta.');
+                        $this->toolBox()->i18nLog()->info('company-not-equals-company-of-vehicle', ['%company%' => $nombreEmpresa]);
                     }
                 }
             }
@@ -199,12 +199,12 @@ class FuelKm extends Base\ModelClass
     {
         // Exigimos que se introduzca iddriver o idemployee
         if ((empty($this->iddriver)) && (empty($this->idemployee))) {
-            $this->toolBox()->i18nLog()->error('Debe de confirmar si el repostaje lo ha hecho un empleado o un conductor.');
+            $this->toolBox()->i18nLog()->error('confirm-refueling-done-employee-or-driver');
             return false;
         }
 
         if ((!empty($this->iddriver)) && (!empty($this->idemployee))) {
-            $this->toolBox()->i18nLog()->error('El repostaje o lo ha hecho un empleado o lo ha hecho un conductor, pero no de ambos.');
+            $this->toolBox()->i18nLog()->error('refueling-has-employee-or-driver-bat-not-both');
             return false;
         }
 
@@ -215,12 +215,12 @@ class FuelKm extends Base\ModelClass
     {
         // Exigimos que se introduzca idempresa o idcollaborator
         if ((empty($this->idfuel_pump)) && (empty($this->codproveedor))) {
-            $this->toolBox()->i18nLog()->error('Debe de confirmar si es un repostaje interno o externo.');
+            $this->toolBox()->i18nLog()->error('confirm-internal-or-external-refueling');
             return false;
         }
 
         if ((!empty($this->idfuel_pump)) && (!empty($this->codproveedor))) {
-            $this->toolBox()->i18nLog()->error('El repostaje o es interno o externo, pero no de ambos.');
+            $this->toolBox()->i18nLog()->error('internal-or-external-refueling-bat-not-both');
             return false;
         }
 
@@ -231,12 +231,12 @@ class FuelKm extends Base\ModelClass
     {
         // Exigimos que se introduzca idtarjeta o ididentification_mean
         if ((empty($this->idtarjeta)) && (empty($this->ididentification_mean))) {
-            $this->toolBox()->i18nLog()->error('Debe de confirmar que tarjeta ó que Medio de Identificación ha usado para este repostaje.');
+            $this->toolBox()->i18nLog()->error('confirm-card-used-this-refueling');
             return false;
         }
 
         if ((!empty($this->idtarjeta)) && (!empty($this->ididentification_mean))) {
-            $this->toolBox()->i18nLog()->error('El repostaje o lo ha hecho con el uso de una tarjeta o lo ha hecho con un Medio de Identifiación, pero no de ambos.');
+            $this->toolBox()->i18nLog()->error('refueling-use-card-or-identification-bat-not-both');
             return false;
         }
 

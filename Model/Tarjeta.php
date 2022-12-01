@@ -107,12 +107,12 @@ class Tarjeta extends Base\ModelClass
         }
 
         if ((empty($this->idemployee)) && (empty($this->iddriver))) {
-            $this->toolBox()->i18nLog()->error('Debe de confirmar si la tarjeta es de un empleado o de un conductor.');
+            $this->toolBox()->i18nLog()->error('confirm-card-is-employee-or-driver');
             return false;
         }
 
         if ((!empty($this->idemployee)) && (!empty($this->iddriver))) {
-            $this->toolBox()->i18nLog()->error('La tarjeta o es de un empleado o es de un conductor, pero no de ambos.');
+            $this->toolBox()->i18nLog()->error('the-card-is-employee-or-driver-bat-not-both');
             return false;
         }
 
@@ -152,7 +152,7 @@ class Tarjeta extends Base\ModelClass
         if (!empty($this->idempresa)) {
             if (!empty($idempresa)) {
                 if ($idempresa <> $this->idempresa) {
-                    $this->toolBox()->i18nLog()->info('Pero para su información ... la empresa del conductor/empleado ("' . $nombreEmpresa . '") no es la misma que la empresa elegida para esta tarjeta.');
+                    $this->toolBox()->i18nLog()->info('company-not-equals-company-of-driver', ['%company%' => $nombreEmpresa]);
                 }
             }
         }

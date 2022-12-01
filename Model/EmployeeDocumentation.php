@@ -78,7 +78,7 @@ class EmployeeDocumentation extends Base\ModelClass
 
         if (empty($this->fecha_caducidad)) {
             if ($this->getDocumentarioType()->fechacaducidad_obligarla) {
-                $this->toolBox()->i18nLog()->error('Para el tipo de documento elegido, necesitamos rellenar la fecha de caducidad');
+                $this->toolBox()->i18nLog()->error('type-document-need-expiration-date');
                 return false;
             }
         }

@@ -126,8 +126,7 @@ class ServiceRegularCombination extends Base\ModelClass
         }
 
         if (empty($this->iddriver_1) || empty($this->idvehicle)) {
-            $this->toolBox()->i18nLog()->info('Si no rellena el vehículo o el conductor, este será el orden de prioridades para el Montaje de Servicios:'
-                . ' 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular');
+            $this->toolBox()->i18nLog()->info('service-default-priority');
         }
 
         if ($this->hayServiciosQueNoCoincidenLosDiasDeSemana() === true) {
@@ -228,7 +227,7 @@ class ServiceRegularCombination extends Base\ModelClass
         }
 
         foreach ($serviciosConDiasDiferentes as $servicio) {
-            $this->toolBox()->i18nLog()->error("Los días de la semana del servicio $servicio no coinciden con los días de la semana de esta combinación.");
+            $this->toolBox()->i18nLog()->error("days-week-service-not-coincide-with-combination", ['%service%' => $servicio]);
         }
         return true;
     }

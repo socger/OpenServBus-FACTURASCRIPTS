@@ -75,7 +75,7 @@ class ListServiceAssembly extends ListController
 
         // Comprobamos si han introducido la fecha del montaje
         if (empty($form["date_assembly"])) {
-            $this->toolBox()->i18nLog()->warning('No ha facilitado la fecha de montaje');
+            $this->toolBox()->i18nLog()->warning('you-have-not-provided-the-assembly-date');
             return true;
         }
 

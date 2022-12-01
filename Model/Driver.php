@@ -125,13 +125,13 @@ class Driver extends Base\ModelClass
 
         // Exigimos que se introduzca idempresa o idcollaborator
         if ((empty($this->idemployee)) && (empty($this->idcollaborator))) {
-            $this->toolBox()->i18nLog()->error('Debe de confirmar si es un empleado nuestro o de una empresa colaboradora');
+            $this->toolBox()->i18nLog()->error('confirm-employee-or-collaborating');
             return false;
         }
 
         // No debe de elegir empleado y colaborador a la vez
         if ((!empty($this->idemployee)) and (!empty($this->idcollaborator))) {
-            $this->toolBox()->i18nLog()->error('O es un empleado nuestro o de una empresa colaboradora, pero ambos no');
+            $this->toolBox()->i18nLog()->error('employee-or-collaborating-bat-not-both');
             return false;
         }
 

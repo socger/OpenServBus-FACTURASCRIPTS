@@ -110,7 +110,7 @@ class ServiceValuation extends Base\ModelClass
         }
 
         if (empty($this->idservice)) {
-            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio discrecional al que pertenece este itinerario.');
+            $this->toolBox()->i18nLog()->error('assign-service-this-itinerary');
             return false;
         }
 
@@ -159,7 +159,7 @@ class ServiceValuation extends Base\ModelClass
         }
 
         if (empty($this->idservice_valuation_type)) {
-            $this->toolBox()->i18nLog()->error('Debe de completar la descripción.');
+            $this->toolBox()->i18nLog()->error('complete-to-description');
             return false;
         }
 

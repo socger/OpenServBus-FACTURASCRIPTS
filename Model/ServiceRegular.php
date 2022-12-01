@@ -378,87 +378,87 @@ class ServiceRegular extends Base\ModelClass
             $this->viernes === false &&
             $this->sabado === false &&
             $this->domingo === false) {
-            $this->toolBox()->i18nLog()->error('Ya que es un servicio regular/fijo, debe de elegirme que días de la semana se va a realizar.');
+            $this->toolBox()->i18nLog()->error('service-regular-choose-days-of-week');
             return false;
         }
 
         if ($this->facturar_SN === false && $this->facturar_agrupando === true) {
-            $this->toolBox()->i18nLog()->error('Si elige FACTURAR = NO, no puede elegir AGRUPANDO = SI.');
+            $this->toolBox()->i18nLog()->error('billing-is-no-cannot-grouping-yes');
             return false;
         }
 
         if (empty($this->codcliente)) {
-            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio a un cliente.');
+            $this->toolBox()->i18nLog()->error('assign-service-to-customer');
             return false;
         }
 
         if (empty($this->nombre)) {
-            $this->toolBox()->i18nLog()->error('Debe completar la descripción del servicio.');
+            $this->toolBox()->i18nLog()->error('complete-description-of-service');
             return false;
         }
 
         if (empty($this->hoja_ruta_origen)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el origen de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-origin-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_destino)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el destino de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-destination-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_expediciones)) {
-            $this->toolBox()->i18nLog()->error('Debe completar las expediciones de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-expeditions-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_contratante)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el contratante de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-contracting-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_tipoidfiscal)) {
-            $this->toolBox()->i18nLog()->error('Debe completar Id. Fiscal de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-fiscal-id-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_cifnif)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el Num. Fiscal de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-fiscal-number-of-roadmap');
             return false;
         }
 
         if (empty($this->idempresa)) {
-            $this->toolBox()->i18nLog()->error('Debe completar la empresa que realiza el servicio.');
+            $this->toolBox()->i18nLog()->error('complete-company-performs-service');
             return false;
         }
 
         if (empty($this->importe)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el Importe x km nacional.');
+            $this->toolBox()->i18nLog()->error('complete-amount-national-km');
             return false;
         }
 
         if (empty($this->codimpuesto)) {
-            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km nacional".');
+            $this->toolBox()->i18nLog()->error('have-not-type-tax-national-km');
             return false;
         }
 
         if (empty($this->importe_enextranjero)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el Importe x km en extranjero.');
+            $this->toolBox()->i18nLog()->error('complete-amount-abroad-km');
             return false;
         }
 
         if (empty($this->codimpuesto_enextranjero)) {
-            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km en extrajero".');
+            $this->toolBox()->i18nLog()->error('have-not-type-tax-abroad-km');
             return false;
         }
 
         if (empty($this->plazas) or $this->plazas <= 0) {
-            $this->toolBox()->i18nLog()->error('Debe de completar las plazas.');
+            $this->toolBox()->i18nLog()->error('complete-squares');
             return false;
         }
 
         if (!$this->aceptado) {
-            $this->toolBox()->i18nLog()->info('Si no acepta el servicio, no podrá montarse.');
+            $this->toolBox()->i18nLog()->info('accept-service-able-mount');
         }
 
         if ($this->hayCombinacionesDondeEsteElServicioQueNoCoincidenLosDiasDeSemana() === true) {
@@ -466,8 +466,7 @@ class ServiceRegular extends Base\ModelClass
         }
 
         if (empty($this->iddriver_1) || empty($this->idvehicle)) {
-            $this->toolBox()->i18nLog()->info('Si no rellena el vehículo o el conductor, este será el orden de prioridades para el Montaje de Servicios:'
-                . ' 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular');
+            $this->toolBox()->i18nLog()->info('service-default-priority');
         }
 
         $this->completarCombinadoSN();
@@ -653,7 +652,7 @@ class ServiceRegular extends Base\ModelClass
         }
 
         foreach ($combinacionesConDiasDiferentes as $combinacion) {
-            $this->toolBox()->i18nLog()->error("Los días de la semana de la combinación $combinacion no coinciden con los días de la semana de este servicio regular.");
+            $this->toolBox()->i18nLog()->error("days-week-combination-not-coincide-with-week-service", ['%combination%' => $combinacion]);
         }
         return true;
     }

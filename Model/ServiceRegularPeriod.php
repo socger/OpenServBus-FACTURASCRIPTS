@@ -121,7 +121,7 @@ class ServiceRegularPeriod extends Base\ModelClass
 
         // La fecha de inicio es obligatoria
         if (empty($this->fecha_desde)) {
-            $this->toolBox()->i18nLog()->error('La fecha de inicio, debe de introducirla.');
+            $this->toolBox()->i18nLog()->error('date-start-is-required');
             return false;
         }
 
@@ -129,20 +129,20 @@ class ServiceRegularPeriod extends Base\ModelClass
         if (!empty($this->fecha_hasta)) {
             if (!empty($this->fecha_desde) and
                 $this->fecha_desde > $this->fecha_hasta) {
-                $this->toolBox()->i18nLog()->error('La fecha de inicio, no puede ser mayor que la fecha de fin.');
+                $this->toolBox()->i18nLog()->error('date-start-not-greater-date-end');
                 return false;
             }
         }
 
         // La hora de inicio es obligatoria
         if (empty($this->hora_desde)) {
-            $this->toolBox()->i18nLog()->error('La hora de inicio, debe de introducirla.');
+            $this->toolBox()->i18nLog()->error('hour-start-is-required');
             return false;
         }
 
         // La hora de fin es obligatoria
         if (empty($this->hora_hasta)) {
-            $this->toolBox()->i18nLog()->error('La hora fin, debe de introducirla.');
+            $this->toolBox()->i18nLog()->error('hour-end-is-required');
             return false;
         }
 
@@ -150,7 +150,7 @@ class ServiceRegularPeriod extends Base\ModelClass
         if (!empty($this->hora_hasta)) {
             if (!empty($this->hora_desde) &&
                 $this->hora_desde > $this->hora_hasta) {
-                $this->toolBox()->i18nLog()->error('La hora de inicio, no puede ser mayor que la hora de fin.');
+                $this->toolBox()->i18nLog()->error('hour-start-not-greater-hour-end.');
                 return false;
             }
         }

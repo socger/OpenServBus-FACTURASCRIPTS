@@ -110,17 +110,17 @@ class ServiceItinerary extends Base\ModelClass
         }
 
         if (empty($this->idservice)) {
-            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio discrecional al que pertenece este itinerario.');
+            $this->toolBox()->i18nLog()->error('assign-service-this-itinerary');
             return false;
         }
 
         if (empty($this->hora)) {
-            $this->toolBox()->i18nLog()->error('Falta la hora en la que debe de estar en la parada.');
+            $this->toolBox()->i18nLog()->error('time-should-stop-missing');
             return false;
         }
 
         if (empty($this->pasajeros_entradas) && empty($this->pasajeros_salidas)) {
-            $this->toolBox()->i18nLog()->info('Debe de asignar la cantidad de pasajeros a recoger/dejar.');
+            $this->toolBox()->i18nLog()->info('assign-number-passengers-up-drop');
             return false;
         }
 

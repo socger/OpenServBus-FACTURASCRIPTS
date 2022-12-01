@@ -241,7 +241,7 @@ class ServiceAssembly extends Base\ModelClass
                     . ' LEFT JOIN retenciones ON (retenciones.codretencion = clientes.codretencion) '
                     . ' WHERE clientes.codcliente = "' . $this->codcliente . '" ';
 
-                $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
+                $registros = self::$dataBase->select($sql);
 
                 foreach ($registros as $fila) {
                     $cliente_RegimenIVA = $fila['regimeniva'];
@@ -342,22 +342,22 @@ class ServiceAssembly extends Base\ModelClass
     protected function checkFields(): bool
     {
         if (empty($this->idservice) && empty($this->idservice_regular)) {
-            $this->toolBox()->i18nLog()->error('Debe elegir si es un servicio regular o es un servicio discrecional.');
+            $this->toolBox()->i18nLog()->error('service-regular-or-discretionary');
             return false;
         }
 
         if (!empty($this->idservice) && !empty($this->idservice_regular)) {
-            $this->toolBox()->i18nLog()->error('O es un servicio regular o es un servicio discrecional. Pero no ambos');
+            $this->toolBox()->i18nLog()->error('service-is-regular-or-discretional-bat-not-both');
             return false;
         }
 
         if (empty($this->iddriver_1)) {
-            $this->toolBox()->i18nLog()->error('Debe de completar el conductor 1.');
+            $this->toolBox()->i18nLog()->error('complete-driver-1');
             return false;
         }
 
         if (empty($this->idvehicle)) {
-            $this->toolBox()->i18nLog()->error('Debe de completar el vehículo.');
+            $this->toolBox()->i18nLog()->error('complete-to-vehicle');
             return false;
         }
 
@@ -371,87 +371,87 @@ class ServiceAssembly extends Base\ModelClass
         }
 
         if ($this->facturar_SN === false && $this->facturar_agrupando === true) {
-            $this->toolBox()->i18nLog()->error('Si elige FACTURAR = NO, no puede elegir AGRUPANDO = SI.');
+            $this->toolBox()->i18nLog()->error('billing-is-no-cannot-grouping-yes');
             return false;
         }
 
         if (empty($this->codcliente)) {
-            $this->toolBox()->i18nLog()->error('Debe de asignar el servicio a un cliente.');
+            $this->toolBox()->i18nLog()->error('assign-service-to-customer');
             return false;
         }
 
         if (empty($this->nombre)) {
-            $this->toolBox()->i18nLog()->error('Debe completar la descripción del servicio.');
+            $this->toolBox()->i18nLog()->error('complete-description-of-service');
             return false;
         }
 
         if (empty($this->hoja_ruta_origen)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el origen de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-origin-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_destino)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el destino de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-destination-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_expediciones)) {
-            $this->toolBox()->i18nLog()->error('Debe completar las expediciones de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-expeditions-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_contratante)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el contratante de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-contracting-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_tipoidfiscal)) {
-            $this->toolBox()->i18nLog()->error('Debe completar Id. Fiscal de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-fiscal-id-of-roadmap');
             return false;
         }
 
         if (empty($this->hoja_ruta_cifnif)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el Num. Fiscal de la Hoja de Ruta.');
+            $this->toolBox()->i18nLog()->error('complete-fiscal-number-of-roadmap');
             return false;
         }
 
         if (empty($this->idempresa)) {
-            $this->toolBox()->i18nLog()->error('Debe completar la empresa que realiza el servicio.');
+            $this->toolBox()->i18nLog()->error('complete-company-performs-service');
             return false;
         }
 
         if (empty($this->importe)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el Importe x km nacional.');
+            $this->toolBox()->i18nLog()->error('complete-amount-national-km');
             return false;
         }
 
         if (empty($this->codimpuesto)) {
-            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km nacional".');
+            $this->toolBox()->i18nLog()->error('have-not-type-tax-national-km');
             return false;
         }
 
         if (empty($this->importe_enextranjero)) {
-            $this->toolBox()->i18nLog()->error('Debe completar el Importe x km en extranjero.');
+            $this->toolBox()->i18nLog()->error('complete-amount-abroad-km');
             return false;
         }
 
         if (empty($this->codimpuesto_enextranjero)) {
-            $this->toolBox()->i18nLog()->error('No ha elegido el tipo de impuesto para "Importe x km en extrajero".');
+            $this->toolBox()->i18nLog()->error('have-not-type-tax-abroad-km');
             return false;
         }
 
         if (empty($this->inicio_dia)) {
-            $this->toolBox()->i18nLog()->error('No ha elegido la fecha de inicio del servicio.');
+            $this->toolBox()->i18nLog()->error('date-start-is-required');
             return false;
         }
 
         if (empty($this->fin_dia)) {
-            $this->toolBox()->i18nLog()->error('No ha elegido la fecha de fin del servicio.');
+            $this->toolBox()->i18nLog()->error('date-end-is-required');
             return false;
         }
 
         if (empty($this->plazas) or $this->plazas <= 0) {
-            $this->toolBox()->i18nLog()->error('Debe de completar las plazas.');
+            $this->toolBox()->i18nLog()->error('complete-squares');
             return false;
         }
 
@@ -560,7 +560,7 @@ class ServiceAssembly extends Base\ModelClass
         }
 
         // No habían registros
-        $this->toolBox()->i18nLog()->error('No se pudo completar el servicio. Compruebe que el servicio existe o que no haya sido borrado.');
+        $this->toolBox()->i18nLog()->error('service-not-complete');
     }
 
     protected function evitarInyeccionSQL()

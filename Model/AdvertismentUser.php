@@ -84,7 +84,7 @@ class AdvertismentUser extends Base\ModelClass
 
         // Exigimos que se introduzca idempresa o idcollaborator
         if ((!empty($this->nick)) && (!empty($this->codrole))) {
-            $this->toolBox()->i18nLog()->error('Puede rellenar el usuario o el grupo de usuarios. También puede dejar el usuario y el grupo de usuarios vacío (el aviso sería para cualquier usuario. Pero no puede rellenar ambos.');
+            $this->toolBox()->i18nLog()->error('can-fill-user-or-user-group-bat-not-both');
             return false;
         }
 
