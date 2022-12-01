@@ -37,7 +37,7 @@
             </column>
             <column name="helper" numcolumns="4" order="120">
                 <widget type="select" fieldname="idhelper" icon="fas fa-user-graduate" onclick="EditHelper">
-                    <values source="helpers" fieldcode="idhelper" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
         </group>
@@ -177,7 +177,7 @@
         <group name="assembly-services-3-1" numcolumns="12">
             <column name="driver-1" numcolumns="4" order="100">
                 <widget type="select" fieldname="iddriver_1" icon="fas fa-user-astronaut" onclick="EditDriver">
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
             <column name="driver-accommodation-1" numcolumns="4" order="110">
@@ -196,7 +196,7 @@
         <group name="assembly-services-3-2" numcolumns="12">
             <column name="driver-2" numcolumns="4" order="100">
                 <widget type="select" fieldname="iddriver_2" icon="fas fa-user-astronaut" onclick="EditDriver">
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
             <column name="driver-accommodation-2" numcolumns="4" order="110">
@@ -215,7 +215,7 @@
         <group name="assembly-services-3-3" numcolumns="12">
             <column name="driver-3" numcolumns="4" order="100">
                 <widget type="select" fieldname="iddriver_3" icon="fas fa-user-astronaut" onclick="EditDriver">
-                    <values source="drivers" fieldcode="iddriver" fieldtitle="nombre"/>
+                    <values/>
                 </widget>
             </column>
             <column name="driver-accommodation-3" numcolumns="4" order="110">
