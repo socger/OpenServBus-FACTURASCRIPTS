@@ -16,7 +16,13 @@ class Init extends InitClass
 
     public function update()
     {
+        $this->deleteColumnFromTable();
+    }
+
+    protected function deleteColumnFromTable()
+    {
         // eliminamos las columnas deseadas de las tablas seleccionadas
+        // al actualizar a la versión 3.0
         $dataBase = new DataBase();
         $columns = ['nombre'];
         $tables = ['employee_contracts', 'employee_attendance_management_yn', 'drivers', 'helpers', 'collaborators'];
