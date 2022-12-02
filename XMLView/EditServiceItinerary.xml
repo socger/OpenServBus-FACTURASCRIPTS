@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view>
+    <columns>
+        <group name="data" numcolumns="12">
+            <column name="service" numcolumns="4" order="100">
+                <widget type="select" fieldname="idservice" icon="fas fa-book-open" onclick="EditService"
+                        readonly="dinamic">
+                    <values source="services" fieldcode="idservice" fieldtitle="nombre"/>
+                </widget>
+            </column>
+            <column name="description" numcolumns="4" order="110">
+                <widget type="text" fieldname="nombre" maxlength="255" required="true"/>
+            </column>
+            <column name="hora" numcolumns="2" order="120">
+                <widget type="time" fieldname="hora"/>
+            </column>
+            <column name="sort" display="right" numcolumns="2" order="130">
+                <widget type="number" decimal="0" min="0" max="999" step="5" fieldname="orden"/>
+            </column>
+        </group>
+        <group name="kms" numcolumns="6" icon="fas fa-chair" title="kms" valign="bottom">
+            <column name="kms" display="right" numcolums="2" order="100">
+                <widget type="number" decimal="0" fieldname="kms"/>
+            </column>
+            <column name="kms-empty" numcolums="2" order="110">
+                <widget type="checkbox" fieldname="kms_vacios"/>
+            </column>
+            <column name="kms-anotherCountry" numcolums="2" order="120">
+                <widget type="checkbox" fieldname="kms_enExtranjero"/>
+            </column>
+        </group>
+        <group name="seats" numcolumns="4" icon="fas fa-chair" title="seats">
+            <column name="entries" display="right" numcolums="2" order="100">
+                <widget type="number" decimal="0" fieldname="pasajeros_entradas"/>
+            </column>
+            <column name="outputs" display="right" numcolums="2" order="110">
+                <widget type="number" decimal="0" fieldname="pasajeros_salidas"/>
+            </column>
+        </group>
+        <group name="observations" numcolumns="12" icon="fas fa-info-circle" title="observations">
+            <column name="observations" numcolumns="12" order="100">
+                <widget type="textarea" fieldname="observaciones"/>
+            </column>
+        </group>
+        <group name="record-status" numcolumns="12" icon="fas fa-cog" title="Estado del registro">
+            <column name="active" numcolums="12" order="100">
+                <widget type="checkbox" fieldname="activo"/>
+            </column>
+        </group>
+        <group name="record-status_2" numcolumns="12">
+            <column name="creation-date" numcolumns="3" order="100">
+                <widget type="datetime" fieldname="fechaalta" readonly="true"/>
+            </column>
+            <column name="created-by" numcolumns="9" order="110">
+                <widget type="text" icon="fas fa-user-circle" fieldname="useralta" readonly="true"/>
+            </column>
+            <column name="modification-date" numcolumns="3" order="120">
+                <widget type="datetime" fieldname="fechamodificacion" readonly="true"/>
+            </column>
+            <column name="modified-by" numcolumns="9" order="130">
+                <widget type="text" icon="fas fa-user-circle" fieldname="usermodificacion" readonly="true"/>
+            </column>
+            <column name="deletion-date" numcolumns="3" order="140">
+                <widget type="datetime" fieldname="fechabaja" readonly="true"/>
+            </column>
+            <column name="deleted-by" numcolumns="9" order="150">
+                <widget type="text" icon="fas fa-user-circle" fieldname="userbaja" readonly="true"/>
+            </column>
+            <column name="deleted-motif" description="only-fill-inactive-record" numcolumns="12" order="160">
+                <widget type="text" fieldname="motivobaja" maxlength="100"/>
+            </column>
+        </group>
+    </columns>
+</view>

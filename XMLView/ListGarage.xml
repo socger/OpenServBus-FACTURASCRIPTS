@@ -2,33 +2,28 @@
 <view>
     <columns>
         <column name="id" display="none" order="100">
-            <widget type="text" fieldname="idgarage" />
+            <widget type="text" fieldname="idgarage"/>
         </column>
-        
-        
         <column name="description" order="110">
-            <widget type="text" fieldname="nombre" />
+            <widget type="text" fieldname="nombre"/>
         </column>
         <column name="city" order="120">
-            <widget type="text" fieldname="ciudad" />
+            <widget type="text" fieldname="ciudad"/>
         </column>
         <column name="phone" order="130">
-            <widget type="text" fieldname="telefono1" />
+            <widget type="text" fieldname="telefono1"/>
         </column>
-        
-        
-        <column name="active" display="center" order="150">
+        <column name="active" display="center" order="140">
             <widget type="checkbox" fieldname="activo"/>
         </column>
-        <column name="creation-date" display="right" order="160">
+        <column name="creation-date" display="right" order="150">
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>
-    
     <rows>
         <row type="status">
             <option color="success" title="active-yes" fieldname="activo">1</option>
             <option color="warning" title="active-no" fieldname="activo">0</option>
         </row>
-    </rows>    
+    </rows>
 </view>

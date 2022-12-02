@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view>
+    <columns>
+        <column name="id" display="none" order="100">
+            <widget type="text" fieldname="idemployee_attendance_management_yn"/>
+        </column>
+        <column name="employee" order="110" title="Empleado">
+            <widget type="select" fieldname="idemployee">
+                <values source="employees" fieldcode="idemployee" fieldtitle="nombre"/>
+            </widget>
+        </column>
+        <column name="active" display="center" order="120">
+            <widget type="checkbox" fieldname="activo"/>
+        </column>
+        <column name="creation-date" display="right" order="130">
+            <widget type="datetime" fieldname="fechaalta"/>
+        </column>
+    </columns>
+    <rows>
+        <row type="status">
+            <option color="success" title="active-yes" fieldname="activo">1</option>
+            <option color="warning" title="active-no" fieldname="activo">0</option>
+        </row>
+    </rows>
+</view>

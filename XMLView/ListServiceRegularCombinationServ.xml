@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view>
+    <columns>
+        <column name="id" display="none" order="100">
+            <widget type="text" fieldname="idservice_regular_combination_serv"/>
+        </column>
+        <column name="combination-service" order="110">
+            <widget type="select" fieldname="idservice_regular_combination">
+                <values source="service_regular_combinations" fieldcode="idservice_regular_combination"
+                        fieldtitle="nombre"/>
+            </widget>
+        </column>
+        <column name="service-regular" order="120">
+            <widget type="select" fieldname="idservice_regular">
+                <values source="service_regulars" fieldcode="idservice_regular" fieldtitle="nombre"/>
+            </widget>
+        </column>
+        <column name="usual-driver" order="130">
+            <widget type="select" fieldname="iddriver">
+                <values/>
+            </widget>
+        </column>
+        <column name="usual-vehicle" order="140">
+            <widget type="select" fieldname="idvehicle">
+                <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre"/>
+            </widget>
+        </column>
+        <column name="active" display="center" order="150">
+            <widget type="checkbox" fieldname="activo"/>
+        </column>
+        <column name="creation-date" display="right" order="160">
+            <widget type="datetime" fieldname="fechaalta"/>
+        </column>
+    </columns>
+    <rows>
+        <row type="status">
+            <option color="success" title="active-yes" fieldname="activo">1</option>
+            <option color="warning" title="active-no" fieldname="activo">0</option>
+        </row>
+    </rows>
+</view>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view>
+    <columns>
+        <column name="id" display="none" order="100">
+            <widget type="text" fieldname="idemployee_documentation"/>
+        </column>
+        <column name="employee" order="110">
+            <widget type="select" fieldname="idemployee">
+                <values source="employees" fieldcode="idemployee" fieldtitle="nombre"/>
+            </widget>
+        </column>
+        <column name="name" order="120">
+            <widget type="text" fieldname="nombre"/>
+        </column>
+        <column name="document-type" order="130">
+            <widget type="select" fieldname="iddocumentation_type">
+                <values source="documentation_types" fieldcode="iddocumentation_type" fieldtitle="nombre"/>
+            </widget>
+        </column>
+        <column name="expiration-date" display="right" order="140">
+            <widget type="date" fieldname="fecha_caducidad"/>
+        </column>
+        <column name="active" display="center" order="150">
+            <widget type="checkbox" fieldname="activo"/>
+        </column>
+        <column name="creation-date" display="right" order="160">
+            <widget type="datetime" fieldname="fechaalta"/>
+        </column>
+    </columns>
+    <rows>
+        <row type="status">
+            <option color="success" title="active-yes" fieldname="activo">1</option>
+            <option color="warning" title="active-no" fieldname="activo">0</option>
+        </row>
+    </rows>
+</view>

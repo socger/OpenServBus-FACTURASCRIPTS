@@ -1,81 +1,109 @@
 <?php
+
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
-class ListHelper extends ListController {
-    
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
-    public function getPageData(): array {
+class ListHelper extends ListController
+{
+    public function getPageData(): array
+    {
         $pageData = parent::getPageData();
-        
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Archivos';
-        $pageData['title'] = 'Monitores';
-        
-        $pageData['icon'] = 'fas fa-user-graduate';
-        
-
+        $pageData['title'] = 'files';
+        $pageData['icon'] = 'fas fa-archive';
         return $pageData;
     }
-    
-    protected function createViews() {
+
+    protected function createViews()
+    {
         $this->createViewHelper();
+        $this->createViewGarage();
+        $this->createViewDepartment();
+        $this->createViewCollaborator();
+        $this->createViewIdentificationMean();
     }
-    
+
+    protected function createViewCollaborator($viewName = 'ListCollaborator')
+    {
+        $this->addView($viewName, 'Collaborator', 'collaborator', 'fas fa-business-time');
+        $this->addSearchFields($viewName, ['codproveedor', 'nombre']);
+        $this->addOrderBy($viewName, ['codproveedor'], 'cod-supplier');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
+
+        // Filtros
+        $activo = [
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
+        ];
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
+    }
+
+    protected function createViewDepartment($viewName = 'ListDepartment')
+    {
+        $this->addView($viewName, 'Department', 'departments', 'fas fa-book-reader');
+        $this->addSearchFields($viewName, ['nombre']);
+        $this->addOrderBy($viewName, ['nombre'], 'name', 1);
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
+
+        // Filtros
+        $activo = [
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
+        ];
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
+    }
+
+    protected function createViewGarage($viewName = 'ListGarage')
+    {
+        $this->addView($viewName, 'Garage', 'garages', 'fas fa-warehouse');
+        $this->addSearchFields($viewName, ['nombre', 'direccion']);
+        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
+
+        // Filtros
+        $activo = [
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
+        ];
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
+
+        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'company', 'idempresa', 'empresas', 'idempresa', 'nombre');
+    }
+
     protected function createViewHelper($viewName = 'ListHelper')
     {
-        $this->addView($viewName, 'Helper');
-        
-        // Opciones de búsqueda rápida
-        $this->addSearchFields($viewName, ['idemployee', 'nombre']); // Las búsqueda la hará por el campo idemployee y nombre
-        
-        // Tipos de Ordenación
-            // Primer parámetro es la pestaña
-            // Segundo parámetro es los campos por los que ordena (array)
-            // Tercer parámetro es la etiqueta a poner
-            // Cuarto parámetro, si se rellena, le está diciendo cual es el order by por defecto, y además las opciones son
-               // 1 Orden ascendente
-               // 2 Orden descendente
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
+        $this->addView($viewName, 'Helper', 'monitors', 'fas fa-user-graduate');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
+
         // Filtros
-        // Filtro checkBox por campo Activo ... addFilterCheckbox($viewName, $key, $label, $field);
-            // $viewName ... nombre del controlador
-            // $key ... es el nombre que le ponemos al filtro
-            // $label ... la etiqueta a mostrar al usuario
-            // $field ... el campo del modelo sobre el que vamos a comprobar
-        // $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
-     
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);        
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
-        // Filtro periodo de fechas
-        // addFilterPeriod($viewName, $key, $label, $field)
-            // $key ... es el nombre que le ponemos al filtro
-            // $label ... es la etiqueta a mostrar al cliente
-            // $field ... es el campo sobre el que filtraremos
-        // $this->addFilterPeriod($viewName, 'porFechaAlta', 'Fecha de alta', 'fechaalta');
+        $status = [
+            ['label' => 'collaborators-employess-all', 'where' => []],
+            ['label' => 'collaborators-only', 'where' => [new DataBaseWhere('idcollaborator', '0', '>')]],
+            ['label' => 'employees-only', 'where' => [new DataBaseWhere('idemployee', '0', '>')]]
+        ];
+        $this->addFilterSelectWhere($viewName, 'status', $status);
+    }
 
-        $this->addFilterSelectWhere( $viewName
-                                   , 'status'
-                                   , [ ['label' => 'Colaboradores/Empleados - Todos', 'where' => []]
-                                     , ['label' => 'Colaboradores sólo', 'where' => [new DataBaseWhere('idcollaborator', '0', '>')]]
-                                     , ['label' => 'Empleados sólo', 'where' => [new DataBaseWhere('idemployee', '0', '>')]]
-                                     ]
-        );
+    protected function createViewIdentificationMean($viewName = 'ListIdentificationMean')
+    {
+        $this->addView($viewName, 'IdentificationMean', 'means-of-identification', 'far fa-hand-point-right');
+        $this->addSearchFields($viewName, ['nombre']);
+        $this->addOrderBy($viewName, ['nombre'], 'name', 1);
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
-        $this->addFilterAutocomplete($viewName, 'xIdEmpleado', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdCollaborator', 'Colaborador', 'idcollaborator', 'collaborators', 'idcollaborator', 'nombre');
-
-        
+        // Filtros
+        $activo = [
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
+        ];
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
     }
 }

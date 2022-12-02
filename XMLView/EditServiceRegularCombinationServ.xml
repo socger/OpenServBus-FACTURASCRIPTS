@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view>
+    <columns>
+        <group name="data" numcolumns="12">
+            <column name="combination-service" numcolumns="6" order="100">
+                <widget type="select" fieldname="idservice_regular_combination" icon="fas fa-briefcase"
+                        onclick="EditServiceRegularCombination" required="true" readonly="dinamic">
+                    <values source="service_regular_combinations" fieldcode="idservice_regular_combination"
+                            fieldtitle="nombre"/>
+                </widget>
+            </column>
+            <column name="service-regular" numcolumns="6" order="110">
+                <widget type="select" fieldname="idservice_regular" icon="fas fa-book-open"
+                        onclick="EditServiceRegular" required="true" readonly="dinamic">
+                    <values source="service_regulars" fieldcode="idservice_regular" fieldtitle="nombre"/>
+                </widget>
+            </column>
+        </group>
+        <group name="assembly-services" numcolumns="12" icon="fas fa-business-time" title="assembly-services">
+            <column name="usual-driver" numcolumns="6" order="100"
+                    description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular">
+                <widget type="select" fieldname="iddriver" icon="fas fa-user-astronaut" onclick="EditDriver">
+                    <values/>
+                </widget>
+            </column>
+            <column name="usual-vehicle" numcolumns="6" order="110"
+                    description="Orden de prioridad para Montaje de servicios. 1º Combinación - Servicio Regular, 2º Combinación y 3º Servicio Regular">
+                <widget type="select" fieldname="idvehicle" icon="fas fa-bus-alt" onclick="EditVehicle">
+                    <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre"/>
+                </widget>
+            </column>
+        </group>
+        <group name="observations" numcolumns="12" icon="fas fa-info-circle" title="observations">
+            <column name="observations" numcolumns="12" order="100">
+                <widget type="textarea" fieldname="observaciones"/>
+            </column>
+        </group>
+        <group name="record-status" numcolumns="12" icon="fas fa-cog" title="Estado del registro">
+            <column name="active" numcolums="12" order="100">
+                <widget type="checkbox" fieldname="activo"/>
+            </column>
+        </group>
+        <group name="record-status_2" numcolumns="12">
+            <column name="creation-date" numcolumns="3" order="100">
+                <widget type="datetime" fieldname="fechaalta" readonly="true"/>
+            </column>
+            <column name="created-by" numcolumns="9" order="110">
+                <widget type="text" icon="fas fa-user-circle" fieldname="useralta" readonly="true"/>
+            </column>
+            <column name="modification-date" numcolumns="3" order="120">
+                <widget type="datetime" fieldname="fechamodificacion" readonly="true"/>
+            </column>
+            <column name="modified-by" numcolumns="9" order="130">
+                <widget type="text" icon="fas fa-user-circle" fieldname="usermodificacion" readonly="true"/>
+            </column>
+            <column name="deletion-date" numcolumns="3" order="140">
+                <widget type="datetime" fieldname="fechabaja" readonly="true"/>
+            </column>
+            <column name="deleted-by" numcolumns="9" order="150">
+                <widget type="text" icon="fas fa-user-circle" fieldname="userbaja" readonly="true"/>
+            </column>
+            <column name="deleted-motif" description="only-fill-inactive-record" numcolumns="12" order="160">
+                <widget type="text" fieldname="motivobaja" maxlength="100"/>
+            </column>
+        </group>
+    </columns>
+</view>

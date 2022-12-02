@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view>
+    <columns>
+        <group name="data" numcolumns="12">
+            <column name="service-regular" numcolumns="3" order="100">
+                <widget type="select" fieldname="idservice_regular" icon="fas fa-book-open"
+                        onclick="EditServiceRegular" readonly="dinamic">
+                    <values source="service_regulars" fieldcode="idservice_regular" fieldtitle="nombre"/>
+                </widget>
+            </column>
+            <column name="valuation-type" numcolumns="4" order="110">
+                <widget type="select" fieldname="idservice_valuation_type" icon="fas fa-hand-holding-usd"
+                        onclick="EditServicevaluationtype">
+                    <values source="service_valuation_types" fieldcode="idservice_valuation_type" fieldtitle="nombre"/>
+                </widget>
+            </column>
+            <column name="description" numcolumns="4" order="120" description="Vacío = Tipo de valoración">
+                <widget type="text" fieldname="nombre" maxlength="255"/>
+            </column>
+            <column name="sort" display="right" numcolumns="1" order="130">
+                <widget type="number" decimal="0" min="0" max="999" step="5" fieldname="orden"/>
+            </column>
+        </group>
+        <group name="valuation" numcolumns="12" icon="fas fa-dollar-sign" title="valuation">
+            <column name="pvp-por-km-nacional" display="right" numcolums="3" required="true" order="100">
+                <widget type="number" decimal="3" fieldname="importe"/>
+            </column>
+            <column name="pvp-por-km-extranjero" display="right" numcolums="3" order="110" required="true">
+                <widget type="number" decimal="3" fieldname="importe_enextranjero"/>
+            </column>
+        </group>
+        <group name="observations" numcolumns="12" icon="fas fa-info-circle" title="observations">
+            <column name="observations" numcolumns="12" order="100">
+                <widget type="textarea" fieldname="observaciones"/>
+            </column>
+        </group>
+        <group name="record-status" numcolumns="12" icon="fas fa-cog" title="Estado del registro">
+            <column name="active" numcolums="12" order="100">
+                <widget type="checkbox" fieldname="activo"/>
+            </column>
+        </group>
+        <group name="record-status_2" numcolumns="12">
+            <column name="creation-date" numcolumns="3" order="100">
+                <widget type="datetime" fieldname="fechaalta" readonly="true"/>
+            </column>
+            <column name="created-by" numcolumns="9" order="110">
+                <widget type="text" icon="fas fa-user-circle" fieldname="useralta" readonly="true"/>
+            </column>
+            <column name="modification-date" numcolumns="3" order="120">
+                <widget type="datetime" fieldname="fechamodificacion" readonly="true"/>
+            </column>
+            <column name="modified-by" numcolumns="9" order="130">
+                <widget type="text" icon="fas fa-user-circle" fieldname="usermodificacion" readonly="true"/>
+            </column>
+            <column name="deletion-date" numcolumns="3" order="140">
+                <widget type="datetime" fieldname="fechabaja" readonly="true"/>
+            </column>
+            <column name="deleted-by" numcolumns="9" order="150">
+                <widget type="text" icon="fas fa-user-circle" fieldname="userbaja" readonly="true"/>
+            </column>
+            <column name="deleted-motif" description="only-fill-inactive-record" numcolumns="12" order="160">
+                <widget type="text" fieldname="motivobaja" maxlength="100"/>
+            </column>
+        </group>
+    </columns>
+</view>

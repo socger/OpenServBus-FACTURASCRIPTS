@@ -1,74 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <column>
-        <name>iddriver</name>
-        <type>serial</type>
-        <null>NO</null>
-    </column>
-    
-    
-    <column>
-        <name>fechaalta</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>useralta</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>fechamodificacion</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>usermodificacion</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
         <name>activo</name>
         <type>boolean</type>
         <default>true</default>
+    </column>
+    <column>
+        <name>fechaalta</name>
+        <type>timestamp</type>
     </column>
     <column>
         <name>fechabaja</name>
         <type>timestamp</type>
     </column>
     <column>
-        <name>userbaja</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>motivobaja</name>
-        <type>character varying(100)</type>
-    </column>
-
-
-    <column>
-        <name>idemployee</name>
-        <type>integer</type>
+        <name>fechamodificacion</name>
+        <type>timestamp</type>
     </column>
     <column>
         <name>idcollaborator</name>
         <type>integer</type>
     </column>
     <column>
-        <name>nombre</name>
-        <type>character varying(100)</type>
+        <name>iddriver</name>
+        <type>serial</type>
         <null>NO</null>
     </column>
-    
-    
+    <column>
+        <name>idemployee</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>motivobaja</name>
+        <type>character varying(100)</type>
+    </column>
     <column>
         <name>observaciones</name>
         <type>text</type>
     </column>
-    
-    
+    <column>
+        <name>useralta</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>userbaja</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>usermodificacion</name>
+        <type>character varying(50)</type>
+    </column>
     <constraint>
         <name>driver_pkey</name>
         <type>PRIMARY KEY (iddriver)</type>
     </constraint>
-    
-    
     <constraint>
         <name>ca_driver__employees</name>
         <type>FOREIGN KEY (idemployee) REFERENCES employees (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
@@ -77,8 +62,18 @@
         <name>ca_drivers__collaborators</name>
         <type>FOREIGN KEY (idcollaborator) REFERENCES collaborators (idcollaborator) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
-    
-    
+    <constraint>
+        <name>ca_drivers_users_alta</name>
+        <type>FOREIGN KEY (useralta) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_drivers_users_baja</name>
+        <type>FOREIGN KEY (userbaja) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_drivers_users_modificacion</name>
+        <type>FOREIGN KEY (usermodificacion) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
     <constraint>
         <name>uniq_idemployee</name>
         <type>UNIQUE (idemployee)</type>
@@ -88,4 +83,3 @@
         <type>UNIQUE (idcollaborator)</type>
     </constraint>
 </table>
-
