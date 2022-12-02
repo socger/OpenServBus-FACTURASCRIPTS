@@ -17,7 +17,7 @@ class EditEmployee extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Empleado/a';
+        $pageData['title'] = 'employee';
         $pageData['icon'] = 'far fa-id-card';
         return $pageData;
     }
@@ -33,96 +33,85 @@ class EditEmployee extends EditController
 
     protected function createViewEmployeeContract($viewName = 'ListEmployeeContract')
     {
-        $this->addListView($viewName, 'EmployeeContract', 'Contratos realizados', 'fas fa-id-badge');
+        $this->addListView($viewName, 'EmployeeContract', 'contracts-made', 'fas fa-id-badge');
         $this->views[$viewName]->addSearchFields(['nombre']);
-        $this->views[$viewName]->addOrderBy(['fecha_inicio', 'fecha_fin'], 'F.inicio + F.fin.');
-        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->views[$viewName]->addOrderBy(['fecha_inicio', 'fecha_fin'], 'fstart-fend');
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
 
-        $this->views[$viewName]->addFilterAutocomplete('xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
-        $this->views[$viewName]->addFilterAutocomplete('xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
-        $this->views[$viewName]->addFilterAutocomplete('xIdemployee_contract_type', 'Contrato - tipo', 'idemployee_contract_type', 'employee_contract_types', 'idemployee_contract_type', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdEmpresa', 'company', 'idempresa', 'empresas', 'idempresa', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdEmployee', 'employee', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdemployee_contract_type', 'contract-type', 'idemployee_contract_type', 'employee_contract_types', 'idemployee_contract_type', 'nombre');
     }
 
     protected function createViewEmployeeAttendanceManagementYn($viewName = 'ListEmployeeAttendanceManagementYn')
     {
-        $this->addListView($viewName, 'EmployeeAttendanceManagementYn', '¿Está obligado al control de presencia?', 'fas fa-business-timee');
+        $this->addListView($viewName, 'EmployeeAttendanceManagementYn', 'are-you-required-to-check-presence', 'fas fa-business-timee');
         $this->views[$viewName]->addSearchFields(['idemployee', 'nombre']);
-        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
     }
 
     protected function createViewEmployeeDocumentation($viewName = 'ListEmployeeDocumentation')
     {
-        $this->addListView($viewName, 'EmployeeDocumentation', 'Documentación', 'far fa-file-pdf');
+        $this->addListView($viewName, 'EmployeeDocumentation', 'documentation', 'far fa-file-pdf');
         $this->views[$viewName]->addSearchFields(['nombre']);
-        $this->views[$viewName]->addOrderBy(['nombre'], 'Nombre', 1);
-        $this->views[$viewName]->addOrderBy(['iddocumentation_type', 'nombre'], 'Tipo Doc. + nombre');
-        $this->views[$viewName]->addOrderBy(['fecha_caducidad'], 'F. caducidad.');
-        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->views[$viewName]->addOrderBy(['nombre'], 'name', 1);
+        $this->views[$viewName]->addOrderBy(['iddocumentation_type', 'nombre'], 'doctype-name');
+        $this->views[$viewName]->addOrderBy(['fecha_caducidad'], 'date-expiration');
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
 
-        $this->views[$viewName]->addFilterAutocomplete('xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
-        $this->views[$viewName]->addFilterAutocomplete('xiddocumentation_type', 'Documentación - tipo', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
-        $this->views[$viewName]->addFilterPeriod('porFechaCaducidad', 'Fecha de caducidad', 'fecha_caducidad');
+        $this->views[$viewName]->addFilterAutocomplete('xIdEmployee', 'employee', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xiddocumentation_type', 'documentation - tipo', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
+        $this->views[$viewName]->addFilterPeriod('porFechaCaducidad', 'date-expiration', 'fecha_caducidad');
     }
 
     protected function loadData($viewName, $view)
     {
+        $mvn = $this->getMainViewName();
         switch ($viewName) {
             case 'ListEmployeeDocumentation':
             case 'ListEmployeeContract':
             case 'ListEmployeeAttendanceManagementYn':
-                $idemployee = $this->getViewModelValue('EditEmployee', 'idemployee');
+                $idemployee = $this->getViewModelValue($mvn, 'idemployee');
                 $where = [new DatabaseWhere('idemployee', $idemployee)];
                 $view->loadData('', $where);
                 break;
 
-            // Pestaña con el mismo nombre que este controlador EditXxxxx
-            case 'EditEmployee':
+            case $mvn:
                 parent::loadData($viewName, $view);
-
                 $this->ponerContratoActivoEnVista($viewName);
+                break;
 
-                // Guardamos que usuario pulsará guardar
-                $this->views[$viewName]->model->user_nick = $this->user->nick;
-
-                // Guardamos cuando el usuario pulsará guardar
-                // $this->views[$viewName]->model->user_fecha = date('d-m-Y');
-                $this->views[$viewName]->model->user_fecha = date("Y-m-d H:i:s");
-
-                // Guardamos si es conductor o no para la vista
-                $this->views[$viewName]->model->es_Conductor_SI_NO = 'NO';
-                if ($this->views[$viewName]->model->driver_yn == 1) {
-                    $this->views[$viewName]->model->es_Conductor_SI_NO = 'SI';
-                }
-
+            default:
+                parent::loadData($viewName, $view);
                 break;
         }
     }
 
-    protected function ponerContratoActivoEnVista(string $p_viewName)
+    protected function ponerContratoActivoEnVista(string $mvn)
     {
         // Rellenamos el widget de tipo text para el tipo de contrato
-        $idemployee = $this->getViewModelValue('EditEmployee', 'idemployee');
+        $idemployee = $this->getViewModelValue($mvn, 'idemployee');
         if (!empty($idemployee)) {
             $sql = " SELECT employee_contract_types.nombre "
                 . ", employee_contracts.fecha_inicio "
@@ -138,9 +127,7 @@ class EditEmployee extends EditController
 
             $registros = $this->dataBase->select($sql);
             foreach ($registros as $fila) {
-                $this->views[$p_viewName]->model->tipo_contrato = $fila['nombre'];
-                $this->views[$p_viewName]->model->fecha_inicio = $fila['fecha_inicio'];
-                $this->views[$p_viewName]->model->fecha_fin = $fila['fecha_fin'];
+                $this->views[$mvn]->model->tipo_contrato = $fila['nombre'];
             }
         }
     }
