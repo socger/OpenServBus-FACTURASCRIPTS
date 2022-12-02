@@ -17,7 +17,7 @@ class EditFuelKm extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Repostaje - Kms';
+        $pageData['title'] = 'refueling-kms';
         $pageData['icon'] = 'fas fa-gas-pump';
         return $pageData;
     }
@@ -37,9 +37,9 @@ class EditFuelKm extends EditController
                 $this->views[$p_viewName]->model->tipo_tarjeta = $fila['nombre'];
 
                 if ($fila['de_pago'] == 1) {
-                    $this->views[$p_viewName]->model->es_de_pago = 'Si';
+                    $this->views[$p_viewName]->model->es_de_pago = $this->toolBox()->i18n()->trans('yes');
                 } else {
-                    $this->views[$p_viewName]->model->es_de_pago = 'No';
+                    $this->views[$p_viewName]->model->es_de_pago = $this->toolBox()->i18n()->trans('no');
                 }
             }
         }

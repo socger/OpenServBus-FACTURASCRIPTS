@@ -16,7 +16,7 @@ class EditAdvertismentUser extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Aviso';
+        $pageData['title'] = 'warning';
         $pageData['icon'] = 'fas fa-exclamation-triangle';
         return $pageData;
     }

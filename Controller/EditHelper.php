@@ -17,7 +17,7 @@ class EditHelper extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'Archivos';
-        $pageData['title'] = 'Monitor/a';
+        $pageData['title'] = 'helper';
         $pageData['icon'] = 'fas fa-user-graduate';
         return $pageData;
     }

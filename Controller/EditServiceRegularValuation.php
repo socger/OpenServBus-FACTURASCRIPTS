@@ -16,7 +16,7 @@ class EditServiceRegularValuation extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Serv. regular - Valoración';
+        $pageData['title'] = 'serv-regular-rating';
         $pageData['icon'] = 'fas fa-dollar-sign';
         return $pageData;
     }

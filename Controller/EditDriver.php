@@ -17,7 +17,7 @@ class EditDriver extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Conductor/a';
+        $pageData['title'] = 'driver';
         $pageData['icon'] = 'fas fa-user-astronaut';
         return $pageData;
     }

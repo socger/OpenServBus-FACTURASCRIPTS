@@ -11,7 +11,7 @@ class ListHelper extends ListController
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Archivos';
+        $pageData['title'] = 'files';
         $pageData['icon'] = 'fas fa-archive';
         return $pageData;
     }
@@ -29,81 +29,81 @@ class ListHelper extends ListController
     {
         $this->addView($viewName, 'Collaborator', 'collaborator', 'fas fa-business-time');
         $this->addSearchFields($viewName, ['codproveedor', 'nombre']);
-        $this->addOrderBy($viewName, ['codproveedor'], 'Cod.Proveedor');
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addOrderBy($viewName, ['codproveedor'], 'cod-supplier');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
     }
 
     protected function createViewDepartment($viewName = 'ListDepartment')
     {
-        $this->addView($viewName, 'Department', 'Departamentos', 'fas fa-book-reader');
+        $this->addView($viewName, 'Department', 'departments', 'fas fa-book-reader');
         $this->addSearchFields($viewName, ['nombre']);
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addOrderBy($viewName, ['nombre'], 'name', 1);
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
     }
 
     protected function createViewGarage($viewName = 'ListGarage')
     {
-        $this->addView($viewName, 'Garage', 'Garajes', 'fas fa-warehouse');
+        $this->addView($viewName, 'Garage', 'garages', 'fas fa-warehouse');
         $this->addSearchFields($viewName, ['nombre', 'direccion']);
         $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
-        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'company', 'idempresa', 'empresas', 'idempresa', 'nombre');
     }
 
     protected function createViewHelper($viewName = 'ListHelper')
     {
-        $this->addView($viewName, 'Helper', 'Monitores', 'fas fa-user-graduate');
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addView($viewName, 'Helper', 'monitors', 'fas fa-user-graduate');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
         $status = [
-            ['label' => 'Colaboradores/Empleados - Todos', 'where' => []],
-            ['label' => 'Colaboradores sólo', 'where' => [new DataBaseWhere('idcollaborator', '0', '>')]],
-            ['label' => 'Empleados sólo', 'where' => [new DataBaseWhere('idemployee', '0', '>')]]
+            ['label' => 'collaborators-employess-all', 'where' => []],
+            ['label' => 'collaborators-only', 'where' => [new DataBaseWhere('idcollaborator', '0', '>')]],
+            ['label' => 'employees-only', 'where' => [new DataBaseWhere('idemployee', '0', '>')]]
         ];
         $this->addFilterSelectWhere($viewName, 'status', $status);
     }
 
     protected function createViewIdentificationMean($viewName = 'ListIdentificationMean')
     {
-        $this->addView($viewName, 'IdentificationMean', 'Medios de Identificación', 'far fa-hand-point-right');
+        $this->addView($viewName, 'IdentificationMean', 'means-of-identification', 'far fa-hand-point-right');
         $this->addSearchFields($viewName, ['nombre']);
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addOrderBy($viewName, ['nombre'], 'name', 1);
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
     }
 }

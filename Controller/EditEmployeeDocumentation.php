@@ -19,7 +19,7 @@ class EditEmployeeDocumentation extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Doc. empleado';
+        $pageData['title'] = 'employee-document';
         $pageData['icon'] = 'far fa-file-pdf';
         return $pageData;
     }

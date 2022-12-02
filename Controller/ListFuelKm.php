@@ -11,7 +11,7 @@ class ListFuelKm extends ListController
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Repostajes / kms';
+        $pageData['title'] = 'refueling-kms';
         $pageData['icon'] = 'fas fa-gas-pump';
         return $pageData;
     }
@@ -24,44 +24,44 @@ class ListFuelKm extends ListController
 
     protected function createViewFuelKm($viewName = 'ListFuelKm')
     {
-        $this->addView($viewName, 'FuelKm', 'Repostajes / kms', 'fas fa-gas-pump');
+        $this->addView($viewName, 'FuelKm', 'refueling-kms', 'fas fa-gas-pump');
         $this->addOrderBy($viewName, ['fecha'], 'Fecha', 1);
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
-        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdVehicle', 'Vehículo', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdFuel_Type', 'Combustible', 'idfuel_type', 'fuel_types', 'idfuel_type', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdFuel_Pumps', 'Surtidor Interno', 'idfuel_pump', 'fuel_pumps', 'idfuel_pump', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xCodProveedor', 'Proveedor', 'codproveedor', 'proveedores', 'codproveedor', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdTarjeta', 'Tarjeta', 'idtarjeta', 'tarjetas', 'idtarjeta', 'nombre');
-        $this->addFilterPeriod($viewName, 'porFecha', 'Fecha repostaje', 'fecha');
+        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'company', 'idempresa', 'empresas', 'idempresa', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdFuel_Type', 'fuel', 'idfuel_type', 'fuel_types', 'idfuel_type', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdFuel_Pumps', 'internal-fuel-dispenser', 'idfuel_pump', 'fuel_pumps', 'idfuel_pump', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'employee', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xCodProveedor', 'supplier', 'codproveedor', 'proveedores', 'codproveedor', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdTarjeta', 'card', 'idtarjeta', 'tarjetas', 'idtarjeta', 'nombre');
+        $this->addFilterPeriod($viewName, 'porFecha', 'refueling-date', 'fecha');
 
         $esDepositoLleno = [
-            ['code' => '1', 'description' => 'Depósito lleno = SI'],
-            ['code' => '0', 'description' => 'Depósito lleno = NO'],
+            ['code' => '1', 'description' => 'full-tank-yes'],
+            ['code' => '0', 'description' => 'full-tank-no'],
         ];
-        $this->addFilterSelect($viewName, 'esDepositoLleno', 'Depósito lleno = TODO', 'deposito_lleno', $esDepositoLleno);
+        $this->addFilterSelect($viewName, 'esDepositoLleno', 'full-tank-all', 'deposito_lleno', $esDepositoLleno);
     }
 
     protected function createViewFuel_pump($viewName = 'ListFuelPump')
     {
-        $this->addView($viewName, 'FuelPump', 'Surtidores interno', 'fas fa-thumbtack');
+        $this->addView($viewName, 'FuelPump', 'internal-spout', 'fas fa-thumbtack');
         $this->addSearchFields($viewName, ['nombre']);
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addOrderBy($viewName, ['nombre'], 'name', 1);
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
     }
 }

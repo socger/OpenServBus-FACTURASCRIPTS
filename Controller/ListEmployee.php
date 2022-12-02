@@ -10,7 +10,7 @@ class ListEmployee extends ListController
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Empleados';
+        $pageData['title'] = 'employees';
         $pageData['icon'] = 'far fa-id-card';
         return $pageData;
     }
@@ -23,44 +23,44 @@ class ListEmployee extends ListController
 
     protected function createViewEmployee($viewName = 'ListEmployee')
     {
-        $this->addView($viewName, 'Employee', 'Empleados', 'far fa-id-card');
+        $this->addView($viewName, 'Employee', 'employees', 'far fa-id-card');
         $this->addSearchFields($viewName, ['cod_employee', 'nombre', 'direccion']);
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
-        $this->addOrderBy($viewName, ['cod_employee'], 'Código');
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addOrderBy($viewName, ['nombre'], 'name', 1);
+        $this->addOrderBy($viewName, ['cod_employee'], 'code');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
-        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'company', 'idempresa', 'empresas', 'idempresa', 'nombre');
 
         $esConductor = [
-            ['code' => '1', 'description' => 'Conductor = SI'],
-            ['code' => '0', 'description' => 'Conductor = NO'],
+            ['code' => '1', 'description' => 'driver-yes'],
+            ['code' => '0', 'description' => 'driver-no'],
         ];
-        $this->addFilterSelect($viewName, 'esConductor', 'Conductor = TODOS', 'driver_yn', $esConductor);
+        $this->addFilterSelect($viewName, 'esConductor', 'driver-all', 'driver_yn', $esConductor);
     }
 
     protected function createViewEmployeeContract($viewName = 'ListEmployeeContract')
     {
-        $this->addView($viewName, 'EmployeeContract', 'Contratos', 'fas fa-file-contract');
+        $this->addView($viewName, 'EmployeeContract', 'contracts', 'fas fa-file-contract');
         $this->addSearchFields($viewName, ['nombre']);
-        $this->addOrderBy($viewName, ['fecha_inicio', 'fecha_fin'], 'F.inicio + F.fin.');
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addOrderBy($viewName, ['fecha_inicio', 'fecha_fin'], 'fstart-fend');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
-        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdemployee_contract_type', 'Contrato - tipo', 'idemployee_contract_type', 'employee_contract_types', 'idemployee_contract_type', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'company', 'idempresa', 'empresas', 'idempresa', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'employee', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdemployee_contract_type', 'contract-type', 'idemployee_contract_type', 'employee_contract_types', 'idemployee_contract_type', 'nombre');
     }
 }

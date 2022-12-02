@@ -10,7 +10,7 @@ class ListVehicleDocumentation extends ListController
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Documentación';
+        $pageData['title'] = 'documentation';
         $pageData['icon'] = 'far fa-file-pdf';
         return $pageData;
     }
@@ -25,41 +25,41 @@ class ListVehicleDocumentation extends ListController
     {
         $this->addView($viewName, 'EmployeeDocumentation', 'employee', 'fas fa-user');
         $this->addSearchFields($viewName, ['nombre']);
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
-        $this->addOrderBy($viewName, ['iddocumentation_type', 'nombre'], 'Tipo Doc. + nombre');
-        $this->addOrderBy($viewName, ['fecha_caducidad'], 'F. caducidad.');
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addOrderBy($viewName, ['nombre'], 'name', 1);
+        $this->addOrderBy($viewName, ['iddocumentation_type', 'nombre'], 'doctype-name');
+        $this->addOrderBy($viewName, ['fecha_caducidad'], 'date-expiration');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
-        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xiddocumentation_type', 'Documentación - tipo', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
-        $this->addFilterPeriod($viewName, 'porFechaCaducidad', 'Fecha de caducidad', 'fecha_caducidad');
+        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'employee', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xiddocumentation_type', 'documentation-type', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
+        $this->addFilterPeriod($viewName, 'porFechaCaducidad', 'date-expiration', 'fecha_caducidad');
     }
 
     protected function createViewVehicleDocumentation($viewName = 'ListVehicleDocumentation')
     {
-        $this->addView($viewName, 'VehicleDocumentation', 'Vehículos', 'far fa-file-pdf');
+        $this->addView($viewName, 'VehicleDocumentation', 'vehicles', 'far fa-file-pdf');
         $this->addSearchFields($viewName, ['nombre']);
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
-        $this->addOrderBy($viewName, ['idvehicle', 'nombre'], 'Vehículo + Tipo Doc.');
-        $this->addOrderBy($viewName, ['fecha_caducidad'], 'F. caducidad.');
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addOrderBy($viewName, ['nombre'], 'name', 1);
+        $this->addOrderBy($viewName, ['idvehicle', 'nombre'], 'vehicle-type-doc');
+        $this->addOrderBy($viewName, ['fecha_caducidad'], 'date-expiration');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
-        $this->addFilterAutocomplete($viewName, 'xIdVehicle', 'Vehículo', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xiddocumentation_type', 'Documentación - tipo', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
-        $this->addFilterPeriod($viewName, 'porFechaCaducidad', 'Fecha de caducidad', 'fecha_caducidad');
+        $this->addFilterAutocomplete($viewName, 'xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xiddocumentation_type', 'documentation-type', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
+        $this->addFilterPeriod($viewName, 'porFechaCaducidad', 'date-expiration', 'fecha_caducidad');
     }
 }

@@ -16,7 +16,7 @@ class EditServiceType extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Servicio - tipo';
+        $pageData['title'] = 'service-type';
         $pageData['icon'] = 'fas fa-dolly';
         return $pageData;
     }

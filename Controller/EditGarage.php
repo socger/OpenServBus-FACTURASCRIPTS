@@ -16,7 +16,7 @@ class EditGarage extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Cochera';
+        $pageData['title'] = 'garage';
         $pageData['icon'] = 'fas fa-warehouse';
         return $pageData;
     }

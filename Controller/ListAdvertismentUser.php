@@ -12,7 +12,7 @@ class ListAdvertismentUser extends ListController
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Avisos';
+        $pageData['title'] = 'warnings';
         $pageData['icon'] = 'fas fa-exclamation-triangle';
         return $pageData;
     }
@@ -24,23 +24,23 @@ class ListAdvertismentUser extends ListController
 
     protected function createAdvertismentUser($viewName = 'ListAdvertismentUser')
     {
-        $this->addView($viewName, 'AdvertismentUser', 'Avisos', 'fas fa-exclamation-triangle');
+        $this->addView($viewName, 'AdvertismentUser', 'warnings', 'fas fa-exclamation-triangle');
         $this->addSearchFields($viewName, ['nombre']);
-        $this->addOrderBy($viewName, ['nombre', 'inicio', 'fin'], 'Aviso + Inicio + Fin', 1);
-        $this->addOrderBy($viewName, ['nick', 'nombre', 'inicio', 'fin'], 'Usuario + Aviso + Inicio + Fin');
-        $this->addOrderBy($viewName, ['codrole', 'nombre', 'inicio', 'fin'], 'Grupo Usuarios + Aviso + Inicio + Fin');
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addOrderBy($viewName, ['nombre', 'inicio', 'fin'], 'notice-start-end', 1);
+        $this->addOrderBy($viewName, ['nick', 'nombre', 'inicio', 'fin'], 'user-notice-start-end');
+        $this->addOrderBy($viewName, ['codrole', 'nombre', 'inicio', 'fin'], 'user-group-notice-start-end');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
-        $this->addFilterAutocomplete($viewName, 'xNick', 'Usuario', 'nick', 'users', 'nick', 'nick');
-        $this->addFilterAutocomplete($viewName, 'xCodRole', 'Grupos de usuarios', 'codrole', 'roles', 'codrole', 'descripcion');
-        $this->addFilterDatePicker($viewName, 'inicio', 'Avisos desde ...', 'inicio');
-        $this->addFilterDatePicker($viewName, 'fin', 'Avisos hasta ...', 'fin');
+        $this->addFilterAutocomplete($viewName, 'xNick', 'user', 'nick', 'users', 'nick', 'nick');
+        $this->addFilterAutocomplete($viewName, 'xCodRole', 'user-groups', 'codrole', 'roles', 'codrole', 'descripcion');
+        $this->addFilterDatePicker($viewName, 'inicio', 'notices-from', 'inicio');
+        $this->addFilterDatePicker($viewName, 'fin', 'notices-to', 'fin');
 
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
     }
 }

@@ -16,7 +16,7 @@ class EditEmployeeAttendanceManagement extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Fichaje / Asistencia';
+        $pageData['title'] = 'transfer-assistance';
         $pageData['icon'] = 'fas fa-hourglass-half';
         return $pageData;
     }

@@ -16,7 +16,7 @@ class EditFuelType extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Combustible - tipo';
+        $pageData['title'] = 'fuel-type';
         $pageData['icon'] = 'fas fa-charging-station';
         return $pageData;
     }

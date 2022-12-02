@@ -10,7 +10,7 @@ class ListServiceAssembly extends ListController
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Montaje de servicios';
+        $pageData['title'] = 'assembly-of-services';
         $pageData['icon'] = 'fas fa-business-time';
         return $pageData;
     }
@@ -22,39 +22,39 @@ class ListServiceAssembly extends ListController
 
     protected function createViewAssembly($viewName = 'ListServiceAssembly')
     {
-        $this->addView($viewName, 'ServiceAssembly', 'Montaje de servicios', 'fas fa-business-time');
+        $this->addView($viewName, 'ServiceAssembly', 'assembly-of-services', 'fas fa-business-time');
         $this->addSearchFields($viewName, ['nombre']);
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre');
-        $this->addOrderBy($viewName, ['codcliente'], 'Cliente');
-        $this->addOrderBy($viewName, ['fecha_desde', 'fecha_hasta'], 'F.inicio + F.fin', 1);
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta + F.MOdif.');
+        $this->addOrderBy($viewName, ['nombre'], 'name');
+        $this->addOrderBy($viewName, ['codcliente'], 'client');
+        $this->addOrderBy($viewName, ['fecha_desde', 'fecha_hasta'], 'fstart-fend', 1);
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
-        $this->addFilterPeriod($viewName, 'porFechaInicio', 'F.inicio', 'fecha_desde');
-        $this->addFilterPeriod($viewName, 'porFechaFin', 'F.fin', 'fecha_hasta');
+        $this->addFilterPeriod($viewName, 'porFechaInicio', 'date-start', 'fecha_desde');
+        $this->addFilterPeriod($viewName, 'porFechaFin', 'date-end', 'fecha_hasta');
 
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
         $crearFtraSN = [
-            ['code' => '1', 'description' => 'Facturable = SI'],
-            ['code' => '0', 'description' => 'Facturable = NO'],
+            ['code' => '1', 'description' => 'billable-yes'],
+            ['code' => '0', 'description' => 'billable-no'],
         ];
-        $this->addFilterSelect($viewName, 'crearFtra', 'Crear ftra. = TODOS', 'facturar_SN', $crearFtraSN);
+        $this->addFilterSelect($viewName, 'crearFtra', 'billable-all', 'facturar_SN', $crearFtraSN);
 
         $facturarAgrupandoSN = [
-            ['code' => '1', 'description' => 'Ftra.agrupando = SI'],
-            ['code' => '0', 'description' => 'Ftra.agrupando = NO'],
+            ['code' => '1', 'description' => 'grouping-invoice-yes'],
+            ['code' => '0', 'description' => 'grouping-invoice-no'],
         ];
-        $this->addFilterSelect($viewName, 'facturarAgrupando', 'Ftra.agrupando = TODOS', 'facturar_agrupando', $facturarAgrupandoSN);
+        $this->addFilterSelect($viewName, 'facturarAgrupando', 'grouping-invoice-all', 'facturar_agrupando', $facturarAgrupandoSN);
 
-        $this->addFilterAutocomplete($viewName, 'xCodCliente', 'Cliente', 'codcliente', 'clientes', 'codcliente', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdvehicle_type', 'Vehículo - tipo', 'idvehicle_type', 'vehicle_types', 'idvehicle_type', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdservice_type', 'Servicio - tipo', 'idservice_type', 'service_types', 'idservice_type', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdempresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xCodCliente', 'client', 'codcliente', 'clientes', 'codcliente', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdvehicle_type', 'vehicle-type', 'idvehicle_type', 'vehicle_types', 'idvehicle_type', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdservice_type', 'service-type', 'idservice_type', 'service_types', 'idservice_type', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdempresa', 'company', 'idempresa', 'empresas', 'idempresa', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdservice', 'service-discretionary', 'idservice', 'services', 'idservice', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdserviceRegular', 'service-regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
     }

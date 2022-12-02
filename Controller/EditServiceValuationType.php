@@ -16,7 +16,7 @@ class EditServiceValuationType extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Concepto - valoración';
+        $pageData['title'] = 'concept-valuation';
         $pageData['icon'] = 'fas fa-hand-holding-usd';
         return $pageData;
     }

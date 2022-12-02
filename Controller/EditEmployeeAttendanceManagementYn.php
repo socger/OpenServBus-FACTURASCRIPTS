@@ -16,7 +16,7 @@ class EditEmployeeAttendanceManagementYn extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Obligado - Control Presencial';
+        $pageData['title'] = 'obliged-on-site-control';
         $pageData['icon'] = 'fas fa-business-time';
         return $pageData;
     }

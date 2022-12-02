@@ -16,7 +16,7 @@ class EditServiceRegularItinerary extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Serv. regular - Itinerario';
+        $pageData['title'] = 'serv-regular-itinerary';
         $pageData['icon'] = 'fas fa-road';
         return $pageData;
     }

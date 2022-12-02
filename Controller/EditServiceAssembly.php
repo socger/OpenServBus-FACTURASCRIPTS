@@ -20,7 +20,7 @@ class EditServiceAssembly extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Montaje de servicios';
+        $pageData['title'] = 'assembly-of-services';
         $pageData['icon'] = 'fas fa-business-time';
         return $pageData;
     }

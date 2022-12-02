@@ -16,7 +16,7 @@ class EditDocumentationType extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Doc. - Tipo';
+        $pageData['title'] = 'document-type';
         $pageData['icon'] = 'far fa-address-card';
         return $pageData;
     }

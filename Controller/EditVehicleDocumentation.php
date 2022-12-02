@@ -19,7 +19,7 @@ class EditVehicleDocumentation extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Doc. Vehículo';
+        $pageData['title'] = 'doc-vehicle';
         $pageData['icon'] = 'far fa-file-pdf';
         return $pageData;
     }

@@ -16,7 +16,7 @@ class EditFuelPump extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Surtidor interno';
+        $pageData['title'] = 'internal-spout';
         $pageData['icon'] = 'fas fa-thumbtack';
         return $pageData;
     }

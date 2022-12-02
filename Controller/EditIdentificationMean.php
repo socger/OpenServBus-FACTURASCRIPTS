@@ -16,7 +16,7 @@ class EditIdentificationMean extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Identificación - medio';
+        $pageData['title'] = 'identification-mean';
         $pageData['icon'] = 'far fa-hand-point-right';
         return $pageData;
     }

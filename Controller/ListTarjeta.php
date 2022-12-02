@@ -10,7 +10,7 @@ class ListTarjeta extends ListController
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Tarjetas';
+        $pageData['title'] = 'cards';
         $pageData['icon'] = 'fab fa-cc-mastercard';
         return $pageData;
     }
@@ -22,27 +22,27 @@ class ListTarjeta extends ListController
 
     protected function createViewTarjeta($viewName = 'ListTarjeta')
     {
-        $this->addView($viewName, 'Tarjeta', 'Tarjetas', 'fas fa-credit-card');
+        $this->addView($viewName, 'Tarjeta', 'cards', 'fas fa-credit-card');
         $this->addSearchFields($viewName, ['nombre']);
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addOrderBy($viewName, ['nombre'], 'name', 1);
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
-        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdDriver', 'Conductor', 'iddriver', 'drivers', 'iddriver', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdTarjeta_Type', 'Tipo tarjeta', 'idtarjeta_type', 'tarjeta_types', 'idtarjeta_type', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'company', 'idempresa', 'empresas', 'idempresa', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'employee', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdDriver', 'driver', 'iddriver', 'drivers', 'iddriver', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdTarjeta_Type', 'card-type', 'idtarjeta_type', 'tarjeta_types', 'idtarjeta_type', 'nombre');
 
         $esDePago = [
-            ['code' => '1', 'description' => 'De pago = SI'],
-            ['code' => '0', 'description' => 'De pago = NO'],
+            ['code' => '1', 'description' => 'is-paid-yes'],
+            ['code' => '0', 'description' => 'is-paid-no'],
         ];
-        $this->addFilterSelect($viewName, 'esDepago', 'De pago = TODO', 'de_pago', $esDePago);
+        $this->addFilterSelect($viewName, 'esDepago', 'is-paid-all', 'de_pago', $esDePago);
     }
 }

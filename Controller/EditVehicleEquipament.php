@@ -16,7 +16,7 @@ class EditVehicleEquipament extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Vehículo - Equipamiento';
+        $pageData['title'] = 'vehicle-equipment';
         $pageData['icon'] = 'fab fa-accessible-icon';
         return $pageData;
     }

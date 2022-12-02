@@ -16,7 +16,7 @@ class EditAbsenceReason extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Ausencia - motivo';
+        $pageData['title'] = 'absence-reason';
         $pageData['icon'] = 'fas fa-first-aid';
         return $pageData;
     }

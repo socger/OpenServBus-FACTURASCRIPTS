@@ -16,7 +16,7 @@ class EditServiceValuation extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Serv. discrecional - Valoración';
+        $pageData['title'] = 'serv-discretional-rating';
         $pageData['icon'] = 'fas fa-dollar-sign';
         return $pageData;
     }

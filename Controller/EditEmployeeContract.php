@@ -16,7 +16,7 @@ class EditEmployeeContract extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Contrato';
+        $pageData['title'] = 'contract';
         $pageData['icon'] = 'fas fa-id-badge';
         return $pageData;
     }

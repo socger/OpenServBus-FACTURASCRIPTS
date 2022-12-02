@@ -17,7 +17,7 @@ class EditTarjeta extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Tarjeta';
+        $pageData['title'] = 'card';
         $pageData['icon'] = 'fab fa-cc-mastercard';
         return $pageData;
     }

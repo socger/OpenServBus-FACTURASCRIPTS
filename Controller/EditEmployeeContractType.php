@@ -16,7 +16,7 @@ class EditEmployeeContractType extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Contrato - tipo';
+        $pageData['title'] = 'contract-type';
         $pageData['icon'] = 'fas fa-file-signature';
         return $pageData;
     }

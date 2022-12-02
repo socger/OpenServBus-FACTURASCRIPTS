@@ -16,7 +16,7 @@ class EditCollaborator extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Empresa colaboradora';
+        $pageData['title'] = 'collaborating-company';
         $pageData['icon'] = 'fas fa-business-time';
         return $pageData;
     }

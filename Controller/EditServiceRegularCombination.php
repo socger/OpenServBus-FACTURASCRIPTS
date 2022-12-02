@@ -18,7 +18,7 @@ class EditServiceRegularCombination extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Serv. regulares - Combinación';
+        $pageData['title'] = 'serv-regular-combination';
         $pageData['icon'] = 'fas fa-briefcase';
         return $pageData;
     }
@@ -32,16 +32,16 @@ class EditServiceRegularCombination extends EditController
 
     protected function createViewServiceRegularCombination_serv($viewName = 'ListServiceRegularCombinationServ')
     {
-        $this->addListView($viewName, 'ServiceRegularCombinationServ', 'Servicios', 'fas fa-cogs');
-        $this->views[$viewName]->addOrderBy(['idservice_regular_combination', 'idservice_regular'], 'Nombre', 1);
-        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addListView($viewName, 'ServiceRegularCombinationServ', 'services', 'fas fa-cogs');
+        $this->views[$viewName]->addOrderBy(['idservice_regular_combination', 'idservice_regular'], 'name', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
         $this->views[$viewName]->addFilterAutocomplete('xIdDriver', 'driver', 'iddriver', 'drivers', 'iddriver', 'nombre');
         $this->views[$viewName]->addFilterAutocomplete('xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
         $this->views[$viewName]->addFilterAutocomplete('xIdservice_regular', 'service-regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');

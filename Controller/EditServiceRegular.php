@@ -19,7 +19,7 @@ class EditServiceRegular extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Serv. regular';
+        $pageData['title'] = 'regular-service';
         $pageData['icon'] = 'fas fa-book-open';
         return $pageData;
     }
@@ -43,16 +43,16 @@ class EditServiceRegular extends EditController
 
     protected function createViewCombinationServs($viewName = 'ListServiceRegularCombinationServ')
     {
-        $this->addListView($viewName, 'ServiceRegularCombinationServ', 'Combinaciones', 'fas fa-briefcase');
-        $this->views[$viewName]->addOrderBy(['idservice_regular_combination', 'idservice_regular'], 'Nombre', 1);
-        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addListView($viewName, 'ServiceRegularCombinationServ', 'combinations', 'fas fa-briefcase');
+        $this->views[$viewName]->addOrderBy(['idservice_regular_combination', 'idservice_regular'], 'name', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
 
         $this->views[$viewName]->addFilterAutocomplete('xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
         $this->views[$viewName]->addFilterAutocomplete('xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
@@ -61,61 +61,61 @@ class EditServiceRegular extends EditController
 
     protected function createViewItineraries($viewName = 'ListServiceRegularItinerary')
     {
-        $this->addListView($viewName, 'ServiceRegularItinerary', 'Itinerarios', 'fas fa-road');
-        $this->views[$viewName]->addOrderBy(['idservice_regular', 'orden'], 'Por itinerario', 1);
-        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addListView($viewName, 'ServiceRegularItinerary', 'itineraries', 'fas fa-road');
+        $this->views[$viewName]->addOrderBy(['idservice_regular', 'orden'], 'by-itinerary', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
 
-        $this->views[$viewName]->addFilterAutocomplete('xIdservice_regular', 'Servicio regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
-        $this->views[$viewName]->addFilterAutocomplete('xIdstop', 'Parada', 'idstop', 'stops', 'idstop', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice_regular', 'regular-service', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdstop', 'stop', 'idstop', 'stops', 'idstop', 'nombre');
     }
 
     protected function createViewPeriods($viewName = 'ListServiceRegularPeriod')
     {
-        $this->addListView($viewName, 'ServiceRegularPeriod', 'Periodos', 'fas fa-calendar-day');
-        $this->views[$viewName]->addOrderBy(['idservice_regular', 'fecha_desde', 'fecha_hasta', 'hora_desde', 'hora_hasta'], 'Por periodo', 1);
-        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addListView($viewName, 'ServiceRegularPeriod', 'periods', 'fas fa-calendar-day');
+        $this->views[$viewName]->addOrderBy(['idservice_regular', 'fecha_desde', 'fecha_hasta', 'hora_desde', 'hora_hasta'], 'by-period', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
 
         $salidaDesdeNave = [
-            ['code' => '1', 'description' => 'Salida desde nave = SI'],
-            ['code' => '0', 'description' => 'Salida desde nave = NO'],
+            ['code' => '1', 'description' => 'departure-from-ship-yes'],
+            ['code' => '0', 'description' => 'departure-from-ship-no'],
         ];
-        $this->views[$viewName]->addFilterSelect('salidaDesdeNave', 'Salida desde nave = TODOS', 'salida_desde_nave_sn', $salidaDesdeNave);
+        $this->views[$viewName]->addFilterSelect('salidaDesdeNave', 'departure-from-ship-all', 'salida_desde_nave_sn', $salidaDesdeNave);
 
-        $this->views[$viewName]->addFilterAutocomplete('xIdservice_regular', 'Servicio regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
-        $this->views[$viewName]->addFilterPeriod('porFechaInicio', 'F.inicio', 'fecha_desde');
-        $this->views[$viewName]->addFilterPeriod('porFechaFin', 'F.fin', 'fecha_hasta');
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice_regular', 'regular-service', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
+        $this->views[$viewName]->addFilterPeriod('porFechaInicio', 'date-start', 'fecha_desde');
+        $this->views[$viewName]->addFilterPeriod('porFechaFin', 'date-end', 'fecha_hasta');
     }
 
     protected function createViewValuations($viewName = 'ListServiceRegularValuation')
     {
-        $this->addListView($viewName, 'ServiceRegularValuation', 'Valoraciones', 'fas fa-dollar-sign');
+        $this->addListView($viewName, 'ServiceRegularValuation', 'ratings', 'fas fa-dollar-sign');
 
-        $this->views[$viewName]->addOrderBy(['idservice_regular', 'orden'], 'Por valoración', 1);
-        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->views[$viewName]->addOrderBy(['idservice_regular', 'orden'], 'by-rating', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->views[$viewName]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
 
-        $this->views[$viewName]->addFilterAutocomplete('xIdservice_regular', 'Servicio regular', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
-        $this->views[$viewName]->addFilterAutocomplete('xIdservice_valuation_type', 'Conceptos - valoración', 'idservice_valuation_type', 'service_valuation_types', 'idservice_valuation_type', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice_regular', 'regular-service', 'idservice_regular', 'service_regulars', 'idservice_regular', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice_valuation_type', 'concepts-valuation', 'idservice_valuation_type', 'service_valuation_types', 'idservice_valuation_type', 'nombre');
     }
 
     protected function loadData($viewName, $view)

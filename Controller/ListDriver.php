@@ -11,7 +11,7 @@ class ListDriver extends ListController
     {
         $pageData = parent::getPageData();
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Conductores';
+        $pageData['title'] = 'drivers';
         $pageData['icon'] = 'fas fa-user-astronaut';
         return $pageData;
     }
@@ -23,15 +23,15 @@ class ListDriver extends ListController
 
     protected function createViewDriver($viewName = 'ListDriver')
     {
-        $this->addView($viewName, 'Driver', 'Conductores', 'fas fa-user-astronaut');
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
+        $this->addView($viewName, 'Driver', 'drivers', 'fas fa-user-astronaut');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
         // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
         $this->addFilterSelectWhere(
             $viewName,

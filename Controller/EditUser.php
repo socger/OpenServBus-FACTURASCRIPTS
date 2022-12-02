@@ -10,7 +10,7 @@ class EditUser extends ParentController
     protected function createViews()
     {
         parent::createViews();
-        $this->addListView('ListEmployee', 'Employee', 'Empleados con este usuario');
+        $this->addListView('ListEmployee', 'Employee', 'employees-with-this-user');
     }
 
     protected function loadData($viewName, $view)

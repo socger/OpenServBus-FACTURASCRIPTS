@@ -16,7 +16,7 @@ class EditStop extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Parada';
+        $pageData['title'] = 'stop';
         $pageData['icon'] = 'fas fa-stopwatch';
         return $pageData;
     }

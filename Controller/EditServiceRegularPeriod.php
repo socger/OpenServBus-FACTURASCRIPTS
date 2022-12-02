@@ -16,7 +16,7 @@ class EditServiceRegularPeriod extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Serv. regular - Periodo';
+        $pageData['title'] = 'serv-regular-period';
         $pageData['icon'] = 'fas fa-calendar-day';
         return $pageData;
     }

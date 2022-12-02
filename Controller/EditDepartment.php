@@ -16,7 +16,7 @@ class EditDepartment extends EditController
         $pageData = parent::getPageData();
         $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Departamento';
+        $pageData['title'] = 'department';
         $pageData['icon'] = 'fas fa-book-reader';
         return $pageData;
     }
