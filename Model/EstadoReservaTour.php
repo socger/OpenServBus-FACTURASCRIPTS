@@ -26,9 +26,12 @@ use FacturaScripts\Core\Session;
 /**
  * @author Daniel Fernández Giménez <hola@danielfg.es>
  */
-class TourOperador extends ModelClass
+class EstadoReservaTour extends ModelClass
 {
     use ModelTrait;
+
+    /** @var string */
+    public $color;
 
     /** @var string */
     public $creationdate;
@@ -62,7 +65,7 @@ class TourOperador extends ModelClass
 
     public static function tableName(): string
     {
-        return "tour_operadores";
+        return "tour_reservas_estados";
     }
 
     protected function saveInsert(array $values = []): bool

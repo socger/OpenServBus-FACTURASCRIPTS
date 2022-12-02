@@ -19,8 +19,14 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
+use FacturaScripts\Dinamic\Model\EstadoDocumento;
+use FacturaScripts\Plugins\OpenServBus\Model\EstadoReservaTour;
 
+/**
+ * @author Daniel Fernández Giménez <hola@danielfg.es>
+ */
 class ListTourOperador extends ListController
 {
     public function getPageData(): array
@@ -32,14 +38,39 @@ class ListTourOperador extends ListController
         return $data;
     }
 
+    protected function addColorStatusBooking(string $viewName): void
+    {
+        $statusBooking = new EstadoReservaTour();
+        foreach ($statusBooking->all([], [], 0, 0) as $status) {
+            if ($status->color) {
+                $this->addColor($viewName, 'idestado', $status->id, $status->color, $status->name);
+            }
+        }
+    }
+
     protected function createViews()
     {
         $this->createViewsTourOperador();
+        $this->createViewsReservaTour();
+    }
+
+    protected function createViewsReservaTour(string $viewName = "ListReservaTour")
+    {
+        $this->addView($viewName, "ReservaTour", "bookings", "fas fa-calendar-check");
+        $this->addOrderBy($viewName, ["id"], "code", 2);
+        $this->addSearchFields($viewName, ["id"]);
+
+        // Filtros
+        $operators = $this->codeModel->all('tour_operadores', 'id', 'name');
+        $this->addFilterSelect($viewName, 'idoperador', 'operator', 'idoperador', $operators);
+
+        // asignamos los colores
+        $this->addColorStatusBooking($viewName);
     }
 
     protected function createViewsTourOperador(string $viewName = "ListTourOperador")
     {
-        $this->addView($viewName, "TourOperador", "tour-operator", "fas fa-globe-europe");
+        $this->addView($viewName, "TourOperador", "tour-operators", "fas fa-globe-europe");
         $this->addOrderBy($viewName, ["name"], "name");
         $this->addSearchFields($viewName, ["name"]);
     }

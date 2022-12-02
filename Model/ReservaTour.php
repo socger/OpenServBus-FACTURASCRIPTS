@@ -26,15 +26,24 @@ use FacturaScripts\Core\Session;
 /**
  * @author Daniel Fernández Giménez <hola@danielfg.es>
  */
-class TourOperador extends ModelClass
+class ReservaTour extends ModelClass
 {
     use ModelTrait;
+
+    /** @var bool */
+    public $closed;
 
     /** @var string */
     public $creationdate;
 
     /** @var int */
     public $id;
+
+    /** @var int */
+    public $idestado;
+
+    /** @var int */
+    public $idoperador;
 
     /** @var string */
     public $lastnick;
@@ -43,16 +52,34 @@ class TourOperador extends ModelClass
     public $lastupdate;
 
     /** @var string */
-    public $name;
-
-    /** @var string */
     public $nick;
 
     public function clear() 
     {
         parent::clear();
+        $this->closed = false;
         $this->creationdate = date(self::DATETIME_STYLE);
         $this->nick = Session::get('user')->nick ?? null;
+    }
+
+    public function getEstado(): EstadoReservaTour
+    {
+        $estado = new EstadoReservaTour();
+        $estado->loadFromCode($this->idestado);
+        return $estado;
+    }
+
+    public function getOperador(): TourOperador
+    {
+        $operador = new TourOperador();
+        $operador->loadFromCode($this->idoperador);
+        return $operador;
+    }
+
+    public function install(): string
+    {
+        new EstadoReservaTour();
+        return parent::install();
     }
 
     public static function primaryColumn(): string
@@ -62,7 +89,12 @@ class TourOperador extends ModelClass
 
     public static function tableName(): string
     {
-        return "tour_operadores";
+        return "tour_reservas";
+    }
+
+    public function url(string $type = 'auto', string $list = 'ListTourOperador'): string
+    {
+        return parent::url($type, $list . '?activetab=List');
     }
 
     protected function saveInsert(array $values = []): bool

@@ -24,18 +24,18 @@ use FacturaScripts\Core\Lib\ExtendedController\EditController;
 /**
  * @author Daniel Fernández Giménez <hola@danielfg.es>
  */
-class EditTourOperador extends EditController
+class EditReservaTour extends EditController
 {
     public function getModelClassName(): string
     {
-        return "TourOperador";
+        return "ReservaTour";
     }
 
     public function getPageData(): array
     {
         $data = parent::getPageData();
-        $data["title"] = "tour-operator";
-        $data["icon"] = "fas fa-globe-europe";
+        $data["title"] = "booking";
+        $data["icon"] = "fas fa-calendar-check";
         return $data;
     }
 }
