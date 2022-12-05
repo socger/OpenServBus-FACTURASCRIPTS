@@ -19,6 +19,7 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Model;
 
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Model\Base\ModelClass;
 use FacturaScripts\Core\Model\Base\ModelTrait;
 use FacturaScripts\Core\Session;
@@ -104,6 +105,16 @@ class ServicioTour extends ModelClass
         $this->nick = Session::get('user')->nick ?? null;
     }
 
+    public function delete(): bool
+    {
+        if (false === parent::delete()) {
+            return false;
+        }
+
+        $this->checkEstadoSubreserva();
+        return true;
+    }
+
     public function install(): string
     {
         new SubReservaTour();
@@ -114,6 +125,16 @@ class ServicioTour extends ModelClass
     public static function primaryColumn(): string
     {
         return "id";
+    }
+
+    public function save(): bool
+    {
+        if (false === parent::save()) {
+            return false;
+        }
+
+        $this->checkEstadoSubreserva();
+        return true;
     }
 
     public static function tableName(): string
@@ -134,6 +155,16 @@ class ServicioTour extends ModelClass
     public function url(string $type = 'auto', string $list = 'ListTourOperador'): string
     {
         return parent::url($type, $list . '?activetab=List');
+    }
+
+    protected function checkEstadoSubreserva()
+    {
+        // Obtenemos todas las subreservas y las guardamos para que actualice si está completa o no
+        $subreservaModel = new SubReservaTour();
+        $where = [new DataBaseWhere('id', $this->idsubreserva)];
+        foreach ($subreservaModel->all($where, ['id' => 'ASC']) as $subreserva) {
+            $subreserva->save();
+        }
     }
 
     protected function saveInsert(array $values = []): bool

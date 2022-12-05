@@ -49,7 +49,7 @@
                 <widget type="textarea" fieldname="notes"/>
             </column>
             <column name="closed" order="170">
-                <widget type="checkbox" fieldname="closed"/>
+                <widget type="checkbox" fieldname="closed" readonly="true"/>
             </column>
         </group>
         <group name="log" numcolumns="12">

@@ -19,6 +19,7 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Model;
 
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Model\Base\ModelClass;
 use FacturaScripts\Core\Model\Base\ModelTrait;
 use FacturaScripts\Core\Session;
@@ -76,11 +77,30 @@ class ReservaTour extends ModelClass
         return $operador;
     }
 
+    public function getUnderbooks(): array
+    {
+        $underbookModel = new SubReservaTour();
+        $where = [new DataBaseWhere('idreserva', $this->id)];
+        return $underbookModel->all($where, ['id' => 'ASC'], 0, 0);
+    }
+
     public function install(): string
     {
         new TourOperador();
         new EstadoReservaTour();
         return parent::install();
+    }
+
+    public function isClosed(): bool
+    {
+        // comprobamos que todas las subreservas están cerradas
+        foreach ($this->getUnderbooks() as $underbook) {
+            if (false === $underbook->closed) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public static function primaryColumn(): string
@@ -91,6 +111,12 @@ class ReservaTour extends ModelClass
     public static function tableName(): string
     {
         return "tour_reservas";
+    }
+
+    public function test(): bool
+    {
+        $this->closed = $this->isClosed();
+        return parent::test();
     }
 
     public function url(string $type = 'auto', string $list = 'ListTourOperador'): string
@@ -110,5 +136,11 @@ class ReservaTour extends ModelClass
         $this->lastnick = Session::get('user')->nick ?? null;
         $this->lastupdate = date(self::DATETIME_STYLE);
         return parent::saveUpdate($values);
+    }
+
+    protected function setPreviousData(array $fields = [])
+    {
+        $more = ['closed'];
+        parent::setPreviousData(array_merge($more, $fields));
     }
 }

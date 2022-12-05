@@ -44,7 +44,7 @@
                 <widget type="textarea" fieldname="notes" rows="5"/>
             </column>
             <column name="closed" order="150">
-                <widget type="checkbox" fieldname="closed"/>
+                <widget type="checkbox" fieldname="closed" readonly="true"/>
             </column>
         </group>
         <group name="log" numcolumns="12">
