@@ -21,29 +21,34 @@
 <view>
     <columns>
         <group name="data" numcolumns="12">
-            <column name="code" order="100">
+            <column name="code" order="100" readonly="true">
                 <widget type="text" fieldname="id" readonly="true"/>
             </column>
-            <column name="operator" order="110">
+            <column name="booking" order="110">
+                <widget type="select" fieldname="idreserva" required="true" onclick="EditReservaTour">
+                    <values source="tour_reservas" fieldcode="id" fieldtitle="id"/>
+                </widget>
+            </column>
+            <column name="operator" order="120">
                 <widget type="select" fieldname="idoperador" required="true" onclick="EditTourOperador">
                     <values source="tour_operadores" fieldcode="id" fieldtitle="name"/>
                 </widget>
             </column>
-            <column name="hire-date" order="120">
-                <widget type="date" fieldname="hiredate" required="true"/>
+            <column name="date" order="130">
+                <widget type="date" fieldname="date" required="true"/>
             </column>
-            <column name="reference" order="130">
+            <column name="reference" order="140">
                 <widget type="text" fieldname="reference"/>
             </column>
-            <column name="status" order="140">
+            <column name="status" order="150">
                 <widget type="select" fieldname="idestado" required="true">
                     <values source="tour_reservas_estados" fieldcode="id" fieldtitle="name"/>
                 </widget>
             </column>
-            <column name="notes" order="140" numcolumns="12">
-                <widget type="textarea" fieldname="notes" rows="5"/>
+            <column name="notes" order="160" numcolumns="12">
+                <widget type="textarea" fieldname="notes"/>
             </column>
-            <column name="closed" order="150">
+            <column name="closed" order="170">
                 <widget type="checkbox" fieldname="closed"/>
             </column>
         </group>

@@ -19,16 +19,15 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
-use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
-use FacturaScripts\Dinamic\Model\EstadoDocumento;
-use FacturaScripts\Plugins\OpenServBus\Model\EstadoReservaTour;
 
 /**
  * @author Daniel Fernández Giménez <hola@danielfg.es>
  */
 class ListTourOperador extends ListController
 {
+    use OpenServBusControllerTrait;
+
     public function getPageData(): array
     {
         $data = parent::getPageData();
@@ -38,31 +37,45 @@ class ListTourOperador extends ListController
         return $data;
     }
 
-    protected function addColorStatusBooking(string $viewName): void
-    {
-        $statusBooking = new EstadoReservaTour();
-        foreach ($statusBooking->all([], [], 0, 0) as $status) {
-            if ($status->color) {
-                $this->addColor($viewName, 'idestado', $status->id, $status->color, $status->name);
-            }
-        }
-    }
-
     protected function createViews()
     {
         $this->createViewsTourOperador();
         $this->createViewsReservaTour();
+        $this->createViewsSubReservaTour();
     }
 
     protected function createViewsReservaTour(string $viewName = "ListReservaTour")
     {
         $this->addView($viewName, "ReservaTour", "bookings", "fas fa-calendar-check");
         $this->addOrderBy($viewName, ["id"], "code", 2);
-        $this->addSearchFields($viewName, ["id"]);
+        $this->addSearchFields($viewName, ["id", "reference"]);
 
         // Filtros
         $operators = $this->codeModel->all('tour_operadores', 'id', 'name');
         $this->addFilterSelect($viewName, 'idoperador', 'operator', 'idoperador', $operators);
+
+        $status = $this->codeModel->all('tour_reservas_estados', 'id', 'name');
+        $this->addFilterSelect($viewName, 'idestado', 'status', 'idestado', $status);
+
+        // asignamos los colores
+        $this->addColorStatusBooking($viewName);
+    }
+
+    protected function createViewsSubReservaTour(string $viewName = "ListSubReservaTour")
+    {
+        $this->addView($viewName, "SubReservaTour", "underbooks", "fas fa-calendar-alt");
+        $this->addOrderBy($viewName, ["id"], "code", 2);
+        $this->addSearchFields($viewName, ["id", "reference"]);
+
+        // Filtros
+        $operators = $this->codeModel->all('tour_operadores', 'id', 'name');
+        $this->addFilterSelect($viewName, 'idoperador', 'operator', 'idoperador', $operators);
+
+        $bookings = $this->codeModel->all('tour_reservas', 'id', 'id');
+        $this->addFilterSelect($viewName, 'idreserva', 'booking', 'idreserva', $bookings);
+
+        $status = $this->codeModel->all('tour_reservas_estados', 'id', 'name');
+        $this->addFilterSelect($viewName, 'idestado', 'status', 'idestado', $status);
 
         // asignamos los colores
         $this->addColorStatusBooking($viewName);

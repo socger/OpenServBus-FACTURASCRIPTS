@@ -19,6 +19,7 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 /**
@@ -26,6 +27,8 @@ use FacturaScripts\Core\Lib\ExtendedController\EditController;
  */
 class EditReservaTour extends EditController
 {
+    use OpenServBusControllerTrait;
+
     public function getModelClassName(): string
     {
         return "ReservaTour";
@@ -37,5 +40,48 @@ class EditReservaTour extends EditController
         $data["title"] = "booking";
         $data["icon"] = "fas fa-calendar-check";
         return $data;
+    }
+
+    protected function createViews()
+    {
+        parent::createViews();
+        $this->createViewsSubReservaTour();
+        $this->setTabsPosition('bottom');
+    }
+
+    protected function createViewsSubReservaTour(string $viewName = "ListSubReservaTour")
+    {
+        $this->addListView($viewName, "SubReservaTour", "underbooks", "fas fa-calendar-alt");
+        $this->views[$viewName]->addOrderBy(["id"], "code", 2);
+        $this->views[$viewName]->addSearchFields(["id", "reference"]);
+
+        // ocultar columnas
+        $this->views[$viewName]->disableColumn('booking', true);
+
+        // Filtros
+        $operators = $this->codeModel->all('tour_operadores', 'id', 'name');
+        $this->views[$viewName]->addFilterSelect('idoperador', 'operator', 'idoperador', $operators);
+
+        $status = $this->codeModel->all('tour_reservas_estados', 'id', 'name');
+        $this->views[$viewName]->addFilterSelect('idestado', 'status', 'idestado', $status);
+
+        // asignamos los colores
+        $this->addColorStatusBooking($viewName);
+    }
+
+    protected function loadData($viewName, $view)
+    {
+        $mvn = $this->getMainViewName();
+        switch ($viewName) {
+            case 'ListSubReservaTour':
+                $idreserva = $this->getViewModelValue($mvn, 'id');
+                $where = [new DatabaseWhere('idreserva', $idreserva)];
+                $view->loadData('', $where);
+                break;
+
+            default:
+                parent::loadData($viewName, $view);
+                break;
+        }
     }
 }

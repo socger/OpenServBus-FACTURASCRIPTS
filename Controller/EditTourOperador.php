@@ -19,6 +19,7 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 /**
@@ -26,6 +27,8 @@ use FacturaScripts\Core\Lib\ExtendedController\EditController;
  */
 class EditTourOperador extends EditController
 {
+    use OpenServBusControllerTrait;
+
     public function getModelClassName(): string
     {
         return "TourOperador";
@@ -37,5 +40,45 @@ class EditTourOperador extends EditController
         $data["title"] = "tour-operator";
         $data["icon"] = "fas fa-globe-europe";
         return $data;
+    }
+
+    protected function createViews()
+    {
+        parent::createViews();
+        $this->createViewsReservaTour();
+        $this->setTabsPosition('bottom');
+    }
+
+    protected function createViewsReservaTour(string $viewName = "ListReservaTour")
+    {
+        $this->addListView($viewName, "ReservaTour", "bookings", "fas fa-calendar-check");
+        $this->views[$viewName]->addOrderBy(["id"], "code", 2);
+        $this->views[$viewName]->addSearchFields(["id", "reference"]);
+
+        // ocultar columnas
+        $this->views[$viewName]->disableColumn('operator', true);
+
+        // Filtros
+        $status = $this->codeModel->all('tour_reservas_estados', 'id', 'name');
+        $this->views[$viewName]->addFilterSelect('idestado', 'status', 'idestado', $status);
+
+        // asignamos los colores
+        $this->addColorStatusBooking($viewName);
+    }
+
+    protected function loadData($viewName, $view)
+    {
+        $mvn = $this->getMainViewName();
+        switch ($viewName) {
+            case 'ListReservaTour':
+                $idoperador = $this->getViewModelValue($mvn, 'id');
+                $where = [new DatabaseWhere('idoperador', $idoperador)];
+                $view->loadData('', $where);
+                break;
+
+            default:
+                parent::loadData($viewName, $view);
+                break;
+        }
     }
 }
