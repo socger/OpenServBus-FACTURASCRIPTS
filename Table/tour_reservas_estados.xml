@@ -30,7 +30,6 @@
     <column>
         <name>nick</name>
         <type>character varying(50)</type>
-        <null>NO</null>
     </column>
     <constraint>
         <name>tour_reservas_estados_pkey</name>

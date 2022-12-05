@@ -68,7 +68,6 @@
     <column>
         <name>nick</name>
         <type>character varying(50)</type>
-        <null>NO</null>
     </column>
     <column>
         <name>pickupdate</name>
