@@ -78,6 +78,7 @@ class ReservaTour extends ModelClass
 
     public function install(): string
     {
+        new TourOperador();
         new EstadoReservaTour();
         return parent::install();
     }

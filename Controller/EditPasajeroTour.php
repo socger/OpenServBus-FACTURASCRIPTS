@@ -19,55 +19,25 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
-use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 /**
  * @author Daniel Fernández Giménez <hola@danielfg.es>
  */
-class EditServicioTour extends EditController
+class EditPasajeroTour extends EditController
 {
+    use OpenServBusControllerTrait;
+
     public function getModelClassName(): string
     {
-        return "ServicioTour";
+        return "PasajeroTour";
     }
 
     public function getPageData(): array
     {
         $data = parent::getPageData();
-        $data["title"] = "service";
-        $data["icon"] = "fas fa-concierge-bell";
+        $data["title"] = "passenger";
+        $data["icon"] = "fas fa-user";
         return $data;
-    }
-
-    protected function createViews()
-    {
-        parent::createViews();
-        $this->createViewsContacto();
-        $this->setTabsPosition('bottom');
-    }
-
-    protected function createViewsContacto(string $viewName = "EditPasajeroTour")
-    {
-        $this->addEditListView($viewName, "PasajeroTour", "passengers", "fas fa-users");
-
-        // ocultar columnas
-        $this->views[$viewName]->disableColumn('service', true);
-    }
-
-    protected function loadData($viewName, $view)
-    {
-        $mvn = $this->getMainViewName();
-        switch ($viewName) {
-            case 'EditPasajeroTour':
-                $idservicio = $this->getViewModelValue($mvn, 'id');
-                $where = [new DatabaseWhere('idservicio', $idservicio)];
-                $view->loadData('', $where);
-                break;
-
-            default:
-                parent::loadData($viewName, $view);
-                break;
-        }
     }
 }

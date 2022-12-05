@@ -43,6 +43,21 @@ class ListTourOperador extends ListController
         $this->createViewsReservaTour();
         $this->createViewsSubReservaTour();
         $this->createViewsServicioTour();
+        $this->createViewsPasajeroTour();
+    }
+
+    protected function createViewsPasajeroTour(string $viewName = "ListPasajeroTour")
+    {
+        $this->addView($viewName, "PasajeroTour", "passengers", "fas fa-users");
+        $this->addOrderBy($viewName, ["id"], "id", 2);
+        $this->addOrderBy($viewName, ["idservicio"], "service");
+        $this->addOrderBy($viewName, ["idcontacto"], "contact");
+
+        // Filtros
+        $services = $this->codeModel->all('tour_servicios', 'id', 'routename');
+        $this->addFilterSelect($viewName, 'idservicio', 'service', 'idservicio', $services);
+
+        $this->addFilterAutocomplete($viewName, 'idcontacto', 'contact', 'idcontacto', 'contactos', 'idcontacto', 'nombre');
     }
 
     protected function createViewsReservaTour(string $viewName = "ListReservaTour")

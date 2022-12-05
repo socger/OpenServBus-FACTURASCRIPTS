@@ -22,34 +22,26 @@ namespace FacturaScripts\Plugins\OpenServBus\Model;
 use FacturaScripts\Core\Model\Base\ModelClass;
 use FacturaScripts\Core\Model\Base\ModelTrait;
 use FacturaScripts\Core\Session;
+use FacturaScripts\Dinamic\Model\Contacto;
 
 /**
  * @author Daniel Fernández Giménez <hola@danielfg.es>
  */
-class SubReservaTour extends ModelClass
+class PasajeroTour extends ModelClass
 {
     use ModelTrait;
 
-    /** @var bool */
-    public $closed;
-
     /** @var string */
     public $creationdate;
-
-    /** @var string */
-    public $date;
 
     /** @var int */
     public $id;
 
     /** @var int */
-    public $idestado;
+    public $idcontacto;
 
     /** @var int */
-    public $idoperador;
-
-    /** @var int */
-    public $idreserva;
+    public $idservicio;
 
     /** @var string */
     public $lastnick;
@@ -60,38 +52,30 @@ class SubReservaTour extends ModelClass
     /** @var string */
     public $nick;
 
-    /** @var string */
-    public $notes;
-
-    /** @var string */
-    public $reference;
-
     public function clear() 
     {
         parent::clear();
-        $this->closed = false;
         $this->creationdate = date(self::DATETIME_STYLE);
         $this->nick = Session::get('user')->nick ?? null;
     }
 
-    public function getEstado(): EstadoReservaTour
+    public function getContacto(): Contacto
     {
-        $estado = new EstadoReservaTour();
-        $estado->loadFromCode($this->idestado);
-        return $estado;
+        $contacto = new Contacto();
+        $contacto->loadFromCode($this->idcontacto);
+        return $contacto;
     }
 
-    public function getOperador(): TourOperador
+    public function getServicio(): ServicioTour
     {
-        $operador = new TourOperador();
-        $operador->loadFromCode($this->idoperador);
-        return $operador;
+        $servicio = new ServicioTour();
+        $servicio->loadFromCode($this->idservicio);
+        return $servicio;
     }
 
     public function install(): string
     {
-        new ReservaTour();
-        new EstadoReservaTour();
+        new ServicioTour();
         return parent::install();
     }
 
@@ -102,11 +86,15 @@ class SubReservaTour extends ModelClass
 
     public static function tableName(): string
     {
-        return "tour_subreservas";
+        return "tour_pasajeros";
     }
 
     public function url(string $type = 'auto', string $list = 'ListTourOperador'): string
     {
+        if ($type === 'auto') {
+            return $this->getServicio()->url();
+        }
+
         return parent::url($type, $list . '?activetab=List');
     }
 

@@ -106,6 +106,7 @@ class ServicioTour extends ModelClass
 
     public function install(): string
     {
+        new SubReservaTour();
         new EstadoServicioTour();
         return parent::install();
     }
