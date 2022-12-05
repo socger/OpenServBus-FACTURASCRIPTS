@@ -3,10 +3,12 @@
     <column>
         <name>closed</name>
         <type>boolean</type>
+        <null>NO</null>
     </column>
     <column>
         <name>creationdate</name>
         <type>timestamp</type>
+        <null>NO</null>
     </column>
     <column>
         <name>hiredate</name>
@@ -39,6 +41,7 @@
     <column>
         <name>nick</name>
         <type>character varying(50)</type>
+        <null>NO</null>
     </column>
     <column>
         <name>notes</name>

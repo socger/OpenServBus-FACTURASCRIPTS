@@ -3,14 +3,17 @@
     <column>
         <name>closed</name>
         <type>boolean</type>
+        <null>NO</null>
     </column>
     <column>
         <name>creationdate</name>
         <type>timestamp</type>
+        <null>NO</null>
     </column>
     <column>
         <name>date</name>
         <type>date</type>
+        <null>NO</null>
     </column>
     <column>
         <name>id</name>
@@ -20,14 +23,17 @@
     <column>
         <name>idestado</name>
         <type>integer</type>
+        <null>NO</null>
     </column>
     <column>
         <name>idoperador</name>
         <type>integer</type>
+        <null>NO</null>
     </column>
     <column>
         <name>idreserva</name>
         <type>integer</type>
+        <null>NO</null>
     </column>
     <column>
         <name>lastnick</name>
@@ -40,6 +46,7 @@
     <column>
         <name>nick</name>
         <type>character varying(50)</type>
+        <null>NO</null>
     </column>
     <column>
         <name>notes</name>

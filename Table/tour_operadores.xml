@@ -3,6 +3,7 @@
     <column>
         <name>creationdate</name>
         <type>timestamp</type>
+        <null>NO</null>
     </column>
     <column>
         <name>id</name>
@@ -20,10 +21,12 @@
     <column>
         <name>name</name>
         <type>character varying(100)</type>
+        <null>NO</null>
     </column>
     <column>
         <name>nick</name>
         <type>character varying(50)</type>
+        <null>NO</null>
     </column>
     <constraint>
         <name>tour_operadores_pkey</name>

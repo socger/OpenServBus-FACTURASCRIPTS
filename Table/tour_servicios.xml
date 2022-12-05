@@ -3,14 +3,17 @@
     <column>
         <name>closed</name>
         <type>boolean</type>
+        <null>NO</null>
     </column>
     <column>
         <name>creationdate</name>
         <type>timestamp</type>
+        <null>NO</null>
     </column>
     <column>
         <name>destinationdate</name>
         <type>date</type>
+        <null>NO</null>
     </column>
     <column>
         <name>destinationflightid</name>
@@ -19,10 +22,12 @@
     <column>
         <name>destinationpoint</name>
         <type>character varying(200)</type>
+        <null>NO</null>
     </column>
     <column>
         <name>destinationtime</name>
         <type>time</type>
+        <null>NO</null>
     </column>
     <column>
         <name>id</name>
@@ -32,6 +37,7 @@
     <column>
         <name>idestado</name>
         <type>integer</type>
+        <null>NO</null>
     </column>
     <column>
         <name>idserviciodiscrecional</name>
@@ -44,10 +50,12 @@
     <column>
         <name>idsubreserva</name>
         <type>integer</type>
+        <null>NO</null>
     </column>
     <column>
         <name>idtiposervicio</name>
         <type>integer</type>
+        <null>NO</null>
     </column>
     <column>
         <name>lastnick</name>
@@ -60,10 +68,12 @@
     <column>
         <name>nick</name>
         <type>character varying(50)</type>
+        <null>NO</null>
     </column>
     <column>
         <name>pickupdate</name>
         <type>date</type>
+        <null>NO</null>
     </column>
     <column>
         <name>pickupflightid</name>
@@ -76,18 +86,22 @@
     <column>
         <name>pickuppoint</name>
         <type>character varying(200)</type>
+        <null>NO</null>
     </column>
     <column>
         <name>pickuptime</name>
         <type>time</type>
+        <null>NO</null>
     </column>
     <column>
         <name>routecode</name>
         <type>character varying(30)</type>
+        <null>NO</null>
     </column>
     <column>
         <name>routename</name>
         <type>character varying(100)</type>
+        <null>NO</null>
     </column>
     <constraint>
         <name>tour_servicios_pkey</name>
