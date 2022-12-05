@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table>
+    <column>
+        <name>closed</name>
+        <type>boolean</type>
+    </column>
+    <column>
+        <name>creationdate</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>destinationdate</name>
+        <type>date</type>
+    </column>
+    <column>
+        <name>destinationflightid</name>
+        <type>character varying(30)</type>
+    </column>
+    <column>
+        <name>destinationpoint</name>
+        <type>character varying(200)</type>
+    </column>
+    <column>
+        <name>destinationtime</name>
+        <type>time</type>
+    </column>
+    <column>
+        <name>id</name>
+        <type>serial</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>idestado</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idserviciodiscrecional</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idservicioregular</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idsubreserva</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idtiposervicio</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>lastnick</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>lastupdate</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>nick</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>pickupdate</name>
+        <type>date</type>
+    </column>
+    <column>
+        <name>pickupflightid</name>
+        <type>character varying(30)</type>
+    </column>
+    <column>
+        <name>pickupflighttime</name>
+        <type>time</type>
+    </column>
+    <column>
+        <name>pickuppoint</name>
+        <type>character varying(200)</type>
+    </column>
+    <column>
+        <name>pickuptime</name>
+        <type>time</type>
+    </column>
+    <column>
+        <name>routecode</name>
+        <type>character varying(30)</type>
+    </column>
+    <column>
+        <name>routename</name>
+        <type>character varying(100)</type>
+    </column>
+    <constraint>
+        <name>tour_servicios_pkey</name>
+        <type>PRIMARY KEY (id)</type>
+    </constraint>
+    <constraint>
+        <name>ca_tour_servicios_users_lastnick</name>
+        <type>FOREIGN KEY (lastnick) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_tour_servicios_users_nick</name>
+        <type>FOREIGN KEY (nick) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_tour_servicios_tour_servicios_estados</name>
+        <type>FOREIGN KEY (idestado) REFERENCES tour_servicios_estados (id) ON DELETE RESTRICT ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_tour_subreservas_tour_subreservas</name>
+        <type>FOREIGN KEY (idsubreserva) REFERENCES tour_subreservas (id) ON DELETE RESTRICT ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_tour_subreservas_service_types</name>
+        <type>FOREIGN KEY (idtiposervicio) REFERENCES service_types (idservice_type) ON DELETE RESTRICT ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_tour_subreservas_service_regulars</name>
+        <type>FOREIGN KEY (idservicioregular) REFERENCES service_regulars (idservice_regular) ON DELETE RESTRICT ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_tour_subreservas_services</name>
+        <type>FOREIGN KEY (idserviciodiscrecional) REFERENCES services (idservice) ON DELETE RESTRICT ON UPDATE CASCADE</type>
+    </constraint>
+</table>

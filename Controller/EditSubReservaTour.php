@@ -19,6 +19,7 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
+use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 /**
@@ -26,6 +27,8 @@ use FacturaScripts\Core\Lib\ExtendedController\EditController;
  */
 class EditSubReservaTour extends EditController
 {
+    use OpenServBusControllerTrait;
+
     public function getModelClassName(): string
     {
         return "SubReservaTour";
@@ -37,5 +40,56 @@ class EditSubReservaTour extends EditController
         $data["title"] = "underbook";
         $data["icon"] = "fas fa-calendar-alt";
         return $data;
+    }
+
+    protected function createViews()
+    {
+        parent::createViews();
+        $this->createViewsServicioTour();
+        $this->setTabsPosition('bottom');
+    }
+
+    protected function createViewsServicioTour(string $viewName = "ListServicioTour")
+    {
+        $this->addListView($viewName, "ServicioTour", "services", "fas fa-concierge-bell");
+        $this->views[$viewName]->addOrderBy(["id"], "code", 2);
+        $this->views[$viewName]->addOrderBy(["pickupdate", "pickuptime"], "pick-up-date");
+        $this->views[$viewName]->addOrderBy(["destinationdate", "destinationtime"], "destination-date");
+        $this->views[$viewName]->addSearchFields(["id", "routecode", "routename", "pickupflightid", "destinationflightid", "pickuplocation", "pickuppoint", "destinationpoint"]);
+
+        // ocultar columnas
+        $this->views[$viewName]->disableColumn('underbook', true);
+
+        // Filtros
+        $serviceTypes = $this->codeModel->all('service_types', 'idservice_type', 'nombre');
+        $this->views[$viewName]->addFilterSelect('idtiposervicio', 'service-type', 'idtiposervicio', $serviceTypes);
+
+        $status = $this->codeModel->all('tour_servicios_estados', 'id', 'name');
+        $this->views[$viewName]->addFilterSelect('idestado', 'status', 'idestado', $status);
+
+        $serviceDiscrecional = $this->codeModel->all('services', 'idservice', 'nombre');
+        $this->views[$viewName]->addFilterSelect('idserviciodiscrecional', 'service-discretionary', 'idserviciodiscrecional', $serviceDiscrecional);
+
+        $serviceRegular = $this->codeModel->all('service_regulars', 'idservice_regular', 'nombre');
+        $this->views[$viewName]->addFilterSelect('idservicioregular', 'service-regular', 'idservicioregular', $serviceRegular);
+
+        // asignamos los colores
+        $this->addColorStatusService($viewName);
+    }
+
+    protected function loadData($viewName, $view)
+    {
+        $mvn = $this->getMainViewName();
+        switch ($viewName) {
+            case 'ListServicioTour':
+                $idsubreserva = $this->getViewModelValue($mvn, 'id');
+                $where = [new DatabaseWhere('idsubreserva', $idsubreserva)];
+                $view->loadData('', $where);
+                break;
+
+            default:
+                parent::loadData($viewName, $view);
+                break;
+        }
     }
 }

@@ -42,6 +42,7 @@ class ListTourOperador extends ListController
         $this->createViewsTourOperador();
         $this->createViewsReservaTour();
         $this->createViewsSubReservaTour();
+        $this->createViewsServicioTour();
     }
 
     protected function createViewsReservaTour(string $viewName = "ListReservaTour")
@@ -59,6 +60,34 @@ class ListTourOperador extends ListController
 
         // asignamos los colores
         $this->addColorStatusBooking($viewName);
+    }
+
+    protected function createViewsServicioTour(string $viewName = "ListServicioTour")
+    {
+        $this->addView($viewName, "ServicioTour", "services", "fas fa-concierge-bell");
+        $this->addOrderBy($viewName, ["id"], "code", 2);
+        $this->addOrderBy($viewName, ["pickupdate", "pickuptime"], "pick-up-date");
+        $this->addOrderBy($viewName, ["destinationdate", "destinationtime"], "destination-date");
+        $this->addSearchFields($viewName, ["id", "routecode", "routename", "pickupflightid", "destinationflightid", "pickuplocation", "pickuppoint", "destinationpoint"]);
+
+        // Filtros
+        $subReservas = $this->codeModel->all('tour_subreservas', 'id', 'id');
+        $this->addFilterSelect($viewName, 'idsubreserva', 'underbook', 'idsubreserva', $subReservas);
+
+        $serviceTypes = $this->codeModel->all('service_types', 'idservice_type', 'nombre');
+        $this->addFilterSelect($viewName, 'idtiposervicio', 'service-type', 'idtiposervicio', $serviceTypes);
+
+        $status = $this->codeModel->all('tour_servicios_estados', 'id', 'name');
+        $this->addFilterSelect($viewName, 'idestado', 'status', 'idestado', $status);
+
+        $serviceDiscrecional = $this->codeModel->all('services', 'idservice', 'nombre');
+        $this->addFilterSelect($viewName, 'idserviciodiscrecional', 'service-discretionary', 'idserviciodiscrecional', $serviceDiscrecional);
+
+        $serviceRegular = $this->codeModel->all('service_regulars', 'idservice_regular', 'nombre');
+        $this->addFilterSelect($viewName, 'idservicioregular', 'service-regular', 'idservicioregular', $serviceRegular);
+
+        // asignamos los colores
+        $this->addColorStatusService($viewName);
     }
 
     protected function createViewsSubReservaTour(string $viewName = "ListSubReservaTour")

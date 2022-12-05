@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of OpenServBus plugin for FacturaScripts
+ * Copyright (C) 2022 Carlos Garcia Gomez <carlos@facturascripts.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/.
+ *
+ * @author Daniel Fernández Giménez <hola@danielfg.es>
+-->
+<view>
+    <columns>
+        <group name="data" numcolumns="12">
+            <column name="id" display="none" order="0">
+                <widget type="text" fieldname="id"/>
+            </column>
+            <column name="name" order="100">
+                <widget type="text" fieldname="name"/>
+            </column>
+            <column name="color" titleurl="https://getbootstrap.com/docs/4.6/utilities/colors/#background-color"
+                    order="110">
+                <widget type="select" fieldname="color" translate="true">
+                    <values title="color-primary">primary</values>
+                    <values title="color-secondary">secondary</values>
+                    <values title="color-success">success</values>
+                    <values title="color-danger">danger</values>
+                    <values title="color-warning">warning</values>
+                    <values title="color-info">info</values>
+                    <values title="color-dark">dark</values>
+                </widget>
+            </column>
+            <column name="creation-date" order="120">
+                <widget type="datetime" fieldname="creationdate" readonly="true"/>
+            </column>
+            <column name="user" order="130">
+                <widget type="text" fieldname="nick" readonly="true"/>
+            </column>
+            <column name="last-update" order="140">
+                <widget type="datetime" fieldname="lastupdate" readonly="true"/>
+            </column>
+            <column name="last-user" order="150">
+                <widget type="text" fieldname="lastnick" readonly="true"/>
+            </column>
+        </group>
+    </columns>
+</view>

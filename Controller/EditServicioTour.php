@@ -19,31 +19,23 @@
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
-use FacturaScripts\Plugins\OpenServBus\Model\EstadoReservaTour;
-use FacturaScripts\Plugins\OpenServBus\Model\EstadoServicioTour;
+use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
 /**
  * @author Daniel Fernández Giménez <hola@danielfg.es>
  */
-trait OpenServBusControllerTrait
+class EditServicioTour extends EditController
 {
-    protected function addColorStatusBooking(string $viewName): void
+    public function getModelClassName(): string
     {
-        $statusBooking = new EstadoReservaTour();
-        foreach ($statusBooking->all([], [], 0, 0) as $status) {
-            if ($status->color) {
-                $this->views[$viewName]->addColor('idestado', $status->id, $status->color, $status->name);
-            }
-        }
+        return "ServicioTour";
     }
 
-    protected function addColorStatusService(string $viewName): void
+    public function getPageData(): array
     {
-        $statusService = new EstadoServicioTour();
-        foreach ($statusService->all([], [], 0, 0) as $status) {
-            if ($status->color) {
-                $this->views[$viewName]->addColor('idestado', $status->id, $status->color, $status->name);
-            }
-        }
+        $data = parent::getPageData();
+        $data["title"] = "service";
+        $data["icon"] = "fas fa-concierge-bell";
+        return $data;
     }
 }

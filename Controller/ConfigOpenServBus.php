@@ -47,6 +47,7 @@ class ConfigOpenServBus extends PanelController
         $this->createViewVehicleEquipamentType();
         $this->createViewVehicleType();
         $this->createViewBookingsStatus();
+        $this->createViewServicesStatus();
     }
 
     protected function createViewBookingsStatus($viewName = 'EditEstadoReservaTour')
@@ -122,6 +123,11 @@ class ConfigOpenServBus extends PanelController
         $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
     }
 
+    protected function createViewServicesStatus($viewName = 'EditEstadoServicioTour')
+    {
+        $this->addEditListView($viewName, 'EstadoServicioTour', 'service-status', 'fas fa-concierge-bell');
+    }
+
     protected function createViewTarjetaType($viewName = 'ListTarjetaType')
     {
         $this->addListView($viewName, 'TarjetaType', 'tarjeta_type', 'far fa-credit-card');
@@ -184,6 +190,7 @@ class ConfigOpenServBus extends PanelController
                 break;
 
             case 'EditEstadoReservaTour':
+            case 'EditEstadoServicioTour':
             case 'ListDocumentationType':
             case 'ListEmployeeContractType':
             case 'ListFuelType':

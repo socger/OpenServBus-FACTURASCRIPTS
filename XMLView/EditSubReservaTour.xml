@@ -21,7 +21,7 @@
 <view>
     <columns>
         <group name="data" numcolumns="12">
-            <column name="code" order="100" readonly="true">
+            <column name="id" order="100">
                 <widget type="text" fieldname="id" readonly="true"/>
             </column>
             <column name="booking" order="110">

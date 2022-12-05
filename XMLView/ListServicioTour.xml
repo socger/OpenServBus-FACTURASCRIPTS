@@ -21,27 +21,27 @@
 <view>
     <columns>
         <column name="id" order="100">
-            <widget type="text" fieldname="id" />
+            <widget type="text" fieldname="id"/>
         </column>
-        <column name="reference" order="110">
-            <widget type="text" fieldname="reference"/>
-        </column>
-        <column name="booking" order="120">
-            <widget type="select" fieldname="idreserva" onclick="EditReservaTour">
-                <values source="tour_reservas" fieldcode="id" fieldtitle="id"/>
+        <column name="underbook" order="110">
+            <widget type="select" fieldname="idsubreserva">
+                <values source="tour_subreservas" fieldcode="id" fieldtitle="id"/>
             </widget>
         </column>
-        <column name="operator" order="130">
-            <widget type="select" fieldname="idoperador" onclick="EditTourOperador">
-                <values source="tour_operadores" fieldcode="id" fieldtitle="name"/>
-            </widget>
+        <column name="route-code" order="120">
+            <widget type="text" fieldname="routecode"/>
         </column>
-        <column name="date" order="140">
-            <widget type="date" fieldname="date"/>
+        <column name="route-name" order="130">
+            <widget type="text" fieldname="routename"/>
+        </column>
+        <column name="service-type" order="140">
+            <widget type="select" fieldname="idtiposervicio">
+                <values source="service_types" fieldcode="idservice_type" fieldtitle="nombre"/>
+            </widget>
         </column>
         <column name="status" order="150">
             <widget type="select" fieldname="idestado">
-                <values source="tour_reservas_estados" fieldcode="id" fieldtitle="name"/>
+                <values source="tour_servicios_estados" fieldcode="id" fieldtitle="name"/>
             </widget>
         </column>
         <column name="closed" order="160" display="center">
