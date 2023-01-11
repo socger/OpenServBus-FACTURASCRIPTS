@@ -22,6 +22,9 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\PanelController;
 
+/**
+ * @author Daniel Fernández Giménez <hola@danielfg.es>
+ */
 class ConfigOpenServBus extends PanelController
 {
     public function getPageData(): array
@@ -43,6 +46,13 @@ class ConfigOpenServBus extends PanelController
         $this->createViewTarjetaType();
         $this->createViewVehicleEquipamentType();
         $this->createViewVehicleType();
+        $this->createViewBookingsStatus();
+        $this->createViewServicesStatus();
+    }
+
+    protected function createViewBookingsStatus($viewName = 'EditEstadoReservaTour')
+    {
+        $this->addEditListView($viewName, 'EstadoReservaTour', 'bookings-status', 'fas fa-calendar-check');
     }
 
     protected function createViewDocumentationType($viewName = 'ListDocumentationType')
@@ -113,6 +123,11 @@ class ConfigOpenServBus extends PanelController
         $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
     }
 
+    protected function createViewServicesStatus($viewName = 'EditEstadoServicioTour')
+    {
+        $this->addEditListView($viewName, 'EstadoServicioTour', 'service-status', 'fas fa-concierge-bell');
+    }
+
     protected function createViewTarjetaType($viewName = 'ListTarjetaType')
     {
         $this->addListView($viewName, 'TarjetaType', 'tarjeta_type', 'far fa-credit-card');
@@ -174,6 +189,8 @@ class ConfigOpenServBus extends PanelController
                 $view->model->name = 'openservbus';
                 break;
 
+            case 'EditEstadoReservaTour':
+            case 'EditEstadoServicioTour':
             case 'ListDocumentationType':
             case 'ListEmployeeContractType':
             case 'ListFuelType':
