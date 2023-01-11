@@ -31,9 +31,9 @@
                 <values source="tour_reservas" fieldcode="id" fieldtitle="id"/>
             </widget>
         </column>
-        <column name="operator" order="130">
-            <widget type="select" fieldname="idoperador" onclick="EditTourOperador">
-                <values source="tour_operadores" fieldcode="id" fieldtitle="name"/>
+        <column name="agency" order="130">
+            <widget type="select" fieldname="codcliente" onclick="EditCliente">
+                <values source="clientes" fieldcode="codcliente" fieldtitle="nombre"/>
             </widget>
         </column>
         <column name="date" order="140">

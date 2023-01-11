@@ -24,9 +24,9 @@
             <column name="id" order="100">
                 <widget type="text" fieldname="id" readonly="true"/>
             </column>
-            <column name="operator" order="110">
-                <widget type="select" fieldname="idoperador" required="true" onclick="EditTourOperador">
-                    <values source="tour_operadores" fieldcode="id" fieldtitle="name"/>
+            <column name="tour-operator" order="110">
+                <widget type="autocomplete" fieldname="codcliente" required="true" onclick="EditCliente">
+                    <values source="clientes" fieldcode="codcliente" fieldtitle="nombre"/>
                 </widget>
             </column>
             <column name="hire-date" order="120">
@@ -35,7 +35,7 @@
             <column name="reference" order="130">
                 <widget type="text" fieldname="reference"/>
             </column>
-            <column name="status" order="140">
+            <column name="status" order="140" titleurl="ConfigOpenServBus?activetab=EditEstadoReservaTour">
                 <widget type="select" fieldname="idestado" required="true">
                     <values source="tour_reservas_estados" fieldcode="id" fieldtitle="name"/>
                 </widget>

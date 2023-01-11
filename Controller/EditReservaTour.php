@@ -59,8 +59,7 @@ class EditReservaTour extends EditController
         $this->views[$viewName]->disableColumn('booking', true);
 
         // Filtros
-        $operators = $this->codeModel->all('tour_operadores', 'id', 'name');
-        $this->views[$viewName]->addFilterSelect('idoperador', 'operator', 'idoperador', $operators);
+        $this->views[$viewName]->addFilterAutocomplete('codcliente', 'agency', 'codcliente', 'clientes', 'codcliente', 'nombre');
 
         $status = $this->codeModel->all('tour_reservas_estados', 'id', 'name');
         $this->views[$viewName]->addFilterSelect('idestado', 'status', 'idestado', $status);
