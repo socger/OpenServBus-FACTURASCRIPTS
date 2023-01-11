@@ -35,7 +35,7 @@
             <column name="route-name" order="130" numcolumns="7">
                 <widget type="text" fieldname="routename" required="true"/>
             </column>
-            <column name="service-type" order="140">
+            <column name="service-type" titleurl="ConfigOpenServBus?activetab=ListServiceType" order="140">
                 <widget type="select" fieldname="idtiposervicio" required="true">
                     <values source="service_types" fieldcode="idservice_type" fieldtitle="nombre"/>
                 </widget>
@@ -50,7 +50,7 @@
                     <values source="service_regulars" fieldcode="idservice_regular" fieldtitle="nombre"/>
                 </widget>
             </column>
-            <column name="status" order="180">
+            <column name="status" titleurl="ConfigOpenServBus?activetab=EditEstadoServicioTour" order="180">
                 <widget type="select" fieldname="idestado" required="true">
                     <values source="tour_servicios_estados" fieldcode="id" fieldtitle="name"/>
                 </widget>
@@ -76,7 +76,7 @@
                 <widget type="time" fieldname="pickupflighttime"/>
             </column>
         </group>
-        <group name="destination" title="distination" numcolumns="12">
+        <group name="destination" title="destination" numcolumns="12">
             <column name="destination-point" order="100" numcolumns="12">
                 <widget type="text" fieldname="destinationpoint" required="true"/>
             </column>
