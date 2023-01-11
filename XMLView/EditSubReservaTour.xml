@@ -25,7 +25,7 @@
                 <widget type="text" fieldname="id" readonly="true"/>
             </column>
             <column name="booking" order="110">
-                <widget type="select" fieldname="idreserva" required="true" onclick="EditReservaTour">
+                <widget type="autocomplete" fieldname="idreserva" required="true" onclick="EditReservaTour" readonly="true">
                     <values source="tour_reservas" fieldcode="id" fieldtitle="id"/>
                 </widget>
             </column>
