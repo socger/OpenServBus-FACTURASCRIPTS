@@ -24,22 +24,21 @@ use FacturaScripts\Core\Lib\ExtendedController\ListController;
 /**
  * @author Daniel Fernández Giménez <hola@danielfg.es>
  */
-class ListTourOperador extends ListController
+class ListReservaTour extends ListController
 {
     use OpenServBusControllerTrait;
 
     public function getPageData(): array
     {
         $data = parent::getPageData();
-        $data["title"] = "tour-operators";
+        $data["title"] = "bookings";
         $data["menu"] = "OpenServBus";
-        $data["icon"] = "fas fa-globe-europe";
+        $data["icon"] = "fas fa-calendar-check";
         return $data;
     }
 
     protected function createViews()
     {
-        $this->createViewsTourOperador();
         $this->createViewsReservaTour();
         $this->createViewsSubReservaTour();
         $this->createViewsServicioTour();
@@ -67,8 +66,7 @@ class ListTourOperador extends ListController
         $this->addSearchFields($viewName, ["id", "reference"]);
 
         // Filtros
-        $operators = $this->codeModel->all('tour_operadores', 'id', 'name');
-        $this->addFilterSelect($viewName, 'idoperador', 'operator', 'idoperador', $operators);
+        $this->addFilterAutocomplete($viewName, 'codcliente', 'tour-operator', 'codcliente', 'clientes', 'codcliente', 'nombre');
 
         $status = $this->codeModel->all('tour_reservas_estados', 'id', 'name');
         $this->addFilterSelect($viewName, 'idestado', 'status', 'idestado', $status);
@@ -112,8 +110,7 @@ class ListTourOperador extends ListController
         $this->addSearchFields($viewName, ["id", "reference"]);
 
         // Filtros
-        $operators = $this->codeModel->all('tour_operadores', 'id', 'name');
-        $this->addFilterSelect($viewName, 'idoperador', 'operator', 'idoperador', $operators);
+        $this->addFilterAutocomplete($viewName, 'codcliente', 'agency', 'codcliente', 'clientes', 'codcliente', 'nombre');
 
         $bookings = $this->codeModel->all('tour_reservas', 'id', 'id');
         $this->addFilterSelect($viewName, 'idreserva', 'booking', 'idreserva', $bookings);
@@ -123,12 +120,5 @@ class ListTourOperador extends ListController
 
         // asignamos los colores
         $this->addColorStatusBooking($viewName);
-    }
-
-    protected function createViewsTourOperador(string $viewName = "ListTourOperador")
-    {
-        $this->addView($viewName, "TourOperador", "tour-operators", "fas fa-globe-europe");
-        $this->addOrderBy($viewName, ["name"], "name");
-        $this->addSearchFields($viewName, ["name"]);
     }
 }

@@ -92,13 +92,6 @@ class SubReservaTour extends ModelClass
         return $estado;
     }
 
-    public function getOperador(): TourOperador
-    {
-        $operador = new TourOperador();
-        $operador->loadFromCode($this->idoperador);
-        return $operador;
-    }
-
     public function getServices(): array
     {
         $serviceModel = new ServicioTour();
@@ -151,7 +144,7 @@ class SubReservaTour extends ModelClass
         return parent::test();
     }
 
-    public function url(string $type = 'auto', string $list = 'ListTourOperador'): string
+    public function url(string $type = 'auto', string $list = 'ListReservaTour'): string
     {
         return parent::url($type, $list . '?activetab=List');
     }

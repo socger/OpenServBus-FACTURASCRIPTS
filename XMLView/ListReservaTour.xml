@@ -26,9 +26,9 @@
         <column name="reference" order="110">
             <widget type="text" fieldname="reference"/>
         </column>
-        <column name="operator" order="120">
-            <widget type="select" fieldname="idoperador" onclick="EditTourOperador">
-                <values source="tour_operadores" fieldcode="id" fieldtitle="name"/>
+        <column name="tour-operator" order="120">
+            <widget type="select" fieldname="codcliente" onclick="EditCliente">
+                <values source="clientes" fieldcode="codcliente" fieldtitle="nombre"/>
             </widget>
         </column>
         <column name="hire-date" order="130">

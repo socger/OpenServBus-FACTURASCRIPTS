@@ -117,6 +117,8 @@ class ServicioTour extends ModelClass
 
     public function install(): string
     {
+        new Service();
+        new ServiceRegular();
         new SubReservaTour();
         new EstadoServicioTour();
         return parent::install();
@@ -152,7 +154,7 @@ class ServicioTour extends ModelClass
         return parent::test();
     }
 
-    public function url(string $type = 'auto', string $list = 'ListTourOperador'): string
+    public function url(string $type = 'auto', string $list = 'ListReservaTour'): string
     {
         return parent::url($type, $list . '?activetab=List');
     }

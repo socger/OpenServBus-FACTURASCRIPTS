@@ -22,6 +22,12 @@ namespace FacturaScripts\Plugins\OpenServBus;
 
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\InitClass;
+use FacturaScripts\Plugins\OpenServBus\Model\PasajeroTour;
+use FacturaScripts\Plugins\OpenServBus\Model\ReservaTour;
+use FacturaScripts\Plugins\OpenServBus\Model\Service;
+use FacturaScripts\Plugins\OpenServBus\Model\ServiceRegular;
+use FacturaScripts\Plugins\OpenServBus\Model\ServicioTour;
+use FacturaScripts\Plugins\OpenServBus\Model\SubReservaTour;
 
 class Init extends InitClass
 {
@@ -34,6 +40,12 @@ class Init extends InitClass
 
     public function update()
     {
+        new Service();
+        new ServiceRegular();
+        new ReservaTour();
+        new SubReservaTour();
+        new ServicioTour();
+        new PasajeroTour();
         $this->deleteColumnFromTable();
     }
 
@@ -45,13 +57,13 @@ class Init extends InitClass
         $columns = ['nombre'];
         $tables = ['employee_contracts', 'employees_attendance_management_yn', 'drivers', 'helpers', 'collaborators'];
         foreach ($tables as $table) {
-            // preguntamos si exite la tabla
+            // preguntamos si existe la tabla
             if (false === $dataBase->tableExists($table)) {
                 continue;
             }
             foreach ($dataBase->getColumns($table) as $column) {
-                if (in_array($column->name, $columns)) {
-                    $sql = 'ALTER TABLE ' . $table . ' DROP COLUMN ' . $column->name;
+                if (in_array($column['name'], $columns)) {
+                    $sql = 'ALTER TABLE ' . $table . ' DROP COLUMN ' . $column['name'];
                     $dataBase->exec($sql);
                 }
             }

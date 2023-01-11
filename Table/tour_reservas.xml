@@ -6,6 +6,11 @@
         <null>NO</null>
     </column>
     <column>
+        <name>codcliente</name>
+        <type>character varying(10)</type>
+        <null>NO</null>
+    </column>
+    <column>
         <name>creationdate</name>
         <type>timestamp</type>
         <null>NO</null>
@@ -22,11 +27,6 @@
     </column>
     <column>
         <name>idestado</name>
-        <type>integer</type>
-        <null>NO</null>
-    </column>
-    <column>
-        <name>idoperador</name>
         <type>integer</type>
         <null>NO</null>
     </column>
@@ -63,8 +63,8 @@
         <type>FOREIGN KEY (nick) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
     </constraint>
     <constraint>
-        <name>ca_tour_reservas_tour_operadores</name>
-        <type>FOREIGN KEY (idoperador) REFERENCES tour_operadores (id) ON DELETE RESTRICT ON UPDATE CASCADE</type>
+        <name>ca_tour_reservas_clientes</name>
+        <type>FOREIGN KEY (codcliente) REFERENCES clientes (codcliente) ON DELETE RESTRICT ON UPDATE CASCADE</type>
     </constraint>
     <constraint>
         <name>ca_tour_reservas_tour_reservas_estados</name>

@@ -89,7 +89,7 @@ class PasajeroTour extends ModelClass
         return "tour_pasajeros";
     }
 
-    public function url(string $type = 'auto', string $list = 'ListTourOperador'): string
+    public function url(string $type = 'auto', string $list = 'ListReservaTour'): string
     {
         if ($type === 'auto') {
             return $this->getServicio()->url();
