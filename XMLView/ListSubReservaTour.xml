@@ -27,12 +27,12 @@
             <widget type="text" fieldname="reference"/>
         </column>
         <column name="booking" order="120">
-            <widget type="select" fieldname="idreserva" onclick="EditReservaTour">
+            <widget type="select" fieldname="idreserva">
                 <values source="tour_reservas" fieldcode="id" fieldtitle="id"/>
             </widget>
         </column>
         <column name="agency" order="130">
-            <widget type="select" fieldname="codcliente" onclick="EditCliente">
+            <widget type="select" fieldname="codcliente">
                 <values source="clientes" fieldcode="codcliente" fieldtitle="nombre"/>
             </widget>
         </column>

@@ -24,12 +24,12 @@
             <widget type="text" fieldname="id"/>
         </column>
         <column name="service" order="110">
-            <widget type="select" fieldname="idservicio" onclick="EditServicioTour">
+            <widget type="select" fieldname="idservicio">
                 <values source="tour_servicios" fieldcode="id" fieldtitle="id"/>
             </widget>
         </column>
         <column name="contact" order="120">
-            <widget type="select" fieldname="idcontacto" onclick="EditContacto">
+            <widget type="select" fieldname="idcontacto">
                 <values source="contactos" fieldcode="idcontacto" fieldtitle="nombre"/>
             </widget>
         </column>
