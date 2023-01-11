@@ -25,7 +25,7 @@
                 <widget type="text" fieldname="id" readonly="true"/>
             </column>
             <column name="underbook" order="110" numcolumns="1">
-                <widget type="select" fieldname="idsubreserva" required="true" onclick="EditSubReservaTour">
+                <widget type="autocomplete" fieldname="idsubreserva" required="true" readonly="true" onclick="EditSubReservaTour">
                     <values source="tour_subreservas" fieldcode="id" fieldtitle="id"/>
                 </widget>
             </column>

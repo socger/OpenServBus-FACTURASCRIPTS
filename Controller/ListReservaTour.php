@@ -57,6 +57,9 @@ class ListReservaTour extends ListController
         $this->addFilterSelect($viewName, 'idservicio', 'service', 'idservicio', $services);
 
         $this->addFilterAutocomplete($viewName, 'idcontacto', 'contact', 'idcontacto', 'contactos', 'idcontacto', 'nombre');
+
+        // ocultamos botones
+        $this->setSettings($viewName, 'btnNew', false);
     }
 
     protected function createViewsReservaTour(string $viewName = "ListReservaTour")
@@ -101,6 +104,9 @@ class ListReservaTour extends ListController
 
         // asignamos los colores
         $this->addColorStatusService($viewName);
+
+        // ocultamos botones
+        $this->setSettings($viewName, 'btnNew', false);
     }
 
     protected function createViewsSubReservaTour(string $viewName = "ListSubReservaTour")
@@ -120,5 +126,8 @@ class ListReservaTour extends ListController
 
         // asignamos los colores
         $this->addColorStatusBooking($viewName);
+
+        // ocultamos botones
+        $this->setSettings($viewName, 'btnNew', false);
     }
 }
