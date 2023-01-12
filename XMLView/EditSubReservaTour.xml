@@ -46,7 +46,7 @@
                 </widget>
             </column>
             <column name="type" numcolumns="2" order="160">
-                <widget type="select" fieldname="type" required="true">
+                <widget type="select" fieldname="type" translate="true" required="true">
                     <values title="by-vehicle">VEHICULO</values>
                     <values title="by-seat">PLAZA</values>
                 </widget>

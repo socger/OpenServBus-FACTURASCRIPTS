@@ -226,7 +226,7 @@ class EditSubReservaTour extends EditController
                         'action' => 'albaran-subreserva',
                         'color' => 'warning',
                         'icon' => 'fas fa-dolly-flatbed',
-                        'label' => 'delivery-underbook',
+                        'label' => 'delivery-note-underbook',
                         'type' => 'action'
                     ]);
                 } else {
