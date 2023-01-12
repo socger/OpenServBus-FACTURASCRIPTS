@@ -84,9 +84,12 @@ class ListReservaTour extends ListController
         $this->addOrderBy($viewName, ["id"], "code", 2);
         $this->addOrderBy($viewName, ["pickupdate", "pickuptime"], "pick-up-date");
         $this->addOrderBy($viewName, ["destinationdate", "destinationtime"], "destination-date");
+        $this->addOrderBy($viewName, ["seatingtotal"], "seating-total");
         $this->addSearchFields($viewName, ["id", "routecode", "routename", "pickupflightid", "destinationflightid", "pickuplocation", "pickuppoint", "destinationpoint"]);
 
         // Filtros
+        $this->addFilterCheckbox($viewName, 'vip', 'vip', 'vip');
+
         $subReservas = $this->codeModel->all('tour_subreservas', 'id', 'id');
         $this->addFilterSelect($viewName, 'idsubreserva', 'underbook', 'idsubreserva', $subReservas);
 

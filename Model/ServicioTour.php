@@ -31,8 +31,26 @@ class ServicioTour extends ModelClass
 {
     use ModelTrait;
 
+    /** @var int */
+    public $adult;
+
+    /** @var int */
+    public $baby;
+
+    /** @var int */
+    public $children;
+
     /** @var bool */
     public $closed;
+
+    /** @var string */
+    public $connectioncode;
+
+    /** @var string */
+    public $connectionstartdate;
+
+    /** @var string */
+    public $connectionname;
 
     /** @var string */
     public $creationdate;
@@ -91,18 +109,33 @@ class ServicioTour extends ModelClass
     /** @var string */
     public $pickuptime;
 
+    /** @var int */
+    public $seatingtotal;
+
     /** @var string */
     public $routecode;
 
     /** @var string */
     public $routename;
 
+    /** @var bool */
+    public $vip;
+
+    /** @var int */
+    public $wheelchair;
+
     public function clear() 
     {
         parent::clear();
+        $this->adult = 0;
+        $this->baby = 0;
+        $this->children = 0;
         $this->closed = false;
         $this->creationdate = date(self::DATETIME_STYLE);
         $this->nick = Session::get('user')->nick ?? null;
+        $this->seatingtotal = 0;
+        $this->vip = false;
+        $this->wheelchair = 0;
     }
 
     public function delete(): bool
@@ -113,6 +146,13 @@ class ServicioTour extends ModelClass
 
         $this->checkEstadoSubreserva();
         return true;
+    }
+
+    public function getSubreserva(): SubReservaTour
+    {
+        $subreserva = new SubReservaTour();
+        $subreserva->loadFromCode($this->idsubreserva);
+        return $subreserva;
     }
 
     public function install(): string
@@ -149,6 +189,18 @@ class ServicioTour extends ModelClass
         if (false === empty($this->idserviciodiscrecional) && false === empty($this->idservicioregular)) {
             $this->toolBox()->i18nLog()->warning('only-one-service');
             return false;
+        }
+
+        $subreserva = $this->getSubreserva();
+        $this->seatingtotal = $this->adult + $this->children + $this->baby + $this->wheelchair;
+        if ($subreserva->type === SubReservaTour::TYPE_PLAZA) {
+            $qty = 0;
+            foreach ($subreserva->getProductos() as $product) {
+                $qty += $product->cantidad;
+            }
+            if ($this->seatingtotal > $qty) {
+                $this->toolBox()->i18nLog()->warning('seating-total-higher-than-qty');
+            }
         }
 
         return parent::test();

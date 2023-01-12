@@ -43,6 +43,7 @@ class EditServicioTour extends EditController
     protected function createViews()
     {
         parent::createViews();
+        $this->setSettings('EditServicioTour', 'btnNew', false);
         $this->createViewsContacto();
         $this->setTabsPosition('bottom');
     }

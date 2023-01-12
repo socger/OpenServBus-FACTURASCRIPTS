@@ -23,6 +23,7 @@ use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Model\Base\ModelClass;
 use FacturaScripts\Core\Model\Base\ModelTrait;
 use FacturaScripts\Core\Session;
+use FacturaScripts\Dinamic\Model\Cliente;
 
 /**
  * @author Daniel Fernández Giménez <hola@danielfg.es>
@@ -31,8 +32,14 @@ class SubReservaTour extends ModelClass
 {
     use ModelTrait;
 
+    const TYPE_PLAZA = 'PLAZA';
+    const TYPE_VEHICLE = 'VEHICULO';
+
     /** @var bool */
     public $closed;
+
+    /** @var string */
+    public $codcliente;
 
     /** @var string */
     public $creationdate;
@@ -44,10 +51,10 @@ class SubReservaTour extends ModelClass
     public $id;
 
     /** @var int */
-    public $idestado;
+    public $idalbaran;
 
     /** @var int */
-    public $idoperador;
+    public $idestado;
 
     /** @var int */
     public $idreserva;
@@ -67,6 +74,9 @@ class SubReservaTour extends ModelClass
     /** @var string */
     public $reference;
 
+    /** @var string */
+    public $type;
+
     public function clear() 
     {
         parent::clear();
@@ -85,11 +95,32 @@ class SubReservaTour extends ModelClass
         return true;
     }
 
+    public function getCliente(): Cliente
+    {
+        $cliente = new Cliente();
+        $cliente->loadFromCode($this->codcliente);
+        return $cliente;
+    }
+
     public function getEstado(): EstadoReservaTour
     {
         $estado = new EstadoReservaTour();
         $estado->loadFromCode($this->idestado);
         return $estado;
+    }
+
+    public function getProductos(): array
+    {
+        $producto = new SubReservaTourProduct();
+        $where = [new DataBaseWhere('idsubreserva', $this->id)];
+        return $producto->all($where, [], 0, 0);
+    }
+
+    public function getReserva(): ReservaTour
+    {
+        $reserva = new ReservaTour();
+        $reserva->loadFromCode($this->idreserva);
+        return $reserva;
     }
 
     public function getServices(): array
