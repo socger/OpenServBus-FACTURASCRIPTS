@@ -104,7 +104,7 @@ class Tarjeta extends Base\ModelClass
     public function install(): string
     {
         new Driver();
-        new Employee();
+        new EmployeeOpen();
         return parent::install();
     }
 
@@ -147,17 +147,17 @@ class Tarjeta extends Base\ModelClass
     protected function comprobarEmpresa()
     {
         if (!empty($this->idemployee)) {
-            $sql = ' SELECT employees.idempresa '
+            $sql = ' SELECT employees_open.idempresa '
                 . ' , empresas.nombrecorto '
-                . ' FROM employees '
-                . ' LEFT JOIN empresas ON (empresas.idempresa = employees.idempresa) '
-                . ' WHERE employees.idemployee = ' . $this->idemployee;
+                . ' FROM employees_open '
+                . ' LEFT JOIN empresas ON (empresas.idempresa = employees_open.idempresa) '
+                . ' WHERE employees_open.idemployee = ' . $this->idemployee;
         } else {
-            $sql = ' SELECT employees.idempresa '
+            $sql = ' SELECT employees_open.idempresa '
                 . ' , empresas.nombrecorto '
                 . ' FROM drivers '
-                . ' LEFT JOIN employees ON (employees.idemployee = drivers.idemployee) '
-                . ' LEFT JOIN empresas ON (empresas.idempresa = employees.idempresa) '
+                . ' LEFT JOIN employees_open ON (employees_open.idemployee = drivers.idemployee) '
+                . ' LEFT JOIN empresas ON (empresas.idempresa = employees_open.idempresa) '
                 . ' WHERE drivers.iddriver = ' . $this->iddriver;
         }
         $registros = self::$dataBase->select($sql);

@@ -47,6 +47,16 @@ class Init extends InitClass
         new ServicioTour();
         new PasajeroTour();
         $this->deleteColumnFromTable();
+        $this->changeNameEmployee();
+    }
+
+    private function changeNameEmployee()
+    {
+        // cambiamos el nombre de la tabla employees por employees_open
+        // al actualizar a la versión 3.1
+        $dataBase = new DataBase();
+        $sql = "ALTER TABLE employees RENAME employees_open";
+        $dataBase->exec($sql);
     }
 
     protected function deleteColumnFromTable()

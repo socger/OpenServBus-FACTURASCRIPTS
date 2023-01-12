@@ -22,7 +22,7 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
-class ListEmployee extends ListController
+class ListEmployeeOpen extends ListController
 {
     public function getPageData(): array
     {
@@ -39,9 +39,9 @@ class ListEmployee extends ListController
         $this->createViewEmployeeContract();
     }
 
-    protected function createViewEmployee($viewName = 'ListEmployee')
+    protected function createViewEmployee($viewName = 'ListEmployeeOpen')
     {
-        $this->addView($viewName, 'Employee', 'employees', 'far fa-id-card');
+        $this->addView($viewName, 'EmployeeOpen', 'employees', 'far fa-id-card');
         $this->addSearchFields($viewName, ['cod_employee', 'nombre', 'direccion']);
         $this->addOrderBy($viewName, ['nombre'], 'name', 1);
         $this->addOrderBy($viewName, ['cod_employee'], 'code');
@@ -78,7 +78,7 @@ class ListEmployee extends ListController
         $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
         $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'company', 'idempresa', 'empresas', 'idempresa', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'employee', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'employee', 'idemployee', 'employees_open', 'idemployee', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdemployee_contract_type', 'contract-type', 'idemployee_contract_type', 'employee_contract_types', 'idemployee_contract_type', 'nombre');
     }
 }

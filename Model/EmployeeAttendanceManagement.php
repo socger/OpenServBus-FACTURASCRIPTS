@@ -88,7 +88,7 @@ class EmployeeAttendanceManagement extends Base\ModelClass
 
     public function install(): string
     {
-        new Employee();
+        new EmployeeOpen();
         return parent::install();
     }
 

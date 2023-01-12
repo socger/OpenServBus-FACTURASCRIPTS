@@ -92,16 +92,16 @@ class EmployeeContract extends Base\ModelClass
         return true;
     }
 
-    public function getEmployee(): Employee
+    public function getEmployee(): EmployeeOpen
     {
-        $employee = new Employee();
+        $employee = new EmployeeOpen();
         $employee->loadFromCode($this->idemployee);
         return $employee;
     }
 
     public function install(): string
     {
-        new Employee();
+        new EmployeeOpen();
         new EmployeeContractType();
         return parent::install();
     }
@@ -138,7 +138,7 @@ class EmployeeContract extends Base\ModelClass
         return parent::test();
     }
 
-    public function url(string $type = 'auto', string $list = 'ListEmployee'): string
+    public function url(string $type = 'auto', string $list = 'ListEmployeeOpen'): string
     {
         return parent::url($type, $list . '?activetab=List');
     }
@@ -146,8 +146,8 @@ class EmployeeContract extends Base\ModelClass
     protected function Actualizar_idempresa_en_employees()
     {
         // Completamos el campo idempresa de la tabla employee
-        $sql = " UPDATE employees "
-            . " SET employees.idempresa = ( SELECT IF(employee_contracts.idempresa IS NOT NULL, employee_contracts.idempresa, 0) "
+        $sql = " UPDATE employees_open "
+            . " SET employees_open.idempresa = ( SELECT IF(employee_contracts.idempresa IS NOT NULL, employee_contracts.idempresa, 0) "
             . " FROM employee_contracts "
             . " WHERE employee_contracts.idemployee = " . $this->idemployee . " "
             . " AND employee_contracts.activo = 1 "
@@ -155,7 +155,7 @@ class EmployeeContract extends Base\ModelClass
             . " , employee_contracts.fecha_inicio DESC "
             . " , employee_contracts.fecha_fin DESC "
             . " LIMIT 1 ) "
-            . " WHERE employees.idemployee = " . $this->idemployee . ";";
+            . " WHERE employees_open.idemployee = " . $this->idemployee . ";";
 
         self::$dataBase->exec($sql);
     }

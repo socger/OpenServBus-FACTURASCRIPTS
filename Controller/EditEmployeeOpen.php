@@ -23,11 +23,11 @@ namespace FacturaScripts\Plugins\OpenServBus\Controller;
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
 
-class EditEmployee extends EditController
+class EditEmployeeOpen extends EditController
 {
     public function getModelClassName(): string
     {
-        return 'Employee';
+        return 'EmployeeOpen';
     }
 
     public function getPageData(): array
@@ -64,7 +64,7 @@ class EditEmployee extends EditController
         $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
 
         $this->views[$viewName]->addFilterAutocomplete('xIdEmpresa', 'company', 'idempresa', 'empresas', 'idempresa', 'nombre');
-        $this->views[$viewName]->addFilterAutocomplete('xIdEmployee', 'employee', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdEmployee', 'employee', 'idemployee', 'employees_open', 'idemployee', 'nombre');
         $this->views[$viewName]->addFilterAutocomplete('xIdemployee_contract_type', 'contract-type', 'idemployee_contract_type', 'employee_contract_types', 'idemployee_contract_type', 'nombre');
     }
 
@@ -98,7 +98,7 @@ class EditEmployee extends EditController
         ];
         $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
 
-        $this->views[$viewName]->addFilterAutocomplete('xIdEmployee', 'employee', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdEmployee', 'employee', 'idemployee', 'employees_open', 'idemployee', 'nombre');
         $this->views[$viewName]->addFilterAutocomplete('xiddocumentation_type', 'documentation - tipo', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
         $this->views[$viewName]->addFilterPeriod('porFechaCaducidad', 'date-expiration', 'fecha_caducidad');
     }

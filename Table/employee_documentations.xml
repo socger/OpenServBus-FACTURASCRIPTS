@@ -65,8 +65,8 @@
         <type>PRIMARY KEY (idemployee_documentation)</type>
     </constraint>
     <constraint>
-        <name>ca_employee_documentations__employees</name>
-        <type>FOREIGN KEY (idemployee) REFERENCES employees (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <name>ca_employee_documentations__employees_open</name>
+        <type>FOREIGN KEY (idemployee) REFERENCES employees_open (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
         <name>ca_employee_documentations__documentation_types</name>

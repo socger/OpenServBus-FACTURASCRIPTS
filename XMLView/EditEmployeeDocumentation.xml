@@ -26,7 +26,7 @@
             <column name="employee" titleurl="ListEmployee" numcolumns="3" order="110">
                 <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee"
                         required="true">
-                    <values source="employees" fieldcode="idemployee" fieldtitle="nombre"/>
+                    <values source="employees_open" fieldcode="idemployee" fieldtitle="nombre"/>
                 </widget>
             </column>
             <column name="document-type" titleurl="ListDocumentation_type" numcolumns="3" order="120">

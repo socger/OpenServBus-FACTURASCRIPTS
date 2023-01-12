@@ -67,8 +67,8 @@
         <type>PRIMARY KEY (idemployee_contract)</type>
     </constraint>
     <constraint>
-        <name>ca_employee_contracts_employees</name>
-        <type>FOREIGN KEY (idemployee) REFERENCES employees (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <name>ca_employee_contracts_employees_open</name>
+        <type>FOREIGN KEY (idemployee) REFERENCES employees_open (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
         <name>ca_employee_contracts_empresas</name>

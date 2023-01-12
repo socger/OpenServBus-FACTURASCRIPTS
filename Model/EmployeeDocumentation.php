@@ -73,7 +73,7 @@ class EmployeeDocumentation extends Base\ModelClass
 
     public function install(): string
     {
-        new Employee();
+        new EmployeeOpen();
         new DocumentationType();
         return parent::install();
     }

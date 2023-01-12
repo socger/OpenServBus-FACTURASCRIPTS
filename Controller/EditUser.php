@@ -28,13 +28,13 @@ class EditUser extends ParentController
     protected function createViews()
     {
         parent::createViews();
-        $this->addListView('ListEmployee', 'Employee', 'employees-with-this-user');
+        $this->addListView('ListEmployeeOpen', 'EmployeeOpen', 'employees-with-this-user');
     }
 
     protected function loadData($viewName, $view)
     {
         switch ($viewName) {
-            case 'ListEmployee':
+            case 'ListEmployeeOpen':
                 $nick = $this->getViewModelValue('EditUser', 'nick');
                 $where = [new DataBaseWhere('user_facturascripts_nick', $nick)];
                 $view->loadData('', $where);
