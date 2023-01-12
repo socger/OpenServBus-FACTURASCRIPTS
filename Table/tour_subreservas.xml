@@ -26,6 +26,10 @@
         <null>NO</null>
     </column>
     <column>
+        <name>idalbaran</name>
+        <type>integer</type>
+    </column>
+    <column>
         <name>idestado</name>
         <type>integer</type>
         <null>NO</null>
@@ -55,6 +59,11 @@
         <name>reference</name>
         <type>character varying(20)</type>
     </column>
+    <column>
+        <name>type</name>
+        <type>character varying(15)</type>
+        <null>NO</null>
+    </column>
     <constraint>
         <name>tour_subreservas_pkey</name>
         <type>PRIMARY KEY (id)</type>
@@ -78,5 +87,9 @@
     <constraint>
         <name>ca_tour_subreservas_tour_reservas</name>
         <type>FOREIGN KEY (idreserva) REFERENCES tour_reservas (id) ON DELETE RESTRICT ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_tour_subreservas_tour_albaranescli</name>
+        <type>FOREIGN KEY (idalbaran) REFERENCES albaranescli (idalbaran) ON DELETE SET NULL ON UPDATE CASCADE</type>
     </constraint>
 </table>

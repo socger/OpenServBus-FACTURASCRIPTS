@@ -55,8 +55,28 @@
                     <values source="tour_servicios_estados" fieldcode="id" fieldtitle="name"/>
                 </widget>
             </column>
-            <column name="closed" order="190">
+            <column name="vip" order="190">
+                <widget type="checkbox" fieldname="vip"/>
+            </column>
+            <column name="closed" order="200">
                 <widget type="checkbox" fieldname="closed"/>
+            </column>
+        </group>
+        <group name="seating" title="seating" numcolumns="12">
+            <column name="adult" order="100">
+                <widget type="number" fieldname="adult" min="0" step="1" decimal="0"/>
+            </column>
+            <column name="children" order="110">
+                <widget type="number" fieldname="children" min="0" step="1" decimal="0"/>
+            </column>
+            <column name="baby" order="120">
+                <widget type="number" fieldname="baby" min="0" step="1" decimal="0"/>
+            </column>
+            <column name="wheelchair" order="130">
+                <widget type="number" fieldname="wheelchair" min="0" step="1" decimal="0"/>
+            </column>
+            <column name="total" order="140">
+                <widget type="number" fieldname="seatingtotal" decimal="0" readonly="true"/>
             </column>
         </group>
         <group name="pick-up" title="pick-up" numcolumns="12">
@@ -88,6 +108,17 @@
             </column>
             <column name="destination-flight-id" order="130">
                 <widget type="text" fieldname="destinationflightid"/>
+            </column>
+        </group>
+        <group name="connection" title="connection" numcolumns="12">
+            <column name="name" order="100">
+                <widget type="text" fieldname="connectionname"/>
+            </column>
+            <column name="code" order="110">
+                <widget type="text" fieldname="connectioncode"/>
+            </column>
+            <column name="start-date" order="120">
+                <widget type="date" fieldname="connectionstartdate"/>
             </column>
         </group>
         <group name="log" title="logs" numcolumns="12">

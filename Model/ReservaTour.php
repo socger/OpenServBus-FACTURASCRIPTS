@@ -23,6 +23,7 @@ use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Model\Base\ModelClass;
 use FacturaScripts\Core\Model\Base\ModelTrait;
 use FacturaScripts\Core\Session;
+use FacturaScripts\Dinamic\Model\Cliente;
 
 /**
  * @author Daniel Fernández Giménez <hola@danielfg.es>
@@ -35,6 +36,9 @@ class ReservaTour extends ModelClass
     public $closed;
 
     /** @var string */
+    public $codcliente;
+
+    /** @var string */
     public $creationdate;
 
     /** @var int */
@@ -42,9 +46,6 @@ class ReservaTour extends ModelClass
 
     /** @var int */
     public $idestado;
-
-    /** @var int */
-    public $idoperador;
 
     /** @var string */
     public $lastnick;
@@ -61,6 +62,13 @@ class ReservaTour extends ModelClass
         $this->closed = false;
         $this->creationdate = date(self::DATETIME_STYLE);
         $this->nick = Session::get('user')->nick ?? null;
+    }
+
+    public function getCliente(): Cliente
+    {
+        $cliente = new Cliente();
+        $cliente->loadFromCode($this->codcliente);
+        return $cliente;
     }
 
     public function getEstado(): EstadoReservaTour
