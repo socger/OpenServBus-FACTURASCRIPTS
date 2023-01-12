@@ -37,7 +37,7 @@
             </column>
             <column name="empleado" title="Empleado" titleurl="ListEmployee" numcolumns="4" order="140">
                 <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee">
-                    <values source="employees" fieldcode="idemployee" fieldtitle="nombre"/>
+                    <values source="employees_open" fieldcode="idemployee" fieldtitle="nombre"/>
                 </widget>
             </column>
             <column name="conductor" title="Conductor" titleurl="ListDriver" numcolumns="4" order="150">

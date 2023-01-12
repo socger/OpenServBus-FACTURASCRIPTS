@@ -68,7 +68,7 @@ class ListEmployeeAttendanceManagement extends ListController
         ];
         $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
-        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'employee', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'employee', 'idemployee', 'employees_open', 'idemployee', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdidentification_mean', 'Identificacion - medio', 'ididentification_mean', 'identification_means', 'ididentification_mean', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdabsence_reason', 'absence-reason', 'idabsence_reason', 'absence_reasons', 'idabsence_reason', 'nombre');
         $this->addFilterPeriod($viewName, 'porFecha', 'date', 'fecha');
@@ -98,6 +98,6 @@ class ListEmployeeAttendanceManagement extends ListController
         ];
         $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
-        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'employee', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'employee', 'idemployee', 'employees_open', 'idemployee', 'nombre');
     }
 }

@@ -52,8 +52,8 @@
         <type>PRIMARY KEY (idemployee_attendance_management_yn)</type>
     </constraint>
     <constraint>
-        <name>ca_employee_attendance_management_yn_employees</name>
-        <type>FOREIGN KEY (idemployee) REFERENCES employees (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <name>ca_employee_attendance_management_yn_employees_open</name>
+        <type>FOREIGN KEY (idemployee) REFERENCES employees_open (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
         <name>ca_employee_attendance_management_yn__users_alta</name>
@@ -68,7 +68,7 @@
         <type>FOREIGN KEY (usermodificacion) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
     </constraint>
     <constraint>
-        <name>uniq_idempatt_employees</name>
+        <name>uniq_idempatt_employees_open</name>
         <type>UNIQUE (idemployee)</type>
     </constraint>
 </table>

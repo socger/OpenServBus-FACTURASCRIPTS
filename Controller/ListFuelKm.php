@@ -57,7 +57,7 @@ class ListFuelKm extends ListController
         $this->addFilterAutocomplete($viewName, 'xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdFuel_Type', 'fuel', 'idfuel_type', 'fuel_types', 'idfuel_type', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdFuel_Pumps', 'internal-fuel-dispenser', 'idfuel_pump', 'fuel_pumps', 'idfuel_pump', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'employee', 'idemployee', 'employees', 'idemployee', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'employee', 'idemployee', 'employees_open', 'idemployee', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xCodProveedor', 'supplier', 'codproveedor', 'proveedores', 'codproveedor', 'nombre');
         $this->addFilterAutocomplete($viewName, 'xIdTarjeta', 'card', 'idtarjeta', 'tarjetas', 'idtarjeta', 'nombre');
         $this->addFilterPeriod($viewName, 'porFecha', 'refueling-date', 'fecha');

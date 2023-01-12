@@ -23,7 +23,7 @@ namespace FacturaScripts\Plugins\OpenServBus\Model;
 use FacturaScripts\Core\Model\Base;
 use FacturaScripts\Core\Session;
 
-class Employee extends Base\ModelClass
+class EmployeeOpen extends Base\ModelClass
 {
     use Base\ModelTrait;
     use OpenServBusModelTrait;
@@ -131,7 +131,7 @@ class Employee extends Base\ModelClass
 
     public static function tableName(): string
     {
-        return 'employees';
+        return 'employees_open';
     }
 
     public function test(): bool

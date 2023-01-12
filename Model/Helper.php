@@ -88,7 +88,7 @@ class Helper extends Base\ModelClass
 
     public function install(): string
     {
-        new Employee();
+        new EmployeeOpen();
         new Collaborator();
         return parent::install();
     }
@@ -134,9 +134,9 @@ class Helper extends Base\ModelClass
         return $collaborator;
     }
 
-    protected function getEmployee(): Employee
+    protected function getEmployee(): EmployeeOpen
     {
-        $employee = new Employee();
+        $employee = new EmployeeOpen();
         $employee->loadFromCode($this->idemployee);
         return $employee;
     }

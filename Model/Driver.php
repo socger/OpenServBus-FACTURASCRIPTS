@@ -96,16 +96,16 @@ class Driver extends Base\ModelClass
         return $collaborator;
     }
 
-    public function getEmployee(): Employee
+    public function getEmployee(): EmployeeOpen
     {
-        $employee = new Employee();
+        $employee = new EmployeeOpen();
         $employee->loadFromCode($this->idemployee);
         return $employee;
     }
 
     public function install(): string
     {
-        new Employee();
+        new EmployeeOpen();
         new Collaborator();
         return parent::install();
     }

@@ -26,7 +26,7 @@
             <column name="employee" description="once-created-are-not-allowed-to-modify" numcolumns="5" order="110">
                 <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee"
                         readonly="dinamic">
-                    <values source="employees" fieldcode="idemployee" fieldtitle="nombre"/>
+                    <values source="employees_open" fieldcode="idemployee" fieldtitle="nombre"/>
                 </widget>
             </column>
             <column name="collaborator" description="once-created-are-not-allowed-to-modify" numcolumns="5" order="120">

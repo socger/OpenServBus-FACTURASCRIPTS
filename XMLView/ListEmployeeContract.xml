@@ -24,7 +24,7 @@
         </column>
         <column name="employee" order="110" title="Empleado">
             <widget type="select" fieldname="idemployee">
-                <values source="employees" fieldcode="idemployee" fieldtitle="nombre"/>
+                <values source="employees_open" fieldcode="idemployee" fieldtitle="nombre"/>
             </widget>
         </column>
         <column name="company" numcolumns="6" order="120">

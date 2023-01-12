@@ -112,7 +112,7 @@ class FuelKm extends Base\ModelClass
     {
         new Vehicle();
         new Driver();
-        new Employee();
+        new EmployeeOpen();
         new FuelType();
         new FuelPump();
         new Tarjeta();
@@ -159,17 +159,17 @@ class FuelKm extends Base\ModelClass
     {
         // Comprobamos la empresa del empleado o del conductor
         if (!empty($this->idemployee)) {
-            $sql = ' SELECT employees.idempresa '
+            $sql = ' SELECT employees_open.idempresa '
                 . ' , empresas.nombrecorto '
-                . ' FROM employees '
-                . ' LEFT JOIN empresas ON (empresas.idempresa = employees.idempresa) '
-                . ' WHERE employees.idemployee = ' . $this->idemployee;
+                . ' FROM employees_open '
+                . ' LEFT JOIN empresas ON (empresas.idempresa = employees_open.idempresa) '
+                . ' WHERE employees_open.idemployee = ' . $this->idemployee;
         } else {
-            $sql = ' SELECT employees.idempresa '
+            $sql = ' SELECT employees_open.idempresa '
                 . ' , empresas.nombrecorto '
                 . ' FROM drivers '
-                . ' LEFT JOIN employees ON (employees.idemployee = drivers.idemployee) '
-                . ' LEFT JOIN empresas ON (empresas.idempresa = employees.idempresa) '
+                . ' LEFT JOIN employees_open ON (employees_open.idemployee = drivers.idemployee) '
+                . ' LEFT JOIN empresas ON (empresas.idempresa = employees_open.idempresa) '
                 . ' WHERE drivers.iddriver = ' . $this->iddriver;
         }
 

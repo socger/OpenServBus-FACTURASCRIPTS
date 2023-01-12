@@ -71,7 +71,7 @@ class EmployeeAttendanceManagementYn extends Base\ModelClass
 
     public function install(): string
     {
-        new Employee();
+        new EmployeeOpen();
         return parent::install();
     }
 
@@ -103,9 +103,9 @@ class EmployeeAttendanceManagementYn extends Base\ModelClass
         return parent::url($type, $list . '?activetab=List');
     }
 
-    protected function getEmployee(): Employee
+    protected function getEmployee(): EmployeeOpen
     {
-        $employee = new Employee();
+        $employee = new EmployeeOpen();
         $employee->loadFromCode($this->idemployee);
         return $employee;
     }
