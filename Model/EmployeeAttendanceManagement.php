@@ -88,6 +88,7 @@ class EmployeeAttendanceManagement extends Base\ModelClass
 
     public function install(): string
     {
+        new AbsenceReason();
         new EmployeeOpen();
         return parent::install();
     }
