@@ -103,6 +103,7 @@ class Tarjeta extends Base\ModelClass
 
     public function install(): string
     {
+        new TarjetaType();
         new Driver();
         new EmployeeOpen();
         return parent::install();

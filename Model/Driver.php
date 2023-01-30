@@ -44,6 +44,8 @@ class Driver extends Base\ModelClass
 
     public $motivobaja;
 
+    public $nombre;
+
     public $observaciones;
 
     public $useralta;
@@ -51,20 +53,6 @@ class Driver extends Base\ModelClass
     public $userbaja;
 
     public $usermodificacion;
-
-    public function __get($name)
-    {
-        if ($name === 'nombre') {
-            if (false === empty($this->idcollaborator)) {
-                $collaborator = $this->getCollaborator();
-                return $collaborator->getProveedor()->nombre;
-            } elseif (false === empty($this->idemployee)) {
-                $employee = $this->getEmployee();
-                return $employee->nombre;
-            }
-        }
-        return null;
-    }
 
     public function clear()
     {
@@ -156,6 +144,14 @@ class Driver extends Base\ModelClass
         $utils = $this->toolBox()->utils();
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
+
+        // guardamos el nombre del colaborador o empleado
+        if ($this->idcollaborator) {
+            $this->nombre = $this->getCollaborator()->getProveedor()->nombre;
+        } elseif ($this->idemployee) {
+            $this->nombre = $this->getEmployee()->nombre;
+        }
+
         return parent::test();
     }
 
