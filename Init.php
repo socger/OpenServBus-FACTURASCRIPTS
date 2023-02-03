@@ -22,12 +22,8 @@ namespace FacturaScripts\Plugins\OpenServBus;
 
 use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Base\InitClass;
-use FacturaScripts\Plugins\OpenServBus\Model\PasajeroTour;
-use FacturaScripts\Plugins\OpenServBus\Model\ReservaTour;
 use FacturaScripts\Plugins\OpenServBus\Model\Service;
 use FacturaScripts\Plugins\OpenServBus\Model\ServiceRegular;
-use FacturaScripts\Plugins\OpenServBus\Model\ServicioTour;
-use FacturaScripts\Plugins\OpenServBus\Model\SubReservaTour;
 
 final class Init extends InitClass
 {
@@ -42,10 +38,6 @@ final class Init extends InitClass
     {
         new Service();
         new ServiceRegular();
-        new ReservaTour();
-        new SubReservaTour();
-        new ServicioTour();
-        new PasajeroTour();
         $this->deleteColumnFromTable();
         $this->changeNameEmployee();
     }
