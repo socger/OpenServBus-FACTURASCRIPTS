@@ -94,7 +94,7 @@
             </column>
         </group>
         <group name="billing" numcolumns="12" icon="fas fa-file-invoice-dollar" title="billing" valign="bottom">
-            <column name="company" titleurl="ListEmpresas" numcolumns="4" order="100">
+            <column name="company" titleurl="ListEmpresa" numcolumns="4" order="100">
                 <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa">
                     <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto"/>
                 </widget>

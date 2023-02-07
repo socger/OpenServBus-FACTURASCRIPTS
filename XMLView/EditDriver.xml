@@ -24,7 +24,7 @@
                 <widget type="text" fieldname="iddriver" readonly="true"/>
             </column>
             <column name="employee" description="once-created-are-not-allowed-to-modify" numcolumns="5" order="110">
-                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee"
+                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployeeOpen"
                         readonly="dinamic">
                     <values source="employees_open" fieldcode="idemployee" fieldtitle="nombre"/>
                 </widget>

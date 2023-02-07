@@ -20,8 +20,8 @@
 <view>
     <columns>
         <group name="data" numcolumns="12">
-            <column name="employee" titleurl="ListEmployee" numcolumns="8" order="100">
-                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee"
+            <column name="employee" titleurl="ListEmployeeOpen" numcolumns="8" order="100">
+                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployeeOpen"
                         required="true" readonly="dinamic">
                     <values source="employees_open" fieldcode="idemployee" fieldtitle="nombre"/>
                 </widget>
@@ -32,7 +32,7 @@
             <column name="end-date" numcolumns="2" order="120">
                 <widget type="date" fieldname="fecha_fin"/>
             </column>
-            <column name="contract-type" titleurl="ListEmployee_contract_type" numcolumns="6" order="130">
+            <column name="contract-type" titleurl="ConfigOpenServBus?activetab=ListEmployeeContractType" numcolumns="6" order="130">
                 <widget type="select" fieldname="idemployee_contract_type" icon="fas fa-building"
                         onclick="EditEmployeeContractType" required="true">
                     <values source="employee_contract_types" fieldcode="idemployee_contract_type" fieldtitle="nombre"/>

@@ -174,7 +174,7 @@
                 <widget type="time" fieldname="hora_anticipacion"/>
             </column>
             <column name="departure-from-garages" numcolums="1" order="110">
-                <widget type="checkbox" fieldname="salida_desde_nave_text" readonly="true"/>
+                <widget type="checkbox" fieldname="salida_desde_nave_text"/>
             </column>
         </group>
         <group name="horario" numcolumns="7" icon="far fa-clock" title="horario">

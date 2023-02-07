@@ -23,8 +23,8 @@
             <column name="id" numcolumns="3" order="100">
                 <widget type="text" fieldname="idemployee_attendance_management_yn" readonly="true"/>
             </column>
-            <column name="employee" titleurl="ListEmployee" numcolumns="9" order="110">
-                <widget type="select" fieldname="idemployee" icon="fas fa-book-reader" onclick="EditEmployee"
+            <column name="employee" titleurl="ListEmployeeOpen" numcolumns="9" order="110">
+                <widget type="select" fieldname="idemployee" icon="fas fa-book-reader" onclick="EditEmployeeOpen"
                         readonly="dinamic" required="true">
                     <values source="employees_open" fieldcode="idemployee" fieldtitle="nombre"/>
                 </widget>

@@ -23,8 +23,8 @@
             <column name="id" numcolumns="2" order="100">
                 <widget type="text" fieldname="idemployee_attendance_management" readonly="true"/>
             </column>
-            <column name="employee" titleurl="ListEmployee" numcolumns="4" order="110">
-                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee"
+            <column name="employee" titleurl="ListEmployeeOpen" numcolumns="4" order="110">
+                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployeeOpen"
                         required="true">
                     <values source="employees_open" fieldcode="idemployee" fieldtitle="nombre"/>
                 </widget>
@@ -50,7 +50,7 @@
                     <values source="identification_means" fieldcode="ididentification_mean" fieldtitle="nombre"/>
                 </widget>
             </column>
-            <column name="absence-reason" titleurl="ListAbsence_reason" numcolumns="6" order="160">
+            <column name="absence-reason" titleurl="ListEmployeeAttendanceManagement#ListAbsenceReason" numcolumns="6" order="160">
                 <widget type="select" fieldname="idabsence_reason" icon="fas fa-first-aid" onclick="EditAbsenceReason">
                     <values source="absence_reasons" fieldcode="idabsence_reason" fieldtitle="nombre"/>
                 </widget>

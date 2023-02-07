@@ -26,7 +26,7 @@
             <column name="description" numcolumns="4" order="110">
                 <widget type="text" fieldname="nombre" maxlength="100" required="true"/>
             </column>
-            <column name="card-type" titleurl="ListTarjeta_type" numcolumns="4" order="120">
+            <column name="card-type" titleurl="ConfigOpenServBus?activetab=ListTarjetaType" numcolumns="4" order="120">
                 <widget type="select" fieldname="idtarjeta_type" icon="far fa-credit-card" onclick="EditTarjetaType"
                         required="true">
                     <values source="tarjeta_types" fieldcode="idtarjeta_type" fieldtitle="nombre"/>
@@ -35,8 +35,8 @@
             <column name="es-de-pago" numcolums="2" order="130">
                 <widget type="checkbox" fieldname="es_DePago" readonly="true"/>
             </column>
-            <column name="empleado" title="Empleado" titleurl="ListEmployee" numcolumns="4" order="140">
-                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee">
+            <column name="empleado" title="Empleado" titleurl="ListEmployeeOpen" numcolumns="4" order="140">
+                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployeeOpen">
                     <values source="employees_open" fieldcode="idemployee" fieldtitle="nombre"/>
                 </widget>
             </column>
@@ -45,7 +45,7 @@
                     <values/>
                 </widget>
             </column>
-            <column name="company" titleurl="ListEmpresas" numcolumns="4" order="160">
+            <column name="company" titleurl="ListEmpresa" numcolumns="4" order="160">
                 <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa"
                         required="true">
                     <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto"/>

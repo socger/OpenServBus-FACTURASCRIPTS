@@ -49,7 +49,7 @@
                 </widget>
             </column>
             <column name="helper" numcolumns="4" order="120">
-                <widget type="select" fieldname="idhelper" icon="fas fa-user-graduate" onclick="EditVehicleType">
+                <widget type="select" fieldname="idhelper" icon="fas fa-user-graduate" onclick="EditHelper">
                     <values/>
                 </widget>
             </column>
@@ -83,7 +83,7 @@
                 <widget type="text" fieldname="hoja_ruta_cifnif" maxlength="30" icon="fas fa-id-card"/>
             </column>
             <column name="service-type" numcolumns="4" order="180">
-                <widget type="select" fieldname="idservice_type" icon="fas fa-dolly" onclick="EditVehicleType">
+                <widget type="select" fieldname="idservice_type" icon="fas fa-dolly" onclick="ConfigOpenServBus?activetab=ListServiceType">
                     <values source="service_types" fieldcode="idservice_type" fieldtitle="nombre"/>
                 </widget>
             </column>
@@ -153,7 +153,7 @@
                 <widget type="time" fieldname="hora_anticipacion"/>
             </column>
             <column name="departure-from-garages" numcolums="1" order="110">
-                <widget type="checkbox" fieldname="salida_desde_nave_sn"/>
+                <widget type="checkbox" fieldname="salida_desde_nave_sn" readonly="true"/>
             </column>
             <column name="departure_from_garages_2" title="departure-from-garages" numcolums="1" order="120">
                 <widget type="text" fieldname="salida_desde_nave_text" readonly="true"/>

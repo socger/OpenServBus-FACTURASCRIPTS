@@ -23,13 +23,13 @@
             <column name="name" numcolumns="4" order="100">
                 <widget type="text" fieldname="nombre" maxlength="100" required="true"/>
             </column>
-            <column name="employee" titleurl="ListEmployee" numcolumns="3" order="110">
-                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployee"
+            <column name="employee" titleurl="ListEmployeeOpen" numcolumns="3" order="110">
+                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployeeOpen"
                         required="true">
                     <values source="employees_open" fieldcode="idemployee" fieldtitle="nombre"/>
                 </widget>
             </column>
-            <column name="document-type" titleurl="ListDocumentation_type" numcolumns="3" order="120">
+            <column name="document-type" titleurl="ConfigOpenServBus?activetab=ListDocumentationType" numcolumns="3" order="120">
                 <widget type="select" fieldname="iddocumentation_type" icon="far fa-address-card"
                         onclick="EditDocumentationType" required="true">
                     <values source="documentation_types" fieldcode="iddocumentation_type" fieldtitle="nombre"/>
