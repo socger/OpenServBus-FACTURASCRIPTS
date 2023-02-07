@@ -179,8 +179,8 @@ class EmployeeContract extends Base\ModelClass
                 // Ponemos como activo el encontrado con mayor fecha_inicio + fecha_fin
                 $sql = " UPDATE employee_contracts "
                     . " SET employee_contracts.activo = 1 "
-                    . " , employee_contracts.usermodificacion = '" . $this->user_nick . "' "
-                    . " , employee_contracts.fechamodificacion = '" . $this->user_fecha . "' "
+                    . " , employee_contracts.usermodificacion = '" . $this->usermodificacion . "' "
+                    . " , employee_contracts.fechamodificacion = '" . $this->fechamodificacion . "' "
                     . " , employee_contracts.userbaja = null "
                     . " , employee_contracts.fechabaja = null "
                     . " WHERE employee_contracts.idemployee_contract = " . $contrato['idemployee_contract'] . " ";
@@ -190,10 +190,10 @@ class EmployeeContract extends Base\ModelClass
                 // Ponemos como no activos el resto
                 $sql = " UPDATE employee_contracts "
                     . " SET employee_contracts.activo = 0 "
-                    . " , employee_contracts.usermodificacion = '" . $this->user_nick . "' "
-                    . " , employee_contracts.fechamodificacion = '" . $this->user_fecha . "' "
-                    . " , employee_contracts.userbaja = '" . $this->user_nick . "' "
-                    . " , employee_contracts.fechabaja = '" . $this->user_fecha . "' "
+                    . " , employee_contracts.usermodificacion = '" . $this->usermodificacion . "' "
+                    . " , employee_contracts.fechamodificacion = '" . $this->fechamodificacion . "' "
+                    . " , employee_contracts.userbaja = '" . $this->userbaja . "' "
+                    . " , employee_contracts.fechabaja = '" . $this->fechabaja . "' "
 
                     . " WHERE employee_contracts.idemployee_contract <> " . $contrato['idemployee_contract'] . " "
                     . " AND employee_contracts.idemployee = " . $this->idemployee . " ";
