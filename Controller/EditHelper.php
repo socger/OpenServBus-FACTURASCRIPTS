@@ -45,7 +45,7 @@ class EditHelper extends EditController
         $mvn = $this->getMainViewName();
         switch ($viewName) {
             case $mvn:
-                $view->loadData();
+                parent::loadData($viewName, $view);
                 $this->loadValuesSelectCollaborators($mvn);
                 break;
 
