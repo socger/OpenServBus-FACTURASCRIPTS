@@ -54,6 +54,22 @@ class Driver extends Base\ModelClass
 
     public $usermodificacion;
 
+    public function __get(string $name)
+    {
+        if ($name === 'nombre') {
+            $collaborator = $this->getCollaborator();
+            $employee = $this->getEmployee();
+
+            if ($collaborator->exists()) {
+                return $collaborator->nombre;
+            } elseif ($employee->exists()) {
+                return $employee->nombre;
+            }
+        }
+
+        return null;
+    }
+
     public function clear()
     {
         parent::clear();
