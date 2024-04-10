@@ -130,7 +130,7 @@ class Vehicle extends Base\ModelClass
         $this->useralta = Session::get('user')->nick ?? null;
     }
 
-    public function install()
+    public function install(): string
     {
         new Collaborator();
         new Garage();

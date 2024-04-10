@@ -85,7 +85,7 @@ class VehicleDocumentation extends Base\ModelClass
         return $documentation_type;
     }
 
-    public function install()
+    public function install(): string
     {
         new Vehicle();
         new DocumentationType();
