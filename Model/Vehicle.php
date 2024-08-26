@@ -134,6 +134,8 @@ class Vehicle extends Base\ModelClass
     {
         new Collaborator();
         new Garage();
+        new FuelType();
+
         return parent::install();
     }
 

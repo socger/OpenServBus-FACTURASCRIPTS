@@ -278,7 +278,7 @@
     "serv-regulars-itineraries": "Serv. regulars - Itineraris",
     "service_type": "Tipus de servici",
     "service-combined": "Servici combinat",
-    "service-default-priority": "Si no reompli el vehicle o el conductor, aquest serà l'ordre de prioritats per al Muntatge de Servicis:  1r Combinació - Servici Regular, 2n Combinació y 3r Servici Regular",
+    "service-default-priority": "Si no ompliu el vehicle o el conductor, aquest serà l'ordre de prioritats per al Muntatge de Serveis:  1r Combinació - Servei Regular, 2n Combinació i 3r Servei Regular",
     "service-discretionary": "Servici discrecional",
     "service-is-regular-or-discretional-bat-not-both": "O es un servici regular o es un servicio discrecional. Però no els dos",
     "service-not-complete": "No es pot completar el servici. Comproveu que el servici existix o que no ha sigut borrat.",
