@@ -1,48 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <column>
-        <name>idemployee_contract</name>
-        <type>serial</type>
-        <null>NO</null>
+        <name>activo</name>
+        <type>boolean</type>
+        <default>true</default>
     </column>
     <column>
         <name>fechaalta</name>
         <type>timestamp</type>
     </column>
     <column>
-        <name>useralta</name>
-        <type>character varying(50)</type>
+        <name>fechabaja</name>
+        <type>timestamp</type>
     </column>
     <column>
         <name>fechamodificacion</name>
         <type>timestamp</type>
     </column>
     <column>
-        <name>usermodificacion</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>activo</name>
-        <type>boolean</type>
-        <default>true</default>
-    </column>
-    <column>
-        <name>fechabaja</name>
+        <name>fecha_fin</name>
         <type>timestamp</type>
     </column>
     <column>
-        <name>userbaja</name>
-        <type>character varying(50)</type>
+        <name>fecha_inicio</name>
+        <type>timestamp</type>
     </column>
-    <column>
-        <name>motivobaja</name>
-        <type>character varying(100)</type>
-    </column>
-
-
-
     <column>
         <name>idemployee</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idemployee_contract</name>
+        <type>serial</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>idemployee_contract_type</name>
         <type>integer</type>
     </column>
     <column>
@@ -50,43 +43,51 @@
         <type>integer</type>
     </column>
     <column>
-        <name>idemployee_contract_type</name>
-        <type>integer</type>
+        <name>motivobaja</name>
+        <type>character varying(100)</type>
     </column>
     <column>
         <name>observaciones</name>
         <type>text</type>
     </column>
-    
     <column>
-        <name>fecha_inicio</name>
-        <type>timestamp</type>
+        <name>useralta</name>
+        <type>character varying(50)</type>
     </column>
     <column>
-        <name>fecha_fin</name>
-        <type>timestamp</type>
+        <name>userbaja</name>
+        <type>character varying(50)</type>
     </column>
-
     <column>
-        <name>nombre</name>
-        <type>character varying(100)</type>
-        <null>NO</null>
+        <name>usermodificacion</name>
+        <type>character varying(50)</type>
     </column>
     <constraint>
         <name>employee_contracts_pkey</name>
         <type>PRIMARY KEY (idemployee_contract)</type>
     </constraint>
     <constraint>
-        <name>ca_employee_contracts_employees</name>
-        <type>FOREIGN KEY (idemployee) REFERENCES employees (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <name>ca_employee_contracts_employees_open</name>
+        <type>FOREIGN KEY (idemployee) REFERENCES employees_open (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
         <name>ca_employee_contracts_empresas</name>
         <type>FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
+        <name>ca_employee_contracts__users_alta</name>
+        <type>FOREIGN KEY (useralta) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_employee_contracts__users_baja</name>
+        <type>FOREIGN KEY (userbaja) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_employee_contracts__users_modificacion</name>
+        <type>FOREIGN KEY (usermodificacion) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
         <name>ca_employee_contracts_employee_contract_type</name>
         <type>FOREIGN KEY (idemployee_contract_type) REFERENCES employee_contract_types (idemployee_contract_type) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
 </table>
-

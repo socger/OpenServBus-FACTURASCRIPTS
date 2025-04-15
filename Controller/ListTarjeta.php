@@ -1,94 +1,66 @@
 <?php
+/**
+ * This file is part of OpenServBus plugin for FacturaScripts
+ * Copyright (C) 2021-2022 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2021 Jerónimo Pedro Sánchez Manzano <socger@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/.
+ */
+
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
-class ListTarjeta extends ListController {
-    
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
-    public function getPageData(): array {
+class ListTarjeta extends ListController
+{
+    public function getPageData(): array
+    {
         $pageData = parent::getPageData();
-        
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Tarjetas';
-        $pageData['title'] = 'Tarjetas';
-        
+        $pageData['title'] = 'cards';
         $pageData['icon'] = 'fab fa-cc-mastercard';
-
-
         return $pageData;
     }
-    
-    protected function createViews() {
+
+    protected function createViews()
+    {
         $this->createViewTarjeta();
     }
-    
+
     protected function createViewTarjeta($viewName = 'ListTarjeta')
     {
-        $this->addView($viewName, 'Tarjeta');
-        
-        // Opciones de búsqueda rápida
-        $this->addSearchFields($viewName, ['nombre']); // Las búsqueda la hará por el campo nombre
-        
-        // Tipos de Ordenación
-            // Primer parámetro es la pestaña
-            // Segundo parámetro es los campos por los que ordena (array)
-            // Tercer parámetro es la etiqueta a poner
-            // Cuarto parámetro, si se rellena, le está diciendo cual es el order by por defecto, y además las opciones son
-               // 1 Orden ascendente
-               // 2 Orden descendente
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
+        $this->addView($viewName, 'Tarjeta', 'cards', 'fas fa-credit-card');
+        $this->addSearchFields($viewName, ['nombre']);
+        $this->addOrderBy($viewName, ['nombre'], 'name', 1);
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
+
         // Filtros
-        // Filtro checkBox por campo Activo ... addFilterCheckbox($viewName, $key, $label, $field);
-            // $viewName ... nombre del controlador
-            // $key ... es el nombre que le ponemos al filtro
-            // $label ... la etiqueta a mostrar al usuario
-            // $field ... el campo del modelo sobre el que vamos a comprobar
-        // $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
-     
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);        
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
-        // Filtro autoComplete ... addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode, $fieldtitle)
-        // Aunque lo vamos a hacer sobre la tabla empresa que normalmente tiene pocos registros
-        // este tipo de filtros está pensado para tablas como clientes, proveedores, etc que tengan muchos registros
-        // Para estas tablas no vamos a usar un filtro Select ... faltaría memoria al equipo para ello
-            // $viewName ... nombre del controlador
-            // $key ... es el nombre que le ponemos al filtro, que puede ser el campo sobre el que quiero filtrar
-            // $label ...  parámetro es la etiqueta a mostrar al usuario
-            // $field ... es el campo del modelo
-            // $table ... es el nombre de la tabla en la BD
-            // $fieldcode ... es el campo interno que quiero consultar
-            // $fieldtitle ... es el campo a mostar al usuario
-        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdDriver', 'Conductor', 'iddriver', 'drivers', 'iddriver', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdTarjeta_Type', 'Tipo tarjeta', 'idtarjeta_type', 'tarjeta_types', 'idtarjeta_type', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'company', 'idempresa', 'empresas', 'idempresa', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmployee', 'employee', 'idemployee', 'employees_open', 'idemployee', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdDriver', 'driver', 'iddriver', 'drivers', 'iddriver', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdTarjeta_Type', 'card-type', 'idtarjeta_type', 'tarjeta_types', 'idtarjeta_type', 'nombre');
 
-        // Filtro periodo de fechas
-        // addFilterPeriod($viewName, $key, $label, $field)
-            // $key ... es el nombre que le ponemos al filtro
-            // $label ... es la etiqueta a mostrar al cliente
-            // $field ... es el campo sobre el que filtraremos
-        // $this->addFilterPeriod($viewName, 'porFechaAlta', 'Fecha de alta', 'fechaalta');
-        
-        // Filtro de fecha sin periodo
-        // addFilterDatePicker($viewName, $key, $label, $field)
-
-        // Filtro de TIPO SELECT para filtrar por SI ES O NO de pago, O TODOS
         $esDePago = [
-            ['code' => '1', 'description' => 'De pago = SI'],
-            ['code' => '0', 'description' => 'De pago = NO'],
+            ['code' => '1', 'description' => 'is-paid-yes'],
+            ['code' => '0', 'description' => 'is-paid-no'],
         ];
-        $this->addFilterSelect($viewName, 'esDepago', 'De pago = TODO', 'de_pago', $esDePago);        
-        
+        $this->addFilterSelect($viewName, 'esDepago', 'is-paid-all', 'de_pago', $esDePago);
     }
 }

@@ -1,175 +1,157 @@
 <?php
+/**
+ * This file is part of OpenServBus plugin for FacturaScripts
+ * Copyright (C) 2021-2022 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2021 Jerónimo Pedro Sánchez Manzano <socger@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/.
+ */
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
+use FacturaScripts\Plugins\OpenServBus\Model\Collaborator;
+use FacturaScripts\Plugins\OpenServBus\Model\Driver;
 
-class EditVehicle extends EditController {
-    
-    public function getModelClassName() {
+class EditVehicle extends EditController
+{
+    public function getModelClassName(): string
+    {
         return 'Vehicle';
     }
-    
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Cocheras
-    public function getPageData(): array {
-        $pageData = parent::getPageData();
-        
-        $pagedata['showonmenu'] = false;
-        $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Vehículo';
-        
-        $pageData['icon'] = 'fas fa-bus-alt';
 
+    public function getPageData(): array
+    {
+        $pageData = parent::getPageData();
+        $pageData['showonmenu'] = false;
+        $pageData['menu'] = 'OpenServBus';
+        $pageData['title'] = 'vehicle';
+        $pageData['icon'] = 'fas fa-bus-alt';
         return $pageData;
     }
-    
-    protected function createViews() {
+
+    protected function createViews()
+    {
         parent::createViews();
-        
-        /*
-        $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
-         * 
-        $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
-        $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
-        $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
-        $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        */
-        $this->createView__Vehicle_equipament();    
-        $this->createView__Vehicle_documentation();    
-        
-        $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
+        $this->createViewVehicleEquipament();
+        $this->createViewVehicleDocumentation();
+        $this->setTabsPosition('top');
     }
-    
-    protected function createView__Vehicle_documentation($model = 'Vehicle_documentation')
+
+    protected function createViewVehicleDocumentation($viewName = 'ListVehicleDocumentation')
     {
-        // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
-        // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
-        // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
-        // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
-        // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model . '_2', 'Documentación', 'far fa-file-pdf'); 
-        
-        
-        $this->views['List' . $model]->addSearchFields(['nombre']); 
+        $this->addListView($viewName, 'VehicleDocumentation', 'documentation', 'far fa-file-pdf');
+        $this->views[$viewName]->addSearchFields(['nombre']);
+        $this->views[$viewName]->addOrderBy(['nombre'], 'name', 1);
+        $this->views[$viewName]->addOrderBy(['idvehicle', 'nombre'], 'vehicle-type-doc');
+        $this->views[$viewName]->addOrderBy(['fecha_caducidad'], 'date-expiration');
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
-        
-        $this->views['List' . $model]->addOrderBy(['nombre'], 'Nombre', 1);
-        $this->views['List' . $model]->addOrderBy(['idvehicle', 'nombre'], 'Vehículo + Tipo Doc.');
-        $this->views['List' . $model]->addOrderBy(['fecha_caducidad'], 'F. caducidad.');
-        $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
-
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
-     
-
-        $this->views['List' . $model]->addFilterAutocomplete('xIdVehicle', 'Vehículo', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
-        $this->views['List' . $model]->addFilterAutocomplete('xiddocumentation_type', 'Documentación - tipo', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
-
-
-        $this->views['List' . $model]->addFilterPeriod('porFechaCaducidad', 'Fecha de caducidad', 'fecha_caducidad');
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
+        $this->views[$viewName]->addFilterAutocomplete('xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xiddocumentation_type', 'documentation-type', 'iddocumentation_type', 'documentation_types', 'iddocumentation_type', 'nombre');
+        $this->views[$viewName]->addFilterPeriod('porFechaCaducidad', 'date-expiration', 'fecha_caducidad');
     }
-    
-    protected function createView__Vehicle_equipament($model = 'Vehicle_equipament')
+
+    protected function createViewVehicleEquipament($viewName = 'ListVehicleEquipament')
     {
-        // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
-        // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
-        // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
-        // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
-        // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model, 'Equipamiento', 'fab fa-accessible-icon'); 
-        
-        
-        $this->views['List' . $model]->addOrderBy(['idvehicle', 'idvehicle_equipament_type'], 'Vehículo + Equipamiento', 1);
-        $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
+        $this->addListView($viewName, 'VehicleEquipament', 'equipment', 'fab fa-accessible-icon');
+        $this->views[$viewName]->addOrderBy(['idvehicle', 'idvehicle_equipament_type'], 'vehicle-equipment-plus', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
-     
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
 
-        $this->views['List' . $model]->addFilterAutocomplete('xIdVehicle', 'Vehículo', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
-        $this->views['List' . $model]->addFilterAutocomplete('xIdVehicle_equipament_type', 'Equipamiento - Tipo', 'idvehicle_equipament_type', 'vehicle_equipament_types', 'idvehicle_equipament_type', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdVehicle_equipament_type', 'equipment-type', 'idvehicle_equipament_type', 'vehicle_equipament_types', 'idvehicle_equipament_type', 'nombre');
     }
-    
-    // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
-    protected function loadData($viewName, $view) {
+
+    protected function loadData($viewName, $view)
+    {
+        $mvn = $this->getMainViewName();
         switch ($viewName) {
-            case 'ListVehicle_documentation':
-                $idvehicle = $this->getViewModelValue('EditVehicle', 'idvehicle'); // Le pedimos que guarde en la variable local $idemployee el valor del campo idemployee del controlador EditEmployee.php
-                $where = [new DatabaseWhere('idvehicle', $idvehicle)];
-                $view->loadData('', $where);
-                break;
-                    
-            case 'ListVehicle_equipament':
-                $idvehicle = $this->getViewModelValue('EditVehicle', 'idvehicle'); // Le pedimos que guarde en la variable local $idemployee el valor del campo idemployee del controlador EditEmployee.php
+            case 'ListVehicleDocumentation':
+            case 'ListVehicleEquipament':
+                $idvehicle = $this->getViewModelValue($mvn, 'idvehicle');
                 $where = [new DatabaseWhere('idvehicle', $idvehicle)];
                 $view->loadData('', $where);
                 break;
 
-            // Pestaña con el mismo nombre que este controlador EditXxxxx
-            case 'EditVehicle': 
+            case $mvn:
                 parent::loadData($viewName, $view);
-                
-                /* No hace falta porque ya tenemos el campo nombre físicamente en tabla collaborators
-                    // Rellenamos el widget de tipo select para la empresa colaboradora
-                    $sql = ' SELECT COLLABORATORS.IDCOLLABORATOR AS value '
-                         .      ' , PROVEEDORES.NOMBRE AS title '
-                         . ' FROM COLLABORATORS '
-                         . ' LEFT JOIN PROVEEDORES ON (PROVEEDORES.CODPROVEEDOR = COLLABORATORS.CODPROVEEDOR) ';
-
-                    $data = $this->dataBase->select($sql);
-
-                 // $data[] = ['value' => null, 'title' => null];
-                 // $data[] = ['value' => '24', 'title' => 'jeromin'];
-
-                 // array_unshift($data, ['value' => null, '------' => null]); ... Esto no guardaba una línea nula
-                 // array_unshift($data, ['value' => '0', 'title' => '------']); ... Esto me dejaba una opción que aparentemente parecía nula, pero luego en function test del modelo tenía que comprobar si devolvía 0 para ponerlo = null (idCollaborator)
-
-                    $columnToModify = $this->views[$viewName]->columnForName('Colaborador');
-                    if($columnToModify) {
-                     // $columnToModify->widget->setValuesFromArray($data);
-                        $columnToModify->widget->setValuesFromArray($data, false, true); // El 3er parámetro es para añadir un elemento vacío, mirar documentacion en https://github.com/NeoRazorX/facturascripts/blob/master/Core/Lib/Widget/WidgetSelect.php#L137
-                    }
-                */
-                
-                // Guardamos que usuario y cuando pulsará guardar
-                $this->views[$viewName]->model->user_nick = $this->user->nick;
-
-             // $this->views[$viewName]->model->user_fecha = date('d-m-Y');
-                $this->views[$viewName]->model->user_fecha = date("Y-m-d H:i:s");
-                
                 $this->PonerEnVistaLaEdad($viewName);
+                $this->loadValuesSelectCollaborators($mvn);
+                $this->loadValuesSelectDrivers($mvn);
+                break;
 
+            default:
+                parent::loadData($viewName, $view);
                 break;
         }
     }
 
+    protected function loadValuesSelectCollaborators(string $mvn)
+    {
+        $column = $this->views[$mvn]->columnForName('collaborator');
+        if($column && $column->widget->getType() === 'select') {
+            // obtenemos los colaboradores
+            $customValues = [];
+            $collaboratorsModel = new Collaborator();
+            foreach ($collaboratorsModel->all([], [], 0, 0) as $collaborator) {
+                $customValues[] = [
+                    'value' => $collaborator->idcollaborator,
+                    'title' => $collaborator->getProveedor()->nombre,
+                ];
+            }
+            $column->widget->setValuesFromArray($customValues, false, true);
+        }
+    }
 
-    // ** *************************************** ** //
-    // ** FUNCIONES CREADAS PARA ESTE CONTROLADOR ** //
-    // ** *************************************** ** //
-    private function PonerEnVistaLaEdad($p_viewName) {
+    protected function loadValuesSelectDrivers(string $mvn)
+    {
+        $column = $this->views[$mvn]->columnForName('usual-driver');
+        if($column && $column->widget->getType() === 'select') {
+            // obtenemos los conductores
+            $customValues = [];
+            $driversModel = new Driver();
+            foreach ($driversModel->all([], [], 0, 0) as $driver) {
+                $customValues[] = [
+                    'value' => $driver->iddriver,
+                    'title' => $driver->nombre,
+                ];
+            }
+            $column->widget->setValuesFromArray($customValues, false, true);
+        }
+    }
+
+    protected function PonerEnVistaLaEdad($p_viewName)
+    {
         if (!empty($this->views[$p_viewName]->model->fecha_matriculacion_primera)) {
-         // $this->views[$viewName]->model->edad_vehiculo = "12";
-            $intervalo = date_diff( date_create(date("Y-m-d H:i:s"))
-                                  , date_create($this->views[$p_viewName]->model->fecha_matriculacion_primera) 
-                                  );
-
+            $intervalo = date_diff(date_create(date("Y-m-d H:i:s"))
+                , date_create($this->views[$p_viewName]->model->fecha_matriculacion_primera)
+            );
             $this->views[$p_viewName]->model->edad_vehiculo = $intervalo->format('%y a, %m m, %d d');
         }
     }
-    
 }

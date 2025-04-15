@@ -1,52 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
-    
-    <column>
-        <name>idfuel_km</name>
-        <type>serial</type>
-        <null>NO</null>
-    </column>
-    
-    
-    <column>
-        <name>fechaalta</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>useralta</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>fechamodificacion</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>usermodificacion</name>
-        <type>character varying(50)</type>
-    </column>
     <column>
         <name>activo</name>
         <type>boolean</type>
         <default>true</default>
     </column>
     <column>
+        <name>codproveedor</name>
+        <type>character varying(10)</type>
+    </column>
+    <column>
+        <name>deposito_lleno</name>
+        <type>boolean</type>
+        <default>false</default>
+    </column>
+    <column>
+        <name>fecha</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>fechaalta</name>
+        <type>timestamp</type>
+    </column>
+    <column>
         <name>fechabaja</name>
         <type>timestamp</type>
     </column>
     <column>
-        <name>userbaja</name>
-        <type>character varying(50)</type>
+        <name>fechamodificacion</name>
+        <type>timestamp</type>
     </column>
     <column>
-        <name>motivobaja</name>
-        <type>character varying(100)</type>
-    </column>
-
-
-    <column>
-        <name>idvehicle</name>
+        <name>ididentification_mean</name>
         <type>integer</type>
-        <null>NO</null>
     </column>
     <column>
         <name>iddriver</name>
@@ -57,12 +43,31 @@
         <type>integer</type>
     </column>
     <column>
+        <name>idempresa</name>
+        <type>integer</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>idfuel_km</name>
+        <type>serial</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>idfuel_pump</name>
+        <type>integer</type>
+    </column>
+    <column>
         <name>idfuel_type</name>
         <type>integer</type>
     </column>
     <column>
-        <name>fecha</name>
-        <type>timestamp</type>
+        <name>idtarjeta</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idvehicle</name>
+        <type>integer</type>
+        <null>NO</null>
     </column>
     <column>
         <name>km</name>
@@ -75,9 +80,12 @@
         <default>0</default>
     </column>
     <column>
-        <name>deposito_lleno</name>
-        <type>boolean</type>
-        <default>false</default>
+        <name>motivobaja</name>
+        <type>character varying(100)</type>
+    </column>
+    <column>
+        <name>observaciones</name>
+        <type>text</type>
     </column>
     <column>
         <name>pvp_litro</name>
@@ -86,44 +94,21 @@
         <default>0</default>
     </column>
     <column>
-        <name>idfuel_pump</name>
-        <type>integer</type>
+        <name>useralta</name>
+        <type>character varying(50)</type>
     </column>
     <column>
-        <name>codproveedor</name>
-        <type>character varying(10)</type>
-    </column>
-    
-
-    <column>
-        <name>ididentification_mean</name>
-        <type>integer</type>
+        <name>userbaja</name>
+        <type>character varying(50)</type>
     </column>
     <column>
-        <name>idtarjeta</name>
-        <type>integer</type>
+        <name>usermodificacion</name>
+        <type>character varying(50)</type>
     </column>
-    
-    
-    <column>
-        <name>idempresa</name>
-        <type>integer</type>
-        <null>NO</null>
-    </column>
-    
-    
-    <column>
-        <name>observaciones</name>
-        <type>text</type>
-    </column>
-    
-    
     <constraint>
         <name>fuel_kms_pkey</name>
         <type>PRIMARY KEY (idfuel_km)</type>
     </constraint>
-    
-    
     <constraint>
         <name>ca_fuel_kms__vehicles</name>
         <type>FOREIGN KEY (idvehicle) REFERENCES vehicles (idvehicle) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
@@ -133,8 +118,8 @@
         <type>FOREIGN KEY (iddriver) REFERENCES drivers (iddriver) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
-        <name>ca_fuel_kms__employees</name>
-        <type>FOREIGN KEY (idemployee) REFERENCES employees (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <name>ca_fuel_kms__employees_open</name>
+        <type>FOREIGN KEY (idemployee) REFERENCES employees_open (idemployee) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
         <name>ca_fuel_kms__fuel_types</name>
@@ -146,7 +131,8 @@
     </constraint>
     <constraint>
         <name>ca_fuel_kms__proveedores</name>
-        <type>FOREIGN KEY (codproveedor) REFERENCES proveedores (codproveedor) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
+        <type>FOREIGN KEY (codproveedor) REFERENCES proveedores (codproveedor) ON DELETE RESTRICT ON UPDATE RESTRICT
+        </type>
     </constraint>
     <constraint>
         <name>ca_fuel_kms__tarjetas</name>
@@ -156,7 +142,16 @@
         <name>ca_fuel_kms__empresas</name>
         <type>FOREIGN KEY (idempresa) REFERENCES empresas (idempresa) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
-    
-    
+    <constraint>
+        <name>ca_ca_fuel_kms__users_alta</name>
+        <type>FOREIGN KEY (useralta) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_ca_fuel_kms__users_baja</name>
+        <type>FOREIGN KEY (userbaja) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_ca_fuel_kms__users_modificacion</name>
+        <type>FOREIGN KEY (usermodificacion) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
 </table>
-

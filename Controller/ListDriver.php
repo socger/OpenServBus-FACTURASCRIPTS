@@ -1,81 +1,64 @@
 <?php
+/**
+ * This file is part of OpenServBus plugin for FacturaScripts
+ * Copyright (C) 2021-2022 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2021 Jerónimo Pedro Sánchez Manzano <socger@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/.
+ */
+
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
-class ListDriver extends ListController {
-    
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
-    public function getPageData(): array {
+class ListDriver extends ListController
+{
+    public function getPageData(): array
+    {
         $pageData = parent::getPageData();
-        
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Conductores';
-        $pageData['title'] = 'Conductores';
-        
+        $pageData['title'] = 'drivers';
         $pageData['icon'] = 'fas fa-user-astronaut';
-        
-
         return $pageData;
     }
-    
-    protected function createViews() {
+
+    protected function createViews()
+    {
         $this->createViewDriver();
     }
-    
+
     protected function createViewDriver($viewName = 'ListDriver')
     {
-        $this->addView($viewName, 'Driver');
-        
-        // Opciones de búsqueda rápida
-        $this->addSearchFields($viewName, ['idemployee', 'nombre']); // Las búsqueda la hará por el campo idemployee y nombre
-        
-        // Tipos de Ordenación
-            // Primer parámetro es la pestaña
-            // Segundo parámetro es los campos por los que ordena (array)
-            // Tercer parámetro es la etiqueta a poner
-            // Cuarto parámetro, si se rellena, le está diciendo cual es el order by por defecto, y además las opciones son
-               // 1 Orden ascendente
-               // 2 Orden descendente
-        $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
+        $this->addView($viewName, 'Driver', 'drivers', 'fas fa-user-astronaut');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
+
         // Filtros
-        // Filtro checkBox por campo Activo ... addFilterCheckbox($viewName, $key, $label, $field);
-            // $viewName ... nombre del controlador
-            // $key ... es el nombre que le ponemos al filtro
-            // $label ... la etiqueta a mostrar al usuario
-            // $field ... el campo del modelo sobre el que vamos a comprobar
-        // $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
-     
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);        
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
-        // Filtro periodo de fechas
-        // addFilterPeriod($viewName, $key, $label, $field)
-            // $key ... es el nombre que le ponemos al filtro
-            // $label ... es la etiqueta a mostrar al cliente
-            // $field ... es el campo sobre el que filtraremos
-        // $this->addFilterPeriod($viewName, 'porFechaAlta', 'Fecha de alta', 'fechaalta');
-
-        $this->addFilterSelectWhere( $viewName
-                                   , 'status'
-                                   , [ ['label' => 'Colaboradores/Empleados - Todos', 'where' => []]
-                                     , ['label' => 'Colaboradores sólo', 'where' => [new DataBaseWhere('idcollaborator', '0', '>')]]
-                                     , ['label' => 'Empleados sólo', 'where' => [new DataBaseWhere('idemployee', '0', '>')]]
-                                     ]
+        $this->addFilterSelectWhere(
+            $viewName,
+            'status',
+            [
+                ['label' => 'Colaboradores/Empleados - Todos', 'where' => []],
+                ['label' => 'Colaboradores sólo', 'where' => [new DataBaseWhere('idcollaborator', '0', '>')]],
+                ['label' => 'Empleados sólo', 'where' => [new DataBaseWhere('idemployee', '0', '>')]]
+            ]
         );
-
-        $this->addFilterAutocomplete($viewName, 'xIdEmpleado', 'Empleado', 'idemployee', 'employees', 'idemployee', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdCollaborator', 'Colaborador', 'idcollaborator', 'collaborators', 'idcollaborator', 'nombre');
-
-        
     }
 }

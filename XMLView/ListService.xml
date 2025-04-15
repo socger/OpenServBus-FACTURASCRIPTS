@@ -1,59 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of OpenServBus plugin for FacturaScripts
+ * Copyright (C) 2021-2022 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2021 Jerónimo Pedro Sánchez Manzano <socger@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/.
+-->
 <view>
     <columns>
-        <column name="code" order="110">
+        <column name="code" order="100">
             <widget type="text" fieldname="idservice"/>
         </column>
-        <column name="description" order="120">
-            <widget type="text" fieldname="nombre" />
+        <column name="description" order="110">
+            <widget type="text" fieldname="nombre"/>
         </column>
-        <column name="accepted" order="123">
+        <column name="accepted" order="120">
             <widget type="checkbox" fieldname="aceptado"/>
         </column>
-        <column name="seats" order="125">
-            <widget type="text" fieldname="plazas" />
+        <column name="seats" order="130">
+            <widget type="text" fieldname="plazas"/>
         </column>
-        <column name="client" order="130">
+        <column name="client" order="140">
             <widget type="select" fieldname="codcliente">
-                <values source="clientes" fieldcode="codcliente" fieldtitle="nombre" />
+                <values source="clientes" fieldcode="codcliente" fieldtitle="nombre"/>
             </widget>
         </column>
-            
-        <column name="inicio_horaAnt" title="anticipation-hour" order="135">
-            <widget type="time" fieldname="hora_anticipacion" />
+        <column name="inicio_horaAnt" title="anticipation-hour" order="150">
+            <widget type="time" fieldname="hora_anticipacion"/>
         </column>
-        <column name="departure-from-garages" display="center" order="140">
+        <column name="departure-from-garages" display="center" order="160">
             <widget type="checkbox" fieldname="salida_desde_nave_sn"/>
         </column>
-
-        <column name="inicio_dia" title="start-date" numcolumns="3" order="145">
-            <widget type="date" fieldname="fecha_desde" required="true" />
+        <column name="inicio_dia" title="start-date" numcolumns="3" order="170">
+            <widget type="date" fieldname="fecha_desde" required="true"/>
         </column>
-        <column name="inicio_hora" title="start-time" numcolumns="3" order="146">
-            <widget type="time" fieldname="hora_desde" />
+        <column name="inicio_hora" title="start-time" numcolumns="3" order="180">
+            <widget type="time" fieldname="hora_desde"/>
         </column>
-
-        <column name="fin_dia" title="end-date" numcolumns="3" order="147">
-            <widget type="date" fieldname="fecha_hasta" required="true" />
+        <column name="fin_dia" title="end-date" numcolumns="3" order="190">
+            <widget type="date" fieldname="fecha_hasta" required="true"/>
         </column>
-        <column name="fin_hora" title="end-time" numcolumns="3" order="148">
-            <widget type="time" fieldname="hora_hasta" />
+        <column name="fin_hora" title="end-time" numcolumns="3" order="200">
+            <widget type="time" fieldname="hora_hasta"/>
         </column>
-
-
-
-        <column name="active" display="center" order="160">
+        <column name="active" display="center" order="210">
             <widget type="checkbox" fieldname="activo"/>
         </column>
-        <column name="creation-date" display="right" order="170">
+        <column name="creation-date" display="right" order="220">
             <widget type="datetime" fieldname="fechaalta"/>
         </column>
     </columns>
-    
     <rows>
         <row type="status">
             <option color="success" title="active-yes" fieldname="activo">1</option>
             <option color="warning" title="active-no" fieldname="activo">0</option>
         </row>
-    </rows>    
+    </rows>
 </view>

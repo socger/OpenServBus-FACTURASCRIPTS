@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ * This file is part of OpenServBus plugin for FacturaScripts
+ * Copyright (C) 2021-2022 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2021 Jerónimo Pedro Sánchez Manzano <socger@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/.
+-->
+<view>
+    <columns>
+        <group name="data" numcolumns="12" valign="bottom">
+            <column name="id" numcolumns="2" order="100">
+                <widget type="text" fieldname="idFuel_km" readonly="true"/>
+            </column>
+            <column name="vehicle" titleurl="ListVehicle" numcolumns="4" order="110">
+                <widget type="select" fieldname="idvehicle" icon="fas fa-bus-alt" onclick="EditVehicle" required="true">
+                    <values source="vehicles" fieldcode="idvehicle" fieldtitle="nombre"/>
+                </widget>
+            </column>
+            <column name="date" numcolumns="3" order="120">
+                <widget type="date" fieldname="fecha" required="true"/>
+            </column>
+            <column name="kms" numcolumns="3" order="130">
+                <widget type="text" fieldname="km"/>
+            </column>
+            <column name="company" description="if-creating-is-empty-company-vehicle-will-be-entered"
+                    titleurl="ListEmpresa" numcolumns="12" order="140">
+                <widget type="select" fieldname="idempresa" icon="fas fa-building" onclick="EditEmpresa"
+                        required="true">
+                    <values source="empresas" fieldcode="idempresa" fieldtitle="nombrecorto"/>
+                </widget>
+            </column>
+            <column name="fuel-type" titleurl="ConfigOpenServBus?activetab=ListFuelType" numcolumns="4" order="150">
+                <widget type="select" fieldname="idfuel_type" icon="fas fa-charging-station" onclick="EditFuelType"
+                        required="true">
+                    <values source="fuel_types" fieldcode="idfuel_type" fieldtitle="nombre"/>
+                </widget>
+            </column>
+            <column name="liters" numcolumns="3" order="160">
+                <widget type="text" fieldname="litros"/>
+            </column>
+            <column name="full-tank" numcolums="2" order="170">
+                <widget type="checkbox" fieldname="deposito_lleno"/>
+            </column>
+            <column name="pvp-litro" display="right" numcolumns="3" order="180">
+                <widget type="money" fieldname="pvp_litro">
+                </widget>
+            </column>
+            <column name="internal-fuel-dispenser" titleurl="ListFuelKm#ListFuelPump" numcolumns="6" order="190">
+                <widget type="select" fieldname="idfuel_pump" icon="fas fa-thumbtack" onclick="EditFuelPump">
+                    <values source="fuel_pumps" fieldcode="idfuel_pump" fieldtitle="nombre"/>
+                </widget>
+            </column>
+            <column name="supplier" titleurl="ListProveedor" numcolumns="6" order="200">
+                <widget type="select" fieldname="codproveedor" icon="fas fa-users" onclick="EditProveedor">
+                    <values source="proveedores" fieldcode="codproveedor" fieldtitle="nombre"/>
+                </widget>
+            </column>
+        </group>
+        <group name="made-by" numcolumns="12" icon="fas fa-cog" title="made-by">
+            <column name="driver" titleurl="ListDriver" numcolumns="6" order="100">
+                <widget type="select" fieldname="iddriver" icon="fas fa-user-astronaut" onclick="EditDriver">
+                    <values/>
+                </widget>
+            </column>
+            <column name="employee" titleurl="ListEmployeeOpen" numcolumns="6" order="110">
+                <widget type="select" fieldname="idemployee" icon="far fa-id-card" onclick="EditEmployeeOpen">
+                    <values source="employees_open" fieldcode="idemployee" fieldtitle="nombre"/>
+                </widget>
+            </column>
+        </group>
+        <group name="refueled-with" numcolumns="12" icon="fas fa-cog" title="refueled-with">
+            <column name="identification-mean" titleurl="ListHelper#ListIdentificationMean" numcolumns="4" order="100">
+                <widget type="select" fieldname="ididentification_mean" icon="far fa-hand-point-right"
+                        onclick="EditIdentificationMean">
+                    <values source="identification_means" fieldcode="ididentification_mean" fieldtitle="nombre"/>
+                </widget>
+            </column>
+            <column name="card" titleurl="ListTarjeta" numcolumns="3" order="110">
+                <widget type="select" fieldname="idtarjeta" icon="fab fa-cc-mastercard" onclick="EditTarjeta">
+                    <values source="tarjetas" fieldcode="idtarjeta" fieldtitle="nombre"/>
+                </widget>
+            </column>
+            <column name="card-type" numcolumns="4" order="120">
+                <widget type="text" fieldname="tipo_tarjeta" readonly="true"/>
+            </column>
+            <column name="es-de-pago" numcolumns="1" order="130">
+                <widget type="text" fieldname="es_de_pago" readonly="true"/>
+            </column>
+        </group>
+        <group name="other-annotations" numcolumns="12" icon="fas fa-cog" title="other-annotations">
+            <column name="observations" numcolumns="12" order="100">
+                <widget type="textarea" fieldname="observaciones"/>
+            </column>
+        </group>
+        <group name="record-status" numcolumns="12" icon="fas fa-cog" title="Estado del registro">
+            <column name="active" numcolums="12" order="100">
+                <widget type="checkbox" fieldname="activo"/>
+            </column>
+        </group>
+        <group name="record-status_2" numcolumns="12">
+            <column name="creation-date" numcolumns="3" order="100">
+                <widget type="datetime" fieldname="fechaalta" readonly="true"/>
+            </column>
+            <column name="created-by" numcolumns="9" order="110">
+                <widget type="text" icon="fas fa-user-circle" fieldname="useralta" readonly="true"/>
+            </column>
+            <column name="modification-date" numcolumns="3" order="120">
+                <widget type="datetime" fieldname="fechamodificacion" readonly="true"/>
+            </column>
+            <column name="modified-by" numcolumns="9" order="130">
+                <widget type="text" icon="fas fa-user-circle" fieldname="usermodificacion" readonly="true"/>
+            </column>
+            <column name="deletion-date" numcolumns="3" order="140">
+                <widget type="datetime" fieldname="fechabaja" readonly="true"/>
+            </column>
+            <column name="deleted-by" numcolumns="9" order="150">
+                <widget type="text" icon="fas fa-user-circle" fieldname="userbaja" readonly="true"/>
+            </column>
+            <column name="deleted-motif" description="only-fill-inactive-record" numcolumns="12" order="160">
+                <widget type="text" fieldname="motivobaja" maxlength="100"/>
+            </column>
+        </group>
+    </columns>
+</view>

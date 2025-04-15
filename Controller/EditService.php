@@ -1,187 +1,177 @@
 <?php
+/**
+ * This file is part of OpenServBus plugin for FacturaScripts
+ * Copyright (C) 2021-2022 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2021 Jerónimo Pedro Sánchez Manzano <socger@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/.
+ */
 
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Base\DataBase\DataBaseWhere;
 use FacturaScripts\Core\Lib\ExtendedController\EditController;
+use FacturaScripts\Plugins\OpenServBus\Model\Driver;
+use FacturaScripts\Plugins\OpenServBus\Model\Helper;
 
-class EditService extends EditController {
-    
-    public function getModelClassName() {
+class EditService extends EditController
+{
+    public function getModelClassName(): string
+    {
         return 'Service';
     }
-    
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Cocheras
-    public function getPageData(): array {
+
+    public function getPageData(): array
+    {
         $pageData = parent::getPageData();
-
-        $pagedata['showonmenu'] = false;
+        $pageData['showonmenu'] = false;
         $pageData['menu'] = 'OpenServBus';
-        $pageData['title'] = 'Servicio discrecional';
-
+        $pageData['title'] = 'service-discretionary';
         $pageData['icon'] = 'fas fa-book-reader';
-        
-
         return $pageData;
     }
-    
-    protected function createViews() {
+
+    protected function createViews()
+    {
         parent::createViews();
-        
         $this->createViewContacts();
         $this->createViewItineraries();
         $this->createViewValuations();
-        
-        $this->setTabsPosition('top'); // Las posiciones de las pestañas pueden ser left, top, down
+        $this->setTabsPosition('top');
     }
-    
+
     protected function createViewContacts(string $viewName = 'EditDireccionContacto')
     {
         $this->addEditListView($viewName, 'Contacto', 'addresses-and-contacts', 'fas fa-address-book');
         $this->views[$viewName]->setInLine(true);
     }
 
-    protected function createViewItineraries($model = 'Service_itinerary')
+    protected function createViewItineraries($viewName = 'ListServiceItinerary')
     {
-        // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
-        // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
-        // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
-        // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
-        // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model, 'Itinerarios', 'fas fa-road');    
+        $this->addListView($viewName, 'ServiceItinerary', 'itineraries', 'fas fa-road');
+        $this->views[$viewName]->addSearchFields(['nombre']);
+        $this->views[$viewName]->addOrderBy(['idservice', 'orden'], 'by-itinerary', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
 
-        $this->views['List' . $model]->addSearchFields(['nombre']);
-
-        
-        $this->views['List' . $model]->addOrderBy(['idservice', 'orden'], 'Por itinerario', 1);
-        $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
 
-        $this->views['List' . $model]->addFilterAutocomplete('xIdservice', 'Servicio discrecional', 'idservice', 'services', 'idservice', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice', 'service-discretionary', 'idservice', 'services', 'idservice', 'nombre');
     }
-    
-    protected function createViewValuations($model = 'Service_valuation')
+
+    protected function createViewValuations($viewName = 'ListServiceValuation')
     {
-        // $this->addListView($viewName, $modelName, $viewTitle, $viewIcon)
-        // $viewName: el identificador o nombre interno de esta pestaña o sección. Por ejemplo: ListProducto.
-        // $modelName: el nombre del modelo que usará este listado. Por ejemplo: Producto.
-        // $viewTitle: el título de la pestaña o sección. Será tarducido. Por ejemplo: products.
-        // $viewIcon: (opcional) el icono a utilizar. Por ejemplo: fas fa-search.
-        $this->addListView('List' . $model, $model, 'Valoraciones', 'fas fa-dollar-sign');    
-        
-        $this->views['List' . $model]->addOrderBy(['idservice', 'orden'], 'Por valoración', 1);
-        $this->views['List' . $model]->addOrderBy(['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        $this->addListView($viewName, 'ServiceValuation', 'ratings', 'fas fa-dollar-sign');
+        $this->views[$viewName]->addOrderBy(['idservice', 'orden'], 'by-rating', 1);
+        $this->views[$viewName]->addOrderBy(['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
+
+        // Filtros
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->views['List' . $model]->addFilterSelect('soloActivos', 'Activos = TODOS', 'activo', $activo);
+        $this->views[$viewName]->addFilterSelect('soloActivos', 'active-all', 'activo', $activo);
 
-        $this->views['List' . $model]->addFilterAutocomplete('xIdservice', 'Servicio discrecional', 'idservice', 'services', 'idservice', 'nombre');
-        $this->views['List' . $model]->addFilterAutocomplete('xIdservice_valuation_type', 'Conceptos - valoración', 'idservice_valuation_type', 'service_valuation_types', 'idservice_valuation_type', 'nombre');
-    }
-    
-    // function loadData es para cargar con datos las diferentes pestañas que tuviera el controlador
-    protected function loadData($viewName, $view) {
-        switch ($viewName) {
-            case 'EditDireccionContacto':
-                $codcliente = $this->getViewModelValue('EditService', 'codcliente');
-                $where = [new DatabaseWhere('codcliente', $codcliente)];
-                $view->loadData('', $where);
-                break;
-            
-            case 'ListService_itinerary':
-                $idservice = $this->getViewModelValue('EditService', 'idservice');
-                $where = [new DatabaseWhere('idservice', $idservice)];
-                $view->loadData('', $where);
-                break;
-            
-            case 'ListService_valuation':
-                $idservice = $this->getViewModelValue('EditService', 'idservice');
-                $where = [new DatabaseWhere('idservice', $idservice)];
-                $view->loadData('', $where);
-                break;
-            
-            // Pestaña con el mismo nombre que este controlador EditXxxxx
-            case 'EditService': 
-                parent::loadData($viewName, $view);
-                
-                // Guardamos que usuario pulsará guardar
-                $this->views[$viewName]->model->user_nick = $this->user->nick;
-
-                // Guardamos cuando el usuario pulsará guardar
-             // $this->views[$viewName]->model->user_fecha = date('d-m-Y');
-                $this->views[$viewName]->model->user_fecha = date("Y-m-d H:i:s");
-                
-                $this->prepararFechasParaVista($viewName);
-                $this->prepararHorasParaVista($viewName);
-
-                if ($this->views[$viewName]->model->aceptado === true) {
-                    $this->views[$viewName]->model->aceptado_text = 'SI';
-                } else {
-                    $this->views[$viewName]->model->aceptado_text = 'NO';
-                }
-                
-                if ($this->views[$viewName]->model->salida_desde_nave_sn === true) {
-                    $this->views[$viewName]->model->salida_desde_nave_text = 'SI';
-                } else {
-                    $this->views[$viewName]->model->salida_desde_nave_text = 'NO';
-                }
-                
-                if ($this->views[$viewName]->model->fuera_del_municipio === true) {
-                    $this->views[$viewName]->model->fuera_del_municipio_text = 'SI';
-                } else {
-                    $this->views[$viewName]->model->fuera_del_municipio_text = 'NO';
-                }
-                
-                if ($this->views[$viewName]->model->facturar_SN === true) {
-                    $this->views[$viewName]->model->facturar_SN_text = 'SI';
-                } else {
-                    $this->views[$viewName]->model->facturar_SN_text = 'NO';
-                }
-                
-                if ($this->views[$viewName]->model->activo === true) {
-                    $this->views[$viewName]->model->activo_text = 'SI';
-                } else {
-                    $this->views[$viewName]->model->activo_text = 'NO';
-                }
-                
-                $this->readOnlyFields($viewName);
-                break;
-        }
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice', 'service-discretionary', 'idservice', 'services', 'idservice', 'nombre');
+        $this->views[$viewName]->addFilterAutocomplete('xIdservice_valuation_type', 'concepts-valuation', 'idservice_valuation_type', 'service_valuation_types', 'idservice_valuation_type', 'nombre');
     }
 
-
-    // ** *************************************** ** //
-    // ** FUNCIONES CREADAS PARA ESTE CONTROLADOR ** //
-    // ** *************************************** ** //
-    private function readOnlyField($viewName, $fieldName)
-    {
-        $column = $this->views[$viewName]->columnForField($fieldName);
-        $column->widget->readonly = 'true';
-    }
-
-    private function displayNoneField($viewName, $fieldName)
+    protected function displayNoneField($viewName, $fieldName)
     {
         $column = $this->views[$viewName]->columnForField($fieldName);
         $column->display = 'none';
     }
 
-    private function readOnlyFields($viewName)
+    protected function loadData($viewName, $view)
     {
-        if (!empty($this->views[$viewName]->model->idfactura)) 
-        { // Está facturado el servicio
+        $mvn = $this->getMainViewName();
+        switch ($viewName) {
+            case 'EditDireccionContacto':
+                $codcliente = $this->getViewModelValue($mvn, 'codcliente');
+                $where = [new DatabaseWhere('codcliente', $codcliente)];
+                $view->loadData('', $where);
+                break;
+
+            case 'ListServiceItinerary':
+            case 'ListServiceValuation':
+                $idservice = $this->getViewModelValue($mvn, 'idservice');
+                $where = [new DatabaseWhere('idservice', $idservice)];
+                $view->loadData('', $where);
+                break;
+
+            case $mvn:
+                parent::loadData($viewName, $view);
+                $this->readOnlyFields($viewName);
+                $this->loadValuesSelectHelpers($mvn);
+                $this->loadValuesSelectDrivers($mvn, 'driver-1');
+                $this->loadValuesSelectDrivers($mvn, 'driver-2');
+                $this->loadValuesSelectDrivers($mvn, 'driver-3');
+                break;
+
+            default:
+                parent::loadData($viewName, $view);
+                break;
+        }
+    }
+
+    protected function loadValuesSelectDrivers(string $mvn, string $columnName)
+    {
+        $column = $this->views[$mvn]->columnForName($columnName);
+        if($column && $column->widget->getType() === 'select') {
+            // obtenemos los conductores
+            $customValues = [];
+            $driversModel = new Driver();
+            foreach ($driversModel->all([], [], 0, 0) as $driver) {
+                $customValues[] = [
+                    'value' => $driver->iddriver,
+                    'title' => $driver->nombre,
+                ];
+            }
+            $column->widget->setValuesFromArray($customValues, false, true);
+        }
+    }
+
+    protected function loadValuesSelectHelpers(string $mvn)
+    {
+        $column = $this->views[$mvn]->columnForName('helper');
+        if($column && $column->widget->getType() === 'select') {
+            // obtenemos los monitores
+            $customValues = [];
+            $helpersModel = new Helper();
+            foreach ($helpersModel->all([], [], 0, 0) as $helper) {
+                $customValues[] = [
+                    'value' => $helper->idhelper,
+                    'title' => $helper->nombre,
+                ];
+            }
+            $column->widget->setValuesFromArray($customValues, false, true);
+        }
+    }
+
+    protected function readOnlyField($viewName, $fieldName)
+    {
+        $column = $this->views[$viewName]->columnForField($fieldName);
+        $column->widget->readonly = 'true';
+    }
+
+    protected function readOnlyFields($viewName)
+    {
+        if (!empty($this->views[$viewName]->model->idfactura)) {
             $this->readOnlyField($viewName, 'idservice');
             $this->readOnlyField($viewName, 'nombre');
             $this->readOnlyField($viewName, 'plazas');
@@ -211,19 +201,15 @@ class EditService extends EditController {
             $this->readOnlyField($viewName, 'fin_dia');
             $this->readOnlyField($viewName, 'fin_hora');
             $this->readOnlyField($viewName, 'idvehicle');
-            
             $this->readOnlyField($viewName, 'iddriver_1');
             $this->readOnlyField($viewName, 'driver_alojamiento_1');
             $this->readOnlyField($viewName, 'driver_observaciones_1');
-            
             $this->readOnlyField($viewName, 'iddriver_2');
             $this->readOnlyField($viewName, 'driver_alojamiento_2');
             $this->readOnlyField($viewName, 'driver_observaciones_2');
-            
             $this->readOnlyField($viewName, 'iddriver_3');
             $this->readOnlyField($viewName, 'driver_alojamiento_3');
             $this->readOnlyField($viewName, 'driver_observaciones_3');
-            
             $this->readOnlyField($viewName, 'observaciones');
             $this->readOnlyField($viewName, 'observaciones_montaje');
             $this->readOnlyField($viewName, 'observaciones_drivers');
@@ -231,57 +217,18 @@ class EditService extends EditController {
             $this->readOnlyField($viewName, 'observaciones_facturacion');
             $this->readOnlyField($viewName, 'observaciones_liquidacion');
             $this->readOnlyField($viewName, 'motivobaja');
-            
-            // Invisibles
             $this->displayNoneField($viewName, 'aceptado');
             $this->displayNoneField($viewName, 'fuera_del_municipio');
             $this->displayNoneField($viewName, 'facturar_SN');
             $this->displayNoneField($viewName, 'salida_desde_nave_sn');
             $this->displayNoneField($viewName, 'activo');
-        } else {
-            // Invisibles
-            $this->displayNoneField($viewName, 'aceptado_text');
-            $this->displayNoneField($viewName, 'fuera_del_municipio_text');
-            $this->displayNoneField($viewName, 'facturar_SN_text');
-            $this->displayNoneField($viewName, 'salida_desde_nave_text');
-            $this->displayNoneField($viewName, 'activo_text');
+            return;
         }
+
+        $this->displayNoneField($viewName, 'aceptado_text');
+        $this->displayNoneField($viewName, 'fuera_del_municipio_text');
+        $this->displayNoneField($viewName, 'facturar_SN_text');
+        $this->displayNoneField($viewName, 'salida_desde_nave_text');
+        $this->displayNoneField($viewName, 'activo_text');
     }
-
-    private function prepararFechasParaVista($viewName)
-    {
-        if (!empty($this->views[$viewName]->model->fecha_desde)){
-            $this->views[$viewName]->model->inicio_dia = date("Y-m-d", strtotime($this->views[$viewName]->model->fecha_desde));
-        } else {
-            $this->views[$viewName]->model->inicio_dia = null;
-        }
-
-        if (!empty($this->views[$viewName]->model->fecha_hasta)){
-            $this->views[$viewName]->model->fin_dia = date("Y-m-d", strtotime($this->views[$viewName]->model->fecha_hasta));
-        } else {
-            $this->views[$viewName]->model->fin_dia = null;
-        }
-    }
-
-    private function prepararHorasParaVista($viewName)
-    {
-        if (!empty($this->views[$viewName]->model->hora_anticipacion)){
-            $this->views[$viewName]->model->inicio_horaAnt = date("H:i:s", strtotime($this->views[$viewName]->model->hora_anticipacion));
-        } else {
-            $this->views[$viewName]->model->inicio_horaAnt = null;
-        }
-        
-        if (!empty($this->views[$viewName]->model->hora_desde)){
-            $this->views[$viewName]->model->inicio_hora = date("H:i:s", strtotime($this->views[$viewName]->model->hora_desde));
-        } else {
-            $this->views[$viewName]->model->inicio_hora = null;
-        }
-
-        if (!empty($this->views[$viewName]->model->hora_hasta)){
-            $this->views[$viewName]->model->fin_hora = date("H:i:s", strtotime($this->views[$viewName]->model->hora_hasta));
-        } else {
-            $this->views[$viewName]->model->fin_hora = null;
-        }
-    }
-
 }

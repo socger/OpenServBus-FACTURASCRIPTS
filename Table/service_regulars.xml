@@ -1,27 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <column>
-        <name>idservice_regular</name>
-        <type>serial</type>
-        <null>NO</null>
-    </column>
-    
-    
-    <column>
-        <name>fechaalta</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>useralta</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>fechamodificacion</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>usermodificacion</name>
-        <type>character varying(50)</type>
+        <name>aceptado</name>
+        <type>boolean</type>
+        <default>true</default>
     </column>
     <column>
         <name>activo</name>
@@ -29,58 +11,201 @@
         <default>true</default>
     </column>
     <column>
-        <name>fechabaja</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>userbaja</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>motivobaja</name>
-        <type>character varying(100)</type>
-    </column>
-    
-    
-    <column>
-        <name>nombre</name>
-        <type>character varying(100)</type>
+        <name>codcliente</name>
+        <type>character varying(10)</type>
         <null>NO</null>
     </column>
-
-
     <column>
-        <name>aceptado</name>
+        <name>codimpuesto</name>
+        <type>character varying(10)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>codimpuesto_enextranjero</name>
+        <type>character varying(10)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>codsubcuenta_km_extranjero</name>
+        <type>character varying(15)</type>
+    </column>
+    <column>
+        <name>codsubcuenta_km_nacional</name>
+        <type>character varying(15)</type>
+    </column>
+    <column>
+        <name>combinadoSN</name>
         <type>boolean</type>
-        <default>true</default>
+        <default>false</default>
     </column>
-    <column>
-        <name>plazas</name>
-        <type>integer</type>
-        <null>NO</null>
-    </column>
-    
-    
     <column>
         <name>cod_servicio</name>
         <type>character varying(20)</type>
         <null>NO</null>
     </column>
     <column>
-        <name>codcliente</name>
-        <type>character varying(10)</type>
+        <name>domingo</name>
+        <type>boolean</type>
+        <default>false</default>
+    </column>
+    <column>
+        <name>driver_alojamiento_1</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>driver_alojamiento_2</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>driver_alojamiento_3</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>driver_observaciones_1</name>
+        <type>text</type>
+    </column>
+    <column>
+        <name>driver_observaciones_2</name>
+        <type>text</type>
+    </column>
+    <column>
+        <name>driver_observaciones_3</name>
+        <type>text</type>
+    </column>
+    <column>
+        <name>facturar_SN</name>
+        <type>boolean</type>
+        <default>true</default>
+    </column>
+    <column>
+        <name>facturar_agrupando</name>
+        <type>boolean</type>
+        <default>false</default>
+    </column>
+    <column>
+        <name>fechaalta</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>fechabaja</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>fechamodificacion</name>
+        <type>timestamp</type>
+    </column>
+    <column>
+        <name>fecha_desde</name>
+        <type>date</type>
+    </column>
+    <column>
+        <name>fecha_hasta</name>
+        <type>date</type>
+    </column>
+    <column>
+        <name>fuera_del_municipio</name>
+        <type>boolean</type>
+        <default>false</default>
+    </column>
+    <column>
+        <name>hoja_ruta_cifnif</name>
+        <type>character varying(30)</type>
         <null>NO</null>
     </column>
     <column>
-        <name>idvehicle_type</name>
+        <name>hoja_ruta_contratante</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>hoja_ruta_destino</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>hoja_ruta_expediciones</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>hoja_ruta_origen</name>
+        <type>character varying(100)</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>hoja_ruta_tipoidfiscal</name>
+        <type>character varying(25)</type>
+    </column>
+    <column>
+        <name>hora_anticipacion</name>
+        <type>time</type>
+    </column>
+    <column>
+        <name>hora_desde</name>
+        <type>time</type>
+    </column>
+    <column>
+        <name>hora_hasta</name>
+        <type>time</type>
+    </column>
+    <column>
+        <name>iddriver_1</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>iddriver_2</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>iddriver_3</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idempresa</name>
         <type>integer</type>
     </column>
     <column>
         <name>idhelper</name>
         <type>integer</type>
     </column>
-    
-
+    <column>
+        <name>idservice_regular</name>
+        <type>serial</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>idservice_regular_period</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idservice_type</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idvehicle</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>idvehicle_type</name>
+        <type>integer</type>
+    </column>
+    <column>
+        <name>importe</name>
+        <type>double precision</type>
+        <null>NO</null>
+        <default>0</default>
+    </column>
+    <column>
+        <name>importe_enextranjero</name>
+        <type>double precision</type>
+        <null>NO</null>
+        <default>0</default>
+    </column>
+    <column>
+        <name>jueves</name>
+        <type>boolean</type>
+        <default>false</default>
+    </column>
     <column>
         <name>lunes</name>
         <type>boolean</type>
@@ -97,129 +222,20 @@
         <default>false</default>
     </column>
     <column>
-        <name>jueves</name>
-        <type>boolean</type>
-        <default>false</default>
+        <name>motivobaja</name>
+        <type>character varying(100)</type>
     </column>
     <column>
-        <name>viernes</name>
-        <type>boolean</type>
-        <default>false</default>
-    </column>
-    <column>
-        <name>sabado</name>
-        <type>boolean</type>
-        <default>false</default>
-    </column>
-    <column>
-        <name>domingo</name>
-        <type>boolean</type>
-        <default>false</default>
-    </column>
-    
-
-    <column>
-        <name>facturar_SN</name>
-        <type>boolean</type>
-        <default>true</default>
-    </column>
-    <column>
-        <name>facturar_agrupando</name>
-        <type>boolean</type>
-        <default>false</default>
-    </column>
-    
-    
-    <column>
-        <name>importe</name>
-        <type>double precision</type>
-        <null>NO</null>
-        <default>0</default>
-    </column>
-    <column>
-        <name>importe_enextranjero</name>
-        <type>double precision</type>
-        <null>NO</null>
-        <default>0</default>
-    </column>
-    <column>
-        <name>codimpuesto</name>
-        <type>character varying(10)</type>
-        <null>NO</null>
-    </column>
-    <column>
-        <name>codimpuesto_enextranjero</name>
-        <type>character varying(10)</type>
-        <null>NO</null>
-    </column>
-    <column>
-        <name>total</name>
-        <type>double precision</type>
-        <null>NO</null>
-        <default>0</default>
-    </column>
-    
-    
-    
-    
-    <column>
-        <name>fuera_del_municipio</name>
-        <type>boolean</type>
-        <default>false</default>
-    </column>
-
-    
-    <column>
-        <name>hoja_ruta_origen</name>
+        <name>nombre</name>
         <type>character varying(100)</type>
         <null>NO</null>
     </column>
-    <column>
-        <name>hoja_ruta_destino</name>
-        <type>character varying(100)</type>
-        <null>NO</null>
-    </column>
-    <column>
-        <name>hoja_ruta_expediciones</name>
-        <type>character varying(100)</type>
-        <null>NO</null>
-    </column>
-    <column>
-        <name>hoja_ruta_contratante</name>
-        <type>character varying(100)</type>
-        <null>NO</null>
-    </column>
-    <column>
-        <name>hoja_ruta_tipoidfiscal</name>
-        <type>character varying(25)</type>
-    </column>
-    <column>
-        <name>hoja_ruta_cifnif</name>
-        <type>character varying(30)</type>
-        <null>NO</null>
-    </column>
-
-        
-    <column>
-        <name>idservice_type</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>idempresa</name>
-        <type>integer</type>
-    </column>
-
-        
     <column>
         <name>observaciones</name>
         <type>text</type>
     </column>
     <column>
-        <name>observaciones_montaje</name>
-        <type>text</type>
-    </column>
-    <column>
-        <name>observaciones_vehiculo</name>
+        <name>observaciones_drivers</name>
         <type>text</type>
     </column>
     <column>
@@ -231,92 +247,26 @@
         <type>text</type>
     </column>
     <column>
-        <name>observaciones_drivers</name>
+        <name>observaciones_montaje</name>
         <type>text</type>
     </column>
-
-
     <column>
-        <name>iddriver_1</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>driver_alojamiento_1</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>driver_observaciones_1</name>
+        <name>observaciones_periodo</name>
         <type>text</type>
     </column>
-    
-    
     <column>
-        <name>iddriver_2</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>driver_alojamiento_2</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>driver_observaciones_2</name>
+        <name>observaciones_vehiculo</name>
         <type>text</type>
     </column>
-    
-    
     <column>
-        <name>iddriver_3</name>
+        <name>plazas</name>
         <type>integer</type>
+        <null>NO</null>
     </column>
     <column>
-        <name>driver_alojamiento_3</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>driver_observaciones_3</name>
-        <type>text</type>
-    </column>
-    
-    
-    <column>
-        <name>idvehicle</name>
-        <type>integer</type>
-    </column>
-
-
-    <column>
-        <name>codsubcuenta_km_nacional</name>
-        <type>character varying(15)</type>
-    </column>
-    <column>
-        <name>codsubcuenta_km_extranjero</name>
-        <type>character varying(15)</type>
-    </column>
-    
-    
-    <column>
-        <name>idservice_regular_period</name>
-        <type>integer</type>
-    </column>
-    <column>
-        <name>fecha_desde</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>fecha_hasta</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>hora_anticipacion</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>hora_desde</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>hora_hasta</name>
-        <type>timestamp</type>
+        <name>sabado</name>
+        <type>boolean</type>
+        <default>false</default>
     </column>
     <column>
         <name>salida_desde_nave_sn</name>
@@ -324,24 +274,32 @@
         <default>true</default>
     </column>
     <column>
-        <name>observaciones_periodo</name>
-        <type>text</type>
+        <name>total</name>
+        <type>double precision</type>
+        <null>NO</null>
+        <default>0</default>
     </column>
-    
     <column>
-        <name>combinadoSN</name>
+        <name>useralta</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>userbaja</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>usermodificacion</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>viernes</name>
         <type>boolean</type>
         <default>false</default>
     </column>
-        
-    
-    
-    
     <constraint>
         <name>service_regulars_pkey</name>
         <type>PRIMARY KEY (idservice_regular)</type>
     </constraint>
-
     <constraint>
         <name>ca_service_regulars__clientes</name>
         <type>FOREIGN KEY (codcliente) REFERENCES clientes (codcliente) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
@@ -398,13 +356,20 @@
         <name>ca_services_regulars__impuestos_enextranjero</name>
         <type>FOREIGN KEY (codimpuesto_enextranjero) REFERENCES impuestos (codimpuesto) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
-
-        
+    <constraint>
+        <name>ca_services_regulars__users_alta</name>
+        <type>FOREIGN KEY (useralta) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_services_regulars__users_baja</name>
+        <type>FOREIGN KEY (userbaja) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_services_regulars__users_modificacion</name>
+        <type>FOREIGN KEY (usermodificacion) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
     <constraint>
         <name>uniq_service_regulars__cod_servicio</name>
         <type>UNIQUE (cod_servicio)</type>
     </constraint>
-    
 </table>
-
-

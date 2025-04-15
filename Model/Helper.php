@@ -1,195 +1,150 @@
 <?php
+/**
+ * This file is part of OpenServBus plugin for FacturaScripts
+ * Copyright (C) 2021-2022 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2021 Jerónimo Pedro Sánchez Manzano <socger@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/.
+ */
 
-namespace FacturaScripts\Plugins\OpenServBus\Model; 
+namespace FacturaScripts\Plugins\OpenServBus\Model;
 
-//use FacturaScripts\Core\Base\DataBase;
 use FacturaScripts\Core\Model\Base;
-use FacturaScripts\Plugins\OpenServBus\Model\Employee;
-use FacturaScripts\Plugins\OpenServBus\Model\Collaborator;
+use FacturaScripts\Core\Session;
 
-class Helper extends Base\ModelClass {
+class Helper extends Base\ModelClass
+{
     use Base\ModelTrait;
+    use OpenServBusModelTrait;
 
-    public $idhelper;
-        
-    public $user_fecha;
-    public $user_nick;
-    public $fechaalta;
-    public $useralta;
-    public $fechamodificacion;
-    public $usermodificacion;
+    /** @var bool */
     public $activo;
+
+    /** @var string */
+    public $fechaalta;
+
+    /** @var string */
     public $fechabaja;
-    public $userbaja;
+
+    /** @var string */
+    public $fechamodificacion;
+
+    /** @var int */
+    public $idcollaborator;
+
+    /** @var int */
+    public $idemployee;
+
+    /** @var int */
+    public $idhelper;
+
+    /** @var string */
     public $motivobaja;
 
-    public $idemployee;
-    public $idcollaborator;
-    
+    /** @var string */
     public $observaciones;
-    public $nombre;
-    
-    // función que inicializa algunos valores antes de la vista del controlador
-    public function clear() {
-        parent::clear();
-        $this->activo = true; // Por defecto estará activo
-    }
-    
-    /**
-     * This function is called when creating the model table. Returns the SQL
-     * that will be executed after the creation of the table. Useful to insert values
-     * default.
-     *
-     * @return string
-     */
-    public function install()
-    {
-        /// needed dependency proveedores
-        new Employee();
-        new Collaborator();
 
+    /** @var string */
+    public $useralta;
+
+    /** @var string */
+    public $userbaja;
+
+    /** @var string */
+    public $usermodificacion;
+
+    public function __get($name)
+    {
+        if ($name === 'nombre') {
+            if (false === empty($this->idcollaborator)) {
+                $collaborator = $this->getCollaborator();
+                return $collaborator->getProveedor()->nombre;
+            } elseif (false === empty($this->idemployee)) {
+                $employee = $this->getEmployee();
+                return $employee->nombre;
+            }
+        }
+        return null;
+    }
+
+    public function clear()
+    {
+        parent::clear();
+        $this->activo = true;
+        $this->fechaalta = date(static::DATETIME_STYLE);
+        $this->useralta = Session::get('user')->nick ?? null;
+    }
+
+    public function install(): string
+    {
+        new EmployeeOpen();
+        new Collaborator();
         return parent::install();
     }
 
-    // función que devuelve el id principal
-    public static function primaryColumn(): string {
+    public static function primaryColumn(): string
+    {
         return 'idhelper';
     }
-    
-    // función que devuelve el nombre de la tabla
-    public static function tableName(): string {
+
+    public static function tableName(): string
+    {
         return 'helpers';
     }
-    
-    // Para realizar cambios en los datos antes de guardar por modificación
-    protected function saveUpdate(array $values = [])
-    {
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
-            return false;
-        }
-        
-        return parent::saveUpdate($values);
-    }
 
-    // Para realizar cambios en los datos antes de guardar por alta
-    protected function saveInsert(array $values = [])
+    public function test(): bool
     {
-        // Creamos el nuevo id
-        if (empty($this->idhelper)) {
-            $this->idhelper = $this->newCode();
-        }
-        
-        $this->rellenarDatosAlta();
-        $this->rellenarDatosModificacion();
-        
-        if ($this->comprobarSiActivo() == false){
+        // Exigimos que se introduzca idempresa o idcollaborator
+        if ((empty($this->idemployee)) && (empty($this->idcollaborator))) {
+            $this->toolBox()->i18nLog()->error('confirm-employee-or-collaborating');
             return false;
         }
 
-        return parent::saveInsert($values);
-    }
-    
-    public function test()
-    {
-        // Exijimos que se introduzca idempresa o idcollaborator
-        if ( (empty($this->idemployee)) 
-         and (empty($this->idcollaborator))
-           ) 
-        {
-            $this->toolBox()->i18nLog()->error('Debe de confirmar si es un empleado nuestro o de una empresa colaboradora');
-            return false;
-        }
-        
         // No debe de elegir empleado y colaborador a la vez
-        if ( (!empty($this->idemployee)) 
-         and (!empty($this->idcollaborator))
-           ) 
-        {
-            $this->toolBox()->i18nLog()->error('O es un empleado nuestro o de una empresa colaboradora, pero ambos no');
+        if ((!empty($this->idemployee)) && (!empty($this->idcollaborator))) {
+            $this->toolBox()->i18nLog()->error('employee-or-collaborating-bat-not-both');
             return false;
         }
-        
-        $this->completarCampoNombre();
-        
-        $this->evitarInyeccionSQL();
-        return parent::test();
-    }
 
-
-    // ** ********************************** ** //
-    // ** FUNCIONES CREADAS PARA ESTE MODELO ** //
-    // ** ********************************** ** //
-    private function comprobarSiActivo()
-    {
-        $a_devolver = true;
-        
-        if ($this->activo == false) {
-            $this->fechabaja = $this->fechamodificacion;
-            $this->userbaja = $this->usermodificacion;
-            
-            if (empty($this->motivobaja)){
-                $a_devolver = false;
-                $this->toolBox()->i18nLog()->error('Si el registro no está activo, debe especificar el motivo.');
-            }
-        } else { // Por si se vuelve a poner Activo = true
-            $this->fechabaja = null;
-            $this->userbaja = null;
-            $this->motivobaja = null;
-        }
-        return $a_devolver;
-    }
-    
-    private function completarCampoNombre()
-    {
-        // Rellenamos el campo nombre de este modelo pues está ligado con campo nombre de tabla empleados
-        // no hace falta actualizarlo siempre. porque la tabla employees es de este mismo pluggin y desde el test de employee.php actualizo el campo nombre de tabla dirvers
-        $sql = '';
-        
-        if (!empty($this->idemployee)) {
-            $sql = ' SELECT employees.nombre AS title '
-                 . ' FROM employees '
-                 . ' WHERE employees.idemployee = ' . $this->idemployee
-                 ;
+        if ($this->comprobarSiActivo() === false) {
+            return false;
         }
 
-        if (!empty($this->idcollaborator)) {
-            $sql = ' SELECT collaborators.NOMBRE AS title '
-                 . ' FROM collaborators '
-                 . ' WHERE collaborators.idcollaborator = ' . $this->idcollaborator
-                 ;
-        }
-
-        if (!$sql == '') {
-            $registros = self::$dataBase->select($sql); // Para entender su funcionamiento visitar ... https://facturascripts.com/publicaciones/acceso-a-la-base-de-datos-818
-
-            foreach ($registros as $fila) {
-                $this->nombre = $fila['title'];
-            }
-        } else {
-            $this->nombre = null;
-        }
-        
-    }
-
-    private function rellenarDatosModificacion()
-    {
-        $this->usermodificacion = $this->user_nick; 
-        $this->fechamodificacion = $this->user_fecha; 
-    }
-
-    private function rellenarDatosAlta()
-    {
-        $this->useralta = $this->user_nick; 
-        $this->fechaalta = $this->user_fecha; 
-    }
-	
-    private function evitarInyeccionSQL()
-    {
         $utils = $this->toolBox()->utils();
         $this->observaciones = $utils->noHtml($this->observaciones);
         $this->motivobaja = $utils->noHtml($this->motivobaja);
+        return parent::test();
     }
-	
+
+    protected function getCollaborator(): Collaborator
+    {
+        $collaborator = new Collaborator();
+        $collaborator->loadFromCode($this->idcollaborator);
+        return $collaborator;
+    }
+
+    protected function getEmployee(): EmployeeOpen
+    {
+        $employee = new EmployeeOpen();
+        $employee->loadFromCode($this->idemployee);
+        return $employee;
+    }
+
+    protected function saveUpdate(array $values = []): bool
+    {
+        $this->usermodificacion = Session::get('user')->nick ?? null;
+        $this->fechamodificacion = date(static::DATETIME_STYLE);
+        return parent::saveUpdate($values);
+    }
 }

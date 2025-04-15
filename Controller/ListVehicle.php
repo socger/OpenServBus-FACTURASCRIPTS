@@ -1,94 +1,84 @@
 <?php
+/**
+ * This file is part of OpenServBus plugin for FacturaScripts
+ * Copyright (C) 2021-2022 Carlos Garcia Gomez <carlos@facturascripts.com>
+ * Copyright (C) 2021 Jerónimo Pedro Sánchez Manzano <socger@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this program. If not, see http://www.gnu.org/licenses/.
+ */
+
 namespace FacturaScripts\Plugins\OpenServBus\Controller;
 
 use FacturaScripts\Core\Lib\ExtendedController\ListController;
 
-class ListVehicle extends ListController {
-    
-    // Para presentar la pantalla del controlador
-    // Estará en el el menú principal bajo \\OpenServBus\Archivos\Empleados
-    public function getPageData(): array {
+class ListVehicle extends ListController
+{
+    public function getPageData(): array
+    {
         $pageData = parent::getPageData();
-        
         $pageData['menu'] = 'OpenServBus';
-        $pageData['submenu'] = 'Vehículos';
-        $pageData['title'] = 'Vehículos';
-        
+        $pageData['title'] = 'vehicles';
         $pageData['icon'] = 'fas fa-bus-alt';
-
-
         return $pageData;
     }
-    
-    protected function createViews() {
+
+    protected function createViews()
+    {
         $this->createViewVehicle();
+        $this->createViewVehicleEquipament();
     }
-    
+
     protected function createViewVehicle($viewName = 'ListVehicle')
     {
-        $this->addView($viewName, 'Vehicle');
-        
-        // Opciones de búsqueda rápida
-        $this->addSearchFields($viewName, ['cod_vehicle', 'nombre','matricula']); // Las búsqueda la hará por el campo nombre y por el campo direccion
-        
-        // Tipos de Ordenación
-            // Primer parámetro es la pestaña
-            // Segundo parámetro es los campos por los que ordena (array)
-            // Tercer parámetro es la etiqueta a poner
-            // Cuarto parámetro, si se rellena, le está diciendo cual es el order by por defecto, y además las opciones son
-               // 1 Orden ascendente
-               // 2 Orden descendente
+        $this->addView($viewName, 'Vehicle', 'vehicles', 'fas fa-bus-alt');
+        $this->addSearchFields($viewName, ['cod_vehicle', 'name', 'matricula']);
         $this->addOrderBy($viewName, ['nombre'], 'Nombre', 1);
-        $this->addOrderBy($viewName, ['cod_vehicle'], 'Código');
-        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'F.Alta+F.MOdif.');
-        
+        $this->addOrderBy($viewName, ['cod_vehicle'], 'code');
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
+
         // Filtros
-        // Filtro checkBox por campo Activo ... addFilterCheckbox($viewName, $key, $label, $field);
-            // $viewName ... nombre del controlador
-            // $key ... es el nombre que le ponemos al filtro
-            // $label ... la etiqueta a mostrar al usuario
-            // $field ... el campo del modelo sobre el que vamos a comprobar
-        $this->addFilterCheckbox($viewName, 'solo_Colaboradores', 'Ver sólo colaboradores', 'idcollaborator', 'IS NOT', null);
-        $this->addFilterCheckbox($viewName, 'solo_VehiculosNtros', 'Ver sólo vehículos nuestros', 'idempresa', 'IS NOT', null);
-        // $this->addFilterCheckbox($viewName, 'activo', 'Ver sólo los activos', 'activo');
-     
-        // Filtro de TIPO SELECT para filtrar por registros activos (SI, NO, o TODOS)
-        // Sustituimos el filtro activo (checkBox) por el filtro activo (select)
+        $this->addFilterCheckbox($viewName, 'solo_Colaboradores', 'collaborators-only', 'idcollaborator', 'IS NOT', null);
+        $this->addFilterCheckbox($viewName, 'solo_VehiculosNtros', 'our-vehicles', 'idempresa', 'IS NOT', null);
+
         $activo = [
-            ['code' => '1', 'description' => 'Activos = SI'],
-            ['code' => '0', 'description' => 'Activos = NO'],
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
         ];
-        $this->addFilterSelect($viewName, 'soloActivos', 'Activos = TODOS', 'activo', $activo);        
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
 
-        // Filtro autoComplete ... addFilterAutocomplete($viewName, $key, $label, $field, $table, $fieldcode, $fieldtitle)
-        // Aunque lo vamos a hacer sobre la tabla empresa que normalmente tiene pocos registros
-        // este tipo de filtros está pensado para tablas como clientes, proveedores, etc que tengan muchos registros
-        // Para estas tablas no vamos a usar un filtro Select ... faltaría memoria al equipo para ello
-            // $viewName ... nombre del controlador
-            // $key ... es el nombre que le ponemos al filtro, que puede ser el campo sobre el que quiero filtrar
-            // $label ...  parámetro es la etiqueta a mostrar al usuario
-            // $field ... es el campo del modelo
-            // $table ... es el nombre de la tabla en la BD
-            // $fieldcode ... es el campo interno que quiero consultar
-            // $fieldtitle ... es el campo a mostar al usuario
-        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'Empresa', 'idempresa', 'empresas', 'idempresa', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xIdGarage', 'Cochera', 'idgarage', 'garages', 'idgarage', 'nombre');
-        $this->addFilterAutocomplete($viewName, 'xidfuel_type', 'T.Combustible', 'idfuel_type', 'fuel_types', 'idfuel_type', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdEmpresa', 'company', 'idempresa', 'empresas', 'idempresa', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdGarage', 'garage', 'idgarage', 'garages', 'idgarage', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xidfuel_type', 'fuel-type', 'idfuel_type', 'fuel_types', 'idfuel_type', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdCollaborator', 'collaborator', 'idcollaborator', 'collaborators', 'idcollaborator', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdvehicle_type', 'vehicle-type', 'idvehicle_type', 'vehicle_types', 'idvehicle_type', 'nombre');
+    }
 
-        // $this->addFilterAutocomplete($viewName, 'xIdCollaborator', 'Colaborador', 'idcollaborator', 'collaborators', 'idcollaborator', 'codproveedor');
-        $this->addFilterAutocomplete($viewName, 'xIdCollaborator', 'Colaborador', 'idcollaborator', 'collaborators', 'idcollaborator', 'nombre');
-        
-        $this->addFilterAutocomplete($viewName, 'xIdvehicle_type', 'Tipo vehículo', 'idvehicle_type', 'vehicle_types', 'idvehicle_type', 'nombre');
-        
-        // Filtro periodo de fechas
-        // addFilterPeriod($viewName, $key, $label, $field)
-            // $key ... es el nombre que le ponemos al filtro
-            // $label ... es la etiqueta a mostrar al cliente
-            // $field ... es el campo sobre el que filtraremos
-        // $this->addFilterPeriod($viewName, 'porFechaAlta', 'Fecha de alta', 'fechaalta');
-        
-        // Filtro de fecha sin periodo
-        // addFilterDatePicker($viewName, $key, $label, $field)
-        
+    protected function createViewVehicleEquipament($viewName = 'ListVehicleEquipament')
+    {
+        $this->addView($viewName, 'VehicleEquipament', 'equipament', 'fas fa-bus-alt');
+        $this->addSearchFields($viewName, ['nombre']);
+        $this->addOrderBy($viewName, ['idvehicle', 'idvehicle_equipament_type'], 'vehicle-equipment-plus', 1);
+        $this->addOrderBy($viewName, ['fechaalta', 'fechamodificacion'], 'fhigh-fmodiff');
+
+        // Filtros
+        $activo = [
+            ['code' => '1', 'description' => 'active-yes'],
+            ['code' => '0', 'description' => 'active-no'],
+        ];
+        $this->addFilterSelect($viewName, 'soloActivos', 'active-all', 'activo', $activo);
+
+        $this->addFilterAutocomplete($viewName, 'xIdVehicle', 'vehicle', 'idvehicle', 'vehicles', 'idvehicle', 'nombre');
+        $this->addFilterAutocomplete($viewName, 'xIdVehicle_equipament_type', 'equipment-type', 'idvehicle_equipament_type', 'vehicle_equipament_types', 'idvehicle_equipament_type', 'nombre');
     }
 }

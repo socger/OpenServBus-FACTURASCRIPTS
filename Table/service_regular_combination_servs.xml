@@ -1,49 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <table>
     <column>
-        <name>idservice_regular_combination_serv</name>
-        <type>serial</type>
-        <null>NO</null>
-    </column>
-    
-    
-    <column>
-        <name>fechaalta</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>useralta</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
-        <name>fechamodificacion</name>
-        <type>timestamp</type>
-    </column>
-    <column>
-        <name>usermodificacion</name>
-        <type>character varying(50)</type>
-    </column>
-    <column>
         <name>activo</name>
         <type>boolean</type>
         <default>true</default>
+    </column>
+    <column>
+        <name>fechaalta</name>
+        <type>timestamp</type>
     </column>
     <column>
         <name>fechabaja</name>
         <type>timestamp</type>
     </column>
     <column>
-        <name>userbaja</name>
-        <type>character varying(50)</type>
+        <name>fechamodificacion</name>
+        <type>timestamp</type>
     </column>
     <column>
-        <name>motivobaja</name>
-        <type>character varying(100)</type>
-    </column>
-
-
-    <column>
-        <name>idservice_regular_combination</name>
+        <name>iddriver</name>
         <type>integer</type>
         <null>NO</null>
     </column>
@@ -53,8 +28,13 @@
         <null>NO</null>
     </column>
     <column>
-        <name>iddriver</name>
+        <name>idservice_regular_combination</name>
         <type>integer</type>
+        <null>NO</null>
+    </column>
+    <column>
+        <name>idservice_regular_combination_serv</name>
+        <type>serial</type>
         <null>NO</null>
     </column>
     <column>
@@ -62,42 +42,60 @@
         <type>integer</type>
         <null>NO</null>
     </column>
-
-
+    <column>
+        <name>motivobaja</name>
+        <type>character varying(100)</type>
+    </column>
     <column>
         <name>observaciones</name>
         <type>text</type>
     </column>
-    
-    
+    <column>
+        <name>useralta</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>userbaja</name>
+        <type>character varying(50)</type>
+    </column>
+    <column>
+        <name>usermodificacion</name>
+        <type>character varying(50)</type>
+    </column>
     <constraint>
-        <name>service_regular_combination_servs_pkey</name>
+        <name>ca_service_regular_combination_servs_pkey</name>
         <type>PRIMARY KEY (idservice_regular_combination_serv)</type>
     </constraint>
-    
-    
     <constraint>
-        <name>service_regular_combination_servs__drivers</name>
+        <name>ca_service_regular_combination_servs__drivers</name>
         <type>FOREIGN KEY (iddriver) REFERENCES drivers (iddriver) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
-        <name>service_regular_combination_servs__vehicles</name>
+        <name>ca_service_regular_combination_servs__vehicles</name>
         <type>FOREIGN KEY (idvehicle) REFERENCES vehicles (idvehicle) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
-        <name>service_regular_combination_servs__service_regular_combinations</name>
+        <name>ca_service_regular_combi_servs__service_regular_combis</name>
         <type>FOREIGN KEY (idservice_regular_combination) REFERENCES service_regular_combinations (idservice_regular_combination) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
     <constraint>
-        <name>service_regular_combination_servs__service_regulars</name>
+        <name>ca_service_regular_combination_servs__service_regulars</name>
         <type>FOREIGN KEY (idservice_regular) REFERENCES service_regulars (idservice_regular) ON DELETE RESTRICT ON UPDATE RESTRICT</type>
     </constraint>
-
-
     <constraint>
-        <name>uniq_idservice_regular_combination__idservice_regular</name>
+        <name>ca_service_regular_combination_servs__users_alta</name>
+        <type>FOREIGN KEY (useralta) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_regular_combination_servs__users_baja</name>
+        <type>FOREIGN KEY (userbaja) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>ca_service_regular_combination_servs__users_modificacion</name>
+        <type>FOREIGN KEY (usermodificacion) REFERENCES users (nick) ON DELETE SET NULL ON UPDATE CASCADE</type>
+    </constraint>
+    <constraint>
+        <name>uniq_idservice_regular_combination_servs__idservice_regular</name>
         <type>UNIQUE (idservice_regular_combination, idservice_regular)</type>
     </constraint>
-    
 </table>
-
